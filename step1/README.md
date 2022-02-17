@@ -26,6 +26,7 @@
 * Electron MiniISO scale factors and efficiencies: need to run the Tag and Probe code 
 * Electron Cross-Trigger scale factors and efficiencies
 * Muon MiniISO scale factors and efficiencies: need to run the Tag and Probe code
+* Muon Cross-Trigger scale factors and efficiencies
 * Hadronic trigger (muon channel)
 * Hadronic trigger (electron channel)
 * (Optional) Calculate `njet` scale factors
