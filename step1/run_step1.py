@@ -5,12 +5,13 @@ from argparse import ArgumentParser
 from XRootD import client
 
 parser = ArgumentParser()
-parser.add_argument( "-y", "--year", default = "17" )
-parser.add_argument( "-s", "--shifts", action = "store_true" )
-parser.add_argument( "-t", "--test", action = "store_true" )
+parser.add_argument( "-y", "--year", required = True, help = "Options:16APV,16,17,18" )
+parser.add_argument( "-g", "--groups", nargs = "+" )
 parser.add_argument( "-f", "--filesPerJob", default = "30" )
-parser.add_argument( "-r", "--resubmit", default = "" )
+parser.add_argument( "-r", "--resubmit", default = "", help = "Condor log folder" )
 parser.add_argument( "-l", "--location", default = "LPC", help = "Options: LPC, BRUX" )
+parser.add_argument( "--shifts", action = "store_true" )
+parser.add_argument( "--test", action = "store_true" )
 args = parser.parse_args()
 
 from ROOT import *
