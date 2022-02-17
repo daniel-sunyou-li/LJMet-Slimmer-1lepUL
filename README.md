@@ -8,6 +8,7 @@
 __Notes:__
 * Kept the HOT-tagging UL SF, mistag and efficiencies the same as for Legacy SF and duplicated the `2016` values over to `2016APV`
 * UL Top tagging was calculated for only 2017 and 2018 for the `RunIISummer19` production, and each era will be added with the switch to the `RunIISummer20` production
+* Temporarily removed the VLQ trigger SF
 
 __Scale factors updated to UL:__
 * EGamma Gsf: using the JSON POG EGamma `.json` scale factors with the working point `RecoAbove20`
