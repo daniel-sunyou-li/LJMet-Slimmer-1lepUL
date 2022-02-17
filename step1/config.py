@@ -25,7 +25,7 @@ haddDir = {
   } for year in years
 }
 
-# make sure this matches with the names in step1.cc
+# make sure this matches with the names in step1.cc and in make_step1.C
 deepCSV_SF = {
   "16APV": "btag_sf/reshaping_deepCSV_106XUL16preVFP_v2.csv",
   "16":    "btag_sf/reshaping_deepCSV_106XUL16postVFP_v3.csv",
