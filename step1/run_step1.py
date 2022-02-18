@@ -25,7 +25,7 @@ start_time = time.time()
 if args.test: print( "[OPT] Running in test mode. Only submitting one sample: {}".format( config.samples[ args.year ][ "TEST" ] ) )
 if args.year not in [ "16APV", "16", "17", "18" ]: sys.exit( "[ERR] Invalid year option. Use: 16APV, 16, 17, 18" )
 if args.location not in [ "LPC", "BRUX" ]: sys.exit( "[ERR] Invalid location option. Use: BRUX, LPC" )
-shifts = [ "nominal" ] if not args.shifts else [ "JECup", "JECdown", "JERup", "JERdown" ]
+shifts = [ "nominal" ] if not args.shifts else [ "nominal", "JECup", "JECdown", "JERup", "JERdown" ]
 filesPerJob = int( args.filesPerJob )
 postfix = config.postfix
 inputDir = config.ljmetDir[ args.year ][ args.location ]
@@ -156,7 +156,7 @@ for shift in samples:
                 'YEAR': args.year, 
                 'DEEPCSV': deepCSV_SF[ args.year ], 
                 'DEEPJET':deepJet_SF[ args.year ],
-                "SYSTEMATICS": "true" if args.systematics else "false"
+                "SYSTEMATICS": "true" if args.shifts else "false"
               }
               jdfName = "{}{}/{}_{}.job".format( condorDir, shift, jobParams["OUTFILENAME"], jobParams["ID"] )
               print( ">> Storing job information in {}".format( jdfName ) )
