@@ -141,44 +141,43 @@ for shift in samples:
             #  for id_ in problematicIDs:
             #    idList = idList.replace( id_, "" ).replace( "  ", " " )
             print( ">> Running IDs: {}".format( idList ) )
-            print( ">> Running systematic shifts: {}".format( shifts ) )
-            for shift in shifts:
-              jobParams = {
-                'RUNDIR': os.getcwd(), 
-                'SAMPLE': sample, 
-                'INPATHSUFFIX': pathSuffix, 
-                'INPUTDIR': inputDir, 
-                'FILENAME': baseFilename, 
-                'OUTFILENAME': step1_sample, 
-                'OUTPUTDIR': outputDir[ shift ], 
-                'LIST': idList, 
-                'ID': fs_count, 
-                'YEAR': args.year, 
-                'DEEPCSV': deepCSV_SF[ args.year ], 
-                'DEEPJET':deepJet_SF[ args.year ]
-              }
-              jdfName = "{}{}/{}_{}.job".format( condorDir, shift, jobParams["OUTFILENAME"], jobParams["ID"] )
-              print( ">> Storing job information in {}".format( jdfName ) )
-              jdf = open( jdfName, 'w' )
-              jdf.write(
+            jobParams = {
+              'RUNDIR': os.getcwd(), 
+              'SAMPLE': sample, 
+              'INPATHSUFFIX': pathSuffix, 
+              'INPUTDIR': inputDir, 
+              'FILENAME': baseFilename, 
+              'OUTFILENAME': "{}_{}".format( step1_sample, shift ), 
+              'OUTPUTDIR': outputDir[ shift ], 
+              'LIST': idList, 
+              'ID': fs_count, 
+              'YEAR': args.year, 
+              'SHIFT': shift,
+              'DEEPCSV': deepCSV_SF[ args.year ], 
+              'DEEPJET':deepJet_SF[ args.year ]
+            }
+            jdfName = "{}{}/{}_{}.job".format( condorDir, shift, jobParams["OUTFILENAME"], jobParams["ID"] )
+            print( ">> Storing job information in {}".format( jdfName ) )
+            jdf = open( jdfName, 'w' )
+            jdf.write(
   """use_x509userproxy = true
   universe = vanilla
   Executable = %(RUNDIR)s/make_step1.sh
   should_transfer_files = YES
   when_to_transfer_output = ON_EXIT
   Transfer_Input_Files = %(RUNDIR)s/compile_step1.C, %(RUNDIR)s/make_step1.C, %(RUNDIR)s/step1.cc, %(RUNDIR)s/step1.h, %(RUNDIR)s/HardcodedConditions.cc, %(RUNDIR)s/HardcodedConditions.h, %(RUNDIR)s/BTagCalibForLJMet.cpp, %(RUNDIR)s/BTagCalibForLJMet.h, %(RUNDIR)s/%(DEEPCSV)s, %(RUNDIR)s/%(DEEPJET)s
-  request_memory = 3072
+  request_memory = 2048
   Output = %(OUTFILENAME)s_%(ID)s.out
   Error = %(OUTFILENAME)s_%(ID)s.err
   Log = %(OUTFILENAME)s_%(ID)s.log
   Notification = Never
-  Arguments = "%(FILENAME)s %(OUTFILENAME)s %(INPUTDIR)s/%(SAMPLE)s/%(INPATHSUFFIX)s %(OUTPUTDIR)s/%(OUTFILENAME)s '%(LIST)s' %(ID)s %(YEAR)s"
+  Arguments = "%(FILENAME)s %(OUTFILENAME)s %(INPUTDIR)s/%(SAMPLE)s/%(INPATHSUFFIX)s %(OUTPUTDIR)s/%(OUTFILENAME)s '%(LIST)s' %(ID)s %(YEAR)s %(SHIFT)s"
   Queue 1"""%jobParams)
-              jdf.close()
-              os.chdir( os.path.join( condorDir, shift ) )
-              os.system( "condor_submit {}".format( jdfName.split("/")[-1] ) )
-              os.system( "sleep 0.5" )                                
-              os.chdir( jobParams["RUNDIR"] )
-              job_count += 1
+            jdf.close()
+            os.chdir( os.path.join( condorDir, shift ) )
+            os.system( "condor_submit {}".format( jdfName.split("/")[-1] ) )
+            os.system( "sleep 0.5" )                                
+            os.chdir( jobParams["RUNDIR"] )
+            job_count += 1
                                                  
 print( "[DONE] {} jobs submitted in {:.2f} minutes".format( job_count, round( time.time() - start_time, 2 ) / 60. ) )
