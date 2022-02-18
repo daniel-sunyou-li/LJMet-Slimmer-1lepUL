@@ -155,8 +155,7 @@ for shift in samples:
                 'ID': fs_count, 
                 'YEAR': args.year, 
                 'DEEPCSV': deepCSV_SF[ args.year ], 
-                'DEEPJET':deepJet_SF[ args.year ],
-                "SYSTEMATICS": "true" if args.shifts else "false"
+                'DEEPJET':deepJet_SF[ args.year ]
               }
               jdfName = "{}{}/{}_{}.job".format( condorDir, shift, jobParams["OUTFILENAME"], jobParams["ID"] )
               print( ">> Storing job information in {}".format( jdfName ) )
@@ -173,7 +172,7 @@ for shift in samples:
   Error = %(OUTFILENAME)s_%(ID)s.err
   Log = %(OUTFILENAME)s_%(ID)s.log
   Notification = Never
-  Arguments = "%(FILENAME)s %(OUTFILENAME)s %(INPUTDIR)s/%(SAMPLE)s/%(INPATHSUFFIX)s %(OUTPUTDIR)s/%(OUTFILENAME)s '%(LIST)s' %(ID)s %(YEAR)s %(SYSTEMATICS)s"
+  Arguments = "%(FILENAME)s %(OUTFILENAME)s %(INPUTDIR)s/%(SAMPLE)s/%(INPATHSUFFIX)s %(OUTPUTDIR)s/%(OUTFILENAME)s '%(LIST)s' %(ID)s %(YEAR)s"
   Queue 1"""%jobParams)
               jdf.close()
               os.chdir( os.path.join( condorDir, shift ) )
