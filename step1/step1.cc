@@ -1291,6 +1291,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     }
     std::string eltrigger;
     std::string mutrigger;
+    std::string mutrigger2;
     std::string hadtrigger;
     std::vector<std::string> eltriggers;
     std::vector<std::string> mutriggers;
@@ -1376,7 +1377,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         triggerSF = hardcodedConditions.GetElectronTriggerSF(leppt, lepeta, Year);
         triggerHadSF = hardcodedConditions.GetIsEHadronTriggerSF(NJets_JetSubCalc, AK4HT, Year);
         triggerXSF = hardcodedConditions.GetElectronTriggerXSF(leppt, lepeta, Year);
-        triggerVlqXSF = hardcodedConditions.GetElectronTriggerVlqXSF(leppt, lepeta, Year);
+        //triggerVlqXSF = hardcodedConditions.GetElectronTriggerVlqXSF(leppt, lepeta, Year);
       }
       if(isMuon){
         for(unsigned int itrig=0; itrig < vsSelMCTriggersMu_MultiLepCalc->size(); itrig++){
@@ -1394,7 +1395,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         triggerSF = hardcodedConditions.GetMuonTriggerSF(leppt, lepeta, Year);
         triggerHadSF = hardcodedConditions.GetIsMHadronTriggerSF(NJets_JetSubCalc, AK4HT, Year);
         triggerXSF = hardcodedConditions.GetMuonTriggerXSF(leppt, lepeta, Year);
-        triggerVlqXSF = hardcodedConditions.GetMuonTriggerVlqXSF(leppt, lepeta, Year);
+        //triggerVlqXSF = hardcodedConditions.GetMuonTriggerVlqXSF(leppt, lepeta, Year);
       }
       if (MCLepPastTrigger == 1 || MCHadPastTrigger == 1){
         MCPastTrigger = 1;
