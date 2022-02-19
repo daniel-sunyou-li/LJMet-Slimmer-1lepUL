@@ -677,141 +677,18 @@ void HardcodedConditions::GetHOTtaggingEff(double pt, double *eff, std::string y
   //The main getter for GetHOTtaggingEff Efficiencies
   *eff = 1.000;
   if(isGenMatched){
-  	if      (year=="2016APV") GetHOTtaggingEff2016APV(pt, eff, sample, workingpoint, massIndex);
+    if      (year=="2016APV") GetHOTtaggingEff2016APV(pt, eff, sample, workingpoint, massIndex);
     else if (year=="2016") GetHOTtaggingEff2016(pt, eff, sample, workingpoint, massIndex);
-  	else if (year=="2017") GetHOTtaggingEff2017(pt, eff, sample, workingpoint, massIndex);
-  	else if (year=="2018") GetHOTtaggingEff2018(pt, eff, sample, workingpoint, massIndex);
-  	}
+    else if (year=="2017") GetHOTtaggingEff2017(pt, eff, sample, workingpoint, massIndex);
+    else if (year=="2018") GetHOTtaggingEff2018(pt, eff, sample, workingpoint, massIndex);
+  }
   else{
-  	if      (year=="2016APV") GetHOTmistagEff2016APV(pt, eff, sample, workingpoint, massIndex);
+    if      (year=="2016APV") GetHOTmistagEff2016APV(pt, eff, sample, workingpoint, massIndex);
     else if (year=="2016") GetHOTmistagEff2016(pt, eff, sample, workingpoint, massIndex);
-  	else if (year=="2017") GetHOTmistagEff2017(pt, eff, sample, workingpoint, massIndex);
-  	else if (year=="2018") GetHOTmistagEff2018(pt, eff, sample, workingpoint, massIndex);
-  	}
+    else if (year=="2017") GetHOTmistagEff2017(pt, eff, sample, workingpoint, massIndex);
+    else if (year=="2018") GetHOTmistagEff2018(pt, eff, sample, workingpoint, massIndex);
+  }
 }//end GetHOTtaggingEff
-
-void HardcodedConditions::GetHOTtaggingEff2016APV(double pt, double *eff, std::string sample, std::string workingpoint, int massIndex)
-{
-	if(sample=="singletop"){
-		ptMins = {0,150,250,300,350,400,500};
-		hotEffs1p = {0.205348668416,0.314370717634,0.409574468085,0.44616639478,0.499124343257,0.472885032538,0.375634517766};
-		hotEffs2p = {0.33733459885,0.435088351965,0.522606382979,0.551386623165,0.583187390543,0.58568329718,0.472081218274};
-		hotEffs5p = {0.52297470828,0.592679408583,0.65469858156,0.677814029364,0.709281961471,0.720173535792,0.583756345178};
-		hotEffs10p= {0.664787002401,0.717634331049,0.754875886525,0.783849918434,0.791593695271,0.798264642082,0.654822335025};
-		int bin = findBin(pt, ptMins);
-		if(workingpoint=="1pfake"){*eff = hotEffs1p[bin];}
-		else if(workingpoint=="2pfake"){*eff = hotEffs2p[bin];}
-		else if(workingpoint=="5pfake"){*eff = hotEffs5p[bin];}
-		else if(workingpoint=="10pfake"){*eff = hotEffs10p[bin];}
-		else{ std::cerr << "Working Point " << workingpoint << " not coded into HardcodedConditions::GetHOTtaggingEff2017! Aborting ..." << std::endl; std::abort();}
-		}
-	else if(sample=="TTVV"){
-		ptMins = {0,150,250,300,350,400,500};
-		hotEffs1p = {0.305842391304,0.399267399267,0.477281055332,0.493034055728,0.537331701346,0.531803542673,0.418008784773};
-		hotEffs2p = {0.464266304348,0.535256410256,0.587761084646,0.609907120743,0.645042839657,0.625603864734,0.513909224012};
-		hotEffs5p = {0.650815217391,0.6903998779,0.725357273727,0.731682146543,0.74949000408,0.739935587762,0.635431918009};
-		hotEffs10p= {0.768614130435,0.791361416361,0.813484792964,0.818885448916,0.825785393717,0.815217391304,0.714494875549};
-		int bin = findBin(pt, ptMins);
-		if(workingpoint=="1pfake"){*eff = hotEffs1p[bin];}
-		else if(workingpoint=="2pfake"){*eff = hotEffs2p[bin];}
-		else if(workingpoint=="5pfake"){*eff = hotEffs5p[bin];}
-		else if(workingpoint=="10pfake"){*eff = hotEffs10p[bin];}
-		else{ std::cerr << "Working Point " << workingpoint << " not coded into HardcodedConditions::GetHOTtaggingEff2017! Aborting ..." << std::endl; std::abort();}
-		}
-	else if(sample=="TTTX"){
-		ptMins = {0,150,250,300,350,400,500};
-		hotEffs1p = {0.306924101198,0.39515630792,0.47762962963,0.52101910828,0.53066850448,0.537334263782,0.394946808511};
-		hotEffs2p = {0.466932978251,0.531199802298,0.59762962963,0.635668789809,0.644383184011,0.630146545708,0.496010638298};
-		hotEffs5p = {0.648024855748,0.684047942667,0.733037037037,0.750318471338,0.762232942798,0.738311235171,0.644946808511};
-		hotEffs10p= {0.770972037284,0.785617200049,0.815111111111,0.832696390658,0.840799448656,0.813677599442,0.716755319149};
-		int bin = findBin(pt, ptMins);
-		if(workingpoint=="1pfake"){*eff = hotEffs1p[bin];}
-		else if(workingpoint=="2pfake"){*eff = hotEffs2p[bin];}
-		else if(workingpoint=="5pfake"){*eff = hotEffs5p[bin];}
-		else if(workingpoint=="10pfake"){*eff = hotEffs10p[bin];}
-		else{ std::cerr << "Working Point " << workingpoint << " not coded into HardcodedConditions::GetHOTtaggingEff2017! Aborting ..." << std::endl; std::abort();}
-		}
-	else if(sample=="ttbarHT500Njet9"){
-		ptMins = {0,150,250,300,350,400,450,500,550,600};
-		hotEffs1p = {0.407909294843,0.487360654607,0.554943124203,0.585792903693,0.607100158595,0.624351331646,0.610264067903,0.570180155956,0.529164477141,0.417211703959};
-		hotEffs2p = {0.568257255093,0.618534948399,0.665471923536,0.685199131064,0.698426253507,0.708109962688,0.696007544797,0.66415703146,0.621650026274,0.499139414802};
-		hotEffs5p = {0.736228265173,0.755602546717,0.781532684758,0.791745112238,0.799609613273,0.804949178711,0.792675259352,0.767410594246,0.723068838676,0.618244406196};
-		hotEffs10p= {0.834972644315,0.840545199623,0.854462214994,0.860637219406,0.867268512871,0.87095252391,0.857041810751,0.837859639688,0.800840777719,0.702925989673};
-		int bin = findBin(pt, ptMins);
-		if(workingpoint=="1pfake"){*eff = hotEffs1p[bin];}
-		else if(workingpoint=="2pfake"){*eff = hotEffs2p[bin];}
-		else if(workingpoint=="5pfake"){*eff = hotEffs5p[bin];}
-		else if(workingpoint=="10pfake"){*eff = hotEffs10p[bin];}
-		else{ std::cerr << "Working Point " << workingpoint << " not coded into HardcodedConditions::GetHOTtaggingEff2017! Aborting ..." << std::endl; std::abort();}
-		}
-	else if(sample=="ttbar"){
-		ptMins = {0,150,250,300,350,400,450,500,550,600};
-		hotEffs1p = {0.252959824309,0.361397414942,0.459087366036,0.504119254456,0.534357717034,0.550922369278,0.535451420581,0.492177755604,0.438544880534,0.298526640397};
-		hotEffs2p = {0.39900220362,0.493794233602,0.574189819563,0.608677624155,0.631207830733,0.641467233281,0.624997572486,0.58401339938,0.523498600847,0.380589343841};
-		hotEffs5p = {0.588466684642,0.652158801147,0.707418016666,0.730327047958,0.745084736246,0.749944084098,0.732041248325,0.69227753822,0.632991318074,0.48338187425};
-		hotEffs10p= {0.721765531851,0.763493052893,0.801389053122,0.815564800087,0.823962905082,0.823869769432,0.80799331948,0.771996721428,0.718160292746,0.574610244989};
-		int bin = findBin(pt, ptMins);
-		if(workingpoint=="1pfake"){*eff = hotEffs1p[bin];}
-		else if(workingpoint=="2pfake"){*eff = hotEffs2p[bin];}
-		else if(workingpoint=="5pfake"){*eff = hotEffs5p[bin];}
-		else if(workingpoint=="10pfake"){*eff = hotEffs10p[bin];}
-		else{ std::cerr << "Working Point " << workingpoint << " not coded into HardcodedConditions::GetHOTtaggingEff2017! Aborting ..." << std::endl; std::abort();}
-		}
-	else if(sample=="ttVjets"){
-		ptMins = {0,150,250,300,350,400,450,500,550,600};
-		hotEffs1p = {0.25058416855,0.337887212073,0.411016797393,0.443887827299,0.467403702729,0.474528168015,0.454567022539,0.411171171171,0.368152866242,0.247029393371};
-		hotEffs2p = {0.395882818686,0.471008737093,0.528383653881,0.553943087332,0.570150039484,0.56903646942,0.539264531435,0.495135135135,0.452229299363,0.330206378987};
-		hotEffs5p = {0.582893999961,0.633783425999,0.669388632212,0.683313536126,0.691936474511,0.690506598553,0.664294187426,0.607207207207,0.579617834395,0.430268918074};
-		hotEffs10p= {0.715350597686,0.747603918454,0.769958096057,0.777668749677,0.780994998684,0.78288633461,0.749466192171,0.707747747748,0.675796178344,0.522826766729};
-		int bin = findBin(pt, ptMins);
-		if(workingpoint=="1pfake"){*eff = hotEffs1p[bin];}
-		else if(workingpoint=="2pfake"){*eff = hotEffs2p[bin];}
-		else if(workingpoint=="5pfake"){*eff = hotEffs5p[bin];}
-		else if(workingpoint=="10pfake"){*eff = hotEffs10p[bin];}
-		else{ std::cerr << "Working Point " << workingpoint << " not coded into HardcodedConditions::GetHOTtaggingEff2017! Aborting ..." << std::endl; std::abort();}
-		}
-	else if(sample=="ttHToNonbb"){
-		ptMins = {0,150,250,300,350,400,500};
-		hotEffs1p = {0.283254772173,0.370313194136,0.441448382126,0.485894673548,0.5044754744,0.51778614773,0.402069297401};
-		hotEffs2p = {0.438354561562,0.511728120835,0.561922187982,0.595279851681,0.607948442535,0.61581920904,0.491578440808};
-		hotEffs5p = {0.629559054592,0.672112394491,0.70531587057,0.721250688981,0.727980665951,0.726197949362,0.615736284889};
-		hotEffs10p= {0.756560692675,0.781452687694,0.800783256292,0.809640727564,0.808628714644,0.80989746809,0.700433108758};
-		int bin = findBin(pt, ptMins);
-		if(workingpoint=="1pfake"){*eff = hotEffs1p[bin];}
-		else if(workingpoint=="2pfake"){*eff = hotEffs2p[bin];}
-		else if(workingpoint=="5pfake"){*eff = hotEffs5p[bin];}
-		else if(workingpoint=="10pfake"){*eff = hotEffs10p[bin];}
-		else{ std::cerr << "Working Point " << workingpoint << " not coded into HardcodedConditions::GetHOTtaggingEff2017! Aborting ..." << std::endl; std::abort();}
-		}
-	else if(sample=="ttHTobb"){
-		ptMins = {0,150,250,300,350,400,500};
-		hotEffs1p = {0.306951814618,0.400615427169,0.481797844214,0.522922404017,0.541345583877,0.54735152488,0.417312661499};
-		hotEffs2p = {0.468254179889,0.544082564049,0.607585926378,0.636886440953,0.652934202727,0.639200998752,0.502153316107};
-		hotEffs5p = {0.662009013093,0.708830342634,0.748525523693,0.759274258869,0.766597510373,0.752452291778,0.617571059432};
-		hotEffs10p= {0.786299032026,0.81291705563,0.833384177344,0.84318807711,0.838470657973,0.820581416087,0.699827734711};
-		int bin = findBin(pt, ptMins);
-		if(workingpoint=="1pfake"){*eff = hotEffs1p[bin];}
-		else if(workingpoint=="2pfake"){*eff = hotEffs2p[bin];}
-		else if(workingpoint=="5pfake"){*eff = hotEffs5p[bin];}
-		else if(workingpoint=="10pfake"){*eff = hotEffs10p[bin];}
-		else{ std::cerr << "Working Point " << workingpoint << " not coded into HardcodedConditions::GetHOTtaggingEff2017! Aborting ..." << std::endl; std::abort();}
-		}
-	else if(sample=="tttt"){
-		ptMins = {0,150,250,300,350,400,450,500,550,600};
-		hotEffs1p = {0.311329828161,0.390131583914,0.447922957643,0.479768786127,0.503408790045,0.50556497774,0.495245245245,0.459487179487,0.408713227038,0.294583883752};
-		hotEffs2p = {0.462714798666,0.528502298755,0.5714845344,0.594583600942,0.609445326979,0.607536569854,0.591257924591,0.557307692308,0.505501908826,0.386393659181};
-		hotEffs5p = {0.646111182354,0.686146320104,0.71145025708,0.72575465639,0.731135822081,0.725991096036,0.708375041708,0.674871794872,0.632158095666,0.503302509908};
-		hotEffs10p= {0.763352782765,0.788031374799,0.80355831225,0.811025476343,0.811854646545,0.807504769981,0.787287287287,0.762564102564,0.719514933753,0.594671950683};
-		int bin = findBin(pt, ptMins);
-		if(workingpoint=="1pfake"){*eff = hotEffs1p[bin];}
-		else if(workingpoint=="2pfake"){*eff = hotEffs2p[bin];}
-		else if(workingpoint=="5pfake"){*eff = hotEffs5p[bin];}
-		else if(workingpoint=="10pfake"){*eff = hotEffs10p[bin];}
-		else{ std::cerr << "Working Point " << workingpoint << " not coded into HardcodedConditions::GetHOTtaggingEff2017! Aborting ..." << std::endl; std::abort();}
-		}
-	else{ std::cerr << "The sample " << sample << " not coded into HardcodedConditions::GetHOTtaggingEff2017! Aborting ..." << std::endl; std::abort();}
-
-}
 
 void HardcodedConditions::GetHOTtaggingEff2016APV(double pt, double *eff, std::string sample, std::string workingpoint, int massIndex)
 {
@@ -1058,6 +935,7 @@ void HardcodedConditions::GetHOTtaggingEff2016(double pt, double *eff, std::stri
 	else{ std::cerr << "The sample " << sample << " not coded into HardcodedConditions::GetHOTtaggingEff2017! Aborting ..." << std::endl; std::abort();}
 
 }
+
 
 void HardcodedConditions::GetHOTmistagEff2016APV(double pt, double *eff, std::string sample, std::string workingpoint, int massIndex)
 {
@@ -1368,39 +1246,39 @@ void HardcodedConditions::GetTtaggingSF(double pt, double *tau32sf, double *tau3
 // Needs to be updated
 void HardcodedConditions::GetTtaggingSF2016APV(double pt, double *tau32sf, double *tau32sfup, double *tau32sfdn) {
   *tau32sf   = 1.0;
-  *tau32sfUp = 1.0;
-  *tau32sfDn = 1.0;
+  *tau32sfup = 1.0;
+  *tau32sfdn = 1.0;
 }
 
 // Needs to be updated
 void HardcodedConditions::GetTtaggingSF2016(double pt, double *tau32sf, double *tau32sfup, double *tau32sfdn){
   *tau32sf   = 1.0;
-  *tau32sfUp = 1.0;
-  *tau32sfDn = 1.0;
+  *tau32sfup = 1.0;
+  *tau32sfdn = 1.0;
 }
 
 void HardcodedConditions::GetTtaggingSF2017(double pt, double *tau32sf, double *tau32sfup, double *tau32sfdn) {
 // Will be replaced by RunIISummer20UL version
   if ( pt < 400.0 ) {
     *tau32sf   = 1.10981;
-    *tau32sfUp = 1.14199;
-    *tau32sfDn = 1.07812; }
+    *tau32sfup = 1.14199;
+    *tau32sfdn = 1.07812; }
   else {
     *tau32sf   = 1.13264;
-    *tau32sfUp = 1.18365;
-    *tau32sfDn = 1.08415; }
+    *tau32sfup = 1.18365;
+    *tau32sfdn = 1.08415; }
 }
 
 void HardcodedConditions::GetTtaggingSF2018(double pt, double *tau32sf, double *tau32sfup, double *tau32sfdn) {
 // will be replaced by RunIISummer20UL version
 if ( pt < 400.0 ) {
   *tau32sf   = 1.13869;
-  *tau32sfUp = 1.17326;
-  *tau32sfDn = 1.10527; }
+  *tau32sfup = 1.17326;
+  *tau32sfdn = 1.10527; }
 else {
   *tau32sf   = 1.12333;
-  *tau32sfUp = 1.16340;
-  *tau32sfDn = 1.08492; }
+  *tau32sfup = 1.16340;
+  *tau32sfdn = 1.08492; }
 }
 
 
@@ -2055,9 +1933,10 @@ else {
 double HardcodedConditions::GetElectronIsoSF(double pt, double eta, std::string year)
 {
   //The main getter for Electron Iso Scale Factors
-  if      (year==2016) return GetElectronIsoSF2016(pt, eta);
-  else if (year==2017) return GetElectronIsoSF2017(pt, eta);
-  else if (year==2018) return GetElectronIsoSF2018(pt, eta);
+  if      (year=="2016APV") return GetElectronIsoSF2016APV(pt, eta);
+  else if (year=="2016") return GetElectronIsoSF2016(pt, eta);
+  else if (year=="2017") return GetElectronIsoSF2017(pt, eta);
+  else if (year=="2018") return GetElectronIsoSF2018(pt, eta);
   else return 0.;
 }
 

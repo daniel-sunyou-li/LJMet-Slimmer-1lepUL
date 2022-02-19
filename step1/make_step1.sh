@@ -3,15 +3,15 @@
 hostname
 date
 
-infilename=${1}
-outfilename=${2}
-inputDir=${3}
-outputDir=${4}
-idlist=${5}
+INFILENAME=${1}
+OUTFILENAME=${2}
+INPUTDIR=${3}
+OUTPUTDIR=${4}
+IDLIST=${5}
 ID=${6}
-Year=20${7}
-shift=${8}
-scratch=${PWD}
+YEAR=${7}
+SHIFT=${8}
+SCRATCH=${PWD}
 
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 export SCRAM_ARCH=slc7_amd64_gcc700
@@ -25,15 +25,15 @@ macroDir=${PWD}
 export PATH=$PATH:$macroDir
 root -l -b -q compile_step1.C
 
-XRDpath=root://cmseos.fnal.gov/$inputDir
-if [[ $inputDir == /isilon/hadoop/* ]] ;
+XRDpath=root://cmseos.fnal.gov/$INPUTDIR
+if [[ $INPUTDIR == /isilon/hadoop/* ]] ;
 then
-XRDpath=root://brux30.hep.brown.edu:1094/$inputDir
+XRDpath=root://brux30.hep.brown.edu:1094/$INPUTDIR
 fi
 
-echo ">> Running step1 over list: ${idlist}"
+echo ">> Running step1 over list: ${IDLIST}"
 rm filelist
-for iFile in $idlist; do
+for iFile in $IDLIST; do
   inFile=${iFile}
   if [[ $iFile == ext* ]] ;
   then
@@ -43,11 +43,11 @@ for iFile in $idlist; do
     inFile=${iFile:1}
   fi
 
-  echo ">> Adding ${outfilename}_${iFile}.root to the list by reading ${infilename}_${inFile}"
-  echo  $XRDpath/${infilename}_${inFile}.root,${outfilename}_${iFile}.root>> filelist
+  echo ">> Adding ${OUTFILENAME}_${iFile}.root to the list by reading ${INFILENAME}_${inFile}"
+  echo  $XRDpath/${INFILENAME}_${inFile}.root,${OUTFILENAME}_${iFile}.root>> filelist
 done
 
-root -l -b -q -g make_step1.C\(\"$macroDir\",\"filelist\",\"$systematics\",${Year}\)
+root -l -b -q -g make_step1.C\(\"$macroDir\",\"filelist\",\"$systematics\",20${YEAR}\)
 
 echo ">> Available ROOT Files:"
 ls -l *.root
@@ -57,10 +57,10 @@ ls -l *.root
 NOM="nominal"
 echo ">> xrdcp output for condor"
 
-haddFile=${outfilename}_${ID}${shift}_hadd.root
-hadd ${haddFile} *${shift}.root
-echo ">> xrdcp -f ${haddFile} root://cmseos.fnal.gov/${outputDir//$NOM/$shift}/${haddFile//${shift}_hadd/}"
-xrdcp -f ${haddFile} root://cmseos.fnal.gov/${outputDir//$NOM/$shift}/${haddFile//${shift}_hadd/} 2>&1
+haddFile=${OUTFILENAME}_${ID}${SHIFT}_hadd.root
+hadd ${haddFile} *${SHIFT}.root
+echo ">> xrdcp -f ${haddFile} root://cmseos.fnal.gov/${OUTPUTDIR//$NOM/$SHIFT}/${haddFile//${SHIFT}_hadd/}"
+xrdcp -f ${haddFile} root://cmseos.fnal.gov/${OUTPUTDIR//$NOM/$SHIFT}/${haddFile//${SHIFT}_hadd/} 2>&1
 
 XRDEXIT=$?
 if [[ $XRDEXIT -ne 0 ]]; then
@@ -68,7 +68,7 @@ if [[ $XRDEXIT -ne 0 ]]; then
   echo "[ERR] Exit code $XRDEXIT, failure in xrdcp (or gfal-copy)"
   exit $XRDEXIT
 fi
-rm *${shift}.root
+rm *${SHIFT}.root
 rm ${haddFile}
 if [[ $haddFile == Single* || $haddFile == EGamma* ]]; then break; fi;
 
