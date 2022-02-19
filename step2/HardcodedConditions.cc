@@ -8,10 +8,19 @@ using namespace std;
 
 HardcodedConditions::HardcodedConditions() {}
 
-HardcodedConditions::HardcodedConditions( Int_t year ) {
+HardcodedConditions::HardcodedConditions( std::string year ) {
 
-  TString sfFileName( "HT_njets_SF_3t_UL17_sys.root" );
-  if( year == 2018 ){
+  TString sfFileName( "HT_njets_SF_UL17_sys.root" );
+  if( year == "2016APV" ){
+    sfFileName = "HT_njets_SF_UL16APV_sys.root" ); 
+  }
+  else if( year == "2016" ){
+    sfFileName = "HT_njets_SF_UL16_sys.root" ); 
+  }
+  else if( year == "2018" ){
+    sfFileName = "HT_ njets_SF_UL18_sys.root" );
+  }
+  if( year == "2018" ){
     sfFileName = "HT_njets_SF_3t_UL18_sys.root"; 
   }
   else if( year == 2016 ){
