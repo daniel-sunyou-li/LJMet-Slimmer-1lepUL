@@ -2544,7 +2544,7 @@ void HardcodedConditions::GetPileupWeight2016APV(int nTrueInt, float *pileupweig
   *pileupweightdn = puWeightsDN[nTrueInt];
 }
 
-void HardcodedConditions::GetPileupWeight2016(int nTrueInt, float *pilieupweight, float *pileupweightup, float *pileupweightdn){
+void HardcodedConditions::GetPileupWeight2016(int nTrueInt, float *pileupweight, float *pileupweightup, float *pileupweightdn){
   std::vector<float> puWeights;
   std::vector<float> puWeightsUP;
   std::vector<float> puWeightsDN;
