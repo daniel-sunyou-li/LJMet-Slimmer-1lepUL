@@ -7,7 +7,6 @@ using namespace std;
 
 // single file use
 void make_step1( TString macroDir, TString inputFile, TString outputFile, string shift, string Year ){
-
   gROOT->SetMacroPath(macroDir);
 
   gSystem->AddIncludePath("-I$CMSSW_BASE/src/");
@@ -18,21 +17,39 @@ void make_step1( TString macroDir, TString inputFile, TString outputFile, string
   
   // data
   
+  std::string btagcsvfile( "reshaping_deepCSV_106XUL17_v3.csv" );
+  std::string btagdjcsvfile("reshaping_deepJet_106XUL17_v3.csv");
+  if( Year == "2016APV" ){
+    btagcsvfile = "reshaping_deepCSV_106XUL16preVFP_v2.csv";
+    btagdjcsvfile = "reshaping_deepJet_106XUL16preVFP_v2.csv";
+  }
+  else if( Year == "2016" ){
+    btagcsvfile = "reshaping_deepCSV_106XUL16postVFP_v3.csv";
+    btagdjcsvfile = "reshaping_deepJet_106XUL16postVFP_v3.csv";
+  }
+  else if( Year == "2018" ){
+    btagcsvfile = "reshaping_deepCSV_106XUL18_v2.csv";
+    btagdjcsvfile = "reshaping_deepJet_106XUL18_v2.csv";
+  }
+
+  cout << "[OPT] Using deepCSV reshaping file: " << btagcsvfile << endl;
+  cout << "[OPT] Using deepJet reshaping file: "<< btagdjcsvfile << endl;
+  auto calib = new const BTagCalibrationForLJMet( "DeepCSV", btagcsvfile ); 
+  auto dj_calib = new const BTagCalibrationForLJMet( "DeepJet", btagdjcsvfile );
+
   if ( inputFile.Contains("Run2016") || inputFile.Contains("Run2017") || inputFile.Contains("Run2018") || inputFile.Contains("Single") || inputFile.Contains("Double") || inputFile.Contains("MuonEG") || inputFile.Contains("EGamma") || inputFile.Contains("JetHT") ) { 
     cout << endl << "[START] Running step1 for data" << endl;
     step1 t(inputFile,outputFile.ReplaceAll(".root","nominal.root"),Year);
-    t.Loop("ljmet", "ljmet"); 
+    t.Loop("ljmet", "ljmet", calib, dj_calib); 
   }
   else { // MC
-  	vector<TString> shifts = { "nominal", "JECup", "JECdown", "JERup", "JERdown" };
-  	for (size_t i =0; i<shifts.size(); ++i) {
-      cout << endl << "[START] Running step1 for MC shift: " << shifts[i] << endl;
-      TString tName = "ljmet";
-      if ( !shifts[i].Contains("nominal") ) { tName.Append("_"); tName.Append(shifts[i]); }
-      step1 t(inputFile,outputFile.ReplaceAll(".root",shifts[i].Append(".root")),Year); //"shifts[i]" is now changed to "shifts[i].root"
+    cout << endl << "[START] Running step1 for MC shift: " << shift << endl;
+    TString tName = "ljmet";
+    if ( shift != "nominal" ) { tName.Append("_"); tName.Append( shift ); }
+      step1 t(inputFile,outputFile.ReplaceAll(".root", shift + ".root")),Year); //"shifts[i]" is now changed to "shifts[i].root"
       t.saveHistograms();
-      t.Loop(tName, "ljmet");
-      outputFile.ReplaceAll(shifts[i],".root"); //Change outputFile back to its original name.
+      t.Loop(tName, "ljmet", calib, dj_calib);
+      outputFile.ReplaceAll(shift,".root"); //Change outputFile back to its original name.
     }
   }
 }
