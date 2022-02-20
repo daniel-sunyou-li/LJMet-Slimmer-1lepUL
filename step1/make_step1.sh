@@ -32,7 +32,7 @@ XRDpath=root://brux30.hep.brown.edu:1094/$INPUTDIR
 fi
 
 echo ">> Running step1 over list: ${IDLIST}"
-rm filelist
+
 for iFile in $IDLIST; do
   inFile=${iFile}
   if [[ $iFile == ext* ]] ;
