@@ -79,16 +79,16 @@ throw std::exception();
 
   // make parameters
   unsigned op = stoi(vec[0]);
-  if (op > 3) {
+  if (op > 4) {
     std::cerr << "ERROR in BTagCalibrationForLJMet: "
-              << "Invalid csv line; OperatingPoint > 3: "
+              << "Invalid csv line; OperatingPoint > 4: "
               << csvLine;
     throw std::exception();
   }
   unsigned jf = stoi(vec[3]);
-  if (jf > 2) {
+  if (jf > 6) {
     std::cerr << "ERROR in BTagCalibrationForLJMet: "
-              << "Invalid csv line; JetFlavor > 2: "
+              << "Invalid csv line; JetFlavor > 6: "
               << csvLine;
     throw std::exception();
   }

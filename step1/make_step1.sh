@@ -32,7 +32,7 @@ XRDpath=root://brux30.hep.brown.edu:1094/$INPUTDIR
 fi
 
 echo ">> Running step1 over list: ${IDLIST}"
-rm filelist
+
 for iFile in $IDLIST; do
   inFile=${iFile}
   if [[ $iFile == ext* ]] ;
@@ -47,7 +47,7 @@ for iFile in $IDLIST; do
   echo  $XRDpath/${INFILENAME}_${inFile}.root,${OUTFILENAME}_${iFile}.root>> filelist
 done
 
-root -l -b -q -g make_step1.C\(\"$macroDir\",\"filelist\",\"$systematics\",20${YEAR}\)
+root -l -b -q -g make_step1.C\(\"$macroDir\",\"filelist\",\"$SHIFT\",\"20${YEAR}\"\)
 
 echo ">> Available ROOT Files:"
 ls -l *.root

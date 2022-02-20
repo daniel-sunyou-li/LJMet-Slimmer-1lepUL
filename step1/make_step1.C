@@ -6,7 +6,7 @@
 using namespace std;
 
 // single file use
-void make_step1( TString macroDir, TString inputFile, TString outputFile, TString Year ){
+void make_step1( TString macroDir, TString inputFile, TString outputFile, string shift, string Year ){
 
   gROOT->SetMacroPath(macroDir);
 
@@ -38,7 +38,7 @@ void make_step1( TString macroDir, TString inputFile, TString outputFile, TStrin
 }
 
 // multiple file use
-void make_step1( TString macroDir, string filelist, string Year ){
+void make_step1( TString macroDir, string filelist, string shift, string Year ){
   gROOT->SetMacroPath(macroDir);
 
   gSystem->AddIncludePath("-I$CMSSW_BASE/src/");
@@ -78,6 +78,7 @@ void make_step1( TString macroDir, string filelist, string Year ){
     cout << "[OPT] Using deepJet reshaping file: "<< btagdjcsvfile << endl;
     auto calib = new const BTagCalibrationForLJMet( "DeepCSV", btagcsvfile ); 
     auto dj_calib = new const BTagCalibrationForLJMet( "DeepJet", btagdjcsvfile );
+   
     for (auto f : Files){
       TString inputFile(f.first);
       TString outputFile(f.second);
@@ -85,19 +86,16 @@ void make_step1( TString macroDir, string filelist, string Year ){
         step1 t(inputFile,outputFile.ReplaceAll(".root","nominal.root"),Year);
         t.Loop("ljmet", "ljmet",calib, dj_calib); 
       }
-      else {
-        vector<TString> shifts = { "nominal", "JECup", "JECdown", "JERup", "JERdown" };
-        for ( size_t i =0; i<shifts.size(); ++i ){
-          cout << endl << "Running shift " << shifts[i] << endl;
-          TString tName = "ljmet";
-          if ( !shifts[i].Contains("nominal") ){
-            tName.Append("_"); tName.Append(shifts[i]);
-          }
-          step1 t(inputFile,outputFile.ReplaceAll(".root",shifts[i].Append(".root")),Year); //"shifts[i]" is now changed to "shifts[i].root"
-          t.saveHistograms();
-          t.Loop(tName, "ljmet",calib, dj_calib);
-          outputFile.ReplaceAll(shifts[i],".root"); //Change outputFile back to its original name.
+      else{
+        cout << endl << ">> Running shift: " << shift << endl;
+        TString tName = "ljmet";
+        if (  shift != "nominal" ){
+          tName.Append("_"); tName.Append(shift);
         }
+        step1 t(inputFile,outputFile.ReplaceAll(".root", shift + ".root"),Year); //"shifts[i]" is now changed to "shifts[i].root"
+        t.saveHistograms();
+        t.Loop( tName, "ljmet",calib, dj_calib );
+        outputFile.ReplaceAll(shift,".root"); //Change outputFile back to its original name.
       }
     }
   }

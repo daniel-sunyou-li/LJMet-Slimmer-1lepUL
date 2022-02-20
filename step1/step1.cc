@@ -430,7 +430,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   outputTree->Branch("triggerSF",&triggerSF,"triggerSF/F");
   outputTree->Branch("triggerHadSF",&triggerHadSF,"triggerHadSF/F");
   outputTree->Branch("triggerXSF",&triggerXSF,"triggerXSF/F");
-  outputTree->Branch("triggerVlqXSF",&triggerVlqXSF,"triggerVlqXSF/F");
+  //outputTree->Branch("triggerVlqXSF",&triggerVlqXSF,"triggerVlqXSF/F");
   outputTree->Branch("isoSF",&isoSF,"isoSF/F");
   outputTree->Branch("btagCSVWeight",&btagCSVWeight,"btagCSVWeight/F");
   outputTree->Branch("btagCSVWeight_HFup",&btagCSVWeight_HFup,"btagCSVWeight_HFup/F");
@@ -1269,7 +1269,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     triggerSF = 1.0;
     triggerHadSF = 1.0;
     triggerXSF = 1.0;
-    triggerVlqXSF = 1.0;
+    //triggerVlqXSF = 1.0;
     isoSF = 1.0;
     std::vector<std::string> eltriggersX;
     std::vector<std::string> mutriggersX;
