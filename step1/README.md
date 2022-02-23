@@ -27,8 +27,8 @@
 * Electron Cross-Trigger scale factors and efficiencies
 * Muon MiniISO scale factors and efficiencies: need to run the Tag and Probe code
 * Muon Cross-Trigger scale factors and efficiencies
-* Hadronic trigger (muon channel)
-* Hadronic trigger (electron channel)
+* Hadronic-Leptonic (aka "HadLep") trigger (muon channel)
+* Hadronic-Leptonic (aka "Hadlep") trigger (electron channel)
 * (Optional) Calculate `njet` scale factors
 * (Optional) Update `ttHF` scale factors
 * (Optional) Calculate b-tagging CSV re-normalization
