@@ -7,7 +7,7 @@ from XRootD import client
 parser = ArgumentParser()
 parser.add_argument( "-y", "--year", required = True, help = "Options:16APV,16,17,18" )
 parser.add_argument( "-g", "--groups", nargs = "+" )
-parser.add_argument( "-f", "--filesPerJob", default = "30" )
+parser.add_argument( "-f", "--filesPerJob", default = "30", help = "Default is 30, but recommended 10 for years 16APV,16" )
 parser.add_argument( "-l", "--location", default = "LPC", help = "Options: LPC, BRUX" )
 parser.add_argument( "--override", action = "store_true", help = "Override existing step1 files" )
 parser.add_argument( "--shifts", action = "store_true" )
@@ -41,7 +41,6 @@ deepJet_SF = config.deepJet_SF[ args.year ]
 # Start processing
 gROOT.ProcessLine( ".x compile_step1.C" )
 print( "[START] Submitting step1 condor jobs" )
-
 job_count = 0
 
 samples = { shift: [] for shift in shifts }
@@ -148,7 +147,7 @@ for shift in samples:
               'INPATHSUFFIX': pathSuffix, 
               'INPUTDIR': inputDir, 
               'FILENAME': baseFilename, 
-              'OUTFILENAME': "{}_{}".format( step1_sample, shift ), 
+              'OUTFILENAME': step1_sample, 
               'OUTPUTDIR': outputDir[ shift ], 
               'LIST': idList, 
               'ID': fs_count, 

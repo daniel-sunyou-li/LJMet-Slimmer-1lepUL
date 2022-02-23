@@ -1383,7 +1383,7 @@ step1::step1(TString inputFileName, TString outputFileName, TString Year_) : inp
   outTTCC = outputFileName.Contains("_ttcc");
   outTTLF = outputFileName.Contains("_ttjj");
     
-  std::cout<<"Opening file: "<<inputFileName<<std::endl;
+  std::cout<<"[step1.h] Opening file: "<<inputFileName<<std::endl;
   //Get the sample name from "inputFileName" for pileupWeights
   sample_ = inputFileName;
   Int_t slash = sample_.Last('/');
@@ -1394,7 +1394,7 @@ step1::step1(TString inputFileName, TString outputFileName, TString Year_) : inp
   sample = (std::string)sample_;
   
   if(!(inputFile=TFile::Open(inputFileName))){
-    std::cout<<"WARNING! File doesn't exist! Exiting" << std::endl;
+    std::cout<<"[step1.h] WARNING! File doesn't exist! Exiting" << std::endl;
     exit(1);
   }
   // Now done in the .cc
@@ -1404,7 +1404,7 @@ step1::step1(TString inputFileName, TString outputFileName, TString Year_) : inp
   /*   exit(1); */
   /* } */
   
-  outputFile=new TFile(outputFileName,"RECREATE");   
+  outputFile = new TFile(outputFileName,"RECREATE");   
   
   //  Init(inputTree);
 }
@@ -2297,6 +2297,7 @@ void step1::Init(TTree *tree)
    inputTree->SetBranchAddress("vsSelTriggersHad_MultiLepCalc", &vsSelTriggersHad_MultiLepCalc, &b_vsSelTriggersHad_MultiLepCalc);
    inputTree->SetBranchAddress("vsSelTriggersMu_MultiLepCalc", &vsSelTriggersMu_MultiLepCalc, &b_vsSelTriggersMu_MultiLepCalc);
    Notify();
+   std::cout << "[step1.h] Finished initializing" << std::endl;
 }
 
 Bool_t step1::Notify()

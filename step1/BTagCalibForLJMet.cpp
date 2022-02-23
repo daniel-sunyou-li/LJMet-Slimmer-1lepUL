@@ -79,19 +79,7 @@ throw std::exception();
 
   // make parameters
   unsigned op = stoi(vec[0]);
-  if (op > 4) {
-    std::cerr << "ERROR in BTagCalibrationForLJMet: "
-              << "Invalid csv line; OperatingPoint > 4: "
-              << csvLine;
-    throw std::exception();
-  }
   unsigned jf = stoi(vec[3]);
-  if (jf > 6) {
-    std::cerr << "ERROR in BTagCalibrationForLJMet: "
-              << "Invalid csv line; JetFlavor > 6: "
-              << csvLine;
-    throw std::exception();
-  }
   params = BTagEntryForLJMet::Parameters(
     BTagEntryForLJMet::OperatingPoint(op),
     vec[1],
@@ -424,8 +412,8 @@ BTagCalibrationForLJMetReader::BTagCalibrationForLJMetReaderImpl::BTagCalibratio
                                              const std::vector<std::string> & otherSysTypes):
   op_(op),
   sysType_(sysType),
-  tmpData_(3),
-  useAbsEta_(3, true)
+  tmpData_(6),
+  useAbsEta_(6, true)
 {
   for (const std::string & ost : otherSysTypes) {
     if (otherSysTypeReaders_.count(ost)) {
@@ -444,22 +432,21 @@ void BTagCalibrationForLJMetReader::BTagCalibrationForLJMetReaderImpl::load(
                                              const BTagCalibrationForLJMet & c,
                                              BTagEntryForLJMet::JetFlavor jf,
                                              std::string measurementType)
-{
+  {
   if (tmpData_[jf].size()) {
-std::cerr << "ERROR in BTagCalibrationForLJMet: "
-          << "Data for this jet-flavor is already loaded: "
-          << jf;
-throw std::exception();
+    std::cout << tmpData_[jf].size() << std::endl;
+    std::cerr << "ERROR in BTagCalibrationForLJMet: "
+              << "Data for this jet-flavor is already loaded: "
+              << jf;
+  throw std::exception();
   }
-
   BTagEntryForLJMet::Parameters params(op_, measurementType, sysType_);
   const std::vector<BTagEntryForLJMet> &entries = c.getEntries(params);
-
   for (const auto &be : entries) {
     if (be.params.jetFlavor != jf) {
       continue;
     }
-
+    
     TmpEntry te;
     te.etaMin = be.params.etaMin;
     te.etaMax = be.params.etaMax;
@@ -475,13 +462,11 @@ throw std::exception();
       te.func = TF1("", be.formula.c_str(),
                     be.params.ptMin, be.params.ptMax);
     }
-
     tmpData_[be.params.jetFlavor].push_back(te);
     if (te.etaMin < 0) {
       useAbsEta_[be.params.jetFlavor] = false;
     }
   }
-
   for (auto & p : otherSysTypeReaders_) {
     p.second->load(c, jf, measurementType);
   }

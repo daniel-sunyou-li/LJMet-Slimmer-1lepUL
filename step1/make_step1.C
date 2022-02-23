@@ -17,11 +17,11 @@ void make_step1( TString macroDir, TString inputFile, TString outputFile, string
   
   // data
   
-  std::string btagcsvfile( "reshaping_deepCSV_106XUL17_v3.csv" );
-  std::string btagdjcsvfile("reshaping_deepJet_106XUL17_v3.csv");
+  std::string btagcsvfile( "btag_sf/reshaping_deepCSV_106XUL17_v3.csv" );
+  std::string btagdjcsvfile("btag_sf/reshaping_deepJet_106XUL17_v3.csv");
   if( Year == "2016APV" ){
-    btagcsvfile = "reshaping_deepCSV_106XUL16preVFP_v2.csv";
-    btagdjcsvfile = "reshaping_deepJet_106XUL16preVFP_v2.csv";
+    btagcsvfile = "btag_sf/reshaping_deepCSV_106XUL16preVFP_v2.csv";
+    btagdjcsvfile = "btag_sf/reshaping_deepJet_106XUL16preVFP_v2.csv";
   }
   else if( Year == "2016" ){
     btagcsvfile = "reshaping_deepCSV_106XUL16postVFP_v3.csv";
@@ -46,11 +46,10 @@ void make_step1( TString macroDir, TString inputFile, TString outputFile, string
     cout << endl << "[START] Running step1 for MC shift: " << shift << endl;
     TString tName = "ljmet";
     if ( shift != "nominal" ) { tName.Append("_"); tName.Append( shift ); }
-      step1 t(inputFile,outputFile.ReplaceAll(".root", shift + ".root")),Year); //"shifts[i]" is now changed to "shifts[i].root"
+      step1 t(inputFile,outputFile.ReplaceAll(".root", shift + ".root"),Year); //"shifts[i]" is now changed to "shifts[i].root"
       t.saveHistograms();
       t.Loop(tName, "ljmet", calib, dj_calib);
       outputFile.ReplaceAll(shift,".root"); //Change outputFile back to its original name.
-    }
   }
 }
 
@@ -104,7 +103,7 @@ void make_step1( TString macroDir, string filelist, string shift, string Year ){
         t.Loop("ljmet", "ljmet",calib, dj_calib); 
       }
       else{
-        cout << endl << ">> Running shift: " << shift << endl;
+        cout << endl << ">> Running " << inputFile << " for shift: " << shift << endl;
         TString tName = "ljmet";
         if (  shift != "nominal" ){
           tName.Append("_"); tName.Append(shift);

@@ -77,72 +77,43 @@ wgthist->Write();
 // ----------------------------------------------------------------------------
 
 void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationForLJMet* calib = NULL, const BTagCalibrationForLJMet* calib_dj = NULL){
-  // btagCalibration initialization -csv reshaping
-  if ( calib == NULL){
-    std::string btagcsvfile( "btag_sf/reshaping_deepCSV_106XUL17_v3.csv" );
-    if ( Year == "2018" ) {
-      btagcsvfile = "btag_sf/reshaping_deepCSV_106XUL18_v2.csv"; 
-    }
-	  if ( Year == "2016" ) {
-      btagcsvfile = "btag_sf/reshaping_deepCSV_106XUL16postVFP_v3.csv"; 
-    }
-    if ( Year == "2016APV" ) {
-      btagcsvfile = "btag_sf/reshaping_deepCSV_106XUL16preVFP_v2.csv";
-    }
-    cout << ">> CSV reshaping file: " << btagcsvfile << endl;
-    calib = new const BTagCalibrationForLJMet( "DeepCSV", btagcsvfile ); 
-  }
+  BTagCalibrationForLJMetReader reader(
+    BTagEntryForLJMet::OP_RESHAPING,  // operating point
+    "central",             // central sys type
+//    {"down_hfstats2"});
+    {"up_jes", "down_jes", "up_lf", "down_lf", "up_hfstats1", "down_hfstats1",
+     "up_hfstats2", "down_hfstats2", "up_cferr1", "down_cferr1", "up_cferr2",
+     "down_cferr2", "up_hf", "down_hf", "up_lfstats1", "down_lfstats1",
+     "up_lfstats2", "down_lfstats2"}
+    );      // other sys types
+ 
+  reader.load( *calib, BTagEntryForLJMet::FLAV_B, "iterativefit" );       
+  reader.load( *calib, BTagEntryForLJMet::FLAV_C, "iterativefit" );   
+  reader.load( *calib, BTagEntryForLJMet::FLAV_UDSG, "iterativefit" );
 
-  if ( calib_dj == NULL ){
-    std::string btagdjcsvfile( "btag_sf/reshaping_deepJet_106XUL17_v3.csv" );
-    if ( Year == "2018" ) {
-      btagdjcsvfile = "btag_sf/reshaping_deepJet_106XUL18_v2.csv"; 
-    }
-    if ( Year == "2016" ) {
-      btagdjcsvfile = "btag_sf/reshaping_deepJet_106XULpostVFP_v3.csv"; 
-    }
-    if( Year == "2016APV" ){
-      btagdjcsvfile = "btag_sf/reshaping_deepJet_106XUL16preVFP_v2.csv"; 
-    }
-    cout << ">> DeepJet reshaping file: " << btagdjcsvfile << endl;
-    calib_dj = new const BTagCalibrationForLJMet( "DeepJet", btagdjcsvfile );
-  }
-
-  BTagCalibrationForLJMetReader reader(BTagEntryForLJMet::OP_RESHAPING,  // operating point
-			       "central",             // central sys type
-			       {"up_jes", "down_jes", "up_lf", "down_lf", "up_hfstats1", "down_hfstats1",
-				   "up_hfstats2", "down_hfstats2", "up_cferr1", "down_cferr1", "up_cferr2",
-				   "down_cferr2", "up_hf", "down_hf", "up_lfstats1", "down_lfstats1",
-				   "up_lfstats2", "down_lfstats2"});      // other sys types
+  BTagCalibrationForLJMetReader reader_dj(
+    BTagEntryForLJMet::OP_RESHAPING,  // operating point
+    "central",             // central sys type
+//    {"down_hfstats2"});
+    {"up_jes", "down_jes", "up_lf", "down_lf", "up_hfstats1", "down_hfstats1",
+    "up_hfstats2", "down_hfstats2", "up_cferr1", "down_cferr1", "up_cferr2",
+    "down_cferr2", "up_hf", "down_hf", "up_lfstats1", "down_lfstats1",
+    "up_lfstats2", "down_lfstats2"}
+    );      // other sys types
   
-  reader.load(*calib,                 // calibration instance
-	      BTagEntryForLJMet::FLAV_B,     // btag flavour
-	      "iterativefit");       // measurement type
-  reader.load(*calib, BTagEntryForLJMet::FLAV_C, "iterativefit");     // for FLAV_C
-  reader.load(*calib, BTagEntryForLJMet::FLAV_UDSG, "iterativefit");     // for FLAV_UDSG
-
-  BTagCalibrationForLJMetReader reader_dj(BTagEntryForLJMet::OP_RESHAPING,  // operating point
-			       "central",             // central sys type
-			       {"up_jes", "down_jes", "up_lf", "down_lf", "up_hfstats1", "down_hfstats1",
-				   "up_hfstats2", "down_hfstats2", "up_cferr1", "down_cferr1", "up_cferr2",
-				   "down_cferr2", "up_hf", "down_hf", "up_lfstats1", "down_lfstats1",
-				   "up_lfstats2", "down_lfstats2"});      // other sys types
-  
-  reader_dj.load(*calib_dj,                 // calibration instance
-	      BTagEntryForLJMet::FLAV_B,     // btag flavour
-	      "iterativefit");       // measurement type
-  reader_dj.load(*calib_dj, BTagEntryForLJMet::FLAV_C, "iterativefit");     // for FLAV_C
-  reader_dj.load(*calib_dj, BTagEntryForLJMet::FLAV_UDSG, "iterativefit");     // for FLAV_UDSG
-
+  reader_dj.load(*calib_dj, BTagEntryForLJMet::FLAV_B, "iterativefit");       
+  reader_dj.load(*calib_dj, BTagEntryForLJMet::FLAV_C, "iterativefit");     
+  reader_dj.load(*calib_dj, BTagEntryForLJMet::FLAV_UDSG, "iterativefit");  
 
   HardcodedConditions hardcodedConditions;
+
 
   // ----------------------------------------------------------------------------
   // Turn on input tree branches
   // ----------------------------------------------------------------------------
   inputTree=(TTree*)inputFile->Get(inTreeName+"/"+inTreeName);
   if(inputTree->GetEntries()==0) {
-    std::cout<<"WARNING! Found 0 events in the tree!!!!"<<std::endl;
+    std::cout<< "[step1.cc] WARNING! Found 0 events in the tree!!!!"<<std::endl;
     return;
   }
   Init(inputTree);
@@ -150,6 +121,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   if (inputTree == 0) return;
 
   inputTree->SetBranchStatus("*",0);
+
 
   //Event info
   inputTree->SetBranchStatus("event_CommonCalc",1);
@@ -715,7 +687,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   float htCut=0;
   int   nAK8jetsCut=0;
   float lepPtCut=20.0;
-  float elEtaCut=2.4;
+  float elEtaCut=2.5;
   float muEtaCut=2.4;
   int   njetsCut=4;
   int   nbjetsCut=0; // events with # of b-tags <nbjetsCut (incl. btag shifts) are removed!
@@ -830,7 +802,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
 
     //if (ientry > 5000) break;
 
-    if(jentry % 10000 ==0) std::cout<<"Completed "<<jentry<<" out of "<<nentries<<" events"<<std::endl;
+    if(jentry % 1000 ==0) std::cout << ">> Completed " << jentry << " out of " << nentries << " events" <<std::endl;
 
     // ----------------------------------------------------------------------------
     // Filter input file by mass or decay

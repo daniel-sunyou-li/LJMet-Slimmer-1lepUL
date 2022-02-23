@@ -5,7 +5,7 @@ years = [ "16APV", "16", "17", "18" ]
 ljmetDir = {
   year: {
     "LPC": "/eos/uscms/store/group/lpcljm/FWLJMET106XUL_singleLep20{}UL_RunIISummer20".format( year ),
-    "BRUX": "/isilon/hadoop/store/group/bruxljm/FWLJMET106XUL_singleLep20{}UL_RunIISummer20".format( year )
+    "BRUX": "/isilon/hadoop/store/group/bruxljm/FWLJMET106XUL_singleLep20{}UL_RunIISummer20_old".format( year )
   } for year in years
 }
 
@@ -266,7 +266,7 @@ samples = {
   },
   "17": {
     "TEST": [
-      "TTTJ_TuneCP5_13TeV-madgraph-pythia8/"
+      "TTTJ_TuneCP5_13TeV-madgraph-pythia8"
     ],
     "DATA": [
       "SingleElectron",

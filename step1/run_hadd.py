@@ -5,18 +5,18 @@ import config
 start_time = time.time()
 
 parser = ArgumentParser()
-parser.add_argument( "-y", "--year", default = "17", help = "Options: [16,17,18]" )
-parser.add_argument( "-t", "--test", action = "store_true" )
-parser.add_argument( "-s", "--systematic", action = "store_true" )
+parser.add_argument( "-y", "--year", default = "17", help = "Options: [16APV,16,17,18]" )
+parser.add_argument( "-g", "--groups", nargs = "+", required = True )
 parser.add_argument( "-f", "--filesPerHadd", default = "900" )
-parser.add_argument( "-l", "--location", default = "LPC", help = "Options: [ LPC, BRUX ]" )
+parser.add_argument( "-l", "--location", default = "LPC", help = "Options: [LPC,BRUX]" )
+parser.add_argument( "--shifts", action = "store_true" )
 args = parser.parse_args()
 
 from ROOT import *
 
 execfile( "../EOSSafeUtils.py" )
 
-shifts = [ "nominal" ] if not args.systematic else [ "nominal", "JECup", "JECdown", "JERup", "JERdown" ]
+shifts = [ "nominal" ] if not args.shifts else [ "nominal", "JECup", "JECdown", "JERup", "JERdown" ]
 
 step1Dir = {
   shift: os.path.join( config.step1Dir[ args.year ][ args.location ], shift ) for shift in shifts
@@ -34,10 +34,20 @@ if args.location not in [ "LPC", "BRUX" ]:
   location = "LPC"
 else: location = args.location
 
-samples = config.samples[ "20" + args.year ][ "TEST" ] if args.test else config.samples[ "20" + args.year ][ location ]
+samples = {}
+for shift in shifts:
+  samples[ shift ] = []
+  for group in args.groups:
+    if group not in config.samples[ args.year ].keys():
+      print( "[WARN] {} not a valid group for 20{}, skipping".format( group, args.year ) )
+      continue
+    print( "[INFO] Preparing {} condor jobs for group: {}".format( shift, group ) )
+    for sample in config.samples[ args.year ][ group ]: 
+      print( "   + {}".format( sample ) )
+      samples[ shift ].append( sample )
 
 for shift in shifts:
-  for sample in samples:
+  for sample in samples[ shift ]:
     if shift != "nominal":
       if "Single" in sample or "EGamma" in sample or "up" in sample.lower() or "down" in sample.lower(): continue
     outList = []
@@ -52,8 +62,7 @@ for shift in shifts:
 
     for outLabel in outList:
       outSample = sample if outLabel == "none" else "{}_{}".format( sample, outLabel )
-    
-      step1Files = EOSlist_root_files( os.path.join( step1Dir[ shift ], outSample ) )
+      step1Files = EOSlist_root_files( os.path.join( step1Dir[ shift ], "{}_{}".format( outSample, shift ) ) )
  
       print( ">> Hadd'ing {}: {} files".format( outSample, len( step1Files ) ) )
     
