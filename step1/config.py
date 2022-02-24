@@ -40,6 +40,19 @@ deepJet_SF = {
   "18":    "btag_sf/reshaping_deepJet_106XUL18_v2.csv"
 }
 
+selection = {
+  "leptonPt_MultiLepCalc": { "VALUE": [ 15 ], "CONDITION": [ ">" ] },
+  "leptonEta_MultiLepCalc": { "VALUE": [ 2.5 ], "CONDITION": [ "<" ] },
+  "AK4HT": { "VALUE": [ 350. ], "CONDITION": [ ">" ] },
+  "NJets_JetSubCalc": { "VALUE": [ 4 ], "CONDITION": [ ">=" ] },
+  "NJetsCSV_MultiLepCalc": { "VALUE": [ 2 ], "CONDITION": [ ">=" ] }
+}
+
+triggerX_bins = {
+  "PT": [ 20., 25., 30., 35., 40., 45., 50., 60., 70., 100. ],
+  "ETA": [ 0.8, 1.442, 1.566, 2.0 ]
+}
+
 outputPath = "/store/user/{}/".format( eosUserName ),
 
 # LJMET samples should be by default stored on BRUX, LPC only for personal-use case
