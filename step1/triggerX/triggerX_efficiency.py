@@ -12,13 +12,6 @@ args = parser.parse_args()
 
 import ROOT
 
-def get_bin( pt, eta, pt_bins, eta_bins ):
-  for i, pt_bin in pt_bins:
-    for j, eta_bin in eta_bins:
-      if pt < pt_bin and eta < eta_bin:
-        return i, j
-  return len( pt_bins ), len( eta_bins )
-
 def calculate_efficiency_err( N1, N2 ):
   k = min( N1, N2 )
   n = max( N1, N2 )
@@ -38,10 +31,12 @@ for variable in config.selection:
   for i in range( len( config.selection[ variable ][ "CONDITION" ] ) ):
     print( "   + {} {} {}".format( variable, config.selection[ variable ][ "CONDITION" ][i], config.selection[ variable ][ "VALUE" ][i] ) )
     if filter_string == "":
-      filter_string += "( {} {} {} )".format( variable, config.selection[ variable ][ "CONDITION" ][i], config.selection[ variable ][ "VALUE" ][i] )
-    else:
-      filter_string += "&& ( {} {} {} )".format( variable, config.selection[ variable ][ "CONDITION" ][i], config.selection[ variable ][ "VALUE" ][i] )
-
+      filter_string += "( {} {} {} ) && ".format( variable, config.selection[ variable ][ "CONDITION" ][i], config.selection[ variable ][ "VALUE" ][i] )
+if args.lepton.upper() in "ELECTRON":
+  filter_string += "( isElectron == 1 )"
+else:
+  filter_string += "( isMuon == 1 )"
+      
 for sample in config.samples[ args.year ][ args.group ]:
   if args.group == "DATA" and args.lepton.upper() not in sample.upper(): continue
   samplePath = os.path.join( config.haddDir[ args.year ][ "LPC" ], "nominal/", sample + "_hadd.root" )
@@ -49,13 +44,6 @@ for sample in config.samples[ args.year ][ args.group ]:
   rDF = ROOT.RDataFrame( "ljmet", samplePath )
   total_events = rDF.Count().GetValue()
   filter_string = ""
-  # compile pre-selection filter
-  for variable in config.selection:
-    for i in range( len( config.selection[ variable ][ "CONDITION" ] ) ):
-      if filter_string == "":
-        filter_string += "( {} {} {} )".format( variable, config.selection[ variable ][ "CONDITION" ][i], config.selection[ variable ][ "VALUE" ][i] )
-      else:
-        filter_string += "&& ( {} {} {} )".format( variable, config.selection[ variable ][ "CONDITION" ][i], config.selection[ variable ][ "VALUE" ][i] )
   rDF_nominal = rDF.Filter( filter_string )
   rDF_hlt = rDF.Filter( filter_string + " && ( ( MCPastTriggerX == 1 ) || ( DataPastTriggerX == 1 ) )" )
   nominal_events = rDF_nominal.Count().GetValue()
@@ -106,3 +94,5 @@ json_dict = {
   "PT BINS": config.triggerX_bins[ "PT" ],
   "ETA BINS": config.triggerX_bins[ "ETA" ]
 }
+
+json.dumps( json_dict, open( "efficiency_{}_UL{}.json".format( args.group, args.year ), "w" ), indent = 2 )
