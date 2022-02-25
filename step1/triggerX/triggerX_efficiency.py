@@ -135,4 +135,4 @@ pickle_dict = {
   "ETA BINS": config.triggerX_bins[ "ETA" ]
 }
 print( ">> Dumping efficiency matrix into pickle" )
-pickle.dump( pickle_dict, open( "efficiency_{}_UL{}.pkl".format( args.group, args.year ), "w" ) )
+pickle.dump( pickle_dict, open( "efficiency_{}_{}_UL{}.pkl".format( args.group, args.lepton, args.year ), "w" ) )
