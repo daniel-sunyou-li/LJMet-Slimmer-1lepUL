@@ -9,6 +9,8 @@ The inputs to the `triggerXSF` calculation are step1 files, since that's where `
   3. Update the scale factors in HardcodedConditions.cc
   4. Re-run step1 to add the new `triggerXSF` to the ntuples
 
+Before you run the calculation, check `/step1/config.py` that you have the desired pre-selection and bins for the transverse momentum and pseudorapidity.
+
 ## Quick-start instructions
 To run the `triggerX` SF calculation:
 
