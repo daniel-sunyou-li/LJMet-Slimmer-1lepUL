@@ -367,9 +367,6 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   outputTree->Branch("HLT_Ele15_IsoVVVL_PFHT450",&HLT_Ele15_IsoVVVL_PFHT450,"HLT_Ele15_IsoVVVL_PFHT450/I"); //off in 17B
   outputTree->Branch("HLT_Ele28_eta2p1_WPTight_Gsf_HT150",&HLT_Ele28_eta2p1_WPTight_Gsf_HT150,"HLT_Ele28_eta2p1_WPTight_Gsf_HT150/I");
   outputTree->Branch("HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned",&HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned,"HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned/I"); 
-  outputTree->Branch("HLT_Ele15_IsoVVVL_PFHT400",&HLT_Ele15_IsoVVVL_PFHT400,"HLT_Ele15_IsoVVVL_PFHT400/I");
-  outputTree->Branch("HLT_Ele15_IsoVVVL_PFHT400_PFMET50",&HLT_Ele15_IsoVVVL_PFHT400_PFMET50,"HLT_Ele15_IsoVVVL_PFHT400_PFMET50/I");
-  outputTree->Branch("HLT_Ele50_IsoVVVL_PFHT400",&HLT_Ele50_IsoVVVL_PFHT400,"HLT_Ele50_IsoVVVL_PFHT400/I");
   // ----- mu-channel
   outputTree->Branch("HLT_Mu15_IsoVVVL_PFHT450",&HLT_Mu15_IsoVVVL_PFHT450,"HLT_Mu15_IsoVVVL_PFHT450/I");
   outputTree->Branch("HLT_PFHT400_SixJet30_DoubleBTagCSV_p056",&HLT_PFHT400_SixJet30_DoubleBTagCSV_p056,"HLT_PFHT400_SixJet30_DoubleBTagCSV_p056/I");
@@ -1249,12 +1246,12 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     std::vector<std::string> eltriggersX;
     std::vector<std::string> mutriggersX;
     if( Year == "2016APV" ){ // using trigger HLT instead of cross triggers for now
-      eltriggersX = { "Ele32_eta2p1_WPTight_Gsf" };
-      mutriggersX = { "IsoMu24", "IsoTkMu24" };
+      eltriggersX = { "Ele15_IsoVVVL_PFHT400", "Ele15_IsoVVVL_PFHT400_PFMET50", "HLT_Ele15_IsoVVVL_PFHT600", "Ele50_IsoVVVL_PFHT400", "Ele32_eta2p1_WPTight_Gsf" };
+      mutriggersX = { "Mu15_IsoVVVL_PFHT400", "Mu15_IsoVVVL_PFHT400_PFMET50", "Mu15_IsoVVVL_PFHT600", "Mu50_IsoVVVL_PFHT400", "Mu50" };
     }
     else if( Year == "2016" ){ // using trigger HLT instead of cross triggers for now
-      eltriggersX = { "Ele32_eta2p1_WPTight_Gsf" };
-      mutriggersX = { "IsoMu24", "IsoTkMu24" };
+      eltriggersX = { "Ele15_IsoVVVL_PFHT400", "Ele15_IsoVVVL_PFHT400_PFMET50", "HLT_Ele15_IsoVVVL_PFHT600", "Ele50_IsoVVVL_PFHT400", "Ele32_eta2p1_WPTight_Gsf" };
+      mutriggersX = { "Mu15_IsoVVVL_PFHT400", "Mu15_IsoVVVL_PFHT400_PFMET50", "Mu15_IsoVVVL_PFHT600", "Mu50_IsoVVVL_PFHT400", "Mu50" };
     }
     else if( Year == "2017" ){
       eltriggersX = {"Ele15_IsoVVVL_PFHT450","Ele50_IsoVVVL_PFHT450","Ele15_IsoVVVL_PFHT600","Ele35_WPTight_Gsf","Ele38_WPTight_Gsf"};
