@@ -90,6 +90,10 @@ public :
    Int_t           DataPastTriggerLepTight;
    Int_t           DataPastTriggerHTTight;
 
+   Int_t           HLT_Ele15_IsoVVVL_PFHT400 = 0;
+   Int_t           HLT_Ele15_IsoVVVL_PFHT400_PFMET50 = 0;
+   Int_t           HLT_Ele15_IsoVVVL_PFHT600_v = 0;
+   Int_t           HLT_Ele50_IsoVVVL_PFHT400_v = 0;
    Int_t           HLT_Ele15_IsoVVVL_PFHT450 = 0;
    Int_t           HLT_Ele28_eta2p1_WPTight_Gsf_HT150 = 0;
    Int_t           HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned = 0;
