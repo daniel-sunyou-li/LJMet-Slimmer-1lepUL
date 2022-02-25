@@ -41,7 +41,7 @@ deepJet_SF = {
 }
 
 selection = {
-  "leptonPt_MultiLepCalc": { "VALUE": [ 15 ], "CONDITION": [ ">" ] },
+  "leptonPt_MultiLepCalc": { "VALUE": [ 20 ], "CONDITION": [ ">" ] },
   "leptonEta_MultiLepCalc": { "VALUE": [ 2.5 ], "CONDITION": [ "<" ] },
   "AK4HT": { "VALUE": [ 350. ], "CONDITION": [ ">" ] },
   "NJets_JetSubCalc": { "VALUE": [ 4 ], "CONDITION": [ ">=" ] },
@@ -49,7 +49,7 @@ selection = {
 }
 
 triggerX_bins = {
-  "PT": [ 20., 25., 30., 35., 40., 45., 50., 60., 70., 100. ],
+  "PT": [ 25., 30., 35., 40., 45., 50., 60., 70., 100. ],
   "ETA": [ 0.8, 1.442, 1.566, 2.0 ]
 }
 

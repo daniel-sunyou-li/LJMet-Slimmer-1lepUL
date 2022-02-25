@@ -62,7 +62,7 @@ for shift in shifts:
 
     for outLabel in outList:
       outSample = sample if outLabel == "none" else "{}_{}".format( sample, outLabel )
-      step1Files = EOSlist_root_files( os.path.join( step1Dir[ shift ], "{}_{}".format( outSample, shift ) ) )
+      step1Files = EOSlist_root_files( os.path.join( step1Dir[ shift ], outSample ) )
  
       print( ">> Hadd'ing {}: {} files".format( outSample, len( step1Files ) ) )
     
