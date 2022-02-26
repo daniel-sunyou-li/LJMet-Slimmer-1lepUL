@@ -1245,11 +1245,11 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     isoSF = 1.0;
     std::vector<std::string> eltriggersX;
     std::vector<std::string> mutriggersX;
-    if( Year == "2016APV" ){ // using trigger HLT instead of cross triggers for now
+    if( Year == "2016APV" ){ 
       eltriggersX = { "Ele15_IsoVVVL_PFHT400", "Ele15_IsoVVVL_PFHT400_PFMET50", "HLT_Ele15_IsoVVVL_PFHT600", "Ele50_IsoVVVL_PFHT400", "Ele32_eta2p1_WPTight_Gsf" };
       mutriggersX = { "Mu15_IsoVVVL_PFHT400", "Mu15_IsoVVVL_PFHT400_PFMET50", "Mu15_IsoVVVL_PFHT600", "Mu50_IsoVVVL_PFHT400", "Mu50" };
     }
-    else if( Year == "2016" ){ // using trigger HLT instead of cross triggers for now
+    else if( Year == "2016" ){ 
       eltriggersX = { "Ele15_IsoVVVL_PFHT400", "Ele15_IsoVVVL_PFHT400_PFMET50", "HLT_Ele15_IsoVVVL_PFHT600", "Ele50_IsoVVVL_PFHT400", "Ele32_eta2p1_WPTight_Gsf" };
       mutriggersX = { "Mu15_IsoVVVL_PFHT400", "Mu15_IsoVVVL_PFHT400_PFMET50", "Mu15_IsoVVVL_PFHT600", "Mu50_IsoVVVL_PFHT400", "Mu50" };
     }
