@@ -83,8 +83,10 @@ for shift in samples:
       os.system( "eos root://cmseos.fnal.gov mkdir -p {}".format( os.path.join( outputDir[ shift ], step1_sample ) ) )
       if args.location == "LPC":    
         runList = EOSlistdir( "{}/{}/singleLep20{}UL/".format( inputDir, sample, args.year ) )
-      elif args.location == "BRUX": 
-        status, dirList = xrdClient.dirlist( "{}/{}/singleLep20{}UL/".format( inputDir, sample, args.year ) )
+      elif args.location == "BRUX":
+        runPath = "{}/{}/singleLep20{}UL/".format( inputDir, sample, args.year ) 
+        print( runPath )
+        status, dirList = xrdClient.dirlist( runPath )
         runList = [ item.name for item in dirList ]
 
       print( "[INFO] Running {} CRAB directories...".format( len(runList) ) )
@@ -93,7 +95,9 @@ for shift in samples:
         if args.location == "LPC":
           numList = EOSlistdir( "{}/{}/singleLep20{}UL/{}/".format( inputDir, sample, args.year, run ) )
         elif args.location == "BRUX":
-          status, dirList = xrdClient.dirlist( "{}/{}/singleLep20{}UL/{}".format( inputDir, sample, args.year, run ) )
+          xrd_command = "{}/{}/singleLep20{}UL/{}".format( inputDir, sample, args.year, run )
+          print( xrd_command )
+          status, dirList = xrdClient.dirlist( xrd_command )
           numList = [ item.name for item in dirList ]
 
         for num in numList:

@@ -3,7 +3,7 @@ postfix = "3t" # EDIT ME
 years = [ "16APV", "16", "17", "18" ]
 
 sampleDir = {
-  year: "FWLJMET106XUL_singleLep20{}UL_RunIISummer20" for year in years
+  year: "FWLJMET106XUL_singleLep20{}UL_RunIISummer20".format( year ) for year in years
 }
 
 ljmetDir = {
@@ -63,7 +63,7 @@ outputPath = "/store/user/{}/".format( eosUserName ),
 samples = {
   "16APV": {
     "TEST": [
-      "TTTJ_TuneCP5_13TeV-madgraph-pythia8"
+      "TTTW_TuneCP5_13TeV-madgraph-pythia8"
     ],
     "DATA": [
       "SingleElectron",
@@ -173,7 +173,7 @@ samples = {
   },
   "16": {
     "TEST": [
-      "TTTJ_TuneCP5_13TeV-madgraph-pythia8/"
+      "TTTW_TuneCP5_13TeV-madgraph-pythia8"
     ],
     "DATA": [
       "SingleElectron",
@@ -283,7 +283,7 @@ samples = {
   },
   "17": {
     "TEST": [
-      "TTTJ_TuneCP5_13TeV-madgraph-pythia8"
+      "TTTW_TuneCP5_13TeV-madgraph-pythia8"
     ],
     "DATA": [
       "SingleElectron",
@@ -393,7 +393,7 @@ samples = {
   },
   "18": {
     "TEST": [
-      "TTTJ_TuneCP5_13TeV-madgraph-pythia8/"
+      "TTTW_TuneCP5_13TeV-madgraph-pythia8"
     ],
     "DATA": [
       "SingleElectron",

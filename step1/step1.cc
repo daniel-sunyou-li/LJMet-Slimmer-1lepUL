@@ -1246,11 +1246,11 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     std::vector<std::string> eltriggersX;
     std::vector<std::string> mutriggersX;
     if( Year == "2016APV" ){ 
-      eltriggersX = { "Ele15_IsoVVVL_PFHT400", "Ele15_IsoVVVL_PFHT400_PFMET50", "HLT_Ele15_IsoVVVL_PFHT600", "Ele50_IsoVVVL_PFHT400", "Ele32_eta2p1_WPTight_Gsf" };
+      eltriggersX = { "Ele15_IsoVVVL_PFHT350", "Ele15_IsoVVVL_PFHT400", "Ele15_IsoVVVL_PFHT400_PFMET50", "HLT_Ele15_IsoVVVL_PFHT600", "Ele50_IsoVVVL_PFHT400", "Ele32_eta2p1_WPTight_Gsf" };
       mutriggersX = { "Mu15_IsoVVVL_PFHT400", "Mu15_IsoVVVL_PFHT400_PFMET50", "Mu15_IsoVVVL_PFHT600", "Mu50_IsoVVVL_PFHT400", "Mu50" };
     }
     else if( Year == "2016" ){ 
-      eltriggersX = { "Ele15_IsoVVVL_PFHT400", "Ele15_IsoVVVL_PFHT400_PFMET50", "HLT_Ele15_IsoVVVL_PFHT600", "Ele50_IsoVVVL_PFHT400", "Ele32_eta2p1_WPTight_Gsf" };
+      eltriggersX = { "Ele15_IsoVVVL_PFHT350", "Ele15_IsoVVVL_PFHT400", "Ele15_IsoVVVL_PFHT400_PFMET50", "HLT_Ele15_IsoVVVL_PFHT600", "Ele50_IsoVVVL_PFHT400", "Ele32_eta2p1_WPTight_Gsf" };
       mutriggersX = { "Mu15_IsoVVVL_PFHT400", "Mu15_IsoVVVL_PFHT400_PFMET50", "Mu15_IsoVVVL_PFHT600", "Mu50_IsoVVVL_PFHT400", "Mu50" };
     }
     else if( Year == "2017" ){
@@ -1287,7 +1287,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   
     if ( !isMC && !( Year == "2016APV" ) && !( Year == "2016" ) ){
       eltrigger = datatriggers.at(Era).at(0);
-      mutrigger =  datatriggers.at(Era).at(1);
+      mutrigger = datatriggers.at(Era).at(1); 
       hadtrigger = datatriggers.at(Era).at(2);
     }
     else{
