@@ -2,26 +2,30 @@ eosUserName = "dali" # EDIT ME
 postfix = "3t" # EDIT ME
 years = [ "16APV", "16", "17", "18" ]
 
+sampleDir = {
+  year: "FWLJMET106XUL_singleLep20{}UL_RunIISummer20" for year in years
+}
+
 ljmetDir = {
   year: {
-    "LPC": "/eos/uscms/store/group/lpcljm/FWLJMET106XUL_singleLep20{}UL_RunIISummer20".format( year ),
-    "BRUX": "/isilon/hadoop/store/group/bruxljm/FWLJMET106XUL_singleLep20{}UL_RunIISummer20_old".format( year )
+    "LPC": "/eos/uscms/store/group/lpcljm/{}".format( sampleDir[ year ] ),
+    "BRUX": "/isilon/hadoop/store/group/bruxljm/{}".format( sampleDir[ year ] )
   } for year in years
 }
 
 # can temporarily store step1 on lpcljm or bruxljm, but delete after hadd'ing
 step1Dir = {
   year: {
-    "LPC": "/eos/uscms/store/group/lpcljm/FWLJMET106XUL_singleLep20{}UL_RunIISummer20_{}_step1".format( year, postfix ), 
-    "BRUX": "/isilon/hadoop/store/group/bruxljm/FWLJMET106XUL_singleLep20{}UL_RunIISummer20_{}_step1".format( year, postfix ) 
+    "LPC": "/eos/uscms/store/group/lpcljm/{}_{}_step1".format( sampleDir[ year ], postfix ), 
+    "BRUX": "/isilon/hadoop/store/group/bruxljm/{}_{}_step1".format( sampleDir[ year ], postfix ) 
   } for year in years
 }
 
 # store step1's on your personal space on an analysis basis
 haddDir = {
   year: {
-    "LPC": "/eos/uscms/store/user/{}/FWLJMET106XUL_singleLep20{}UL_RunIISummer20_{}_step1hadds".format( eosUserName, year, postfix ),
-    "BRUX": "/isilon/hadoop/store/user/{}/FWLJMET106XUL_singleLep20{}UL_RunIISummer20_{}_step1hadds".format( eosUserName, year, postfix ) 
+    "LPC": "/eos/uscms/store/user/{}/{}_{}_step1hadds".format( eosUserName, sampleDir[ year ], postfix ),
+    "BRUX": "/isilon/hadoop/store/user/{}/{}_{}_step1hadds".format( eosUserName, sampleDir[ year ], postfix ) 
   } for year in years
 }
 
