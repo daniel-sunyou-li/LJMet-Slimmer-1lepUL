@@ -39,7 +39,7 @@ deepCSV_SF = {
 
 deepJet_SF = {
   "16APV": "btag_sf/reshaping_deepJet_106XUL16preVFP_v2.csv",
-  "16":    "btag_sf/reshaping_deepJet_106XULpostVFP_v3.csv",
+  "16":    "btag_sf/reshaping_deepJet_106XUL16postVFP_v3.csv",
   "17":    "btag_sf/reshaping_deepJet_106XUL17_v3.csv",
   "18":    "btag_sf/reshaping_deepJet_106XUL18_v2.csv"
 }
@@ -49,7 +49,8 @@ selection = {
   "leptonEta_MultiLepCalc": { "VALUE": [ 2.5 ], "CONDITION": [ "<" ] },
   "AK4HT": { "VALUE": [ 350. ], "CONDITION": [ ">" ] },
   "NJets_JetSubCalc": { "VALUE": [ 4 ], "CONDITION": [ ">=" ] },
-  "NJetsCSV_MultiLepCalc": { "VALUE": [ 2 ], "CONDITION": [ ">=" ] }
+  "NJetsCSV_JetSubCalc": { "VALUE": [ 2 ], "CONDITION": [ ">=" ] },
+  "corr_met_MultiLepCalc": { "VALUE": [ 20. ], "CONDITION": [ ">" ] },
 }
 
 triggerX_bins = {
@@ -63,7 +64,8 @@ outputPath = "/store/user/{}/".format( eosUserName ),
 samples = {
   "16APV": {
     "TEST": [
-      "TTTW_TuneCP5_13TeV-madgraph-pythia8"
+      "TTTW_TuneCP5_13TeV-madgraph-pythia8",
+      "TTTJ_TuneCP5_13TeV-madgraph-pythia8"
     ],
     "DATA": [
       "SingleElectron",
@@ -173,7 +175,8 @@ samples = {
   },
   "16": {
     "TEST": [
-      "TTTW_TuneCP5_13TeV-madgraph-pythia8"
+      "TTTW_TuneCP5_13TeV-madgraph-pythia8",
+      "TTTJ_TuneCP5_13TeV-madgraph-pythia8"
     ],
     "DATA": [
       "SingleElectron",
@@ -283,7 +286,7 @@ samples = {
   },
   "17": {
     "TEST": [
-      "TTTW_TuneCP5_13TeV-madgraph-pythia8"
+      "TTTJ_TuneCP5_13TeV-madgraph-pythia8"
     ],
     "DATA": [
       "SingleElectron",

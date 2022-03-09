@@ -1246,11 +1246,11 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     std::vector<std::string> eltriggersX;
     std::vector<std::string> mutriggersX;
     if( Year == "2016APV" ){ 
-      eltriggersX = { "Ele15_IsoVVVL_PFHT350", "Ele15_IsoVVVL_PFHT400", "Ele15_IsoVVVL_PFHT400_PFMET50", "HLT_Ele15_IsoVVVL_PFHT600", "Ele50_IsoVVVL_PFHT400", "Ele32_eta2p1_WPTight_Gsf" };
+      eltriggersX = { "Ele15_IsoVVVL_PFHT350", "Ele15_IsoVVVL_PFHT400", "Ele15_IsoVVVL_PFHT400_PFMET50", "Ele15_IsoVVVL_PFHT600", "Ele50_IsoVVVL_PFHT400", "Ele32_eta2p1_WPTight_Gsf" };
       mutriggersX = { "Mu15_IsoVVVL_PFHT400", "Mu15_IsoVVVL_PFHT400_PFMET50", "Mu15_IsoVVVL_PFHT600", "Mu50_IsoVVVL_PFHT400", "Mu50" };
     }
     else if( Year == "2016" ){ 
-      eltriggersX = { "Ele15_IsoVVVL_PFHT350", "Ele15_IsoVVVL_PFHT400", "Ele15_IsoVVVL_PFHT400_PFMET50", "HLT_Ele15_IsoVVVL_PFHT600", "Ele50_IsoVVVL_PFHT400", "Ele32_eta2p1_WPTight_Gsf" };
+      eltriggersX = { "Ele15_IsoVVVL_PFHT350", "Ele15_IsoVVVL_PFHT400", "Ele15_IsoVVVL_PFHT400_PFMET50", "Ele15_IsoVVVL_PFHT600", "Ele50_IsoVVVL_PFHT400", "Ele32_eta2p1_WPTight_Gsf" };
       mutriggersX = { "Mu15_IsoVVVL_PFHT400", "Mu15_IsoVVVL_PFHT400_PFMET50", "Mu15_IsoVVVL_PFHT600", "Mu50_IsoVVVL_PFHT400", "Mu50" };
     }
     else if( Year == "2017" ){
@@ -1354,6 +1354,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
       if(isMuon){
         for(unsigned int itrig=0; itrig < vsSelMCTriggersMu_MultiLepCalc->size(); itrig++){
           if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(mutrigger) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCLepPastTrigger = 1;
+          if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(mutrigger2) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCLepPastTrigger = 1;
           if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find("HLT_IsoMu24") != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) HLT_IsoMu24 = 1;
           if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find("HLT_IsoMu24_eta2p1") != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) HLT_IsoMu24_eta2p1 = 1;
           if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find("HLT_IsoMu27") != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) HLT_IsoMu27 = 1;
@@ -1400,15 +1401,14 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
             if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(eltriggersX.at(jtrig)) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTriggerX = 1;
           }
         }
-        //else if(isHad){
         if (DataLepPastTrigger == 1 || DataHadPastTrigger == 1){
           DataPastTrigger = 1;
         }
-          //}
       }
       if(isMuon) {
         for(unsigned int itrig=0; itrig < vsSelTriggersMu_MultiLepCalc->size(); itrig++){
           if(vsSelTriggersMu_MultiLepCalc->at(itrig).find(mutrigger) != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) DataLepPastTrigger = 1;
+          if(vsSelTriggersMu_MultiLepCalc->at(itrig).find(mutrigger2) != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) DataLepPastTrigger = 1;
           if(vsSelTriggersMu_MultiLepCalc->at(itrig).find("HLT_IsoMu24") != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) HLT_IsoMu24 = 1;
           if(vsSelTriggersMu_MultiLepCalc->at(itrig).find("HLT_IsoMu24_eta2p1") != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) HLT_IsoMu24_eta2p1 = 1;
           if(vsSelTriggersMu_MultiLepCalc->at(itrig).find("HLT_IsoMu27") != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) HLT_IsoMu27 = 1;
@@ -1417,7 +1417,9 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
             if(vsSelTriggersMu_MultiLepCalc->at(itrig).find(mutriggersX.at(jtrig)) != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) DataPastTriggerX = 1;
           }
         }
-        if (DataLepPastTrigger == 1 || DataHadPastTrigger == 1){ DataPastTrigger = 1; }
+        if (DataLepPastTrigger == 1 || DataHadPastTrigger == 1){ 
+          DataPastTrigger = 1; 
+        }
       }
       MCPastTrigger = 1;
       MCPastTriggerX = 1;

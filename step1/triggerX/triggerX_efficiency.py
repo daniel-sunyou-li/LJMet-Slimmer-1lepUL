@@ -10,6 +10,7 @@ parser = ArgumentParser()
 parser.add_argument( "-y", "--year", help = "16APV,16,17,18" )
 parser.add_argument( "-g", "--group" )
 parser.add_argument( "-l", "--lepton", default = "e", help = "e,m" )
+parser.add_argument( "--single", action = "store_true" )
 args = parser.parse_args()
 
 import ROOT
@@ -63,8 +64,9 @@ if args.lepton.upper() in "ELECTRON":
 else:
   filter_string += "( isMuon == 1 )"
 
-print( filter_string )
-      
+total_nominal = 0
+total_hlt = 0
+ 
 for sample in config.samples[ args.year ][ args.group ]:
   if args.group == "DATA" and args.lepton.upper() not in sample.upper(): continue
   samplePath = os.path.join( config.haddDir[ args.year ][ "LPC" ], "nominal/", sample + "_hadd.root" )
@@ -73,12 +75,20 @@ for sample in config.samples[ args.year ][ args.group ]:
   total_events = rDF.Count().GetValue()
   rDF_nominal = rDF.Filter( filter_string )
   nominal_events = rDF_nominal.Count().GetValue()
-  rDF_hlt = rDF_nominal.Filter( "( MCPastTriggerX == 1 ) && ( DataPastTriggerX == 1 )" )
+  if args.single:
+    rDF_hlt = rDF_nominal.Filter( "( MCLepPastTrigger == 1 ) && ( DataLepPastTrigger == 1 )" )
+  else:
+    rDF_hlt = rDF_nominal.Filter( "( MCPastTriggerX == 1 ) && ( DataPastTriggerX == 1 )" )
   nominal_events = rDF_nominal.Count().GetValue()
   hlt_events = rDF_hlt.Count().GetValue()
+  total_nominal += nominal_events
+  total_hlt += hlt_events
   print( "[INFO] {} has {} total events:".format( sample, total_events ) )
   print( "  + {} passed pre-selection".format( nominal_events ) )
-  print( "  + {} passed pre-selection + triggerX".format( hlt_events ) )
+  if args.single:
+    print( "  + {} passed pre-selection + trigger = {:.3f}".format( hlt_events, float( hlt_events ) / float( nominal_events )  ) )
+  else:
+    print( "  + {} passed pre-selection + triggerX = {:.3f}".format( hlt_events, float( hlt_events ) / float( nominal_events ) ) )
   nom_df = pandas.DataFrame( rDF_nominal.AsNumpy( columns = [ "leptonPt_MultiLepCalc", "leptonEta_MultiLepCalc" ] ) )
   hlt_df = pandas.DataFrame( rDF_hlt.AsNumpy( columns = [ "leptonPt_MultiLepCalc", "leptonEta_MultiLepCalc" ] ) )
 
@@ -134,5 +144,9 @@ pickle_dict = {
   "PT BINS": config.triggerX_bins[ "PT" ],
   "ETA BINS": config.triggerX_bins[ "ETA" ]
 }
+print( "[INFO] Total efficiency: {}/{} = {:.3f}".format( total_hlt, total_nominal, float( total_hlt ) / float( total_nominal ) ) )
 print( ">> Dumping efficiency matrix into pickle" )
-pickle.dump( pickle_dict, open( "efficiency_{}_{}_UL{}.pkl".format( args.group, args.lepton, args.year ), "w" ) )
+if args.single:
+  pickle.dump( pickle_dict, open( "efficiency_{}_{}_UL{}.pkl".format( args.group, args.lepton, args.year ), "w" ) )
+else:
+  pickle.dump( pickle_dict, open( "efficiencyX_{}_{}_UL{}.pkl".format( args.group, args.lepton, args.year ), "w" ) )
