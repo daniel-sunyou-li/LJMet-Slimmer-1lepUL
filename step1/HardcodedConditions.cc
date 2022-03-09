@@ -2335,6 +2335,7 @@ double HardcodedConditions::GetMuonTriggerSF2016APV(double pt, double eta){
     else return 0.95996; }
 }
 
+// using MUON JSON UL SF with WP: NUM_IsoMu24_or_IsoTkMu24_DEN_CutBasedIdTight_and_PFIsoTight
 double HardcodedConditions::GetMuonTriggerSF2016(double pt, double eta){
   if ( pt < 30.0 ) {
     if ( fabs(eta) < 0.9 ) return 0.94981;
@@ -2368,6 +2369,7 @@ double HardcodedConditions::GetMuonTriggerSF2016(double pt, double eta){
     else return 0.96208; }
 }
 
+// using MUON JSON UL SF with WP: NUM_IsoMu27_DEN_CutBasedIdTight_and_PFIsoTight
 double HardcodedConditions::GetMuonTriggerSF2017(double pt, double eta){
   if ( pt < 30.0 ) {
     if ( fabs(eta) < 0.9 ) return 0.97173;
@@ -2401,6 +2403,7 @@ double HardcodedConditions::GetMuonTriggerSF2017(double pt, double eta){
     else return 1.03201; }
 }
 
+// using MUON JSON UL SF with WP: NUM_IsoMu24_DEN_CutBasedIdTight_and_PFIsoTight
 double HardcodedConditions::GetMuonTriggerSF2018(double pt, double eta){
   if ( pt < 30.0 ) {
     if ( fabs(eta) < 0.9 ) return 0.97309;
