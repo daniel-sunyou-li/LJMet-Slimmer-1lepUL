@@ -1343,12 +1343,24 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
             if(vsSelMCTriggersEl_MultiLepCalc->at(itrig).find(eltriggersX.at(jtrig)) != std::string::npos && viSelMCTriggersEl_MultiLepCalc->at(itrig) > 0) MCPastTriggerX = 1;
           }
         }
-        EGammaGsfSF = hardcodedConditions.GetEGammaGsfSF(leppt, lepeta, Year);
-        lepIdSF = hardcodedConditions.GetElectronIdSF(leppt, lepeta, Year);
-        isoSF = hardcodedConditions.GetElectronIsoSF(leppt, lepeta, Year);
-        triggerSF = hardcodedConditions.GetElectronTriggerSF(leppt, lepeta, Year);
-        triggerHadSF = hardcodedConditions.GetIsEHadronTriggerSF(NJets_JetSubCalc, AK4HT, Year);
-        triggerXSF = hardcodedConditions.GetElectronTriggerXSF(leppt, lepeta, Year);
+        
+        EGammaGsfSF = hardcodedConditions.GetEGammaGsfSF( leppt, lepeta, Year );
+        lepIdSF = hardcodedConditions.GetElectronIdSF( leppt, lepeta, Year );
+        isoSF = hardcodedConditions.GetElectronIsoSF( leppt, lepeta, Year );
+        if( MCLepPastTrigger == 1 && MCPastTriggerX == 1 ){ // defaults to using the single-object trigger if available
+          triggerSF = hardcodedConditions.GetElectronTriggerSF( leppt, lepeta, Year );
+          triggerXSF = 1.0; 
+        }
+        else if( MCLepPastTrigger == 0 && MCPastTriggerX == 1 ){ 
+          triggerSF = 1.0;
+          triggerXSF = hardcodedConditions.GetElectronTriggerXSF( leppt, lepeta, year );
+        }
+        else{ 
+          triggerSF = hardcodedConditions.GetElectronTriggerSF(leppt, lepeta, Year);
+          triggerXSF = hardcodedConditions.GetElectronTriggerXSF(leppt, lepeta, Year);
+        }
+        
+        //triggerHadSF = hardcodedConditions.GetIsEHadronTriggerSF(NJets_JetSubCalc, AK4HT, Year);
         //triggerVlqXSF = hardcodedConditions.GetElectronTriggerVlqXSF(leppt, lepeta, Year);
       }
       if(isMuon){
@@ -1365,12 +1377,24 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         }
         lepIdSF = hardcodedConditions.GetMuonIdSF(leppt, lepeta, Year);
         isoSF = hardcodedConditions.GetMuonIsoSF(leppt, lepeta, Year);
-        triggerSF = hardcodedConditions.GetMuonTriggerSF(leppt, lepeta, Year);
-        triggerHadSF = hardcodedConditions.GetIsMHadronTriggerSF(NJets_JetSubCalc, AK4HT, Year);
-        triggerXSF = hardcodedConditions.GetMuonTriggerXSF(leppt, lepeta, Year);
+        
+        if( MCLepPastTrigger == 1 && MCPastTriggerX == 1 ){ // defaults to using the single-object trigger if available
+          triggerSF = hardcodedConditions.GetMuonTriggerSF( leppt, lepeta, Year );
+          triggerXSF = 1.0; 
+        }
+        else if( MCLepPastTrigger == 0 && MCPastTriggerX == 1 ){ 
+          triggerSF = 1.0;
+          triggerXSF = hardcodedConditions.GetMuonTriggerXSF( leppt, lepeta, year );
+        }
+        else{ 
+          triggerSF = hardcodedConditions.GetMuonTriggerSF(leppt, lepeta, Year);
+          triggerXSF = hardcodedConditions.GetMuonTriggerXSF(leppt, lepeta, Year);
+        }
+        
+        //triggerHadSF = hardcodedConditions.GetIsMHadronTriggerSF(NJets_JetSubCalc, AK4HT, Year);
         //triggerVlqXSF = hardcodedConditions.GetMuonTriggerVlqXSF(leppt, lepeta, Year);
       }
-      if (MCLepPastTrigger == 1 || MCHadPastTrigger == 1){
+      if (MCLepPastTrigger == 1 || MCHadPastTrigger == 1){ // for hadLep strategy
         MCPastTrigger = 1;
       }
 
