@@ -55,7 +55,7 @@ selection = {
 
 triggerX_bins = {
   "PT": [ 25., 30., 35., 40., 45., 50., 60., 70., 100. ],
-  "ETA": [ 0.8, 1.442, 1.566, 2.0 ]
+  "ETA": [ 0.8, 1.4442, 1.566, 2.0 ]
 }
 
 outputPath = "/store/user/{}/".format( eosUserName ),
@@ -288,8 +288,10 @@ samples = {
     "TEST": [
       "TTTJ_TuneCP5_13TeV-madgraph-pythia8"
     ],
-    "DATA": [
-      "SingleElectron",
+    "DATAE": [
+      "SingleElectron"
+    ],
+    "DATAM": [
       "SingleMuon"
     ],
     "CHARGEDHIGGS": [
@@ -318,9 +320,9 @@ samples = {
     ],
     "TTBAR": [
       "TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8",
-      "TTToHadronic_TuneCP5_13TeV-powheg-pythia8",
-      "TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8",
-      "TTToSemiLepton_HT500Njet9_TuneCP5_13TeV-powheg-pythia8"
+      #"TTToHadronic_TuneCP5_13TeV-powheg-pythia8",
+      #"TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8",
+      #"TTToSemiLepton_HT500Njet9_TuneCP5_13TeV-powheg-pythia8"
     ],
     "TTBAR_SHIFTS": [
       "TTToSemiLeptonic_hdampUP_TuneCP5_13TeV-powheg-pythia8",
@@ -428,9 +430,9 @@ samples = {
     ],
     "TTBAR": [
       "TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8",
-      "TTToHadronic_TuneCP5_13TeV-powheg-pythia8",
-      "TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8",
-      "TTToSemiLepton_HT500Njet9_TuneCP5_13TeV-powheg-pythia8"
+      #"TTToHadronic_TuneCP5_13TeV-powheg-pythia8",
+      #"TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8",
+      #"TTToSemiLepton_HT500Njet9_TuneCP5_13TeV-powheg-pythia8"
     ],
     "TTBAR_SHIFTS": [
       "TTToSemiLeptonic_hdampUP_TuneCP5_13TeV-powheg-pythia8",

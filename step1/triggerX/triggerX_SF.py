@@ -39,13 +39,14 @@ def print_table( matrix, pt_bins, eta_bins ):
       print( "else if ( pt < {:.1f} )".format( pt_bins[i] ) ), 
       print( "{" )
     for j in range( len( eta_bins ) + 1 ):
+      if np.isnan( matrix[i][j] ): matrix[i][j] = 1.0
       if j == 0:
-        print( "  if ( fabs(eta) < {:.3f} ) return {:.5f};".format( eta_bins[j], matrix[i][j] ) )
+        print( "  if ( fabs(eta) < {:.4f} ) return {:.5f};".format( eta_bins[j], matrix[i][j] ) )
       elif j == len( eta_bins ):
         print( "  else return {:.5f};".format( matrix[i][j] ) ), 
         print( "}" )
       else:
-        print( "  else if ( fabs(eta) < {:.3f} ) return {:.5f};".format( eta_bins[j], matrix[i][j] ) )
+        print( "  else if ( fabs(eta) < {:.4f} ) return {:.5f};".format( eta_bins[j], matrix[i][j] ) )
 
 print_table( SF, mc_dict[ "PT BINS" ], data_dict[ "ETA BINS" ] )
 if args.error: 

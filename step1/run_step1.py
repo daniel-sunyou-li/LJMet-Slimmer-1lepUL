@@ -9,7 +9,6 @@ parser.add_argument( "-y", "--year", required = True, help = "Options:16APV,16,1
 parser.add_argument( "-g", "--groups", nargs = "+" )
 parser.add_argument( "-f", "--filesPerJob", default = "30", help = "Default is 30, but recommended 10 for years 16APV,16" )
 parser.add_argument( "-l", "--location", default = "LPC", help = "Options: LPC, BRUX" )
-parser.add_argument( "--override", action = "store_true", help = "Override existing step1 files" )
 parser.add_argument( "--shifts", action = "store_true" )
 args = parser.parse_args()
 
@@ -85,28 +84,20 @@ for shift in samples:
         runList = EOSlistdir( "{}/{}/singleLep20{}UL/".format( inputDir, sample, args.year ) )
       elif args.location == "BRUX":
         runPath = "{}/{}/singleLep20{}UL/".format( inputDir, sample, args.year ) 
-        print( runPath )
         status, dirList = xrdClient.dirlist( runPath )
         runList = [ item.name for item in dirList ]
 
       print( "[INFO] Running {} CRAB directories...".format( len(runList) ) )
-
+    
       for run in runList:
         if args.location == "LPC":
           numList = EOSlistdir( "{}/{}/singleLep20{}UL/{}/".format( inputDir, sample, args.year, run ) )
         elif args.location == "BRUX":
           xrd_command = "{}/{}/singleLep20{}UL/{}".format( inputDir, sample, args.year, run )
-          print( xrd_command )
           status, dirList = xrdClient.dirlist( xrd_command )
           numList = [ item.name for item in dirList ]
-
+        
         for num in numList:
-          #try: 
-          #  doneList = EOSlistdir( os.path.join( config.step1Dir[ args.year ][ "LPC" ], shift  ) )
-          #except:
-          #  doneList = []
-          #if sample in doneList and not args.override: continue
-          #if sample in doneList and args.override: print( "[WARN] Overriding completed step1 sample: {}".format( sample ) )
           numPath = "{}/{}/singleLep20{}UL/{}/{}".format( inputDir, sample, args.year, run, num )
           pathSuffix = numPath.split("/")[-3:]
           pathSuffix = "/".join( pathSuffix )
@@ -114,7 +105,9 @@ for shift in samples:
           if args.location == "LPC":
             rootFiles = EOSlist_root_files( numPath )
           elif args.location == "BRUX":
-            status, fileList = xrdClient.dirlist( "{}/{}/singleLep20{}UL/{}/{}/".format( inputDir, sample, args.year, run, num ) )
+            xrdPath = "{}/{}/singleLep20{}UL/{}/{}/".format( inputDir, sample, args.year, run, num )
+            print( xrdPath )
+            status, fileList = xrdClient.dirlist( xrdPath )
             rootFiles = [ item.name for item in fileList if item.name.endswith( ".root" ) ]
           if not rootFiles: continue #Check if rootfiles is empty list (remove failed jobs)
           baseFilename = "_".join( ( rootFiles[0].split(".")[0] ).split("_")[:-1] )
@@ -122,7 +115,6 @@ for shift in samples:
 
           for i in range( 0, len(rootFiles), filesPerJob ):
             fs_count += 1
-            #  if fs_count > 1: continue
 
             segments = rootFiles[i].split(".")[0].split("_")                       
 

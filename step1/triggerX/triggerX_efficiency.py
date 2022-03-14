@@ -1,10 +1,13 @@
 import os, sys
 sys.path.append( "../" ) 
+sys.path.append( "../../" )
 from argparse import ArgumentParser
 import numpy as np
 import pickle
 import pandas
 import config
+
+execfile( "../../EOSSafeUtils.py" )
 
 parser = ArgumentParser()
 parser.add_argument( "-y", "--year", help = "16APV,16,17,18" )
@@ -67,9 +70,19 @@ else:
 total_nominal = 0
 total_hlt = 0
  
-for sample in config.samples[ args.year ][ args.group ]:
+samples_done = EOSlistdir( os.path.join( config.haddDir[ args.year ][ "LPC" ], "nominal" ) )
+samples = []
+
+print( "[START] Adding the following samples:" )
+for sample_i in config.samples[ args.year ][ args.group ]:
+  for sample_j in samples_done:
+    if sample_i in sample_j:
+      print( "  + {}".format( sample_j ) )
+      samples.append( sample_j )
+
+for sample in samples:
   if args.group == "DATA" and args.lepton.upper() not in sample.upper(): continue
-  samplePath = os.path.join( config.haddDir[ args.year ][ "LPC" ], "nominal/", sample + "_hadd.root" )
+  samplePath = os.path.join( config.haddDir[ args.year ][ "LPC" ], "nominal/", sample )
   # load the sample
   rDF = ROOT.RDataFrame( "ljmet", samplePath )
   total_events = rDF.Count().GetValue()
@@ -146,7 +159,10 @@ pickle_dict = {
 }
 print( "[INFO] Total efficiency: {}/{} = {:.3f}".format( total_hlt, total_nominal, float( total_hlt ) / float( total_nominal ) ) )
 print( ">> Dumping efficiency matrix into pickle" )
+if not os.path.exists( os.path.join( os.getcwd(), "results/" ) ):
+  os.mkdir( os.path.join( os.getcwd(), "results/" ) )
+
 if args.single:
-  pickle.dump( pickle_dict, open( "efficiency_{}_{}_UL{}.pkl".format( args.group, args.lepton, args.year ), "w" ) )
+  pickle.dump( pickle_dict, open( "results/efficiency_{}_{}_UL{}.pkl".format( args.group, args.lepton, args.year ), "w" ) )
 else:
-  pickle.dump( pickle_dict, open( "efficiencyX_{}_{}_UL{}.pkl".format( args.group, args.lepton, args.year ), "w" ) )
+  pickle.dump( pickle_dict, open( "results/efficiencyX_{}_{}_UL{}.pkl".format( args.group, args.lepton, args.year ), "w" ) )
