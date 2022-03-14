@@ -2060,7 +2060,66 @@ double HardcodedConditions::GetElectronTriggerXSF2016(double pt, double eta){
 }
 
 double HardcodedConditions::GetElectronTriggerXSF2017(double leppt, double lepeta){
-  return 1.000 ;
+  if ( pt < 25.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 1.25125;
+    else if ( fabs(eta) < 1.4442 ) return 1.35693;
+    else if ( fabs(eta) < 1.5660 ) return 1.00000;
+    else if ( fabs(eta) < 2.0000 ) return 1.32810;
+    else return 1.55601; }
+  else if ( pt < 30.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 1.25691;
+    else if ( fabs(eta) < 1.4442 ) return 1.34479;
+    else if ( fabs(eta) < 1.5660 ) return 1.00000;
+    else if ( fabs(eta) < 2.0000 ) return 1.30162;
+    else return 1.49717; }
+  else if ( pt < 35.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 0.82855;
+    else if ( fabs(eta) < 1.4442 ) return 0.89083;
+    else if ( fabs(eta) < 1.5660 ) return 1.00000;
+    else if ( fabs(eta) < 2.0000 ) return 1.01650;
+    else return 1.01709; }
+  else if ( pt < 40.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 0.97305;
+    else if ( fabs(eta) < 1.4442 ) return 0.95100;
+    else if ( fabs(eta) < 1.5660 ) return 1.00000;
+    else if ( fabs(eta) < 2.0000 ) return 0.99687;
+    else return 0.97194; }
+  else if ( pt < 45.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 1.04696;
+    else if ( fabs(eta) < 1.4442 ) return 1.05650;
+    else if ( fabs(eta) < 1.5660 ) return 1.00000;
+    else if ( fabs(eta) < 2.0000 ) return 1.05761;
+    else return 1.08521; }
+  else if ( pt < 50.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 1.04818;
+    else if ( fabs(eta) < 1.4442 ) return 1.05944;
+    else if ( fabs(eta) < 1.5660 ) return 1.00000;
+    else if ( fabs(eta) < 2.0000 ) return 1.05692;
+    else return 1.07881; }
+  else if ( pt < 60.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 1.03115;
+    else if ( fabs(eta) < 1.4442 ) return 1.03405;
+    else if ( fabs(eta) < 1.5660 ) return 1.00000;
+    else if ( fabs(eta) < 2.0000 ) return 1.03670;
+    else return 1.05967; }
+  else if ( pt < 70.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 1.02379;
+    else if ( fabs(eta) < 1.4442 ) return 1.02966;
+    else if ( fabs(eta) < 1.5660 ) return 1.00000;
+    else if ( fabs(eta) < 2.0000 ) return 1.02496;
+    else return 1.03330; }
+  else if ( pt < 100.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 1.01920;
+    else if ( fabs(eta) < 1.4442 ) return 1.02058;
+    else if ( fabs(eta) < 1.5660 ) return 1.00000;
+    else if ( fabs(eta) < 2.0000 ) return 1.01125;
+    else return 1.01302; }
+  else {
+    if ( fabs(eta) < 0.8000 ) return 1.01151;
+    else if ( fabs(eta) < 1.4442 ) return 1.00599;
+    else if ( fabs(eta) < 1.5660 ) return 1.00000;
+    else if ( fabs(eta) < 2.0000 ) return 0.95784;
+    else return 0.93021; }
 }
 
 double HardcodedConditions::GetElectronTriggerXSF2018(double leppt, double lepeta){
