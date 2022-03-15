@@ -2799,13 +2799,13 @@ double HardcodedConditions::GetElectronTriggerSF2017(double pt, double eta){
   }
   else{
     if(      pt < 35.0  ){ sf_B = 1.0;            sf_C = 1.0;            sf_DEF = 1.34938101512; }
-    else if( pt < 40.0  ){ sf_B = 0.852743087035; sf_C = 0.682868604737; sf_DEF = ; }
-    else if( pt < 45.0  ){ sf_B = 1.1679917664;   sf_C = 1.0519398793;   sf_DEF = ; }
-    else if( pt < 50.0  ){ sf_B = 1.19320302369;  sf_C = 0.983854619602; sf_DEF = ; }
-    else if( pt < 60.0  ){ sf_B = 1.08557256937;  sf_C = 0.996753585332; sf_DEF = ; }
-    else if( pt < 100.0 ){ sf_B = 1.18448651178;  sf_C = 1.02919877827;  sf_DEF = ; }
-    else if( pt < 200.0 ){ sf_B = 1.06393762562;  sf_C = 1.01898572985;  sf_DEF = ; }
-    else{                  sf_B = 1.07201980973;  sf_C = 1.06465564707;  sf_DEF = ; }        
+    else if( pt < 40.0  ){ sf_B = 0.852743087035; sf_C = 0.682868604737; sf_DEF = 0.809342108762; }
+    else if( pt < 45.0  ){ sf_B = 1.1679917664;   sf_C = 1.0519398793;   sf_DEF = 0.929952818205; }
+    else if( pt < 50.0  ){ sf_B = 1.19320302369;  sf_C = 0.983854619602; sf_DEF = 0.996331036879; }
+    else if( pt < 60.0  ){ sf_B = 1.08557256937;  sf_C = 0.996753585332; sf_DEF = 0.926442474712; }
+    else if( pt < 100.0 ){ sf_B = 1.18448651178;  sf_C = 1.02919877827;  sf_DEF = 1.03147014466; }
+    else if( pt < 200.0 ){ sf_B = 1.06393762562;  sf_C = 1.01898572985;  sf_DEF = 0.976709670734; }
+    else{                  sf_B = 1.07201980973;  sf_C = 1.06465564707;  sf_DEF = 0.958190082361; }        
   }
   return ( 4.823 * sf_B + 9.664 * sf_C + 27.07 * sf_DEF ) / 41.557;
 }
