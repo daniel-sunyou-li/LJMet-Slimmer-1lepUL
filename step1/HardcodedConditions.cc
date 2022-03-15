@@ -1686,235 +1686,235 @@ double HardcodedConditions::GetElectronIdSF(double pt, double eta, std::string y
 }//end GetElectronIdSF
 
 double HardcodedConditions::GetElectronIdSF2016APV(double pt, double eta){
-if ( pt < 20.0 ) {
-  if ( eta < -2.0 ) return 1.02326;
-  else if ( eta < -1.566 ) return 1.01186;
-  else if ( eta < -1.444 ) return 1.00000;
-  else if ( eta < -0.8 ) return 1.00253;
-  else if ( eta < 0.0 ) return 0.95517;
-  else if ( eta < 0.8 ) return 0.97037;
-  else if ( eta < 1.444 ) return 1.02059;
-  else if ( eta < 1.566 ) return 1.00000;
-  else if ( eta < 2.0 ) return 1.00658;
-  else return 1.04868; }
-else if ( pt < 35.0 ) {
-  if ( eta < -2.0 ) return 0.99368;
-  else if ( eta < -1.566 ) return 0.97646;
-  else if ( eta < -1.444 ) return 1.00000;
-  else if ( eta < -0.8 ) return 0.96936;
-  else if ( eta < 0.0 ) return 0.96038;
-  else if ( eta < 0.8 ) return 0.97741;
-  else if ( eta < 1.444 ) return 0.98276;
-  else if ( eta < 1.566 ) return 1.00000;
-  else if ( eta < 2.0 ) return 0.96650;
-  else return 0.99230; }
-else if ( pt < 50.0 ) {
-  if ( eta < -2.0 ) return 0.99526;
-  else if ( eta < -1.566 ) return 0.98497;
-  else if ( eta < -1.444 ) return 1.00000;
-  else if ( eta < -0.8 ) return 0.97919;
-  else if ( eta < 0.0 ) return 0.96686;
-  else if ( eta < 0.8 ) return 0.97619;
-  else if ( eta < 1.444 ) return 0.98497;
-  else if ( eta < 1.566 ) return 1.00000;
-  else if ( eta < 2.0 ) return 0.98385;
-  else return 0.99520; }
-else if ( pt < 100.0 ) {
-  if ( eta < -2.0 ) return 0.99766;
-  else if ( eta < -1.566 ) return 0.98994;
-  else if ( eta < -1.444 ) return 1.00000;
-  else if ( eta < -0.8 ) return 0.98048;
-  else if ( eta < 0.0 ) return 0.96481;
-  else if ( eta < 0.8 ) return 0.97748;
-  else if ( eta < 1.444 ) return 0.98511;
-  else if ( eta < 1.566 ) return 1.00000;
-  else if ( eta < 2.0 ) return 0.99329;
-  else return 0.99527; }
-else {
-  if ( eta < -2.0 ) return 1.01458;
-  else if ( eta < -1.566 ) return 1.00219;
-  else if ( eta < -1.444 ) return 1.00000;
-  else if ( eta < -0.8 ) return 0.99195;
-  else if ( eta < 0.0 ) return 0.97506;
-  else if ( eta < 0.8 ) return 0.99092;
-  else if ( eta < 1.444 ) return 0.99543;
-  else if ( eta < 1.566 ) return 1.00000;
-  else if ( eta < 2.0 ) return 0.98701;
-  else return 1.00119; }
+  if ( pt < 20.0 ) {
+    if ( eta < -2.0 ) return 1.02326;
+    else if ( eta < -1.566 ) return 1.01186;
+    else if ( eta < -1.444 ) return 1.00000;
+    else if ( eta < -0.8 ) return 1.00253;
+    else if ( eta < 0.0 ) return 0.95517;
+    else if ( eta < 0.8 ) return 0.97037;
+    else if ( eta < 1.444 ) return 1.02059;
+    else if ( eta < 1.566 ) return 1.00000;
+    else if ( eta < 2.0 ) return 1.00658;
+    else return 1.04868; }
+  else if ( pt < 35.0 ) {
+    if ( eta < -2.0 ) return 0.99368;
+    else if ( eta < -1.566 ) return 0.97646;
+    else if ( eta < -1.444 ) return 1.00000;
+    else if ( eta < -0.8 ) return 0.96936;
+    else if ( eta < 0.0 ) return 0.96038;
+    else if ( eta < 0.8 ) return 0.97741;
+    else if ( eta < 1.444 ) return 0.98276;
+    else if ( eta < 1.566 ) return 1.00000;
+    else if ( eta < 2.0 ) return 0.96650;
+    else return 0.99230; }
+  else if ( pt < 50.0 ) {
+    if ( eta < -2.0 ) return 0.99526;
+    else if ( eta < -1.566 ) return 0.98497;
+    else if ( eta < -1.444 ) return 1.00000;
+    else if ( eta < -0.8 ) return 0.97919;
+    else if ( eta < 0.0 ) return 0.96686;
+    else if ( eta < 0.8 ) return 0.97619;
+    else if ( eta < 1.444 ) return 0.98497;
+    else if ( eta < 1.566 ) return 1.00000;
+    else if ( eta < 2.0 ) return 0.98385;
+    else return 0.99520; }
+  else if ( pt < 100.0 ) {
+    if ( eta < -2.0 ) return 0.99766;
+    else if ( eta < -1.566 ) return 0.98994;
+    else if ( eta < -1.444 ) return 1.00000;
+    else if ( eta < -0.8 ) return 0.98048;
+    else if ( eta < 0.0 ) return 0.96481;
+    else if ( eta < 0.8 ) return 0.97748;
+    else if ( eta < 1.444 ) return 0.98511;
+    else if ( eta < 1.566 ) return 1.00000;
+    else if ( eta < 2.0 ) return 0.99329;
+    else return 0.99527; }
+  else {
+    if ( eta < -2.0 ) return 1.01458;
+    else if ( eta < -1.566 ) return 1.00219;
+    else if ( eta < -1.444 ) return 1.00000;
+    else if ( eta < -0.8 ) return 0.99195;
+    else if ( eta < 0.0 ) return 0.97506;
+    else if ( eta < 0.8 ) return 0.99092;
+    else if ( eta < 1.444 ) return 0.99543;
+    else if ( eta < 1.566 ) return 1.00000;
+    else if ( eta < 2.0 ) return 0.98701;
+    else return 1.00119; }
 }
 
 double HardcodedConditions::GetElectronIdSF2016(double pt, double eta){
-if ( pt < 20.0 ) {
-  if ( eta < -2.0 ) return 1.02086;
-  else if ( eta < -1.566 ) return 0.98577;
-  else if ( eta < -1.444 ) return 1.00000;
-  else if ( eta < -0.8 ) return 0.98113;
-  else if ( eta < 0.0 ) return 0.97311;
-  else if ( eta < 0.8 ) return 0.97445;
-  else if ( eta < 1.444 ) return 0.98367;
-  else if ( eta < 1.566 ) return 1.00000;
-  else if ( eta < 2.0 ) return 0.97951;
-  else return 0.98520; }
-else if ( pt < 35.0 ) {
-  if ( eta < -2.0 ) return 0.99359;
-  else if ( eta < -1.566 ) return 0.95360;
-  else if ( eta < -1.444 ) return 1.00000;
-  else if ( eta < -0.8 ) return 0.96252;
-  else if ( eta < 0.0 ) return 0.96956;
-  else if ( eta < 0.8 ) return 0.98824;
-  else if ( eta < 1.444 ) return 0.96493;
-  else if ( eta < 1.566 ) return 1.00000;
-  else if ( eta < 2.0 ) return 0.94310;
-  else return 0.95614; }
-else if ( pt < 50.0 ) {
-  if ( eta < -2.0 ) return 1.00000;
-  else if ( eta < -1.566 ) return 0.96800;
-  else if ( eta < -1.444 ) return 1.00000;
-  else if ( eta < -0.8 ) return 0.96928;
-  else if ( eta < 0.0 ) return 0.97770;
-  else if ( eta < 0.8 ) return 0.99213;
-  else if ( eta < 1.444 ) return 0.97717;
-  else if ( eta < 1.566 ) return 1.00000;
-  else if ( eta < 2.0 ) return 0.96149;
-  else return 0.96820; }
-else if ( pt < 100.0 ) {
-  if ( eta < -2.0 ) return 0.99764;
-  else if ( eta < -1.566 ) return 0.98115;
-  else if ( eta < -1.444 ) return 1.00000;
-  else if ( eta < -0.8 ) return 0.97182;
-  else if ( eta < 0.0 ) return 0.98009;
-  else if ( eta < 0.8 ) return 0.99442;
-  else if ( eta < 1.444 ) return 0.98188;
-  else if ( eta < 1.566 ) return 1.00000;
-  else if ( eta < 2.0 ) return 0.96916;
-  else return 0.97778; }
-else {
-  if ( eta < -2.0 ) return 1.06901;
-  else if ( eta < -1.566 ) return 1.00327;
-  else if ( eta < -1.444 ) return 1.00000;
-  else if ( eta < -0.8 ) return 1.02273;
-  else if ( eta < 0.0 ) return 1.00333;
-  else if ( eta < 0.8 ) return 1.01577;
-  else if ( eta < 1.444 ) return 1.00000;
-  else if ( eta < 1.566 ) return 1.00000;
-  else if ( eta < 2.0 ) return 0.98598;
-  else return 1.00465; }
+  if ( pt < 20.0 ) {
+    if ( eta < -2.0 ) return 1.02086;
+    else if ( eta < -1.566 ) return 0.98577;
+    else if ( eta < -1.444 ) return 1.00000;
+    else if ( eta < -0.8 ) return 0.98113;
+    else if ( eta < 0.0 ) return 0.97311;
+    else if ( eta < 0.8 ) return 0.97445;
+    else if ( eta < 1.444 ) return 0.98367;
+    else if ( eta < 1.566 ) return 1.00000;
+    else if ( eta < 2.0 ) return 0.97951;
+    else return 0.98520; }
+  else if ( pt < 35.0 ) {
+    if ( eta < -2.0 ) return 0.99359;
+    else if ( eta < -1.566 ) return 0.95360;
+    else if ( eta < -1.444 ) return 1.00000;
+    else if ( eta < -0.8 ) return 0.96252;
+    else if ( eta < 0.0 ) return 0.96956;
+    else if ( eta < 0.8 ) return 0.98824;
+    else if ( eta < 1.444 ) return 0.96493;
+    else if ( eta < 1.566 ) return 1.00000;
+    else if ( eta < 2.0 ) return 0.94310;
+    else return 0.95614; }
+  else if ( pt < 50.0 ) {
+    if ( eta < -2.0 ) return 1.00000;
+    else if ( eta < -1.566 ) return 0.96800;
+    else if ( eta < -1.444 ) return 1.00000;
+    else if ( eta < -0.8 ) return 0.96928;
+    else if ( eta < 0.0 ) return 0.97770;
+    else if ( eta < 0.8 ) return 0.99213;
+    else if ( eta < 1.444 ) return 0.97717;
+    else if ( eta < 1.566 ) return 1.00000;
+    else if ( eta < 2.0 ) return 0.96149;
+    else return 0.96820; }
+  else if ( pt < 100.0 ) {
+    if ( eta < -2.0 ) return 0.99764;
+    else if ( eta < -1.566 ) return 0.98115;
+    else if ( eta < -1.444 ) return 1.00000;
+    else if ( eta < -0.8 ) return 0.97182;
+    else if ( eta < 0.0 ) return 0.98009;
+    else if ( eta < 0.8 ) return 0.99442;
+    else if ( eta < 1.444 ) return 0.98188;
+    else if ( eta < 1.566 ) return 1.00000;
+    else if ( eta < 2.0 ) return 0.96916;
+    else return 0.97778; }
+  else {
+    if ( eta < -2.0 ) return 1.06901;
+    else if ( eta < -1.566 ) return 1.00327;
+    else if ( eta < -1.444 ) return 1.00000;
+    else if ( eta < -0.8 ) return 1.02273;
+    else if ( eta < 0.0 ) return 1.00333;
+    else if ( eta < 0.8 ) return 1.01577;
+    else if ( eta < 1.444 ) return 1.00000;
+    else if ( eta < 1.566 ) return 1.00000;
+    else if ( eta < 2.0 ) return 0.98598;
+    else return 1.00465; }
 }
 		
 double HardcodedConditions::GetElectronIdSF2017(double pt, double eta){
-if ( pt < 20.0 ) {
-  if ( eta < -2.0 ) return 0.99501;
-  else if ( eta < -1.566 ) return 0.96127;
-  else if ( eta < -1.444 ) return 1.00000;
-  else if ( eta < -0.8 ) return 0.98659;
-  else if ( eta < 0.0 ) return 0.98027;
-  else if ( eta < 0.8 ) return 0.97672;
-  else if ( eta < 1.444 ) return 0.99009;
-  else if ( eta < 1.566 ) return 1.00000;
-  else if ( eta < 2.0 ) return 0.95765;
-  else return 1.00628; }
-else if ( pt < 35.0 ) {
-  if ( eta < -2.0 ) return 0.95848;
-  else if ( eta < -1.566 ) return 0.94091;
-  else if ( eta < -1.444 ) return 1.00000;
-  else if ( eta < -0.8 ) return 0.96508;
-  else if ( eta < 0.0 ) return 0.96744;
-  else if ( eta < 0.8 ) return 0.97113;
-  else if ( eta < 1.444 ) return 0.96938;
-  else if ( eta < 1.566 ) return 1.00000;
-  else if ( eta < 2.0 ) return 0.94388;
-  else return 0.95935; }
-else if ( pt < 50.0 ) {
-  if ( eta < -2.0 ) return 0.97256;
-  else if ( eta < -1.566 ) return 0.96798;
-  else if ( eta < -1.444 ) return 1.00000;
-  else if ( eta < -0.8 ) return 0.97456;
-  else if ( eta < 0.0 ) return 0.97577;
-  else if ( eta < 0.8 ) return 0.97807;
-  else if ( eta < 1.444 ) return 0.97669;
-  else if ( eta < 1.566 ) return 1.00000;
-  else if ( eta < 2.0 ) return 0.97005;
-  else return 0.96803; }
-else if ( pt < 100.0 ) {
-  if ( eta < -2.0 ) return 0.96851;
-  else if ( eta < -1.566 ) return 0.97692;
-  else if ( eta < -1.444 ) return 1.00000;
-  else if ( eta < -0.8 ) return 0.97271;
-  else if ( eta < 0.0 ) return 0.97503;
-  else if ( eta < 0.8 ) return 0.97727;
-  else if ( eta < 1.444 ) return 0.97697;
-  else if ( eta < 1.566 ) return 1.00000;
-  else if ( eta < 2.0 ) return 0.98310;
-  else return 0.97056; }
-else {
-  if ( eta < -2.0 ) return 0.97677;
-  else if ( eta < -1.566 ) return 0.97927;
-  else if ( eta < -1.444 ) return 1.00000;
-  else if ( eta < -0.8 ) return 1.00331;
-  else if ( eta < 0.0 ) return 0.98592;
-  else if ( eta < 0.8 ) return 0.99134;
-  else if ( eta < 1.444 ) return 0.98366;
-  else if ( eta < 1.566 ) return 1.00000;
-  else if ( eta < 2.0 ) return 0.97617;
-  else return 0.98664; }
+  if ( pt < 20.0 ) {
+    if ( eta < -2.0 ) return 0.99501;
+    else if ( eta < -1.566 ) return 0.96127;
+    else if ( eta < -1.444 ) return 1.00000;
+    else if ( eta < -0.8 ) return 0.98659;
+    else if ( eta < 0.0 ) return 0.98027;
+    else if ( eta < 0.8 ) return 0.97672;
+    else if ( eta < 1.444 ) return 0.99009;
+    else if ( eta < 1.566 ) return 1.00000;
+    else if ( eta < 2.0 ) return 0.95765;
+    else return 1.00628; }
+  else if ( pt < 35.0 ) {
+    if ( eta < -2.0 ) return 0.95848;
+    else if ( eta < -1.566 ) return 0.94091;
+    else if ( eta < -1.444 ) return 1.00000;
+    else if ( eta < -0.8 ) return 0.96508;
+    else if ( eta < 0.0 ) return 0.96744;
+    else if ( eta < 0.8 ) return 0.97113;
+    else if ( eta < 1.444 ) return 0.96938;
+    else if ( eta < 1.566 ) return 1.00000;
+    else if ( eta < 2.0 ) return 0.94388;
+    else return 0.95935; }
+  else if ( pt < 50.0 ) {
+    if ( eta < -2.0 ) return 0.97256;
+    else if ( eta < -1.566 ) return 0.96798;
+    else if ( eta < -1.444 ) return 1.00000;
+    else if ( eta < -0.8 ) return 0.97456;
+    else if ( eta < 0.0 ) return 0.97577;
+    else if ( eta < 0.8 ) return 0.97807;
+    else if ( eta < 1.444 ) return 0.97669;
+    else if ( eta < 1.566 ) return 1.00000;
+    else if ( eta < 2.0 ) return 0.97005;
+    else return 0.96803; }
+  else if ( pt < 100.0 ) {
+    if ( eta < -2.0 ) return 0.96851;
+    else if ( eta < -1.566 ) return 0.97692;
+    else if ( eta < -1.444 ) return 1.00000;
+    else if ( eta < -0.8 ) return 0.97271;
+    else if ( eta < 0.0 ) return 0.97503;
+    else if ( eta < 0.8 ) return 0.97727;
+    else if ( eta < 1.444 ) return 0.97697;
+    else if ( eta < 1.566 ) return 1.00000;
+    else if ( eta < 2.0 ) return 0.98310;
+    else return 0.97056; }
+  else {
+    if ( eta < -2.0 ) return 0.97677;
+    else if ( eta < -1.566 ) return 0.97927;
+    else if ( eta < -1.444 ) return 1.00000;
+    else if ( eta < -0.8 ) return 1.00331;
+    else if ( eta < 0.0 ) return 0.98592;
+    else if ( eta < 0.8 ) return 0.99134;
+    else if ( eta < 1.444 ) return 0.98366;
+    else if ( eta < 1.566 ) return 1.00000;
+    else if ( eta < 2.0 ) return 0.97617;
+    else return 0.98664; }
 }
 
 double HardcodedConditions::GetElectronIdSF2018(double pt, double eta){
-if ( pt < 20.0 ) {
-  if ( eta < -2.0 ) return 0.98977;
-  else if ( eta < -1.566 ) return 0.97193;
-  else if ( eta < -1.444 ) return 1.00000;
-  else if ( eta < -0.8 ) return 0.98375;
-  else if ( eta < 0.0 ) return 0.96348;
-  else if ( eta < 0.8 ) return 0.98120;
-  else if ( eta < 1.444 ) return 0.98365;
-  else if ( eta < 1.566 ) return 1.00000;
-  else if ( eta < 2.0 ) return 0.98242;
-  else return 0.96169; }
-else if ( pt < 35.0 ) {
-  if ( eta < -2.0 ) return 0.95916;
-  else if ( eta < -1.566 ) return 0.95000;
-  else if ( eta < -1.444 ) return 1.00000;
-  else if ( eta < -0.8 ) return 0.95088;
-  else if ( eta < 0.0 ) return 0.96503;
-  else if ( eta < 0.8 ) return 0.97209;
-  else if ( eta < 1.444 ) return 0.95283;
-  else if ( eta < 1.566 ) return 1.00000;
-  else if ( eta < 2.0 ) return 0.94413;
-  else return 0.94496; }
-else if ( pt < 50.0 ) {
-  if ( eta < -2.0 ) return 0.97250;
-  else if ( eta < -1.566 ) return 0.96706;
-  else if ( eta < -1.444 ) return 1.00000;
-  else if ( eta < -0.8 ) return 0.96792;
-  else if ( eta < 0.0 ) return 0.97247;
-  else if ( eta < 0.8 ) return 0.97574;
-  else if ( eta < 1.444 ) return 0.96882;
-  else if ( eta < 1.566 ) return 1.00000;
-  else if ( eta < 2.0 ) return 0.96489;
-  else return 0.96137; }
-else if ( pt < 100.0 ) {
-  if ( eta < -2.0 ) return 0.97059;
-  else if ( eta < -1.566 ) return 0.97484;
-  else if ( eta < -1.444 ) return 1.00000;
-  else if ( eta < -0.8 ) return 0.96824;
-  else if ( eta < 0.0 ) return 0.97388;
-  else if ( eta < 0.8 ) return 0.97495;
-  else if ( eta < 1.444 ) return 0.96806;
-  else if ( eta < 1.566 ) return 1.00000;
-  else if ( eta < 2.0 ) return 0.97170;
-  else return 0.96280; }
-else {
-  if ( eta < -2.0 ) return 0.99777;
-  else if ( eta < -1.566 ) return 0.99162;
-  else if ( eta < -1.444 ) return 1.00000;
-  else if ( eta < -0.8 ) return 0.99126;
-  else if ( eta < 0.0 ) return 0.98060;
-  else if ( eta < 0.8 ) return 0.98598;
-  else if ( eta < 1.444 ) return 0.98794;
-  else if ( eta < 1.566 ) return 1.00000;
-  else if ( eta < 2.0 ) return 0.98428;
-  else return 0.96563; }
+  if ( pt < 20.0 ) {
+    if ( eta < -2.0 ) return 0.98977;
+    else if ( eta < -1.566 ) return 0.97193;
+    else if ( eta < -1.444 ) return 1.00000;
+    else if ( eta < -0.8 ) return 0.98375;
+    else if ( eta < 0.0 ) return 0.96348;
+    else if ( eta < 0.8 ) return 0.98120;
+    else if ( eta < 1.444 ) return 0.98365;
+    else if ( eta < 1.566 ) return 1.00000;
+    else if ( eta < 2.0 ) return 0.98242;
+    else return 0.96169; }
+  else if ( pt < 35.0 ) {
+    if ( eta < -2.0 ) return 0.95916;
+    else if ( eta < -1.566 ) return 0.95000;
+    else if ( eta < -1.444 ) return 1.00000;
+    else if ( eta < -0.8 ) return 0.95088;
+    else if ( eta < 0.0 ) return 0.96503;
+    else if ( eta < 0.8 ) return 0.97209;
+    else if ( eta < 1.444 ) return 0.95283;
+    else if ( eta < 1.566 ) return 1.00000;
+    else if ( eta < 2.0 ) return 0.94413;
+    else return 0.94496; }
+  else if ( pt < 50.0 ) {
+    if ( eta < -2.0 ) return 0.97250;
+    else if ( eta < -1.566 ) return 0.96706;
+    else if ( eta < -1.444 ) return 1.00000;
+    else if ( eta < -0.8 ) return 0.96792;
+    else if ( eta < 0.0 ) return 0.97247;
+    else if ( eta < 0.8 ) return 0.97574;
+    else if ( eta < 1.444 ) return 0.96882;
+    else if ( eta < 1.566 ) return 1.00000;
+    else if ( eta < 2.0 ) return 0.96489;
+    else return 0.96137; }
+  else if ( pt < 100.0 ) {
+    if ( eta < -2.0 ) return 0.97059;
+    else if ( eta < -1.566 ) return 0.97484;
+    else if ( eta < -1.444 ) return 1.00000;
+    else if ( eta < -0.8 ) return 0.96824;
+    else if ( eta < 0.0 ) return 0.97388;
+    else if ( eta < 0.8 ) return 0.97495;
+    else if ( eta < 1.444 ) return 0.96806;
+    else if ( eta < 1.566 ) return 1.00000;
+    else if ( eta < 2.0 ) return 0.97170;
+    else return 0.96280; }
+  else {
+    if ( eta < -2.0 ) return 0.99777;
+    else if ( eta < -1.566 ) return 0.99162;
+    else if ( eta < -1.444 ) return 1.00000;
+    else if ( eta < -0.8 ) return 0.99126;
+    else if ( eta < 0.0 ) return 0.98060;
+    else if ( eta < 0.8 ) return 0.98598;
+    else if ( eta < 1.444 ) return 0.98794;
+    else if ( eta < 1.566 ) return 1.00000;
+    else if ( eta < 2.0 ) return 0.98428;
+    else return 0.96563; }
 }
 
 /*.-----------------------------------------------------------------.
@@ -1979,8 +1979,8 @@ double HardcodedConditions::GetElectronTriggerSF(double pt, double eta, std::str
   else return 0.;
 }//end GetElectronTriggerSF
 
-// using EOY SF for HLT_ele32_eta2p1_WPTight_Gsf_v* approved by KIT for Run 2016 BCDEF
-// https://github.com/TopBrussels/TopTreeAnalysisBase/blob/CMSSW_80X/Calibrations/LeptonSF/ElectronSF/Moriond17/TriggerSF_Run2016BCDEF_v2.root
+// using EOY SF for HLT_ele32_eta2p1_WPTight_Gsf_v* approved by KIT for Run 2016
+// https://github.com/TopBrussels/TopTreeAnalysisBase/blob/CMSSW_80X/Calibrations/LeptonSF/ElectronSF/SF_HLT_Ele32_eta2p1.root
 double HardcodedConditions::GetElectronTriggerSF2016APV(double pt, double eta){
   if (eta < -1.8){
     if     (pt < 32 ){triggerSFHLT = 0.394531250000;}
@@ -2368,6 +2368,8 @@ double HardcodedConditions::GetElectronTriggerSF2016APV(double pt, double eta){
   }
 }
 
+// using EOY SF for HLT_ele32_eta2p1_WPTight_Gsf_v* approved by KIT for Run 2016
+// https://github.com/TopBrussels/TopTreeAnalysisBase/blob/CMSSW_80X/Calibrations/LeptonSF/ElectronSF/SF_HLT_Ele32_eta2p1.root
 double HardcodedConditions::GetElectronTriggerSF2016(double pt, double eta){
   if (eta < -1.8){
     if     (pt < 32 ){triggerSFHLT = 0.394531250000;}
@@ -2758,119 +2760,97 @@ double HardcodedConditions::GetElectronTriggerSF2016(double pt, double eta){
 double HardcodedConditions::GetElectronTriggerSF2017(double pt, double eta){
 {
 	// Trigger Scale Factors, SF2017B_Bkg_LepPtEta_EOR.png & SF2017CDEF_Bkg_LepPtEta_EOR.png
-	float triggerSFB = 1.0;
-	float triggerSFC = 1.0;
-	float triggerSFDEF = 1.0;
-	float triggerSFBunc = 0.0;
-	float triggerSFCunc = 0.0;
-	float triggerSFDEFunc = 0.0;
+	float sf_B;
+	float sf_C;
+	float sf_DEF;
+  float lumi_B = 4.823;
+  float lumi_C = 9.664;
+  float lumi_DEF = 27.07;
 
-	if (eta > 0.0 && eta <= 0.8){
-	    if(pt >30.0 && pt <= 35.0){triggerSFDEF=0.910508894879; triggerSFDEFunc=0.0252630974566; }
-	    else if(pt > 35.0 && pt <= 40.0){triggerSFB=1.19235377821; triggerSFBunc=0.00972352951004; triggerSFC=0.961432584122; triggerSFCunc=0.0206050210328;triggerSFDEF=0.953531146324; triggerSFDEFunc=0.00966443825252;}
-	    else if(pt > 40.0 && pt <= 45.0){triggerSFB=1.15582596391; triggerSFBunc=0.0101490597149; triggerSFC=0.957629044796; triggerSFCunc=0.0156301400464;triggerSFDEF=0.969037828674; triggerSFDEFunc=0.00902253599794;}
-	    else if(pt > 45.0 && pt <= 50.0){triggerSFB=1.14242389742; triggerSFBunc=0.00549159903045; triggerSFC=0.952084569431; triggerSFCunc=0.0156343831136;triggerSFDEF=0.972670135935; triggerSFDEFunc=0.00874302598399;}
-	    else if(pt > 50.0 && pt <= 60.0){triggerSFB=1.13798058665; triggerSFBunc=0.00440646655911; triggerSFC=0.972836208578; triggerSFCunc=0.0109869570181;triggerSFDEF=0.97354484058; triggerSFDEFunc=0.00662049424611;}
-	    else if(pt > 60.0 && pt >= 100.0){triggerSFB=1.11927898325; triggerSFBunc=0.00270996230892; triggerSFC=0.97878084945; triggerSFCunc=0.00639206054071;triggerSFDEF=0.978742705794; triggerSFDEFunc=0.00393049250046;}
-	    else if(pt > 100.0 && pt >= 200.0){triggerSFB=1.08208421955; triggerSFBunc=0.00263577695243;triggerSFC=0.97205414899; triggerSFCunc=0.00666655373504;triggerSFDEF=0.976656543342; triggerSFDEFunc=0.00402836298722;}
-	    else if(pt >200.0 && pt >= 300.0){triggerSFB=1.05681427994; triggerSFBunc=0.00197390294288;triggerSFC=0.988668281842; triggerSFCunc=0.0108354482413;triggerSFDEF=0.980285171661; triggerSFDEFunc=0.00719412375919;}
-	}
-	else if (eta > 0.8 && eta <= 1.442){
-	    if(pt >30.0 && pt <= 35.0){triggerSFDEF=0.751761888491; triggerSFDEFunc=0.0392563144486;}
-	    else if(pt > 35.0 && pt <= 40.0){triggerSFB=1.15822014397; triggerSFBunc=0.0366899788708; triggerSFC=0.860499625902; triggerSFCunc=0.0338474227491;triggerSFDEF=0.919657299703; triggerSFDEFunc=0.0145884627614;}
-	    else if(pt > 40.0 && pt <= 45.0){triggerSFB=1.21616929374; triggerSFBunc=0.0075355308975; triggerSFC=0.954195822579; triggerSFCunc=0.0216774946301;triggerSFDEF=0.9416298044; triggerSFDEFunc=0.0135284523691;}
-	    else if(pt > 45.0 && pt <= 50.0){triggerSFB=1.17221728706; triggerSFBunc=0.00598476735072;triggerSFC=0.95883629846; triggerSFCunc=0.0208809133241; triggerSFDEF=0.967038221562; triggerSFDEFunc=0.012176898146;}
-	    else if(pt > 50.0 && pt <= 60.0){triggerSFB=1.19498750549; triggerSFBunc=0.0178876420601; triggerSFC=0.954662162504; triggerSFCunc=0.0160626737532;triggerSFDEF=0.975886529118; triggerSFDEFunc=0.00901597488231;}
-	    else if(pt > 60.0 && pt >= 100.0){triggerSFB=1.14500756907; triggerSFBunc=0.00769191207143; triggerSFC=0.973404630486; triggerSFCunc=0.00863116494001;triggerSFDEF=0.981893775663; triggerSFDEFunc=0.00516090030148;}
-	    else if(pt > 100.0 && pt >= 200.0){triggerSFB=1.08473672928; triggerSFBunc=0.00377953565311;triggerSFC=0.982716650785; triggerSFCunc=0.00847325191329;triggerSFDEF=0.978950786067; triggerSFDEFunc=0.0052715751246;}
-	    else if(pt >200.0 && pt >= 300.0){triggerSFB=1.04804436988; triggerSFBunc=0.00275314759171;triggerSFC=0.962029353635; triggerSFCunc=0.0169198961547; triggerSFDEF=0.979265291494; triggerSFDEFunc=0.0093553710705;}
-	}
-	else if (eta > 1.442 && eta <= 2.0){
-	    if(pt >30.0 && pt <= 35.0){triggerSFDEF=0.61359340781; triggerSFDEFunc=0.0720651614296; }
-	    else if(pt > 35.0 && pt <= 40.0){triggerSFB=0.979837673172; triggerSFBunc=0.0996061772208;triggerSFC=0.834393494481; triggerSFCunc=0.0545242814001;triggerSFDEF=0.865218488115; triggerSFDEFunc=0.0255203774749;}
-	    else if(pt > 40.0 && pt <= 45.0){triggerSFB=1.09592474113; triggerSFBunc=0.0388939927352; triggerSFC=0.934846351249; triggerSFCunc=0.0336441519287; triggerSFDEF=0.92564191376; triggerSFDEFunc=0.0228158658932; }
-	    else if(pt > 45.0 && pt <= 50.0){triggerSFB=1.14329944654; triggerSFBunc=0.0390830761738; triggerSFC=0.962071721753; triggerSFCunc=0.0323504865487;triggerSFDEF=0.910259293332; triggerSFDEFunc=0.023206491402; }
-	    else if(pt > 50.0 && pt <= 60.0){triggerSFB=1.12458617216; triggerSFBunc=0.0207787584607; triggerSFC=0.939378108547; triggerSFCunc=0.0246293245522; triggerSFDEF=0.951179859384; triggerSFDEFunc=0.0150226105676;}
-	    else if(pt > 60.0 && pt >= 100.0){triggerSFB=1.12172511077; triggerSFBunc=0.0220454574283; triggerSFC=0.987642127321; triggerSFCunc=0.0210337676182; triggerSFDEF=0.968589861037; triggerSFDEFunc=0.0173841185589;}
-	    else if(pt > 100.0 && pt >= 200.0){triggerSFB=1.09052141074; triggerSFBunc=0.0140524818938; triggerSFC=0.985970344843; triggerSFCunc=0.0167420341634; triggerSFDEF=0.967442726925; triggerSFDEFunc=0.0115473116236;}
-	    else if(pt >200.0 && pt >= 300.0){triggerSFB=1.08883369326; triggerSFBunc=0.0193992275579;  triggerSFC=0.893843409369; triggerSFCunc=0.0558133858133; triggerSFDEF=0.958624277634; triggerSFDEFunc=0.0308831433403;}
-	}
-	else if (eta > 2.0 && eta <= 2.4){
-	    if(pt >30.0 && pt <= 35.0){triggerSFDEF=1.34938101512; triggerSFDEFunc=0.897934586653;}
-	    else if(pt > 35.0 && pt <= 40.0){triggerSFB=0.852743087035; triggerSFBunc=0.177423039542;triggerSFC=0.682868604737; triggerSFCunc=0.144437037161; triggerSFDEF=0.809342108762; triggerSFDEFunc=0.0630935824021;}
-	    else if(pt > 40.0 && pt <= 45.0){triggerSFB=1.1679917664; triggerSFBunc=0.0167310627084; triggerSFC=1.0519398793; triggerSFCunc=0.0583624743679; triggerSFDEF=0.929952818205; triggerSFDEFunc=0.0555593489689;}
-	    else if(pt > 45.0 && pt <= 50.0){triggerSFB=1.19320302369; triggerSFBunc=0.0205220242409;triggerSFC=0.983854619602; triggerSFCunc=0.0710158704718;triggerSFDEF=0.996331036879; triggerSFDEFunc=0.0509581507824;}
-	    else if(pt > 50.0 && pt <= 60.0){triggerSFB=1.08557256937; triggerSFBunc=0.117006664089; triggerSFC=0.996753585332; triggerSFCunc=0.0684326387008;triggerSFDEF=0.926442474712; triggerSFDEFunc=0.0458155559586;}
-	    else if(pt > 60.0 && pt >= 100.0){triggerSFB=1.18448651178; triggerSFBunc=0.0697531410082;triggerSFC=1.02919877827; triggerSFCunc=0.0716198040658; triggerSFDEF=1.03147014466; triggerSFDEFunc=0.058149906159;}
-	    else if(pt > 100.0 && pt >= 200.0){triggerSFB=1.06393762562; triggerSFBunc=0.0624111781463;triggerSFC=1.01898572985; triggerSFCunc=0.0416570105471;triggerSFDEF=0.976709670734; triggerSFDEFunc=0.0321444698532;}
-	    else if(pt >200.0 && pt >= 300.0){triggerSFB=1.07201980973; triggerSFBunc=0.0236270951373;triggerSFC=1.06465564707; triggerSFCunc=0.0231736721195;triggerSFDEF=0.958190082361; triggerSFDEFunc=0.103132973757; }
-	}
-
-
-	/*if (ht > 500.0 && ht < 750.0){
-	  if (pt > 20.0 && pt < 50.0){triggerSFB = 0.907;triggerSFC = 0.931;triggerSFDEF = 0.967;}
-	  else if (pt >=50.0 && pt <= 300.0){triggerSFB = 0.997;triggerSFC = 0.999;triggerSFDEF = 0.999;}
-	}
-	else if (ht >= 750.0 && ht < 3000.0){
-	    if (pt > 20.0 && pt < 50.0){triggerSFB = 0.888;triggerSFC = 0.923;triggerSFDEF = 0.963;}
-	    else if (pt >=50.0 && pt <= 300.0){triggerSFB = 0.996;triggerSFC = 1.000;triggerSFDEF = 0.999;}
-	}*/
-	return (4.823*triggerSFB+ 9.664*triggerSFC + 27.07*triggerSFDEF)/41.557;
-
+  if( fabs(eta) < 0.8 ){
+    if(      pt < 35.0  ){ sf_B = 1.0;           sf_C = 1.0;            sf_DEF = 0.910508894879; }
+    else if( pt < 40.0  ){ sf_B = 1.19235377821; sf_C = 0.961432584122; sf_DEF = 0.953531146324; }
+    else if( pt < 45.0  ){ sf_B = 1.15582596391; sf_C = 0.957629044796; sf_DEF = 0.969037828674; }
+    else if( pt < 50.0  ){ sf_B = 1.14242389742; sf_C = 0.952084569431; sf_DEF = 0.972670135935; }
+    else if( pt < 60.0  ){ sf_B = 1.13798058665; sf_C = 0.972836208578; sf_DEF = 0.97354484058; }
+    else if( pt < 100.0 ){ sf_B = 1.11927898325; sf_C = 0.97878084945;  sf_DEF = 0.978742705794; }
+    else if( pt < 200.0 ){ sf_B = 1.08208421955; sf_C = 0.97205414899;  sf_DEF = 0.976656543342; }
+    else{                  sf_B = 1.05681427994; sf_C = 0.988668281842; sf_DEF = 0.980285171661; }                 
+  }
+  else if( fabs(eta) < 1.4442 ){
+    if(      pt < 35.0  ){ sf_B = 1.0;           sf_C = 1.0;            sf_DEF = 0.751761888491; }
+    else if( pt < 40.0  ){ sf_B = 1.15822014397; sf_C = 0.860499625902; sf_DEF = 0.919657299703; }
+    else if( pt < 45.0  ){ sf_B = 1.21616929374; sf_C = 0.954195822579; sf_DEF = 0.9416298044; }
+    else if( pt < 50.0  ){ sf_B = 1.17221728706; sf_C = 0.95883629846;  sf_DEF = 0.967038221562; }
+    else if( pt < 60.0  ){ sf_B = 1.19498750549; sf_C = 0.954662162504; sf_DEF = 0.975886529118; }
+    else if( pt < 100.0 ){ sf_B = 1.14500756907; sf_C = 0.973404630486; sf_DEF = 0.981893775663; }
+    else if( pt < 200.0 ){ sf_B = 1.08473672928; sf_C = 0.982716650785; sf_DEF = 0.978950786067; }
+    else{                  sf_B = 1.04804436988; sf_C = 0.962029353635; sf_DEF = 0.979265291494; }         
+  }
+  else if( fabs(eta) < 2.0 ){
+    if(      pt < 35.0  ){ sf_B = 1.0;            sf_C = 1.0;            sf_DEF = 0.61359340781; }
+    else if( pt < 40.0  ){ sf_B = 0.979837673172; sf_C = 0.834393494481; sf_DEF = 0.865218488115; }
+    else if( pt < 45.0  ){ sf_B = 1.09592474113;  sf_C = 0.934846351249; sf_DEF = 0.92564191376; }
+    else if( pt < 50.0  ){ sf_B = 1.14329944654;  sf_C = 0.962071721753; sf_DEF = 0.910259293332; }
+    else if( pt < 60.0  ){ sf_B = 1.12458617216;  sf_C = 0.939378108547; sf_DEF = 0.951179859384; }
+    else if( pt < 100.0 ){ sf_B = 1.12172511077;  sf_C = 0.987642127321; sf_DEF = 0.968589861037; }
+    else if( pt < 200.0 ){ sf_B = 1.09052141074;  sf_C = 0.985970344843; sf_DEF = 0.967442726925; }
+    else{                  sf_B = 1.08883369326;  sf_C = 0.893843409369; sf_DEF = 0.958624277634; }  
+  }
+  else{
+    if(      pt < 35.0  ){ sf_B = 1.0;            sf_C = 1.0;            sf_DEF = 1.34938101512; }
+    else if( pt < 40.0  ){ sf_B = 0.852743087035; sf_C = 0.682868604737; sf_DEF = ; }
+    else if( pt < 45.0  ){ sf_B = 1.1679917664;   sf_C = 1.0519398793;   sf_DEF = ; }
+    else if( pt < 50.0  ){ sf_B = 1.19320302369;  sf_C = 0.983854619602; sf_DEF = ; }
+    else if( pt < 60.0  ){ sf_B = 1.08557256937;  sf_C = 0.996753585332; sf_DEF = ; }
+    else if( pt < 100.0 ){ sf_B = 1.18448651178;  sf_C = 1.02919877827;  sf_DEF = ; }
+    else if( pt < 200.0 ){ sf_B = 1.06393762562;  sf_C = 1.01898572985;  sf_DEF = ; }
+    else{                  sf_B = 1.07201980973;  sf_C = 1.06465564707;  sf_DEF = ; }        
+  }
+  return ( 4.823 * sf_B + 9.664 * sf_C + 27.07 * sf_DEF ) / 41.557;
 }
 
-double HardcodedConditions::GetElectronTriggerSF2018(double pt, double eta){
-  float triggerSFABCD = 1.0;
-  float triggerSFABCDunc = 0.0;
-  if (eta > 0.0 && eta <= 0.8){
-	    if(pt >30.0 && pt <= 35.0){triggerSFABCD=0.913692057441; triggerSFABCDunc=0.0154464370968;}
-	    else if(pt > 35.0 && pt <= 40.0){triggerSFABCD=0.971695502732; triggerSFABCDunc=0.00613023548779;}
-	    else if(pt > 40.0 && pt <= 45.0){triggerSFABCD=0.973472902604; triggerSFABCDunc=0.00581754877102;}
-	    else if(pt > 45.0 && pt <= 50.0){triggerSFABCD=0.975870251002; triggerSFABCDunc=0.00591952371387;}
-	    else if(pt > 50.0 && pt <= 60.0){triggerSFABCD=0.972260692149; triggerSFABCDunc=0.00426073436109;}
-	    else if(pt > 60.0 && pt >= 100.0){triggerSFABCD=0.978462954775; triggerSFABCDunc=0.00251528166842;}
-	    else if(pt > 100.0 && pt >= 200.0){triggerSFABCD=0.982340801275; triggerSFABCDunc=0.00249892269699;}
-	    else if(pt >200.0 && pt >= 300.0){triggerSFABCD=0.988277803553; triggerSFABCDunc=0.00408553511306;}
-	}
-	else if (eta > 0.8 && eta <= 1.442){
-	    if(pt >30.0 && pt <= 35.0){triggerSFABCD=0.79130810157; triggerSFABCDunc=0.0257604488845;}
-	    else if(pt > 35.0 && pt <= 40.0){triggerSFABCD=0.95794335208; triggerSFABCDunc=0.0200823014694;}
-	    else if(pt > 40.0 && pt <= 45.0){triggerSFABCD=0.98584588097; triggerSFABCDunc=0.0077862661467;}
-	    else if(pt > 45.0 && pt <= 50.0){triggerSFABCD=0.986921685202; triggerSFABCDunc=0.0127837800598; }
-	    else if(pt > 50.0 && pt <= 60.0){triggerSFABCD=1.01257881296; triggerSFABCDunc=0.0160565199922;}
-	    else if(pt > 60.0 && pt >= 100.0){triggerSFABCD=0.985749736854; triggerSFABCDunc=0.00366472974788;}
-	    else if(pt > 100.0 && pt >= 200.0){triggerSFABCD=0.993225266785; triggerSFABCDunc=0.00626714108618;}
-	    else if(pt >200.0 && pt >= 300.0){triggerSFABCD=1.0017169042; triggerSFABCDunc=0.00833637183928;}
-	}
-	else if (eta > 1.442 && eta <= 2.0){
-	    if(pt >30.0 && pt <= 35.0){triggerSFABCD=0.784488053273; triggerSFABCDunc=0.0399543285185;}
-	    else if(pt > 35.0 && pt <= 40.0){triggerSFABCD=0.923642602884; triggerSFABCDunc=0.0250525652842;}
-	    else if(pt > 40.0 && pt <= 45.0){triggerSFABCD=0.949818783052; triggerSFABCDunc=0.0160756054522;}
-	    else if(pt > 45.0 && pt <= 50.0){triggerSFABCD=0.994631635079; triggerSFABCDunc=0.0190307120158;}
-	    else if(pt > 50.0 && pt <= 60.0){triggerSFABCD=0.971684494245; triggerSFABCDunc=0.0170379153418;}
-	    else if(pt > 60.0 && pt >= 100.0){triggerSFABCD=0.975080347642; triggerSFABCDunc=0.00914101473342;}
-	    else if(pt > 100.0 && pt >= 200.0){triggerSFABCD=0.945571234252; triggerSFABCDunc=0.00842362907735;}
-	    else if(pt >200.0 && pt >= 300.0){triggerSFABCD=0.917539801421; triggerSFABCDunc=0.0223619496622;}
-	}
-	else if (eta > 2.0 && eta <= 2.4){
-	    if(pt >30.0 && pt <= 35.0){triggerSFABCD=0.771792545521; triggerSFABCDunc=0.0822918878152;}
-	    else if(pt > 35.0 && pt <= 40.0){triggerSFABCD=0.877438998912; triggerSFABCDunc=0.035306995628;}
-	    else if(pt > 40.0 && pt <= 45.0){triggerSFABCD=1.05068262187; triggerSFABCDunc=0.0582042341467;}
-	    else if(pt > 45.0 && pt <= 50.0){triggerSFABCD=0.963750775537; triggerSFABCDunc=0.0331998840585;}
-	    else if(pt > 50.0 && pt <= 60.0){triggerSFABCD=0.944876225901; triggerSFABCDunc=0.0237164780054;}
-	    else if(pt > 60.0 && pt >= 100.0){ triggerSFABCD=0.954494360964; triggerSFABCDunc=0.0153518496535;}
-	    else if(pt > 100.0 && pt >= 200.0){triggerSFABCD=0.940644961626; triggerSFABCDunc=0.0308095483653;}
-	    else if(pt >200.0 && pt >= 300.0){triggerSFABCD=0.795593538315; triggerSFABCDunc=0.0538805201514;}
-	}
-  /*if (ht > 500.0 && ht < 750.0){
-    if (pt > 20.0 && pt < 50.0){triggerSFAB = 0.970;triggerSFCD = 0.981;}
-    else if (pt >=50.0 && pt <= 300.0){triggerSFAB = 0.999;triggerSFCD = 1.000;}
+double HardcodedConditions::GetElectronTriggerSF2018( double pt, double eta ){
+  if( fabs(eta) < 0.8 ){
+    if( pt < 35 )         return 0.913692057441;
+    else if( pt <  40.0 ) return 0.971695502732;
+    else if( pt <  45.0 ) return 0.973472902604;
+    else if( pt <  50.0 ) return 0.975870251002;
+    else if( pt <  60.0 ) return 0.972260692149;
+    else if( pt < 100.0 ) return 0.978462954775;
+    else if( pt < 200.0 ) return 0.982340801275;
+    else                  return 0.988277803553;
   }
-  else if (ht >= 750.0 && ht < 3000.0){
-    if (pt > 20.0 && pt < 50.0){triggerSFAB = 0.959;triggerSFCD = 0.990;}
-    else if (pt >=50.0 && pt <= 300.0){triggerSFAB = 0.998;triggerSFCD = 0.999;}
-  }*/
-  return triggerSFABCD;
+  else if( fabs(eta) < 1.4442 ){
+    if( pt < 35 )         return 0.79130810157;
+    else if( pt <  40.0 ) return 0.95794335208;
+    else if( pt <  45.0 ) return 0.98584588097;
+    else if( pt <  50.0 ) return 0.986921685202;
+    else if( pt <  60.0 ) return 1.01257881296;
+    else if( pt < 100.0 ) return 0.985749736854;
+    else if( pt < 200.0 ) return 0.993225266785;
+    else                  return 1.0017169042;
+  }
+  else if( fabs(eta) < 2.0 ){
+    if( pt < 35 )         return 0.784488053273;
+    else if( pt <  40.0 ) return 0.923642602884;
+    else if( pt <  45.0 ) return 0.949818783052;
+    else if( pt <  50.0 ) return 0.994631635079;
+    else if( pt <  60.0 ) return 0.971684494245;
+    else if( pt < 100.0 ) return 0.975080347642;
+    else if( pt < 200.0 ) return 0.945571234252;
+    else                  return 0.917539801421;
+  }
+  else{
+    if( pt < 35 )         return 0.771792545521;
+    else if( pt <  40.0 ) return 0.877438998912;
+    else if( pt <  45.0 ) return 1.05068262187;
+    else if( pt <  50.0 ) return 0.963750775537;
+    else if( pt <  60.0 ) return 0.944876225901;
+    else if( pt < 100.0 ) return 0.954494360964;
+    else if( pt < 200.0 ) return 0.940644961626;
+    else                  return 0.795593538315;
+  }
 }
 
 /*.-----------------------------------------------------------------.
@@ -3455,215 +3435,19 @@ double HardcodedConditions::GetIsMHadronTriggerSF(double njets, double ht, std::
 }
 
 double HardcodedConditions::GetIsMHadronTriggerSF2016APV(double njets, double ht){
-  float triggerSFBCDEF = 1.0;
-  float triggerSFGH = 1.0;
-  float lum_RunsBCDEF = 15.658183109;
-  float lum_RunsGH = 15.199167277;
-  // https://github.com/TopBrussels/TopTreeAnalysisBase/blob/CMSSW_80X/Calibrations/LeptonSF/MuonSF/SingleMuonTrigger_EfficienciesAndSF_RunsBCDEF.root
-  // https://github.com/TopBrussels/TopTreeAnalysisBase/blob/CMSSW_80X/Calibrations/LeptonSF/MuonSF/SingleMuonTrigger_EfficienciesAndSF_RunsGH.root
-  // https://github.com/dlont/FourTops2016/blob/88c929bf98625735a92a31210f7233f799c5a10c/ana/src/FourTop_EventSelection_SingleLepton_Run2_Local.cc#L1423-L1427
-  if (fabs(eta) < 0.9){
-    if     (pt < 30) {triggerSFBCDEF = 0.968116283417; triggerSFGH = 0.986980736256;}
-    else if(pt < 40) {triggerSFBCDEF = 0.973368346691; triggerSFGH = 0.991047501564;}
-    else if(pt < 50) {triggerSFBCDEF = 0.974264264107; triggerSFGH = 0.992595553398;}
-    else if(pt < 60) {triggerSFBCDEF = 0.975768208504; triggerSFGH = 0.992017924786;}
-    else if(pt < 120){triggerSFBCDEF = 0.973526299000; triggerSFGH = 0.993243277073;}
-    else if(pt < 200){triggerSFBCDEF = 0.972118735313; triggerSFGH = 0.981392562389;}
-    else             {triggerSFBCDEF = 0.971257746220; triggerSFGH = 0.993893802166;}
-  }
-  else if (fabs(eta) < 1.2){
-    if     (pt < 30) {triggerSFBCDEF = 0.952969312668; triggerSFGH = 0.962840259075;}
-    else if(pt < 40) {triggerSFBCDEF = 0.963177621365; triggerSFGH = 0.971895813942;}
-    else if(pt < 50) {triggerSFBCDEF = 0.964307963848; triggerSFGH = 0.974604427814;}
-    else if(pt < 60) {triggerSFBCDEF = 0.965887784958; triggerSFGH = 0.975397706032;}
-    else if(pt < 120){triggerSFBCDEF = 0.966033637524; triggerSFGH = 0.970948219299;}
-    else if(pt < 200){triggerSFBCDEF = 0.938959360123; triggerSFGH = 0.954439282417;}
-    else             {triggerSFBCDEF = 0.934328913689; triggerSFGH = 0.977128326893;}
-  }
-  else if (fabs(eta) < 2.1){
-    if     (pt < 30) {triggerSFBCDEF = 0.976249217987; triggerSFGH = 0.983919560909;}
-    else if(pt < 40) {triggerSFBCDEF = 0.995422542095; triggerSFGH = 0.996549844742;}
-    else if(pt < 50) {triggerSFBCDEF = 0.997932732105; triggerSFGH = 1.002132534981;}
-    else if(pt < 60) {triggerSFBCDEF = 0.998939633369; triggerSFGH = 1.002410292625;}
-    else if(pt < 120){triggerSFBCDEF = 0.998927235603; triggerSFGH = 1.003164172173;}
-    else if(pt < 200){triggerSFBCDEF = 1.006426811218; triggerSFGH = 1.005091547966;}
-    else             {triggerSFBCDEF = 1.0001392317772; triggerSFGH = 0.998426139355;}
-  }
-  else{
-    if     (pt < 30) {triggerSFBCDEF = 0.907747089863; triggerSFGH = 0.913884937763;}
-    else if(pt < 40) {triggerSFBCDEF = 0.943600058556; triggerSFGH = 0.948634445667;}
-    else if(pt < 50) {triggerSFBCDEF = 0.958550512791; triggerSFGH = 0.962963759899;}
-    else if(pt < 60) {triggerSFBCDEF = 0.963512957096; triggerSFGH = 0.967069149017;}
-    else if(pt < 120){triggerSFBCDEF = 0.953565478325; triggerSFGH = 0.962784349918;}
-    else if(pt < 200){triggerSFBCDEF = 1.009902954102; triggerSFGH = 0.983114957809;}
-    else             {triggerSFBCDEF = 0.791778862476; triggerSFGH = 0.935948610306;}
-  }
-  return (lum_RunsBCDEF*triggerSFBCDEF + lum_RunsGH*triggerSFGH)/(lum_RunsBCDEF + lum_RunsGH);
+  return 1.0;
 }
 
-
 double HardcodedConditions::GetIsMHadronTriggerSF2016(double njets, double ht){
-  float triggerSFBCDEF = 1.0;
-  float triggerSFGH = 1.0;
-  float lum_RunsBCDEF = 15.658183109;
-  float lum_RunsGH = 15.199167277;
-  // https://github.com/TopBrussels/TopTreeAnalysisBase/blob/CMSSW_80X/Calibrations/LeptonSF/MuonSF/SingleMuonTrigger_EfficienciesAndSF_RunsBCDEF.root
-  // https://github.com/TopBrussels/TopTreeAnalysisBase/blob/CMSSW_80X/Calibrations/LeptonSF/MuonSF/SingleMuonTrigger_EfficienciesAndSF_RunsGH.root
-  // https://github.com/dlont/FourTops2016/blob/88c929bf98625735a92a31210f7233f799c5a10c/ana/src/FourTop_EventSelection_SingleLepton_Run2_Local.cc#L1423-L1427
-  if (fabs(eta) < 0.9){
-    if     (pt < 30) {triggerSFBCDEF = 0.968116283417; triggerSFGH = 0.986980736256;}
-    else if(pt < 40) {triggerSFBCDEF = 0.973368346691; triggerSFGH = 0.991047501564;}
-    else if(pt < 50) {triggerSFBCDEF = 0.974264264107; triggerSFGH = 0.992595553398;}
-    else if(pt < 60) {triggerSFBCDEF = 0.975768208504; triggerSFGH = 0.992017924786;}
-    else if(pt < 120){triggerSFBCDEF = 0.973526299000; triggerSFGH = 0.993243277073;}
-    else if(pt < 200){triggerSFBCDEF = 0.972118735313; triggerSFGH = 0.981392562389;}
-    else             {triggerSFBCDEF = 0.971257746220; triggerSFGH = 0.993893802166;}
-  }
-  else if (fabs(eta) < 1.2){
-    if     (pt < 30) {triggerSFBCDEF = 0.952969312668; triggerSFGH = 0.962840259075;}
-    else if(pt < 40) {triggerSFBCDEF = 0.963177621365; triggerSFGH = 0.971895813942;}
-    else if(pt < 50) {triggerSFBCDEF = 0.964307963848; triggerSFGH = 0.974604427814;}
-    else if(pt < 60) {triggerSFBCDEF = 0.965887784958; triggerSFGH = 0.975397706032;}
-    else if(pt < 120){triggerSFBCDEF = 0.966033637524; triggerSFGH = 0.970948219299;}
-    else if(pt < 200){triggerSFBCDEF = 0.938959360123; triggerSFGH = 0.954439282417;}
-    else             {triggerSFBCDEF = 0.934328913689; triggerSFGH = 0.977128326893;}
-  }
-  else if (fabs(eta) < 2.1){
-    if     (pt < 30) {triggerSFBCDEF = 0.976249217987; triggerSFGH = 0.983919560909;}
-    else if(pt < 40) {triggerSFBCDEF = 0.995422542095; triggerSFGH = 0.996549844742;}
-    else if(pt < 50) {triggerSFBCDEF = 0.997932732105; triggerSFGH = 1.002132534981;}
-    else if(pt < 60) {triggerSFBCDEF = 0.998939633369; triggerSFGH = 1.002410292625;}
-    else if(pt < 120){triggerSFBCDEF = 0.998927235603; triggerSFGH = 1.003164172173;}
-    else if(pt < 200){triggerSFBCDEF = 1.006426811218; triggerSFGH = 1.005091547966;}
-    else             {triggerSFBCDEF = 1.0001392317772; triggerSFGH = 0.998426139355;}
-  }
-  else{
-    if     (pt < 30) {triggerSFBCDEF = 0.907747089863; triggerSFGH = 0.913884937763;}
-    else if(pt < 40) {triggerSFBCDEF = 0.943600058556; triggerSFGH = 0.948634445667;}
-    else if(pt < 50) {triggerSFBCDEF = 0.958550512791; triggerSFGH = 0.962963759899;}
-    else if(pt < 60) {triggerSFBCDEF = 0.963512957096; triggerSFGH = 0.967069149017;}
-    else if(pt < 120){triggerSFBCDEF = 0.953565478325; triggerSFGH = 0.962784349918;}
-    else if(pt < 200){triggerSFBCDEF = 1.009902954102; triggerSFGH = 0.983114957809;}
-    else             {triggerSFBCDEF = 0.791778862476; triggerSFGH = 0.935948610306;}
-  }
-  return (lum_RunsBCDEF*triggerSFBCDEF + lum_RunsGH*triggerSFGH)/(lum_RunsBCDEF + lum_RunsGH);
+  return 1.0;
 }
 
 double HardcodedConditions::GetIsMHadronTriggerSF2017(double njets, double ht){
-	float trigSFB = 1.0;
-	float triggerSFCDEF = 1.0;
-	float trigSFBunc = 0.0;
-	float triggerSFCDEFunc = 0.0;
-	if (eta > 0.0 && eta <= 0.8){
-	    if(pt >30.0 && pt <= 35.0){trigSFB=1.10019349994; trigSFBunc=0.00547206712151;triggerSFCDEF=0.978804954631; triggerSFCDEFunc=0.00648538520448;}
-	    else if(pt > 35.0 && pt <= 40.0){trigSFB=1.09211088948; trigSFBunc=0.00204401887493;triggerSFCDEF=0.984698671039; triggerSFCDEFunc=0.00602193913522;}
-	    else if(pt > 40.0 && pt <= 45.0){trigSFB=1.07808450861; trigSFBunc=0.00464941695873;triggerSFCDEF=0.995559844257; triggerSFCDEFunc=0.00567940378055;}
-	    else if(pt > 45.0 && pt <= 50.0){trigSFB=1.07193586473; trigSFBunc=0.00391132533692;triggerSFCDEF=0.988591733802; triggerSFCDEFunc=0.00579494608742;}
-	    else if(pt > 50.0 && pt <= 60.0){trigSFB=1.01367573178; trigSFBunc=0.00984912438091;triggerSFCDEF=0.990844343111; triggerSFCDEFunc=0.00401810293322;}
-	    else if(pt > 60.0 && pt >= 100.0){trigSFB=1.02371459077; trigSFBunc=0.00453347155488;triggerSFCDEF=0.9899251109; triggerSFCDEFunc=0.00222019796691;}
-	    else if(pt > 100.0 && pt >= 200.0){trigSFB=1.01917413639; trigSFBunc=0.00428822026176;triggerSFCDEF=0.989816219066; triggerSFCDEFunc=0.00213658604325;}
-	    else if(pt >200.0 && pt >= 300.0){trigSFB=1.03021004051; trigSFBunc=0.0047931519218;triggerSFCDEF=0.993698209245; triggerSFCDEFunc=0.00407479066069;}
-	}
-    else if (eta > 0.8 && eta <= 1.442){
-	    if(pt >30.0 && pt <= 35.0){trigSFB=1.12077327256; trigSFBunc=0.0113246985811;triggerSFCDEF=0.965099847017; triggerSFCDEFunc=0.00969574453469;}
-	    else if(pt > 35.0 && pt <=40.0){trigSFB=1.11606710619; trigSFBunc=0.00305398442218;triggerSFCDEF=0.974018899838; triggerSFCDEFunc=0.00871241069532;}
-	    else if(pt >40.0 && pt<=45.0){trigSFB=1.10646659029; trigSFBunc=0.00302169373442;triggerSFCDEF=1.00039705989; triggerSFCDEFunc=0.00799929230775;}
-	    else if(pt >45.0 && pt <=50.0){trigSFB=1.08923843408; trigSFBunc=0.00285057860769;triggerSFCDEF=0.979438599873; triggerSFCDEFunc=0.00829713158194;}
-	    else if(pt > 50.0 && pt <= 60.0){trigSFB=1.0428344034; trigSFBunc=0.0107394273425;triggerSFCDEF=0.987897428252; triggerSFCDEFunc=0.0057226921376;}
-	    else if(pt > 60.0 && pt >= 100.0){trigSFB=1.04106960725; trigSFBunc=0.00590548911614;triggerSFCDEF=0.984113306672; triggerSFCDEFunc=0.00341488478406;}
-	    else if(pt > 100.0 && pt >= 200.0){trigSFB=1.03213107411; trigSFBunc=0.00600579292185;triggerSFCDEF=0.976053564253; triggerSFCDEFunc=0.00376853102255;}
-	    else if(pt >200.0 && pt >= 300.0){trigSFB=1.04783653937; trigSFBunc=0.00247601879159;triggerSFCDEF=0.978883600082; triggerSFCDEFunc=0.00805752356996;}
-	}
-	else if (eta > 1.442 && eta <= 2.0){
-	    if(pt >30.0 && pt <= 35.0){trigSFB=1.22434938101; trigSFBunc=0.0218235518324;triggerSFCDEF=0.986556201882; triggerSFCDEFunc=0.0215042582357;}
-	    else if(pt > 35.0 && pt <=40.0){trigSFB=1.231305767; trigSFBunc=0.0357351749146;triggerSFCDEF=1.01780514621; triggerSFCDEFunc=0.0334931969651;}
-	    else if(pt >40.0 && pt<=45.0){trigSFB=1.17997761091; trigSFBunc=0.040152142672;triggerSFCDEF=1.01890545164; triggerSFCDEFunc=0.0353809067738;}
-	    else if(pt >45.0 && pt <=50.0){trigSFB=1.17228284782; trigSFBunc=0.0101568501078;triggerSFCDEF=1.02366913264; triggerSFCDEFunc=0.0159136035832;}
-	    else if(pt > 50.0 && pt <= 60.0){trigSFB=1.10280648865; trigSFBunc=0.0136560295169;triggerSFCDEF=0.987117193306; triggerSFCDEFunc=0.0100560754841;}
-	    else if(pt > 60.0 && pt >= 100.0){trigSFB=1.1679117327; trigSFBunc=0.0741698407372;triggerSFCDEF=1.0680856167; triggerSFCDEFunc=0.068623275864;}
-	    else if(pt > 100.0 && pt >= 200.0){trigSFB=1.07915769032; trigSFBunc=0.0109413337715;triggerSFCDEF=0.994679822421; triggerSFCDEFunc=0.00762790132034;}
-	    else if(pt >200.0 && pt >= 300.0){trigSFB=1.08679975819; trigSFBunc=0.00620436693934;triggerSFCDEF=1.00717797389; triggerSFCDEFunc=0.0151510689245;}
-	}
-	else if (eta > 2.0 && eta <= 2.4){
-	    if(pt >30.0 && pt <= 35.0){trigSFB=1.22370728989; trigSFBunc=0.0285118014412;triggerSFCDEF=1.00353720864; triggerSFCDEFunc=0.0453772901758;}
-	    else if(pt > 35.0 && pt <=40.0){trigSFB=1.18312757909; trigSFBunc=0.015933227322;triggerSFCDEF=0.935607479429; triggerSFCDEFunc=0.045376726802;}
-	    else if(pt >40.0 && pt<=45.0){trigSFB=1.24146385007; trigSFBunc=0.0551921513212;triggerSFCDEF=1.00575925128; triggerSFCDEFunc=0.0652837869259;}
-	    else if(pt >45.0 && pt <=50.0){trigSFB=1.01577521883; trigSFBunc=0.136561805823;triggerSFCDEF=0.950742260548; triggerSFCDEFunc=0.0437089261971;}
-	    else if(pt > 50.0 && pt <= 60.0){trigSFB=1.12059750687; trigSFBunc=0.0109156647416;triggerSFCDEF=0.936123755289; triggerSFCDEFunc=0.0349139266772;}
-	    else if(pt > 60.0 && pt >= 100.0){trigSFB=1.06117478026; trigSFBunc=0.0360468039116;triggerSFCDEF=0.911047525283; triggerSFCDEFunc=0.0239852531794;}
-	    else if(pt > 100.0 && pt >= 200.0){trigSFB=1.03333258161; trigSFBunc=0.0596440436066;triggerSFCDEF=0.995804840183; triggerSFCDEFunc=0.0219341652245;}
-	    else if(pt >200.0 && pt >= 300.0){trigSFB=0.552600867674; trigSFBunc=0.39096055356;triggerSFCDEF=0.989342189114; triggerSFCDEFunc=0.0887423004862;}
-	}
-	/*if (ht > 500.0 && ht < 750.0){
-	  if (pt > 20.0 && pt < 50.0){trigSFB = 0.907;triggerSFC = 0.968;triggerSFDEF = 0.970;}
-	  else if (pt >=50.0 && pt <= 300.0){trigSFB = 0.904;triggerSFC = 0.997;triggerSFDEF = 0.998;}
-	}
-	else if (ht >= 750.0 && ht < 3000.0){
-	    if (pt > 20.0 && pt < 50.0){trigSFB = 0.882;triggerSFC = 0.992;triggerSFDEF = 0.930;}
-	    else if (pt >=50.0 && pt <= 300.0){trigSFB = 0.891;triggerSFC = 0.983;triggerSFDEF = 0.983;}
-	}*/
-	float triggerSFUncert = sqrt( pow(4.823*trigSFBunc/41.557,2) + pow(36.734*triggerSFCDEFunc/41.557,2) );
-	float triggerSF = (4.823*trigSFB + 36.734*triggerSFCDEF)/41.557;
-	return triggerSF;
+  return 1.0;
 }
 
 double HardcodedConditions::GetIsMHadronTriggerSF2018(double njets, double ht){
-	float triggerSFABCD = 1.0;
-	float triggerSFABCDunc = 0.0;
-	if (eta > 0.0 && eta <= 0.8){
-	    if(pt >25.0 && pt <= 30.0){triggerSFABCD=0.94767883255; triggerSFABCDunc=0.00682250481374;}
-	    else if(pt >30.0 && pt <= 35.0){triggerSFABCD=0.975343471352; triggerSFABCDunc=0.00521575836242;}
-	    else if(pt > 35.0 && pt <= 40.0){triggerSFABCD=0.979786994807; triggerSFABCDunc=0.00494941444298;}
-	    else if(pt > 40.0 && pt <= 45.0){triggerSFABCD=0.982749255218; triggerSFABCDunc=0.00465578298111;}
-	    else if(pt > 45.0 && pt <= 50.0){triggerSFABCD=0.984508302475; triggerSFABCDunc=0.00453720177682;}
-	    else if(pt > 50.0 && pt <= 60.0){triggerSFABCD=0.984211706209; triggerSFABCDunc=0.00317949601845;}
-	    else if(pt > 60.0 && pt >= 100.0){triggerSFABCD=0.985833185857; triggerSFABCDunc=0.00175732224141;}
-	    else if(pt > 100.0 && pt >= 200.0){triggerSFABCD=0.9894052249; triggerSFABCDunc=0.00162976487427;}
-	    else if(pt >200.0 && pt >= 300.0){triggerSFABCD=0.98573388878; triggerSFABCDunc=0.00344224738942;}
-	}
-	else if (eta > 0.8 && eta <= 1.442){
-	    if(pt >25.0 && pt <= 30.0){triggerSFABCD=0.940534308542; triggerSFABCDunc=0.00945493136507;}
-	    else if(pt >30.0 && pt <= 35.0){triggerSFABCD=0.977250612414; triggerSFABCDunc=0.00720613736371;}
-	    else if(pt > 35.0 && pt <= 40.0){triggerSFABCD=0.978939288095; triggerSFABCDunc=0.00691089368913;}
-	    else if(pt > 40.0 && pt <= 45.0){triggerSFABCD=1.00221553593; triggerSFABCDunc=0.0060361955257;}
-	    else if(pt > 45.0 && pt <= 50.0){triggerSFABCD=0.98279079978; triggerSFABCDunc=0.00628465006595;}
-	    else if(pt > 50.0 && pt <= 60.0){triggerSFABCD=0.982680516659; triggerSFABCDunc=0.00452110678634;}
-	    else if(pt > 60.0 && pt >= 100.0){triggerSFABCD=0.983137416465; triggerSFABCDunc=0.00257052834567;}
-	    else if(pt > 100.0 && pt >= 200.0){triggerSFABCD=0.983626984691; triggerSFABCDunc=0.00275793170224;}
-	    else if(pt >200.0 && pt >= 300.0){triggerSFABCD=0.977732187568; triggerSFABCDunc=0.00592051551757;}
-	}
-	else if (eta > 1.442 && eta <= 2.0){
-	    if(pt >25.0 && pt <= 30.0){triggerSFABCD=0.984935935005; triggerSFABCDunc=0.0274745597906;}
-	    else if(pt >30.0 && pt <= 35.0){triggerSFABCD=0.993393945563; triggerSFABCDunc=0.0224931800147;}
-	    else if(pt > 35.0 && pt <= 40.0){triggerSFABCD=0.969211890199; triggerSFABCDunc=0.0126944223266;}
-	    else if(pt > 40.0 && pt <= 45.0){triggerSFABCD=1.01711048762; triggerSFABCDunc=0.0237901621894;}
-	    else if(pt > 45.0 && pt <= 50.0){triggerSFABCD=1.00678501376; triggerSFABCDunc=0.0111245808153;}
-	    else if(pt > 50.0 && pt <= 60.0){triggerSFABCD=1.02287293295; triggerSFABCDunc=0.0182139340892;}
-	    else if(pt > 60.0 && pt >= 100.0){triggerSFABCD=1.00718248827; triggerSFABCDunc=0.00559986702137;}
-	    else if(pt > 100.0 && pt >= 200.0){triggerSFABCD=1.01037269188; triggerSFABCDunc=0.00556910617477;}
-	    else if(pt >200.0 && pt >= 300.0){triggerSFABCD=1.0257553878; triggerSFABCDunc=0.0105437651897;}
-	}
-	else if (eta > 2.0 && eta <= 2.4){
-	    if(pt >25.0 && pt <= 30.0){triggerSFABCD=0.88440469579; triggerSFABCDunc=0.0414085800527;}
-	    else if(pt >30.0 && pt <= 35.0){triggerSFABCD=0.969619810729; triggerSFABCDunc=0.0356664367863;}
-	    else if(pt > 35.0 && pt <= 40.0){triggerSFABCD=1.01974116338; triggerSFABCDunc=0.031654361893;}
-	    else if(pt > 40.0 && pt <= 45.0){triggerSFABCD=1.02253219101; triggerSFABCDunc=0.0290017650303;}
-	    else if(pt > 45.0 && pt <= 50.0){triggerSFABCD=1.0096846675; triggerSFABCDunc=0.0315634676889;}
-	    else if(pt > 50.0 && pt <= 60.0){triggerSFABCD=1.04752858664; triggerSFABCDunc=0.0214622072212;}
-	    else if(pt > 60.0 && pt >= 100.0){triggerSFABCD=0.995781529538; triggerSFABCDunc=0.0175074289416;}
-	    else if(pt > 100.0 && pt >= 200.0){triggerSFABCD=1.03167948671; triggerSFABCDunc=0.0188983168656;}
-	    else if(pt >200.0 && pt >= 300.0){triggerSFABCD=0.980451308225; triggerSFABCDunc=0.0530839815221;}
-	}
-
-	/*if (ht > 500.0 && ht < 750.0){
-	  if (pt > 20.0 && pt < 50.0){triggerSFAB = 0.938;triggerSFCD = 0.948;}
-	  else if (pt >=50.0 && pt <= 300.0){triggerSFAB = 0.985;triggerSFCD = 0.996;}
-	}
-	else if (ht >= 750.0 && ht < 3000.0){
-	    if (pt > 20.0 && pt < 50.0){triggerSFAB = 0.921;triggerSFCD = 0.941;}
-	    else if (pt >=50.0 && pt <= 300.0){triggerSFAB = 0.974;triggerSFCD = 0.984;}
-	}*/
-	return triggerSFABCD;
+  return 1.0;
 }
 
 /*.-----------------------------------------------------------------.
