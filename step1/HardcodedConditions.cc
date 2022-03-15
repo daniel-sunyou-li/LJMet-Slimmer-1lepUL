@@ -1979,20 +1979,898 @@ double HardcodedConditions::GetElectronTriggerSF(double pt, double eta, std::str
   else return 0.;
 }//end GetElectronTriggerSF
 
+// using EOY SF for HLT_ele32_eta2p1_WPTight_Gsf_v* approved by KIT for Run 2016 BCDEF
+// https://github.com/TopBrussels/TopTreeAnalysisBase/blob/CMSSW_80X/Calibrations/LeptonSF/ElectronSF/Moriond17/TriggerSF_Run2016BCDEF_v2.root
 double HardcodedConditions::GetElectronTriggerSF2016APV(double pt, double eta){
-  return 1.000;
+  if (eta < -1.8){
+    if     (pt < 32 ){triggerSFHLT = 0.394531250000;}
+    else if(pt < 34 ){triggerSFHLT = 0.721804499626;}
+    else if(pt < 36 ){triggerSFHLT = 0.914093971252;}
+    else if(pt < 38 ){triggerSFHLT = 0.936031341553;}
+    else if(pt < 40 ){triggerSFHLT = 0.942965805531;}
+    else if(pt < 42 ){triggerSFHLT = 0.950310587883;}
+    else if(pt < 44 ){triggerSFHLT = 0.948529422283;}
+    else if(pt < 46 ){triggerSFHLT = 0.947051763535;}
+    else if(pt < 48 ){triggerSFHLT = 0.945107400417;}
+    else if(pt < 50 ){triggerSFHLT = 0.936018943787;}
+    else if(pt < 52 ){triggerSFHLT = 0.961813867092;}
+    else if(pt < 54 ){triggerSFHLT = 0.935483872890;}
+    else if(pt < 56 ){triggerSFHLT = 0.940023064613;}
+    else if(pt < 60 ){triggerSFHLT = 0.954171538353;}
+    else if(pt < 65 ){triggerSFHLT = 0.968347012997;}
+    else if(pt < 70 ){triggerSFHLT = 0.916943550110;}
+    else if(pt < 80 ){triggerSFHLT = 0.928730487823;}
+    else if(pt < 90 ){triggerSFHLT = 0.922222197056;}
+    else if(pt < 100){triggerSFHLT = 0.925081431866;}
+    else if(pt < 120){triggerSFHLT = 0.937701404095;}
+    else if(pt < 200){triggerSFHLT = 0.939427316189;}
+    else             {triggerSFHLT = 0.918580353260;}
+  }
+  else if (eta < -1.566){
+    if     (pt < 32 ){triggerSFHLT = 0.687804877758;}
+    else if(pt < 34 ){triggerSFHLT = 0.827639758587;}
+    else if(pt < 36 ){triggerSFHLT = 0.916438341141;}
+    else if(pt < 38 ){triggerSFHLT = 0.922470450401;}
+    else if(pt < 40 ){triggerSFHLT = 0.919293820858;}
+    else if(pt < 42 ){triggerSFHLT = 0.925558328629;}
+    else if(pt < 44 ){triggerSFHLT = 0.927710831165;}
+    else if(pt < 46 ){triggerSFHLT = 0.933253884315;}
+    else if(pt < 48 ){triggerSFHLT = 0.949820816517;}
+    else if(pt < 50 ){triggerSFHLT = 0.937278091908;}
+    else if(pt < 52 ){triggerSFHLT = 0.942216992378;}
+    else if(pt < 54 ){triggerSFHLT = 0.945497632027;}
+    else if(pt < 56 ){triggerSFHLT = 0.932242989540;}
+    else if(pt < 60 ){triggerSFHLT = 0.936562836170;}
+    else if(pt < 65 ){triggerSFHLT = 0.908988773823;}
+    else if(pt < 70 ){triggerSFHLT = 0.935972034931;}
+    else if(pt < 80 ){triggerSFHLT = 0.937923252583;}
+    else if(pt < 90 ){triggerSFHLT = 0.914939999580;}
+    else if(pt < 100){triggerSFHLT = 0.908096253872;}
+    else if(pt < 120){triggerSFHLT = 0.943584084511;}
+    else if(pt < 200){triggerSFHLT = 0.925438582897;}
+    else             {triggerSFHLT = 1.011376619339;}
+  }
+  else if (eta < -1.442){
+    if     (pt < 32 ){triggerSFHLT = 0.971014499664;}
+    else if(pt < 34 ){triggerSFHLT = 0.883445918560;}
+    else if(pt < 36 ){triggerSFHLT = 0.929945051670;}
+    else if(pt < 38 ){triggerSFHLT = 0.960422158241;}
+    else if(pt < 40 ){triggerSFHLT = 0.970284223557;}
+    else if(pt < 42 ){triggerSFHLT = 0.978616356850;}
+    else if(pt < 44 ){triggerSFHLT = 0.980295538902;}
+    else if(pt < 46 ){triggerSFHLT = 0.990255773067;}
+    else if(pt < 48 ){triggerSFHLT = 0.964705884457;}
+    else if(pt < 50 ){triggerSFHLT = 0.962352931499;}
+    else if(pt < 52 ){triggerSFHLT = 0.965842187405;}
+    else if(pt < 54 ){triggerSFHLT = 1.013496875763;}
+    else if(pt < 56 ){triggerSFHLT = 0.995169103146;}
+    else if(pt < 60 ){triggerSFHLT = 0.974820137024;}
+    else if(pt < 65 ){triggerSFHLT = 0.995073914528;}
+    else if(pt < 70 ){triggerSFHLT = 0.953917026520;}
+    else if(pt < 80 ){triggerSFHLT = 1.048750042915;}
+    else if(pt < 90 ){triggerSFHLT = 0.981351971626;}
+    else if(pt < 100){triggerSFHLT = 0.998864948750;}
+    else if(pt < 120){triggerSFHLT = 0.937290012836;}
+    else if(pt < 200){triggerSFHLT = 0.970132768154;}
+    else             {triggerSFHLT = 1.139416933060;}
+  }
+  else if (eta < -1.1){
+    if     (pt < 32 ){triggerSFHLT = 0.525862097740;}
+    else if(pt < 34 ){triggerSFHLT = 0.781931459904;}
+    else if(pt < 36 ){triggerSFHLT = 0.919653892517;}
+    else if(pt < 38 ){triggerSFHLT = 0.949519217014;}
+    else if(pt < 40 ){triggerSFHLT = 0.956521749496;}
+    else if(pt < 42 ){triggerSFHLT = 0.971131622791;}
+    else if(pt < 44 ){triggerSFHLT = 0.976109206676;}
+    else if(pt < 46 ){triggerSFHLT = 0.976510047913;}
+    else if(pt < 48 ){triggerSFHLT = 0.982142865658;}
+    else if(pt < 50 ){triggerSFHLT = 0.981153011322;}
+    else if(pt < 52 ){triggerSFHLT = 0.979097902775;}
+    else if(pt < 54 ){triggerSFHLT = 0.976112902164;}
+    else if(pt < 56 ){triggerSFHLT = 0.976034879684;}
+    else if(pt < 60 ){triggerSFHLT = 0.965665221214;}
+    else if(pt < 65 ){triggerSFHLT = 0.974248945713;}
+    else if(pt < 70 ){triggerSFHLT = 0.972310960293;}
+    else if(pt < 80 ){triggerSFHLT = 0.972860097885;}
+    else if(pt < 90 ){triggerSFHLT = 0.970164597034;}
+    else if(pt < 100){triggerSFHLT = 0.984326004982;}
+    else if(pt < 120){triggerSFHLT = 0.971428573132;}
+    else if(pt < 200){triggerSFHLT = 0.985567033291;}
+    else             {triggerSFHLT = 0.984504103661;}
+  }
+  else if (eta < -0.8){
+    if     (pt < 32 ){triggerSFHLT = 0.752212405205;}
+    else if(pt < 34 ){triggerSFHLT = 0.908309459686;}
+    else if(pt < 36 ){triggerSFHLT = 0.981176495552;}
+    else if(pt < 38 ){triggerSFHLT = 0.990794003010;}
+    else if(pt < 40 ){triggerSFHLT = 0.996598660946;}
+    else if(pt < 42 ){triggerSFHLT = 1.001122355461;}
+    else if(pt < 44 ){triggerSFHLT = 1.004459261894;}
+    else if(pt < 46 ){triggerSFHLT = 0.998896241188;}
+    else if(pt < 48 ){triggerSFHLT = 1.000000000000;}
+    else if(pt < 50 ){triggerSFHLT = 0.998911857605;}
+    else if(pt < 52 ){triggerSFHLT = 0.993506491184;}
+    else if(pt < 54 ){triggerSFHLT = 1.001086950302;}
+    else if(pt < 56 ){triggerSFHLT = 0.994640946388;}
+    else if(pt < 60 ){triggerSFHLT = 0.986199557781;}
+    else if(pt < 65 ){triggerSFHLT = 0.990425527096;}
+    else if(pt < 70 ){triggerSFHLT = 1.006417155266;}
+    else if(pt < 80 ){triggerSFHLT = 0.979274630547;}
+    else if(pt < 90 ){triggerSFHLT = 0.995833337307;}
+    else if(pt < 100){triggerSFHLT = 1.006302475929;}
+    else if(pt < 120){triggerSFHLT = 0.989680111408;}
+    else if(pt < 200){triggerSFHLT = 0.978615045547;}
+    else             {triggerSFHLT = 0.967578530312;}
+  }
+  else if (eta < -0.6){
+    if     (pt < 32 ){triggerSFHLT = 0.981308400631;}
+    else if(pt < 34 ){triggerSFHLT = 0.964589238167;}
+    else if(pt < 36 ){triggerSFHLT = 1.007168412209;}
+    else if(pt < 38 ){triggerSFHLT = 1.001162767410;}
+    else if(pt < 40 ){triggerSFHLT = 1.015046238899;}
+    else if(pt < 42 ){triggerSFHLT = 1.009039521217;}
+    else if(pt < 44 ){triggerSFHLT = 1.015748023987;}
+    else if(pt < 46 ){triggerSFHLT = 1.013333320618;}
+    else if(pt < 48 ){triggerSFHLT = 1.012101173401;}
+    else if(pt < 50 ){triggerSFHLT = 1.013172388077;}
+    else if(pt < 52 ){triggerSFHLT = 1.001084566116;}
+    else if(pt < 54 ){triggerSFHLT = 1.010952949524;}
+    else if(pt < 56 ){triggerSFHLT = 1.000000000000;}
+    else if(pt < 60 ){triggerSFHLT = 1.000000000000;}
+    else if(pt < 65 ){triggerSFHLT = 1.009667038918;}
+    else if(pt < 70 ){triggerSFHLT = 0.998936176300;}
+    else if(pt < 80 ){triggerSFHLT = 0.992693126202;}
+    else if(pt < 90 ){triggerSFHLT = 0.985507249832;}
+    else if(pt < 100){triggerSFHLT = 0.987590491772;}
+    else if(pt < 120){triggerSFHLT = 0.987654328346;}
+    else if(pt < 200){triggerSFHLT = 0.976673424244;}
+    else             {triggerSFHLT = 0.996878266335;}
+  }
+  else if (eta < -0.3){
+    if     (pt < 32 ){triggerSFHLT = 1.000000000000;}
+    else if(pt < 34 ){triggerSFHLT = 0.954802274704;}
+    else if(pt < 36 ){triggerSFHLT = 0.983030319214;}
+    else if(pt < 38 ){triggerSFHLT = 0.998805284500;}
+    else if(pt < 40 ){triggerSFHLT = 1.004716992378;}
+    else if(pt < 42 ){triggerSFHLT = 1.009237885475;}
+    else if(pt < 44 ){triggerSFHLT = 1.011428594589;}
+    else if(pt < 46 ){triggerSFHLT = 1.011312246323;}
+    else if(pt < 48 ){triggerSFHLT = 1.011223316193;}
+    else if(pt < 50 ){triggerSFHLT = 1.000000000000;}
+    else if(pt < 52 ){triggerSFHLT = 1.003314971924;}
+    else if(pt < 54 ){triggerSFHLT = 1.007683873177;}
+    else if(pt < 56 ){triggerSFHLT = 0.998910665512;}
+    else if(pt < 60 ){triggerSFHLT = 0.990291237831;}
+    else if(pt < 65 ){triggerSFHLT = 0.989316225052;}
+    else if(pt < 70 ){triggerSFHLT = 1.004305720329;}
+    else if(pt < 80 ){triggerSFHLT = 0.990516304970;}
+    else if(pt < 90 ){triggerSFHLT = 0.995824635029;}
+    else if(pt < 100){triggerSFHLT = 0.987616121769;}
+    else if(pt < 120){triggerSFHLT = 1.002094268799;}
+    else if(pt < 200){triggerSFHLT = 0.979633390903;}
+    else             {triggerSFHLT = 1.009384751320;}
+  }
+  else if (eta < 0.0){
+    if     (pt < 32 ){triggerSFHLT = 1.105882406235;}
+    else if(pt < 34 ){triggerSFHLT = 0.889664828777;}
+    else if(pt < 36 ){triggerSFHLT = 0.960509538651;}
+    else if(pt < 38 ){triggerSFHLT = 0.964285731316;}
+    else if(pt < 40 ){triggerSFHLT = 0.984088122845;}
+    else if(pt < 42 ){triggerSFHLT = 0.988081037998;}
+    else if(pt < 44 ){triggerSFHLT = 0.998816549778;}
+    else if(pt < 46 ){triggerSFHLT = 0.995354235172;}
+    else if(pt < 48 ){triggerSFHLT = 0.995397031307;}
+    else if(pt < 50 ){triggerSFHLT = 1.000000000000;}
+    else if(pt < 52 ){triggerSFHLT = 0.998862326145;}
+    else if(pt < 54 ){triggerSFHLT = 0.994394600391;}
+    else if(pt < 56 ){triggerSFHLT = 1.000000000000;}
+    else if(pt < 60 ){triggerSFHLT = 0.996662974358;}
+    else if(pt < 65 ){triggerSFHLT = 0.984782636166;}
+    else if(pt < 70 ){triggerSFHLT = 0.987012982368;}
+    else if(pt < 80 ){triggerSFHLT = 1.003239750862;}
+    else if(pt < 90 ){triggerSFHLT = 0.997879087925;}
+    else if(pt < 100){triggerSFHLT = 1.018104314804;}
+    else if(pt < 120){triggerSFHLT = 0.993717253208;}
+    else if(pt < 200){triggerSFHLT = 1.005219221115;}
+    else             {triggerSFHLT = 0.968559861183;}
+  }
+  else if (eta < 0.3){
+    if     (pt < 32 ){triggerSFHLT = 1.032967090607;}
+    else if(pt < 34 ){triggerSFHLT = 0.883561670780;}
+    else if(pt < 36 ){triggerSFHLT = 0.948427677155;}
+    else if(pt < 38 ){triggerSFHLT = 0.959558844566;}
+    else if(pt < 40 ){triggerSFHLT = 0.975728154182;}
+    else if(pt < 42 ){triggerSFHLT = 0.990419149399;}
+    else if(pt < 44 ){triggerSFHLT = 0.991755008698;}
+    else if(pt < 46 ){triggerSFHLT = 0.990729987621;}
+    else if(pt < 48 ){triggerSFHLT = 0.995391726494;}
+    else if(pt < 50 ){triggerSFHLT = 0.991999983788;}
+    else if(pt < 52 ){triggerSFHLT = 1.002280473709;}
+    else if(pt < 54 ){triggerSFHLT = 0.989910304546;}
+    else if(pt < 56 ){triggerSFHLT = 0.997745215893;}
+    else if(pt < 60 ){triggerSFHLT = 1.001119852066;}
+    else if(pt < 65 ){triggerSFHLT = 0.987912058830;}
+    else if(pt < 70 ){triggerSFHLT = 0.993435442448;}
+    else if(pt < 80 ){triggerSFHLT = 0.991397857666;}
+    else if(pt < 90 ){triggerSFHLT = 0.983122348785;}
+    else if(pt < 100){triggerSFHLT = 1.005307912827;}
+    else if(pt < 120){triggerSFHLT = 0.986344516277;}
+    else if(pt < 200){triggerSFHLT = 0.986584126949;}
+    else             {triggerSFHLT = 0.965412020683;}
+  }
+  else if (eta < 0.6){
+    if     (pt < 32 ){triggerSFHLT = 0.717391312122;}
+    else if(pt < 34 ){triggerSFHLT = 0.891711235046;}
+    else if(pt < 36 ){triggerSFHLT = 0.977080821991;}
+    else if(pt < 38 ){triggerSFHLT = 0.988151669502;}
+    else if(pt < 40 ){triggerSFHLT = 0.994165718555;}
+    else if(pt < 42 ){triggerSFHLT = 1.000000000000;}
+    else if(pt < 44 ){triggerSFHLT = 1.006872892380;}
+    else if(pt < 46 ){triggerSFHLT = 0.998871326447;}
+    else if(pt < 48 ){triggerSFHLT = 0.996644318104;}
+    else if(pt < 50 ){triggerSFHLT = 0.988974630833;}
+    else if(pt < 52 ){triggerSFHLT = 0.994511544704;}
+    else if(pt < 54 ){triggerSFHLT = 1.002212405205;}
+    else if(pt < 56 ){triggerSFHLT = 0.984815597534;}
+    else if(pt < 60 ){triggerSFHLT = 0.990301728249;}
+    else if(pt < 65 ){triggerSFHLT = 0.976694941521;}
+    else if(pt < 70 ){triggerSFHLT = 0.987165749073;}
+    else if(pt < 80 ){triggerSFHLT = 0.986199557781;}
+    else if(pt < 90 ){triggerSFHLT = 0.977107167244;}
+    else if(pt < 100){triggerSFHLT = 0.975051999092;}
+    else if(pt < 120){triggerSFHLT = 0.971074402332;}
+    else if(pt < 200){triggerSFHLT = 0.981519520283;}
+    else             {triggerSFHLT = 0.981651365757;}
+  }
+  else if (eta < 0.8){
+    if     (pt < 32 ){triggerSFHLT = 0.573248386383;}
+    else if(pt < 34 ){triggerSFHLT = 0.887566149235;}
+    else if(pt < 36 ){triggerSFHLT = 0.989424228668;}
+    else if(pt < 38 ){triggerSFHLT = 0.995354235172;}
+    else if(pt < 40 ){triggerSFHLT = 1.002290964127;}
+    else if(pt < 42 ){triggerSFHLT = 1.017123341560;}
+    else if(pt < 44 ){triggerSFHLT = 1.011198163033;}
+    else if(pt < 46 ){triggerSFHLT = 1.006651878357;}
+    else if(pt < 48 ){triggerSFHLT = 1.007700800896;}
+    else if(pt < 50 ){triggerSFHLT = 1.002181053162;}
+    else if(pt < 52 ){triggerSFHLT = 1.000000000000;}
+    else if(pt < 54 ){triggerSFHLT = 1.003260850906;}
+    else if(pt < 56 ){triggerSFHLT = 0.985074639320;}
+    else if(pt < 60 ){triggerSFHLT = 1.001073002815;}
+    else if(pt < 65 ){triggerSFHLT = 0.998937308788;}
+    else if(pt < 70 ){triggerSFHLT = 0.981269538403;}
+    else if(pt < 80 ){triggerSFHLT = 0.982419848442;}
+    else if(pt < 90 ){triggerSFHLT = 0.986415863037;}
+    else if(pt < 100){triggerSFHLT = 1.003144621849;}
+    else if(pt < 120){triggerSFHLT = 0.991684019566;}
+    else if(pt < 200){triggerSFHLT = 0.991778016090;}
+    else             {triggerSFHLT = 0.985507249832;}
+  }
+  else if (eta < 1.1){
+    if     (pt < 32 ){triggerSFHLT = 0.421686738729;}
+    else if(pt < 34 ){triggerSFHLT = 0.835820913315;}
+    else if(pt < 36 ){triggerSFHLT = 0.984669804573;}
+    else if(pt < 38 ){triggerSFHLT = 0.990836203098;}
+    else if(pt < 40 ){triggerSFHLT = 1.001133799553;}
+    else if(pt < 42 ){triggerSFHLT = 1.004494428635;}
+    else if(pt < 44 ){triggerSFHLT = 1.008918642998;}
+    else if(pt < 46 ){triggerSFHLT = 1.005512714386;}
+    else if(pt < 48 ){triggerSFHLT = 1.002185821533;}
+    else if(pt < 50 ){triggerSFHLT = 0.998915374279;}
+    else if(pt < 52 ){triggerSFHLT = 0.998916566372;}
+    else if(pt < 54 ){triggerSFHLT = 0.998923599720;}
+    else if(pt < 56 ){triggerSFHLT = 1.003236293793;}
+    else if(pt < 60 ){triggerSFHLT = 1.000000000000;}
+    else if(pt < 65 ){triggerSFHLT = 0.980000019073;}
+    else if(pt < 70 ){triggerSFHLT = 1.000000000000;}
+    else if(pt < 80 ){triggerSFHLT = 0.980310857296;}
+    else if(pt < 90 ){triggerSFHLT = 0.990683257580;}
+    else if(pt < 100){triggerSFHLT = 0.985641002655;}
+    else if(pt < 120){triggerSFHLT = 0.998968005180;}
+    else if(pt < 200){triggerSFHLT = 0.976767659187;}
+    else             {triggerSFHLT = 0.982653081417;}
+  }
+  else if (eta < 1.442){
+    if     (pt < 32 ){triggerSFHLT = 0.331125825644;}
+    else if(pt < 34 ){triggerSFHLT = 0.722466945648;}
+    else if(pt < 36 ){triggerSFHLT = 0.921085059643;}
+    else if(pt < 38 ){triggerSFHLT = 0.942720770836;}
+    else if(pt < 40 ){triggerSFHLT = 0.952102780342;}
+    else if(pt < 42 ){triggerSFHLT = 0.964367806911;}
+    else if(pt < 44 ){triggerSFHLT = 0.967305541039;}
+    else if(pt < 46 ){triggerSFHLT = 0.974358975887;}
+    else if(pt < 48 ){triggerSFHLT = 0.973509907722;}
+    else if(pt < 50 ){triggerSFHLT = 0.983425438404;}
+    else if(pt < 52 ){triggerSFHLT = 0.973827719688;}
+    else if(pt < 54 ){triggerSFHLT = 0.971769809723;}
+    else if(pt < 56 ){triggerSFHLT = 0.989130437374;}
+    else if(pt < 60 ){triggerSFHLT = 0.975321888924;}
+    else if(pt < 65 ){triggerSFHLT = 0.974386334419;}
+    else if(pt < 70 ){triggerSFHLT = 0.984042525291;}
+    else if(pt < 80 ){triggerSFHLT = 1.004305720329;}
+    else if(pt < 90 ){triggerSFHLT = 0.985324919224;}
+    else if(pt < 100){triggerSFHLT = 1.024731159210;}
+    else if(pt < 120){triggerSFHLT = 0.972533047199;}
+    else if(pt < 200){triggerSFHLT = 0.984583735466;}
+    else             {triggerSFHLT = 0.967741906643;}
+  }
+  else if (eta < 1.566){
+    if     (pt < 32 ){triggerSFHLT = 0.574297189713;}
+    else if(pt < 34 ){triggerSFHLT = 0.796638667583;}
+    else if(pt < 36 ){triggerSFHLT = 0.947887301445;}
+    else if(pt < 38 ){triggerSFHLT = 0.962716400623;}
+    else if(pt < 40 ){triggerSFHLT = 0.975292563438;}
+    else if(pt < 42 ){triggerSFHLT = 0.981132090092;}
+    else if(pt < 44 ){triggerSFHLT = 0.970588207245;}
+    else if(pt < 46 ){triggerSFHLT = 0.998774528503;}
+    else if(pt < 48 ){triggerSFHLT = 0.987804889679;}
+    else if(pt < 50 ){triggerSFHLT = 0.976019203663;}
+    else if(pt < 52 ){triggerSFHLT = 1.000000000000;}
+    else if(pt < 54 ){triggerSFHLT = 0.998763918877;}
+    else if(pt < 56 ){triggerSFHLT = 0.954815685749;}
+    else if(pt < 60 ){triggerSFHLT = 1.017676711082;}
+    else if(pt < 65 ){triggerSFHLT = 0.956212997437;}
+    else if(pt < 70 ){triggerSFHLT = 0.901766002178;}
+    else if(pt < 80 ){triggerSFHLT = 0.997536957264;}
+    else if(pt < 90 ){triggerSFHLT = 0.926719307899;}
+    else if(pt < 100){triggerSFHLT = 0.960496604443;}
+    else if(pt < 120){triggerSFHLT = 0.963045895100;}
+    else if(pt < 200){triggerSFHLT = 1.023529410362;}
+    else             {triggerSFHLT = 0.929039299488;}
+  }
+  else if (eta < 1.8){
+    if     (pt < 32 ){triggerSFHLT = 0.478260874748;}
+    else if(pt < 34 ){triggerSFHLT = 0.773437500000;}
+    else if(pt < 36 ){triggerSFHLT = 0.895161271095;}
+    else if(pt < 38 ){triggerSFHLT = 0.934926986694;}
+    else if(pt < 40 ){triggerSFHLT = 0.923857867718;}
+    else if(pt < 42 ){triggerSFHLT = 0.941323339939;}
+    else if(pt < 44 ){triggerSFHLT = 0.941463410854;}
+    else if(pt < 46 ){triggerSFHLT = 0.948379337788;}
+    else if(pt < 48 ){triggerSFHLT = 0.956886231899;}
+    else if(pt < 50 ){triggerSFHLT = 0.942555665970;}
+    else if(pt < 52 ){triggerSFHLT = 0.949999988079;}
+    else if(pt < 54 ){triggerSFHLT = 0.942129611969;}
+    else if(pt < 56 ){triggerSFHLT = 0.954869329929;}
+    else if(pt < 60 ){triggerSFHLT = 0.956521749496;}
+    else if(pt < 65 ){triggerSFHLT = 0.980722904205;}
+    else if(pt < 70 ){triggerSFHLT = 0.920045018196;}
+    else if(pt < 80 ){triggerSFHLT = 0.938956737518;}
+    else if(pt < 90 ){triggerSFHLT = 0.901287555695;}
+    else if(pt < 100){triggerSFHLT = 0.940516293049;}
+    else if(pt < 120){triggerSFHLT = 0.934282600880;}
+    else if(pt < 200){triggerSFHLT = 0.924754619598;}
+    else             {triggerSFHLT = 0.946819603443;}
+  }
+  else {
+    if     (pt < 32 ){triggerSFHLT = 0.272727280855;}
+    else if(pt < 34 ){triggerSFHLT = 0.656934320927;}
+    else if(pt < 36 ){triggerSFHLT = 0.875324666500;}
+    else if(pt < 38 ){triggerSFHLT = 0.924066901207;}
+    else if(pt < 40 ){triggerSFHLT = 0.926616907120;}
+    else if(pt < 42 ){triggerSFHLT = 0.930402934551;}
+    else if(pt < 44 ){triggerSFHLT = 0.938405811787;}
+    else if(pt < 46 ){triggerSFHLT = 0.939285695553;}
+    else if(pt < 48 ){triggerSFHLT = 0.944378674030;}
+    else if(pt < 50 ){triggerSFHLT = 0.940281033516;}
+    else if(pt < 52 ){triggerSFHLT = 0.944900333881;}
+    else if(pt < 54 ){triggerSFHLT = 0.928571403027;}
+    else if(pt < 56 ){triggerSFHLT = 0.940420567989;}
+    else if(pt < 60 ){triggerSFHLT = 0.921768724918;}
+    else if(pt < 65 ){triggerSFHLT = 0.957568824291;}
+    else if(pt < 70 ){triggerSFHLT = 0.924191772938;}
+    else if(pt < 80 ){triggerSFHLT = 0.932810723782;}
+    else if(pt < 90 ){triggerSFHLT = 0.902465164661;}
+    else if(pt < 100){triggerSFHLT = 0.922657966614;}
+    else if(pt < 120){triggerSFHLT = 0.945945918560;}
+    else if(pt < 200){triggerSFHLT = 0.939393937588;}
+    else             {triggerSFHLT = 0.935235977173;}
+  }
 }
 
 double HardcodedConditions::GetElectronTriggerSF2016(double pt, double eta){
-  return 1.000;
+  if (eta < -1.8){
+    if     (pt < 32 ){triggerSFHLT = 0.394531250000;}
+    else if(pt < 34 ){triggerSFHLT = 0.721804499626;}
+    else if(pt < 36 ){triggerSFHLT = 0.914093971252;}
+    else if(pt < 38 ){triggerSFHLT = 0.936031341553;}
+    else if(pt < 40 ){triggerSFHLT = 0.942965805531;}
+    else if(pt < 42 ){triggerSFHLT = 0.950310587883;}
+    else if(pt < 44 ){triggerSFHLT = 0.948529422283;}
+    else if(pt < 46 ){triggerSFHLT = 0.947051763535;}
+    else if(pt < 48 ){triggerSFHLT = 0.945107400417;}
+    else if(pt < 50 ){triggerSFHLT = 0.936018943787;}
+    else if(pt < 52 ){triggerSFHLT = 0.961813867092;}
+    else if(pt < 54 ){triggerSFHLT = 0.935483872890;}
+    else if(pt < 56 ){triggerSFHLT = 0.940023064613;}
+    else if(pt < 60 ){triggerSFHLT = 0.954171538353;}
+    else if(pt < 65 ){triggerSFHLT = 0.968347012997;}
+    else if(pt < 70 ){triggerSFHLT = 0.916943550110;}
+    else if(pt < 80 ){triggerSFHLT = 0.928730487823;}
+    else if(pt < 90 ){triggerSFHLT = 0.922222197056;}
+    else if(pt < 100){triggerSFHLT = 0.925081431866;}
+    else if(pt < 120){triggerSFHLT = 0.937701404095;}
+    else if(pt < 200){triggerSFHLT = 0.939427316189;}
+    else             {triggerSFHLT = 0.918580353260;}
+  }
+  else if (eta < -1.566){
+    if     (pt < 32 ){triggerSFHLT = 0.687804877758;}
+    else if(pt < 34 ){triggerSFHLT = 0.827639758587;}
+    else if(pt < 36 ){triggerSFHLT = 0.916438341141;}
+    else if(pt < 38 ){triggerSFHLT = 0.922470450401;}
+    else if(pt < 40 ){triggerSFHLT = 0.919293820858;}
+    else if(pt < 42 ){triggerSFHLT = 0.925558328629;}
+    else if(pt < 44 ){triggerSFHLT = 0.927710831165;}
+    else if(pt < 46 ){triggerSFHLT = 0.933253884315;}
+    else if(pt < 48 ){triggerSFHLT = 0.949820816517;}
+    else if(pt < 50 ){triggerSFHLT = 0.937278091908;}
+    else if(pt < 52 ){triggerSFHLT = 0.942216992378;}
+    else if(pt < 54 ){triggerSFHLT = 0.945497632027;}
+    else if(pt < 56 ){triggerSFHLT = 0.932242989540;}
+    else if(pt < 60 ){triggerSFHLT = 0.936562836170;}
+    else if(pt < 65 ){triggerSFHLT = 0.908988773823;}
+    else if(pt < 70 ){triggerSFHLT = 0.935972034931;}
+    else if(pt < 80 ){triggerSFHLT = 0.937923252583;}
+    else if(pt < 90 ){triggerSFHLT = 0.914939999580;}
+    else if(pt < 100){triggerSFHLT = 0.908096253872;}
+    else if(pt < 120){triggerSFHLT = 0.943584084511;}
+    else if(pt < 200){triggerSFHLT = 0.925438582897;}
+    else             {triggerSFHLT = 1.011376619339;}
+  }
+  else if (eta < -1.442){
+    if     (pt < 32 ){triggerSFHLT = 0.971014499664;}
+    else if(pt < 34 ){triggerSFHLT = 0.883445918560;}
+    else if(pt < 36 ){triggerSFHLT = 0.929945051670;}
+    else if(pt < 38 ){triggerSFHLT = 0.960422158241;}
+    else if(pt < 40 ){triggerSFHLT = 0.970284223557;}
+    else if(pt < 42 ){triggerSFHLT = 0.978616356850;}
+    else if(pt < 44 ){triggerSFHLT = 0.980295538902;}
+    else if(pt < 46 ){triggerSFHLT = 0.990255773067;}
+    else if(pt < 48 ){triggerSFHLT = 0.964705884457;}
+    else if(pt < 50 ){triggerSFHLT = 0.962352931499;}
+    else if(pt < 52 ){triggerSFHLT = 0.965842187405;}
+    else if(pt < 54 ){triggerSFHLT = 1.013496875763;}
+    else if(pt < 56 ){triggerSFHLT = 0.995169103146;}
+    else if(pt < 60 ){triggerSFHLT = 0.974820137024;}
+    else if(pt < 65 ){triggerSFHLT = 0.995073914528;}
+    else if(pt < 70 ){triggerSFHLT = 0.953917026520;}
+    else if(pt < 80 ){triggerSFHLT = 1.048750042915;}
+    else if(pt < 90 ){triggerSFHLT = 0.981351971626;}
+    else if(pt < 100){triggerSFHLT = 0.998864948750;}
+    else if(pt < 120){triggerSFHLT = 0.937290012836;}
+    else if(pt < 200){triggerSFHLT = 0.970132768154;}
+    else             {triggerSFHLT = 1.139416933060;}
+  }
+  else if (eta < -1.1){
+    if     (pt < 32 ){triggerSFHLT = 0.525862097740;}
+    else if(pt < 34 ){triggerSFHLT = 0.781931459904;}
+    else if(pt < 36 ){triggerSFHLT = 0.919653892517;}
+    else if(pt < 38 ){triggerSFHLT = 0.949519217014;}
+    else if(pt < 40 ){triggerSFHLT = 0.956521749496;}
+    else if(pt < 42 ){triggerSFHLT = 0.971131622791;}
+    else if(pt < 44 ){triggerSFHLT = 0.976109206676;}
+    else if(pt < 46 ){triggerSFHLT = 0.976510047913;}
+    else if(pt < 48 ){triggerSFHLT = 0.982142865658;}
+    else if(pt < 50 ){triggerSFHLT = 0.981153011322;}
+    else if(pt < 52 ){triggerSFHLT = 0.979097902775;}
+    else if(pt < 54 ){triggerSFHLT = 0.976112902164;}
+    else if(pt < 56 ){triggerSFHLT = 0.976034879684;}
+    else if(pt < 60 ){triggerSFHLT = 0.965665221214;}
+    else if(pt < 65 ){triggerSFHLT = 0.974248945713;}
+    else if(pt < 70 ){triggerSFHLT = 0.972310960293;}
+    else if(pt < 80 ){triggerSFHLT = 0.972860097885;}
+    else if(pt < 90 ){triggerSFHLT = 0.970164597034;}
+    else if(pt < 100){triggerSFHLT = 0.984326004982;}
+    else if(pt < 120){triggerSFHLT = 0.971428573132;}
+    else if(pt < 200){triggerSFHLT = 0.985567033291;}
+    else             {triggerSFHLT = 0.984504103661;}
+  }
+  else if (eta < -0.8){
+    if     (pt < 32 ){triggerSFHLT = 0.752212405205;}
+    else if(pt < 34 ){triggerSFHLT = 0.908309459686;}
+    else if(pt < 36 ){triggerSFHLT = 0.981176495552;}
+    else if(pt < 38 ){triggerSFHLT = 0.990794003010;}
+    else if(pt < 40 ){triggerSFHLT = 0.996598660946;}
+    else if(pt < 42 ){triggerSFHLT = 1.001122355461;}
+    else if(pt < 44 ){triggerSFHLT = 1.004459261894;}
+    else if(pt < 46 ){triggerSFHLT = 0.998896241188;}
+    else if(pt < 48 ){triggerSFHLT = 1.000000000000;}
+    else if(pt < 50 ){triggerSFHLT = 0.998911857605;}
+    else if(pt < 52 ){triggerSFHLT = 0.993506491184;}
+    else if(pt < 54 ){triggerSFHLT = 1.001086950302;}
+    else if(pt < 56 ){triggerSFHLT = 0.994640946388;}
+    else if(pt < 60 ){triggerSFHLT = 0.986199557781;}
+    else if(pt < 65 ){triggerSFHLT = 0.990425527096;}
+    else if(pt < 70 ){triggerSFHLT = 1.006417155266;}
+    else if(pt < 80 ){triggerSFHLT = 0.979274630547;}
+    else if(pt < 90 ){triggerSFHLT = 0.995833337307;}
+    else if(pt < 100){triggerSFHLT = 1.006302475929;}
+    else if(pt < 120){triggerSFHLT = 0.989680111408;}
+    else if(pt < 200){triggerSFHLT = 0.978615045547;}
+    else             {triggerSFHLT = 0.967578530312;}
+  }
+  else if (eta < -0.6){
+    if     (pt < 32 ){triggerSFHLT = 0.981308400631;}
+    else if(pt < 34 ){triggerSFHLT = 0.964589238167;}
+    else if(pt < 36 ){triggerSFHLT = 1.007168412209;}
+    else if(pt < 38 ){triggerSFHLT = 1.001162767410;}
+    else if(pt < 40 ){triggerSFHLT = 1.015046238899;}
+    else if(pt < 42 ){triggerSFHLT = 1.009039521217;}
+    else if(pt < 44 ){triggerSFHLT = 1.015748023987;}
+    else if(pt < 46 ){triggerSFHLT = 1.013333320618;}
+    else if(pt < 48 ){triggerSFHLT = 1.012101173401;}
+    else if(pt < 50 ){triggerSFHLT = 1.013172388077;}
+    else if(pt < 52 ){triggerSFHLT = 1.001084566116;}
+    else if(pt < 54 ){triggerSFHLT = 1.010952949524;}
+    else if(pt < 56 ){triggerSFHLT = 1.000000000000;}
+    else if(pt < 60 ){triggerSFHLT = 1.000000000000;}
+    else if(pt < 65 ){triggerSFHLT = 1.009667038918;}
+    else if(pt < 70 ){triggerSFHLT = 0.998936176300;}
+    else if(pt < 80 ){triggerSFHLT = 0.992693126202;}
+    else if(pt < 90 ){triggerSFHLT = 0.985507249832;}
+    else if(pt < 100){triggerSFHLT = 0.987590491772;}
+    else if(pt < 120){triggerSFHLT = 0.987654328346;}
+    else if(pt < 200){triggerSFHLT = 0.976673424244;}
+    else             {triggerSFHLT = 0.996878266335;}
+  }
+  else if (eta < -0.3){
+    if     (pt < 32 ){triggerSFHLT = 1.000000000000;}
+    else if(pt < 34 ){triggerSFHLT = 0.954802274704;}
+    else if(pt < 36 ){triggerSFHLT = 0.983030319214;}
+    else if(pt < 38 ){triggerSFHLT = 0.998805284500;}
+    else if(pt < 40 ){triggerSFHLT = 1.004716992378;}
+    else if(pt < 42 ){triggerSFHLT = 1.009237885475;}
+    else if(pt < 44 ){triggerSFHLT = 1.011428594589;}
+    else if(pt < 46 ){triggerSFHLT = 1.011312246323;}
+    else if(pt < 48 ){triggerSFHLT = 1.011223316193;}
+    else if(pt < 50 ){triggerSFHLT = 1.000000000000;}
+    else if(pt < 52 ){triggerSFHLT = 1.003314971924;}
+    else if(pt < 54 ){triggerSFHLT = 1.007683873177;}
+    else if(pt < 56 ){triggerSFHLT = 0.998910665512;}
+    else if(pt < 60 ){triggerSFHLT = 0.990291237831;}
+    else if(pt < 65 ){triggerSFHLT = 0.989316225052;}
+    else if(pt < 70 ){triggerSFHLT = 1.004305720329;}
+    else if(pt < 80 ){triggerSFHLT = 0.990516304970;}
+    else if(pt < 90 ){triggerSFHLT = 0.995824635029;}
+    else if(pt < 100){triggerSFHLT = 0.987616121769;}
+    else if(pt < 120){triggerSFHLT = 1.002094268799;}
+    else if(pt < 200){triggerSFHLT = 0.979633390903;}
+    else             {triggerSFHLT = 1.009384751320;}
+  }
+  else if (eta < 0.0){
+    if     (pt < 32 ){triggerSFHLT = 1.105882406235;}
+    else if(pt < 34 ){triggerSFHLT = 0.889664828777;}
+    else if(pt < 36 ){triggerSFHLT = 0.960509538651;}
+    else if(pt < 38 ){triggerSFHLT = 0.964285731316;}
+    else if(pt < 40 ){triggerSFHLT = 0.984088122845;}
+    else if(pt < 42 ){triggerSFHLT = 0.988081037998;}
+    else if(pt < 44 ){triggerSFHLT = 0.998816549778;}
+    else if(pt < 46 ){triggerSFHLT = 0.995354235172;}
+    else if(pt < 48 ){triggerSFHLT = 0.995397031307;}
+    else if(pt < 50 ){triggerSFHLT = 1.000000000000;}
+    else if(pt < 52 ){triggerSFHLT = 0.998862326145;}
+    else if(pt < 54 ){triggerSFHLT = 0.994394600391;}
+    else if(pt < 56 ){triggerSFHLT = 1.000000000000;}
+    else if(pt < 60 ){triggerSFHLT = 0.996662974358;}
+    else if(pt < 65 ){triggerSFHLT = 0.984782636166;}
+    else if(pt < 70 ){triggerSFHLT = 0.987012982368;}
+    else if(pt < 80 ){triggerSFHLT = 1.003239750862;}
+    else if(pt < 90 ){triggerSFHLT = 0.997879087925;}
+    else if(pt < 100){triggerSFHLT = 1.018104314804;}
+    else if(pt < 120){triggerSFHLT = 0.993717253208;}
+    else if(pt < 200){triggerSFHLT = 1.005219221115;}
+    else             {triggerSFHLT = 0.968559861183;}
+  }
+  else if (eta < 0.3){
+    if     (pt < 32 ){triggerSFHLT = 1.032967090607;}
+    else if(pt < 34 ){triggerSFHLT = 0.883561670780;}
+    else if(pt < 36 ){triggerSFHLT = 0.948427677155;}
+    else if(pt < 38 ){triggerSFHLT = 0.959558844566;}
+    else if(pt < 40 ){triggerSFHLT = 0.975728154182;}
+    else if(pt < 42 ){triggerSFHLT = 0.990419149399;}
+    else if(pt < 44 ){triggerSFHLT = 0.991755008698;}
+    else if(pt < 46 ){triggerSFHLT = 0.990729987621;}
+    else if(pt < 48 ){triggerSFHLT = 0.995391726494;}
+    else if(pt < 50 ){triggerSFHLT = 0.991999983788;}
+    else if(pt < 52 ){triggerSFHLT = 1.002280473709;}
+    else if(pt < 54 ){triggerSFHLT = 0.989910304546;}
+    else if(pt < 56 ){triggerSFHLT = 0.997745215893;}
+    else if(pt < 60 ){triggerSFHLT = 1.001119852066;}
+    else if(pt < 65 ){triggerSFHLT = 0.987912058830;}
+    else if(pt < 70 ){triggerSFHLT = 0.993435442448;}
+    else if(pt < 80 ){triggerSFHLT = 0.991397857666;}
+    else if(pt < 90 ){triggerSFHLT = 0.983122348785;}
+    else if(pt < 100){triggerSFHLT = 1.005307912827;}
+    else if(pt < 120){triggerSFHLT = 0.986344516277;}
+    else if(pt < 200){triggerSFHLT = 0.986584126949;}
+    else             {triggerSFHLT = 0.965412020683;}
+  }
+  else if (eta < 0.6){
+    if     (pt < 32 ){triggerSFHLT = 0.717391312122;}
+    else if(pt < 34 ){triggerSFHLT = 0.891711235046;}
+    else if(pt < 36 ){triggerSFHLT = 0.977080821991;}
+    else if(pt < 38 ){triggerSFHLT = 0.988151669502;}
+    else if(pt < 40 ){triggerSFHLT = 0.994165718555;}
+    else if(pt < 42 ){triggerSFHLT = 1.000000000000;}
+    else if(pt < 44 ){triggerSFHLT = 1.006872892380;}
+    else if(pt < 46 ){triggerSFHLT = 0.998871326447;}
+    else if(pt < 48 ){triggerSFHLT = 0.996644318104;}
+    else if(pt < 50 ){triggerSFHLT = 0.988974630833;}
+    else if(pt < 52 ){triggerSFHLT = 0.994511544704;}
+    else if(pt < 54 ){triggerSFHLT = 1.002212405205;}
+    else if(pt < 56 ){triggerSFHLT = 0.984815597534;}
+    else if(pt < 60 ){triggerSFHLT = 0.990301728249;}
+    else if(pt < 65 ){triggerSFHLT = 0.976694941521;}
+    else if(pt < 70 ){triggerSFHLT = 0.987165749073;}
+    else if(pt < 80 ){triggerSFHLT = 0.986199557781;}
+    else if(pt < 90 ){triggerSFHLT = 0.977107167244;}
+    else if(pt < 100){triggerSFHLT = 0.975051999092;}
+    else if(pt < 120){triggerSFHLT = 0.971074402332;}
+    else if(pt < 200){triggerSFHLT = 0.981519520283;}
+    else             {triggerSFHLT = 0.981651365757;}
+  }
+  else if (eta < 0.8){
+    if     (pt < 32 ){triggerSFHLT = 0.573248386383;}
+    else if(pt < 34 ){triggerSFHLT = 0.887566149235;}
+    else if(pt < 36 ){triggerSFHLT = 0.989424228668;}
+    else if(pt < 38 ){triggerSFHLT = 0.995354235172;}
+    else if(pt < 40 ){triggerSFHLT = 1.002290964127;}
+    else if(pt < 42 ){triggerSFHLT = 1.017123341560;}
+    else if(pt < 44 ){triggerSFHLT = 1.011198163033;}
+    else if(pt < 46 ){triggerSFHLT = 1.006651878357;}
+    else if(pt < 48 ){triggerSFHLT = 1.007700800896;}
+    else if(pt < 50 ){triggerSFHLT = 1.002181053162;}
+    else if(pt < 52 ){triggerSFHLT = 1.000000000000;}
+    else if(pt < 54 ){triggerSFHLT = 1.003260850906;}
+    else if(pt < 56 ){triggerSFHLT = 0.985074639320;}
+    else if(pt < 60 ){triggerSFHLT = 1.001073002815;}
+    else if(pt < 65 ){triggerSFHLT = 0.998937308788;}
+    else if(pt < 70 ){triggerSFHLT = 0.981269538403;}
+    else if(pt < 80 ){triggerSFHLT = 0.982419848442;}
+    else if(pt < 90 ){triggerSFHLT = 0.986415863037;}
+    else if(pt < 100){triggerSFHLT = 1.003144621849;}
+    else if(pt < 120){triggerSFHLT = 0.991684019566;}
+    else if(pt < 200){triggerSFHLT = 0.991778016090;}
+    else             {triggerSFHLT = 0.985507249832;}
+  }
+  else if (eta < 1.1){
+    if     (pt < 32 ){triggerSFHLT = 0.421686738729;}
+    else if(pt < 34 ){triggerSFHLT = 0.835820913315;}
+    else if(pt < 36 ){triggerSFHLT = 0.984669804573;}
+    else if(pt < 38 ){triggerSFHLT = 0.990836203098;}
+    else if(pt < 40 ){triggerSFHLT = 1.001133799553;}
+    else if(pt < 42 ){triggerSFHLT = 1.004494428635;}
+    else if(pt < 44 ){triggerSFHLT = 1.008918642998;}
+    else if(pt < 46 ){triggerSFHLT = 1.005512714386;}
+    else if(pt < 48 ){triggerSFHLT = 1.002185821533;}
+    else if(pt < 50 ){triggerSFHLT = 0.998915374279;}
+    else if(pt < 52 ){triggerSFHLT = 0.998916566372;}
+    else if(pt < 54 ){triggerSFHLT = 0.998923599720;}
+    else if(pt < 56 ){triggerSFHLT = 1.003236293793;}
+    else if(pt < 60 ){triggerSFHLT = 1.000000000000;}
+    else if(pt < 65 ){triggerSFHLT = 0.980000019073;}
+    else if(pt < 70 ){triggerSFHLT = 1.000000000000;}
+    else if(pt < 80 ){triggerSFHLT = 0.980310857296;}
+    else if(pt < 90 ){triggerSFHLT = 0.990683257580;}
+    else if(pt < 100){triggerSFHLT = 0.985641002655;}
+    else if(pt < 120){triggerSFHLT = 0.998968005180;}
+    else if(pt < 200){triggerSFHLT = 0.976767659187;}
+    else             {triggerSFHLT = 0.982653081417;}
+  }
+  else if (eta < 1.442){
+    if     (pt < 32 ){triggerSFHLT = 0.331125825644;}
+    else if(pt < 34 ){triggerSFHLT = 0.722466945648;}
+    else if(pt < 36 ){triggerSFHLT = 0.921085059643;}
+    else if(pt < 38 ){triggerSFHLT = 0.942720770836;}
+    else if(pt < 40 ){triggerSFHLT = 0.952102780342;}
+    else if(pt < 42 ){triggerSFHLT = 0.964367806911;}
+    else if(pt < 44 ){triggerSFHLT = 0.967305541039;}
+    else if(pt < 46 ){triggerSFHLT = 0.974358975887;}
+    else if(pt < 48 ){triggerSFHLT = 0.973509907722;}
+    else if(pt < 50 ){triggerSFHLT = 0.983425438404;}
+    else if(pt < 52 ){triggerSFHLT = 0.973827719688;}
+    else if(pt < 54 ){triggerSFHLT = 0.971769809723;}
+    else if(pt < 56 ){triggerSFHLT = 0.989130437374;}
+    else if(pt < 60 ){triggerSFHLT = 0.975321888924;}
+    else if(pt < 65 ){triggerSFHLT = 0.974386334419;}
+    else if(pt < 70 ){triggerSFHLT = 0.984042525291;}
+    else if(pt < 80 ){triggerSFHLT = 1.004305720329;}
+    else if(pt < 90 ){triggerSFHLT = 0.985324919224;}
+    else if(pt < 100){triggerSFHLT = 1.024731159210;}
+    else if(pt < 120){triggerSFHLT = 0.972533047199;}
+    else if(pt < 200){triggerSFHLT = 0.984583735466;}
+    else             {triggerSFHLT = 0.967741906643;}
+  }
+  else if (eta < 1.566){
+    if     (pt < 32 ){triggerSFHLT = 0.574297189713;}
+    else if(pt < 34 ){triggerSFHLT = 0.796638667583;}
+    else if(pt < 36 ){triggerSFHLT = 0.947887301445;}
+    else if(pt < 38 ){triggerSFHLT = 0.962716400623;}
+    else if(pt < 40 ){triggerSFHLT = 0.975292563438;}
+    else if(pt < 42 ){triggerSFHLT = 0.981132090092;}
+    else if(pt < 44 ){triggerSFHLT = 0.970588207245;}
+    else if(pt < 46 ){triggerSFHLT = 0.998774528503;}
+    else if(pt < 48 ){triggerSFHLT = 0.987804889679;}
+    else if(pt < 50 ){triggerSFHLT = 0.976019203663;}
+    else if(pt < 52 ){triggerSFHLT = 1.000000000000;}
+    else if(pt < 54 ){triggerSFHLT = 0.998763918877;}
+    else if(pt < 56 ){triggerSFHLT = 0.954815685749;}
+    else if(pt < 60 ){triggerSFHLT = 1.017676711082;}
+    else if(pt < 65 ){triggerSFHLT = 0.956212997437;}
+    else if(pt < 70 ){triggerSFHLT = 0.901766002178;}
+    else if(pt < 80 ){triggerSFHLT = 0.997536957264;}
+    else if(pt < 90 ){triggerSFHLT = 0.926719307899;}
+    else if(pt < 100){triggerSFHLT = 0.960496604443;}
+    else if(pt < 120){triggerSFHLT = 0.963045895100;}
+    else if(pt < 200){triggerSFHLT = 1.023529410362;}
+    else             {triggerSFHLT = 0.929039299488;}
+  }
+  else if (eta < 1.8){
+    if     (pt < 32 ){triggerSFHLT = 0.478260874748;}
+    else if(pt < 34 ){triggerSFHLT = 0.773437500000;}
+    else if(pt < 36 ){triggerSFHLT = 0.895161271095;}
+    else if(pt < 38 ){triggerSFHLT = 0.934926986694;}
+    else if(pt < 40 ){triggerSFHLT = 0.923857867718;}
+    else if(pt < 42 ){triggerSFHLT = 0.941323339939;}
+    else if(pt < 44 ){triggerSFHLT = 0.941463410854;}
+    else if(pt < 46 ){triggerSFHLT = 0.948379337788;}
+    else if(pt < 48 ){triggerSFHLT = 0.956886231899;}
+    else if(pt < 50 ){triggerSFHLT = 0.942555665970;}
+    else if(pt < 52 ){triggerSFHLT = 0.949999988079;}
+    else if(pt < 54 ){triggerSFHLT = 0.942129611969;}
+    else if(pt < 56 ){triggerSFHLT = 0.954869329929;}
+    else if(pt < 60 ){triggerSFHLT = 0.956521749496;}
+    else if(pt < 65 ){triggerSFHLT = 0.980722904205;}
+    else if(pt < 70 ){triggerSFHLT = 0.920045018196;}
+    else if(pt < 80 ){triggerSFHLT = 0.938956737518;}
+    else if(pt < 90 ){triggerSFHLT = 0.901287555695;}
+    else if(pt < 100){triggerSFHLT = 0.940516293049;}
+    else if(pt < 120){triggerSFHLT = 0.934282600880;}
+    else if(pt < 200){triggerSFHLT = 0.924754619598;}
+    else             {triggerSFHLT = 0.946819603443;}
+  }
+  else {
+    if     (pt < 32 ){triggerSFHLT = 0.272727280855;}
+    else if(pt < 34 ){triggerSFHLT = 0.656934320927;}
+    else if(pt < 36 ){triggerSFHLT = 0.875324666500;}
+    else if(pt < 38 ){triggerSFHLT = 0.924066901207;}
+    else if(pt < 40 ){triggerSFHLT = 0.926616907120;}
+    else if(pt < 42 ){triggerSFHLT = 0.930402934551;}
+    else if(pt < 44 ){triggerSFHLT = 0.938405811787;}
+    else if(pt < 46 ){triggerSFHLT = 0.939285695553;}
+    else if(pt < 48 ){triggerSFHLT = 0.944378674030;}
+    else if(pt < 50 ){triggerSFHLT = 0.940281033516;}
+    else if(pt < 52 ){triggerSFHLT = 0.944900333881;}
+    else if(pt < 54 ){triggerSFHLT = 0.928571403027;}
+    else if(pt < 56 ){triggerSFHLT = 0.940420567989;}
+    else if(pt < 60 ){triggerSFHLT = 0.921768724918;}
+    else if(pt < 65 ){triggerSFHLT = 0.957568824291;}
+    else if(pt < 70 ){triggerSFHLT = 0.924191772938;}
+    else if(pt < 80 ){triggerSFHLT = 0.932810723782;}
+    else if(pt < 90 ){triggerSFHLT = 0.902465164661;}
+    else if(pt < 100){triggerSFHLT = 0.922657966614;}
+    else if(pt < 120){triggerSFHLT = 0.945945918560;}
+    else if(pt < 200){triggerSFHLT = 0.939393937588;}
+    else             {triggerSFHLT = 0.935235977173;}
+  }
 }
 
 double HardcodedConditions::GetElectronTriggerSF2017(double pt, double eta){
-  return 1.000;
+{
+	// Trigger Scale Factors, SF2017B_Bkg_LepPtEta_EOR.png & SF2017CDEF_Bkg_LepPtEta_EOR.png
+	float triggerSFB = 1.0;
+	float triggerSFC = 1.0;
+	float triggerSFDEF = 1.0;
+	float triggerSFBunc = 0.0;
+	float triggerSFCunc = 0.0;
+	float triggerSFDEFunc = 0.0;
+
+	if (eta > 0.0 && eta <= 0.8){
+	    if(pt >30.0 && pt <= 35.0){triggerSFDEF=0.910508894879; triggerSFDEFunc=0.0252630974566; }
+	    else if(pt > 35.0 && pt <= 40.0){triggerSFB=1.19235377821; triggerSFBunc=0.00972352951004; triggerSFC=0.961432584122; triggerSFCunc=0.0206050210328;triggerSFDEF=0.953531146324; triggerSFDEFunc=0.00966443825252;}
+	    else if(pt > 40.0 && pt <= 45.0){triggerSFB=1.15582596391; triggerSFBunc=0.0101490597149; triggerSFC=0.957629044796; triggerSFCunc=0.0156301400464;triggerSFDEF=0.969037828674; triggerSFDEFunc=0.00902253599794;}
+	    else if(pt > 45.0 && pt <= 50.0){triggerSFB=1.14242389742; triggerSFBunc=0.00549159903045; triggerSFC=0.952084569431; triggerSFCunc=0.0156343831136;triggerSFDEF=0.972670135935; triggerSFDEFunc=0.00874302598399;}
+	    else if(pt > 50.0 && pt <= 60.0){triggerSFB=1.13798058665; triggerSFBunc=0.00440646655911; triggerSFC=0.972836208578; triggerSFCunc=0.0109869570181;triggerSFDEF=0.97354484058; triggerSFDEFunc=0.00662049424611;}
+	    else if(pt > 60.0 && pt >= 100.0){triggerSFB=1.11927898325; triggerSFBunc=0.00270996230892; triggerSFC=0.97878084945; triggerSFCunc=0.00639206054071;triggerSFDEF=0.978742705794; triggerSFDEFunc=0.00393049250046;}
+	    else if(pt > 100.0 && pt >= 200.0){triggerSFB=1.08208421955; triggerSFBunc=0.00263577695243;triggerSFC=0.97205414899; triggerSFCunc=0.00666655373504;triggerSFDEF=0.976656543342; triggerSFDEFunc=0.00402836298722;}
+	    else if(pt >200.0 && pt >= 300.0){triggerSFB=1.05681427994; triggerSFBunc=0.00197390294288;triggerSFC=0.988668281842; triggerSFCunc=0.0108354482413;triggerSFDEF=0.980285171661; triggerSFDEFunc=0.00719412375919;}
+	}
+	else if (eta > 0.8 && eta <= 1.442){
+	    if(pt >30.0 && pt <= 35.0){triggerSFDEF=0.751761888491; triggerSFDEFunc=0.0392563144486;}
+	    else if(pt > 35.0 && pt <= 40.0){triggerSFB=1.15822014397; triggerSFBunc=0.0366899788708; triggerSFC=0.860499625902; triggerSFCunc=0.0338474227491;triggerSFDEF=0.919657299703; triggerSFDEFunc=0.0145884627614;}
+	    else if(pt > 40.0 && pt <= 45.0){triggerSFB=1.21616929374; triggerSFBunc=0.0075355308975; triggerSFC=0.954195822579; triggerSFCunc=0.0216774946301;triggerSFDEF=0.9416298044; triggerSFDEFunc=0.0135284523691;}
+	    else if(pt > 45.0 && pt <= 50.0){triggerSFB=1.17221728706; triggerSFBunc=0.00598476735072;triggerSFC=0.95883629846; triggerSFCunc=0.0208809133241; triggerSFDEF=0.967038221562; triggerSFDEFunc=0.012176898146;}
+	    else if(pt > 50.0 && pt <= 60.0){triggerSFB=1.19498750549; triggerSFBunc=0.0178876420601; triggerSFC=0.954662162504; triggerSFCunc=0.0160626737532;triggerSFDEF=0.975886529118; triggerSFDEFunc=0.00901597488231;}
+	    else if(pt > 60.0 && pt >= 100.0){triggerSFB=1.14500756907; triggerSFBunc=0.00769191207143; triggerSFC=0.973404630486; triggerSFCunc=0.00863116494001;triggerSFDEF=0.981893775663; triggerSFDEFunc=0.00516090030148;}
+	    else if(pt > 100.0 && pt >= 200.0){triggerSFB=1.08473672928; triggerSFBunc=0.00377953565311;triggerSFC=0.982716650785; triggerSFCunc=0.00847325191329;triggerSFDEF=0.978950786067; triggerSFDEFunc=0.0052715751246;}
+	    else if(pt >200.0 && pt >= 300.0){triggerSFB=1.04804436988; triggerSFBunc=0.00275314759171;triggerSFC=0.962029353635; triggerSFCunc=0.0169198961547; triggerSFDEF=0.979265291494; triggerSFDEFunc=0.0093553710705;}
+	}
+	else if (eta > 1.442 && eta <= 2.0){
+	    if(pt >30.0 && pt <= 35.0){triggerSFDEF=0.61359340781; triggerSFDEFunc=0.0720651614296; }
+	    else if(pt > 35.0 && pt <= 40.0){triggerSFB=0.979837673172; triggerSFBunc=0.0996061772208;triggerSFC=0.834393494481; triggerSFCunc=0.0545242814001;triggerSFDEF=0.865218488115; triggerSFDEFunc=0.0255203774749;}
+	    else if(pt > 40.0 && pt <= 45.0){triggerSFB=1.09592474113; triggerSFBunc=0.0388939927352; triggerSFC=0.934846351249; triggerSFCunc=0.0336441519287; triggerSFDEF=0.92564191376; triggerSFDEFunc=0.0228158658932; }
+	    else if(pt > 45.0 && pt <= 50.0){triggerSFB=1.14329944654; triggerSFBunc=0.0390830761738; triggerSFC=0.962071721753; triggerSFCunc=0.0323504865487;triggerSFDEF=0.910259293332; triggerSFDEFunc=0.023206491402; }
+	    else if(pt > 50.0 && pt <= 60.0){triggerSFB=1.12458617216; triggerSFBunc=0.0207787584607; triggerSFC=0.939378108547; triggerSFCunc=0.0246293245522; triggerSFDEF=0.951179859384; triggerSFDEFunc=0.0150226105676;}
+	    else if(pt > 60.0 && pt >= 100.0){triggerSFB=1.12172511077; triggerSFBunc=0.0220454574283; triggerSFC=0.987642127321; triggerSFCunc=0.0210337676182; triggerSFDEF=0.968589861037; triggerSFDEFunc=0.0173841185589;}
+	    else if(pt > 100.0 && pt >= 200.0){triggerSFB=1.09052141074; triggerSFBunc=0.0140524818938; triggerSFC=0.985970344843; triggerSFCunc=0.0167420341634; triggerSFDEF=0.967442726925; triggerSFDEFunc=0.0115473116236;}
+	    else if(pt >200.0 && pt >= 300.0){triggerSFB=1.08883369326; triggerSFBunc=0.0193992275579;  triggerSFC=0.893843409369; triggerSFCunc=0.0558133858133; triggerSFDEF=0.958624277634; triggerSFDEFunc=0.0308831433403;}
+	}
+	else if (eta > 2.0 && eta <= 2.4){
+	    if(pt >30.0 && pt <= 35.0){triggerSFDEF=1.34938101512; triggerSFDEFunc=0.897934586653;}
+	    else if(pt > 35.0 && pt <= 40.0){triggerSFB=0.852743087035; triggerSFBunc=0.177423039542;triggerSFC=0.682868604737; triggerSFCunc=0.144437037161; triggerSFDEF=0.809342108762; triggerSFDEFunc=0.0630935824021;}
+	    else if(pt > 40.0 && pt <= 45.0){triggerSFB=1.1679917664; triggerSFBunc=0.0167310627084; triggerSFC=1.0519398793; triggerSFCunc=0.0583624743679; triggerSFDEF=0.929952818205; triggerSFDEFunc=0.0555593489689;}
+	    else if(pt > 45.0 && pt <= 50.0){triggerSFB=1.19320302369; triggerSFBunc=0.0205220242409;triggerSFC=0.983854619602; triggerSFCunc=0.0710158704718;triggerSFDEF=0.996331036879; triggerSFDEFunc=0.0509581507824;}
+	    else if(pt > 50.0 && pt <= 60.0){triggerSFB=1.08557256937; triggerSFBunc=0.117006664089; triggerSFC=0.996753585332; triggerSFCunc=0.0684326387008;triggerSFDEF=0.926442474712; triggerSFDEFunc=0.0458155559586;}
+	    else if(pt > 60.0 && pt >= 100.0){triggerSFB=1.18448651178; triggerSFBunc=0.0697531410082;triggerSFC=1.02919877827; triggerSFCunc=0.0716198040658; triggerSFDEF=1.03147014466; triggerSFDEFunc=0.058149906159;}
+	    else if(pt > 100.0 && pt >= 200.0){triggerSFB=1.06393762562; triggerSFBunc=0.0624111781463;triggerSFC=1.01898572985; triggerSFCunc=0.0416570105471;triggerSFDEF=0.976709670734; triggerSFDEFunc=0.0321444698532;}
+	    else if(pt >200.0 && pt >= 300.0){triggerSFB=1.07201980973; triggerSFBunc=0.0236270951373;triggerSFC=1.06465564707; triggerSFCunc=0.0231736721195;triggerSFDEF=0.958190082361; triggerSFDEFunc=0.103132973757; }
+	}
+
+
+	/*if (ht > 500.0 && ht < 750.0){
+	  if (pt > 20.0 && pt < 50.0){triggerSFB = 0.907;triggerSFC = 0.931;triggerSFDEF = 0.967;}
+	  else if (pt >=50.0 && pt <= 300.0){triggerSFB = 0.997;triggerSFC = 0.999;triggerSFDEF = 0.999;}
+	}
+	else if (ht >= 750.0 && ht < 3000.0){
+	    if (pt > 20.0 && pt < 50.0){triggerSFB = 0.888;triggerSFC = 0.923;triggerSFDEF = 0.963;}
+	    else if (pt >=50.0 && pt <= 300.0){triggerSFB = 0.996;triggerSFC = 1.000;triggerSFDEF = 0.999;}
+	}*/
+	return (4.823*triggerSFB+ 9.664*triggerSFC + 27.07*triggerSFDEF)/41.557;
+
 }
 
 double HardcodedConditions::GetElectronTriggerSF2018(double pt, double eta){
-  return 1.000;
+  float triggerSFABCD = 1.0;
+  float triggerSFABCDunc = 0.0;
+  if (eta > 0.0 && eta <= 0.8){
+	    if(pt >30.0 && pt <= 35.0){triggerSFABCD=0.913692057441; triggerSFABCDunc=0.0154464370968;}
+	    else if(pt > 35.0 && pt <= 40.0){triggerSFABCD=0.971695502732; triggerSFABCDunc=0.00613023548779;}
+	    else if(pt > 40.0 && pt <= 45.0){triggerSFABCD=0.973472902604; triggerSFABCDunc=0.00581754877102;}
+	    else if(pt > 45.0 && pt <= 50.0){triggerSFABCD=0.975870251002; triggerSFABCDunc=0.00591952371387;}
+	    else if(pt > 50.0 && pt <= 60.0){triggerSFABCD=0.972260692149; triggerSFABCDunc=0.00426073436109;}
+	    else if(pt > 60.0 && pt >= 100.0){triggerSFABCD=0.978462954775; triggerSFABCDunc=0.00251528166842;}
+	    else if(pt > 100.0 && pt >= 200.0){triggerSFABCD=0.982340801275; triggerSFABCDunc=0.00249892269699;}
+	    else if(pt >200.0 && pt >= 300.0){triggerSFABCD=0.988277803553; triggerSFABCDunc=0.00408553511306;}
+	}
+	else if (eta > 0.8 && eta <= 1.442){
+	    if(pt >30.0 && pt <= 35.0){triggerSFABCD=0.79130810157; triggerSFABCDunc=0.0257604488845;}
+	    else if(pt > 35.0 && pt <= 40.0){triggerSFABCD=0.95794335208; triggerSFABCDunc=0.0200823014694;}
+	    else if(pt > 40.0 && pt <= 45.0){triggerSFABCD=0.98584588097; triggerSFABCDunc=0.0077862661467;}
+	    else if(pt > 45.0 && pt <= 50.0){triggerSFABCD=0.986921685202; triggerSFABCDunc=0.0127837800598; }
+	    else if(pt > 50.0 && pt <= 60.0){triggerSFABCD=1.01257881296; triggerSFABCDunc=0.0160565199922;}
+	    else if(pt > 60.0 && pt >= 100.0){triggerSFABCD=0.985749736854; triggerSFABCDunc=0.00366472974788;}
+	    else if(pt > 100.0 && pt >= 200.0){triggerSFABCD=0.993225266785; triggerSFABCDunc=0.00626714108618;}
+	    else if(pt >200.0 && pt >= 300.0){triggerSFABCD=1.0017169042; triggerSFABCDunc=0.00833637183928;}
+	}
+	else if (eta > 1.442 && eta <= 2.0){
+	    if(pt >30.0 && pt <= 35.0){triggerSFABCD=0.784488053273; triggerSFABCDunc=0.0399543285185;}
+	    else if(pt > 35.0 && pt <= 40.0){triggerSFABCD=0.923642602884; triggerSFABCDunc=0.0250525652842;}
+	    else if(pt > 40.0 && pt <= 45.0){triggerSFABCD=0.949818783052; triggerSFABCDunc=0.0160756054522;}
+	    else if(pt > 45.0 && pt <= 50.0){triggerSFABCD=0.994631635079; triggerSFABCDunc=0.0190307120158;}
+	    else if(pt > 50.0 && pt <= 60.0){triggerSFABCD=0.971684494245; triggerSFABCDunc=0.0170379153418;}
+	    else if(pt > 60.0 && pt >= 100.0){triggerSFABCD=0.975080347642; triggerSFABCDunc=0.00914101473342;}
+	    else if(pt > 100.0 && pt >= 200.0){triggerSFABCD=0.945571234252; triggerSFABCDunc=0.00842362907735;}
+	    else if(pt >200.0 && pt >= 300.0){triggerSFABCD=0.917539801421; triggerSFABCDunc=0.0223619496622;}
+	}
+	else if (eta > 2.0 && eta <= 2.4){
+	    if(pt >30.0 && pt <= 35.0){triggerSFABCD=0.771792545521; triggerSFABCDunc=0.0822918878152;}
+	    else if(pt > 35.0 && pt <= 40.0){triggerSFABCD=0.877438998912; triggerSFABCDunc=0.035306995628;}
+	    else if(pt > 40.0 && pt <= 45.0){triggerSFABCD=1.05068262187; triggerSFABCDunc=0.0582042341467;}
+	    else if(pt > 45.0 && pt <= 50.0){triggerSFABCD=0.963750775537; triggerSFABCDunc=0.0331998840585;}
+	    else if(pt > 50.0 && pt <= 60.0){triggerSFABCD=0.944876225901; triggerSFABCDunc=0.0237164780054;}
+	    else if(pt > 60.0 && pt >= 100.0){ triggerSFABCD=0.954494360964; triggerSFABCDunc=0.0153518496535;}
+	    else if(pt > 100.0 && pt >= 200.0){triggerSFABCD=0.940644961626; triggerSFABCDunc=0.0308095483653;}
+	    else if(pt >200.0 && pt >= 300.0){triggerSFABCD=0.795593538315; triggerSFABCDunc=0.0538805201514;}
+	}
+  /*if (ht > 500.0 && ht < 750.0){
+    if (pt > 20.0 && pt < 50.0){triggerSFAB = 0.970;triggerSFCD = 0.981;}
+    else if (pt >=50.0 && pt <= 300.0){triggerSFAB = 0.999;triggerSFCD = 1.000;}
+  }
+  else if (ht >= 750.0 && ht < 3000.0){
+    if (pt > 20.0 && pt < 50.0){triggerSFAB = 0.959;triggerSFCD = 0.990;}
+    else if (pt >=50.0 && pt <= 300.0){triggerSFAB = 0.998;triggerSFCD = 0.999;}
+  }*/
+  return triggerSFABCD;
 }
 
 /*.-----------------------------------------------------------------.
@@ -2577,20 +3455,215 @@ double HardcodedConditions::GetIsMHadronTriggerSF(double njets, double ht, std::
 }
 
 double HardcodedConditions::GetIsMHadronTriggerSF2016APV(double njets, double ht){
-  return 1.000;
+  float triggerSFBCDEF = 1.0;
+  float triggerSFGH = 1.0;
+  float lum_RunsBCDEF = 15.658183109;
+  float lum_RunsGH = 15.199167277;
+  // https://github.com/TopBrussels/TopTreeAnalysisBase/blob/CMSSW_80X/Calibrations/LeptonSF/MuonSF/SingleMuonTrigger_EfficienciesAndSF_RunsBCDEF.root
+  // https://github.com/TopBrussels/TopTreeAnalysisBase/blob/CMSSW_80X/Calibrations/LeptonSF/MuonSF/SingleMuonTrigger_EfficienciesAndSF_RunsGH.root
+  // https://github.com/dlont/FourTops2016/blob/88c929bf98625735a92a31210f7233f799c5a10c/ana/src/FourTop_EventSelection_SingleLepton_Run2_Local.cc#L1423-L1427
+  if (fabs(eta) < 0.9){
+    if     (pt < 30) {triggerSFBCDEF = 0.968116283417; triggerSFGH = 0.986980736256;}
+    else if(pt < 40) {triggerSFBCDEF = 0.973368346691; triggerSFGH = 0.991047501564;}
+    else if(pt < 50) {triggerSFBCDEF = 0.974264264107; triggerSFGH = 0.992595553398;}
+    else if(pt < 60) {triggerSFBCDEF = 0.975768208504; triggerSFGH = 0.992017924786;}
+    else if(pt < 120){triggerSFBCDEF = 0.973526299000; triggerSFGH = 0.993243277073;}
+    else if(pt < 200){triggerSFBCDEF = 0.972118735313; triggerSFGH = 0.981392562389;}
+    else             {triggerSFBCDEF = 0.971257746220; triggerSFGH = 0.993893802166;}
+  }
+  else if (fabs(eta) < 1.2){
+    if     (pt < 30) {triggerSFBCDEF = 0.952969312668; triggerSFGH = 0.962840259075;}
+    else if(pt < 40) {triggerSFBCDEF = 0.963177621365; triggerSFGH = 0.971895813942;}
+    else if(pt < 50) {triggerSFBCDEF = 0.964307963848; triggerSFGH = 0.974604427814;}
+    else if(pt < 60) {triggerSFBCDEF = 0.965887784958; triggerSFGH = 0.975397706032;}
+    else if(pt < 120){triggerSFBCDEF = 0.966033637524; triggerSFGH = 0.970948219299;}
+    else if(pt < 200){triggerSFBCDEF = 0.938959360123; triggerSFGH = 0.954439282417;}
+    else             {triggerSFBCDEF = 0.934328913689; triggerSFGH = 0.977128326893;}
+  }
+  else if (fabs(eta) < 2.1){
+    if     (pt < 30) {triggerSFBCDEF = 0.976249217987; triggerSFGH = 0.983919560909;}
+    else if(pt < 40) {triggerSFBCDEF = 0.995422542095; triggerSFGH = 0.996549844742;}
+    else if(pt < 50) {triggerSFBCDEF = 0.997932732105; triggerSFGH = 1.002132534981;}
+    else if(pt < 60) {triggerSFBCDEF = 0.998939633369; triggerSFGH = 1.002410292625;}
+    else if(pt < 120){triggerSFBCDEF = 0.998927235603; triggerSFGH = 1.003164172173;}
+    else if(pt < 200){triggerSFBCDEF = 1.006426811218; triggerSFGH = 1.005091547966;}
+    else             {triggerSFBCDEF = 1.0001392317772; triggerSFGH = 0.998426139355;}
+  }
+  else{
+    if     (pt < 30) {triggerSFBCDEF = 0.907747089863; triggerSFGH = 0.913884937763;}
+    else if(pt < 40) {triggerSFBCDEF = 0.943600058556; triggerSFGH = 0.948634445667;}
+    else if(pt < 50) {triggerSFBCDEF = 0.958550512791; triggerSFGH = 0.962963759899;}
+    else if(pt < 60) {triggerSFBCDEF = 0.963512957096; triggerSFGH = 0.967069149017;}
+    else if(pt < 120){triggerSFBCDEF = 0.953565478325; triggerSFGH = 0.962784349918;}
+    else if(pt < 200){triggerSFBCDEF = 1.009902954102; triggerSFGH = 0.983114957809;}
+    else             {triggerSFBCDEF = 0.791778862476; triggerSFGH = 0.935948610306;}
+  }
+  return (lum_RunsBCDEF*triggerSFBCDEF + lum_RunsGH*triggerSFGH)/(lum_RunsBCDEF + lum_RunsGH);
 }
 
 
 double HardcodedConditions::GetIsMHadronTriggerSF2016(double njets, double ht){
-  return 1.000;
+  float triggerSFBCDEF = 1.0;
+  float triggerSFGH = 1.0;
+  float lum_RunsBCDEF = 15.658183109;
+  float lum_RunsGH = 15.199167277;
+  // https://github.com/TopBrussels/TopTreeAnalysisBase/blob/CMSSW_80X/Calibrations/LeptonSF/MuonSF/SingleMuonTrigger_EfficienciesAndSF_RunsBCDEF.root
+  // https://github.com/TopBrussels/TopTreeAnalysisBase/blob/CMSSW_80X/Calibrations/LeptonSF/MuonSF/SingleMuonTrigger_EfficienciesAndSF_RunsGH.root
+  // https://github.com/dlont/FourTops2016/blob/88c929bf98625735a92a31210f7233f799c5a10c/ana/src/FourTop_EventSelection_SingleLepton_Run2_Local.cc#L1423-L1427
+  if (fabs(eta) < 0.9){
+    if     (pt < 30) {triggerSFBCDEF = 0.968116283417; triggerSFGH = 0.986980736256;}
+    else if(pt < 40) {triggerSFBCDEF = 0.973368346691; triggerSFGH = 0.991047501564;}
+    else if(pt < 50) {triggerSFBCDEF = 0.974264264107; triggerSFGH = 0.992595553398;}
+    else if(pt < 60) {triggerSFBCDEF = 0.975768208504; triggerSFGH = 0.992017924786;}
+    else if(pt < 120){triggerSFBCDEF = 0.973526299000; triggerSFGH = 0.993243277073;}
+    else if(pt < 200){triggerSFBCDEF = 0.972118735313; triggerSFGH = 0.981392562389;}
+    else             {triggerSFBCDEF = 0.971257746220; triggerSFGH = 0.993893802166;}
+  }
+  else if (fabs(eta) < 1.2){
+    if     (pt < 30) {triggerSFBCDEF = 0.952969312668; triggerSFGH = 0.962840259075;}
+    else if(pt < 40) {triggerSFBCDEF = 0.963177621365; triggerSFGH = 0.971895813942;}
+    else if(pt < 50) {triggerSFBCDEF = 0.964307963848; triggerSFGH = 0.974604427814;}
+    else if(pt < 60) {triggerSFBCDEF = 0.965887784958; triggerSFGH = 0.975397706032;}
+    else if(pt < 120){triggerSFBCDEF = 0.966033637524; triggerSFGH = 0.970948219299;}
+    else if(pt < 200){triggerSFBCDEF = 0.938959360123; triggerSFGH = 0.954439282417;}
+    else             {triggerSFBCDEF = 0.934328913689; triggerSFGH = 0.977128326893;}
+  }
+  else if (fabs(eta) < 2.1){
+    if     (pt < 30) {triggerSFBCDEF = 0.976249217987; triggerSFGH = 0.983919560909;}
+    else if(pt < 40) {triggerSFBCDEF = 0.995422542095; triggerSFGH = 0.996549844742;}
+    else if(pt < 50) {triggerSFBCDEF = 0.997932732105; triggerSFGH = 1.002132534981;}
+    else if(pt < 60) {triggerSFBCDEF = 0.998939633369; triggerSFGH = 1.002410292625;}
+    else if(pt < 120){triggerSFBCDEF = 0.998927235603; triggerSFGH = 1.003164172173;}
+    else if(pt < 200){triggerSFBCDEF = 1.006426811218; triggerSFGH = 1.005091547966;}
+    else             {triggerSFBCDEF = 1.0001392317772; triggerSFGH = 0.998426139355;}
+  }
+  else{
+    if     (pt < 30) {triggerSFBCDEF = 0.907747089863; triggerSFGH = 0.913884937763;}
+    else if(pt < 40) {triggerSFBCDEF = 0.943600058556; triggerSFGH = 0.948634445667;}
+    else if(pt < 50) {triggerSFBCDEF = 0.958550512791; triggerSFGH = 0.962963759899;}
+    else if(pt < 60) {triggerSFBCDEF = 0.963512957096; triggerSFGH = 0.967069149017;}
+    else if(pt < 120){triggerSFBCDEF = 0.953565478325; triggerSFGH = 0.962784349918;}
+    else if(pt < 200){triggerSFBCDEF = 1.009902954102; triggerSFGH = 0.983114957809;}
+    else             {triggerSFBCDEF = 0.791778862476; triggerSFGH = 0.935948610306;}
+  }
+  return (lum_RunsBCDEF*triggerSFBCDEF + lum_RunsGH*triggerSFGH)/(lum_RunsBCDEF + lum_RunsGH);
 }
 
 double HardcodedConditions::GetIsMHadronTriggerSF2017(double njets, double ht){
-  return 1.000;
+	float trigSFB = 1.0;
+	float triggerSFCDEF = 1.0;
+	float trigSFBunc = 0.0;
+	float triggerSFCDEFunc = 0.0;
+	if (eta > 0.0 && eta <= 0.8){
+	    if(pt >30.0 && pt <= 35.0){trigSFB=1.10019349994; trigSFBunc=0.00547206712151;triggerSFCDEF=0.978804954631; triggerSFCDEFunc=0.00648538520448;}
+	    else if(pt > 35.0 && pt <= 40.0){trigSFB=1.09211088948; trigSFBunc=0.00204401887493;triggerSFCDEF=0.984698671039; triggerSFCDEFunc=0.00602193913522;}
+	    else if(pt > 40.0 && pt <= 45.0){trigSFB=1.07808450861; trigSFBunc=0.00464941695873;triggerSFCDEF=0.995559844257; triggerSFCDEFunc=0.00567940378055;}
+	    else if(pt > 45.0 && pt <= 50.0){trigSFB=1.07193586473; trigSFBunc=0.00391132533692;triggerSFCDEF=0.988591733802; triggerSFCDEFunc=0.00579494608742;}
+	    else if(pt > 50.0 && pt <= 60.0){trigSFB=1.01367573178; trigSFBunc=0.00984912438091;triggerSFCDEF=0.990844343111; triggerSFCDEFunc=0.00401810293322;}
+	    else if(pt > 60.0 && pt >= 100.0){trigSFB=1.02371459077; trigSFBunc=0.00453347155488;triggerSFCDEF=0.9899251109; triggerSFCDEFunc=0.00222019796691;}
+	    else if(pt > 100.0 && pt >= 200.0){trigSFB=1.01917413639; trigSFBunc=0.00428822026176;triggerSFCDEF=0.989816219066; triggerSFCDEFunc=0.00213658604325;}
+	    else if(pt >200.0 && pt >= 300.0){trigSFB=1.03021004051; trigSFBunc=0.0047931519218;triggerSFCDEF=0.993698209245; triggerSFCDEFunc=0.00407479066069;}
+	}
+    else if (eta > 0.8 && eta <= 1.442){
+	    if(pt >30.0 && pt <= 35.0){trigSFB=1.12077327256; trigSFBunc=0.0113246985811;triggerSFCDEF=0.965099847017; triggerSFCDEFunc=0.00969574453469;}
+	    else if(pt > 35.0 && pt <=40.0){trigSFB=1.11606710619; trigSFBunc=0.00305398442218;triggerSFCDEF=0.974018899838; triggerSFCDEFunc=0.00871241069532;}
+	    else if(pt >40.0 && pt<=45.0){trigSFB=1.10646659029; trigSFBunc=0.00302169373442;triggerSFCDEF=1.00039705989; triggerSFCDEFunc=0.00799929230775;}
+	    else if(pt >45.0 && pt <=50.0){trigSFB=1.08923843408; trigSFBunc=0.00285057860769;triggerSFCDEF=0.979438599873; triggerSFCDEFunc=0.00829713158194;}
+	    else if(pt > 50.0 && pt <= 60.0){trigSFB=1.0428344034; trigSFBunc=0.0107394273425;triggerSFCDEF=0.987897428252; triggerSFCDEFunc=0.0057226921376;}
+	    else if(pt > 60.0 && pt >= 100.0){trigSFB=1.04106960725; trigSFBunc=0.00590548911614;triggerSFCDEF=0.984113306672; triggerSFCDEFunc=0.00341488478406;}
+	    else if(pt > 100.0 && pt >= 200.0){trigSFB=1.03213107411; trigSFBunc=0.00600579292185;triggerSFCDEF=0.976053564253; triggerSFCDEFunc=0.00376853102255;}
+	    else if(pt >200.0 && pt >= 300.0){trigSFB=1.04783653937; trigSFBunc=0.00247601879159;triggerSFCDEF=0.978883600082; triggerSFCDEFunc=0.00805752356996;}
+	}
+	else if (eta > 1.442 && eta <= 2.0){
+	    if(pt >30.0 && pt <= 35.0){trigSFB=1.22434938101; trigSFBunc=0.0218235518324;triggerSFCDEF=0.986556201882; triggerSFCDEFunc=0.0215042582357;}
+	    else if(pt > 35.0 && pt <=40.0){trigSFB=1.231305767; trigSFBunc=0.0357351749146;triggerSFCDEF=1.01780514621; triggerSFCDEFunc=0.0334931969651;}
+	    else if(pt >40.0 && pt<=45.0){trigSFB=1.17997761091; trigSFBunc=0.040152142672;triggerSFCDEF=1.01890545164; triggerSFCDEFunc=0.0353809067738;}
+	    else if(pt >45.0 && pt <=50.0){trigSFB=1.17228284782; trigSFBunc=0.0101568501078;triggerSFCDEF=1.02366913264; triggerSFCDEFunc=0.0159136035832;}
+	    else if(pt > 50.0 && pt <= 60.0){trigSFB=1.10280648865; trigSFBunc=0.0136560295169;triggerSFCDEF=0.987117193306; triggerSFCDEFunc=0.0100560754841;}
+	    else if(pt > 60.0 && pt >= 100.0){trigSFB=1.1679117327; trigSFBunc=0.0741698407372;triggerSFCDEF=1.0680856167; triggerSFCDEFunc=0.068623275864;}
+	    else if(pt > 100.0 && pt >= 200.0){trigSFB=1.07915769032; trigSFBunc=0.0109413337715;triggerSFCDEF=0.994679822421; triggerSFCDEFunc=0.00762790132034;}
+	    else if(pt >200.0 && pt >= 300.0){trigSFB=1.08679975819; trigSFBunc=0.00620436693934;triggerSFCDEF=1.00717797389; triggerSFCDEFunc=0.0151510689245;}
+	}
+	else if (eta > 2.0 && eta <= 2.4){
+	    if(pt >30.0 && pt <= 35.0){trigSFB=1.22370728989; trigSFBunc=0.0285118014412;triggerSFCDEF=1.00353720864; triggerSFCDEFunc=0.0453772901758;}
+	    else if(pt > 35.0 && pt <=40.0){trigSFB=1.18312757909; trigSFBunc=0.015933227322;triggerSFCDEF=0.935607479429; triggerSFCDEFunc=0.045376726802;}
+	    else if(pt >40.0 && pt<=45.0){trigSFB=1.24146385007; trigSFBunc=0.0551921513212;triggerSFCDEF=1.00575925128; triggerSFCDEFunc=0.0652837869259;}
+	    else if(pt >45.0 && pt <=50.0){trigSFB=1.01577521883; trigSFBunc=0.136561805823;triggerSFCDEF=0.950742260548; triggerSFCDEFunc=0.0437089261971;}
+	    else if(pt > 50.0 && pt <= 60.0){trigSFB=1.12059750687; trigSFBunc=0.0109156647416;triggerSFCDEF=0.936123755289; triggerSFCDEFunc=0.0349139266772;}
+	    else if(pt > 60.0 && pt >= 100.0){trigSFB=1.06117478026; trigSFBunc=0.0360468039116;triggerSFCDEF=0.911047525283; triggerSFCDEFunc=0.0239852531794;}
+	    else if(pt > 100.0 && pt >= 200.0){trigSFB=1.03333258161; trigSFBunc=0.0596440436066;triggerSFCDEF=0.995804840183; triggerSFCDEFunc=0.0219341652245;}
+	    else if(pt >200.0 && pt >= 300.0){trigSFB=0.552600867674; trigSFBunc=0.39096055356;triggerSFCDEF=0.989342189114; triggerSFCDEFunc=0.0887423004862;}
+	}
+	/*if (ht > 500.0 && ht < 750.0){
+	  if (pt > 20.0 && pt < 50.0){trigSFB = 0.907;triggerSFC = 0.968;triggerSFDEF = 0.970;}
+	  else if (pt >=50.0 && pt <= 300.0){trigSFB = 0.904;triggerSFC = 0.997;triggerSFDEF = 0.998;}
+	}
+	else if (ht >= 750.0 && ht < 3000.0){
+	    if (pt > 20.0 && pt < 50.0){trigSFB = 0.882;triggerSFC = 0.992;triggerSFDEF = 0.930;}
+	    else if (pt >=50.0 && pt <= 300.0){trigSFB = 0.891;triggerSFC = 0.983;triggerSFDEF = 0.983;}
+	}*/
+	float triggerSFUncert = sqrt( pow(4.823*trigSFBunc/41.557,2) + pow(36.734*triggerSFCDEFunc/41.557,2) );
+	float triggerSF = (4.823*trigSFB + 36.734*triggerSFCDEF)/41.557;
+	return triggerSF;
 }
 
 double HardcodedConditions::GetIsMHadronTriggerSF2018(double njets, double ht){
-  return 1.000;
+	float triggerSFABCD = 1.0;
+	float triggerSFABCDunc = 0.0;
+	if (eta > 0.0 && eta <= 0.8){
+	    if(pt >25.0 && pt <= 30.0){triggerSFABCD=0.94767883255; triggerSFABCDunc=0.00682250481374;}
+	    else if(pt >30.0 && pt <= 35.0){triggerSFABCD=0.975343471352; triggerSFABCDunc=0.00521575836242;}
+	    else if(pt > 35.0 && pt <= 40.0){triggerSFABCD=0.979786994807; triggerSFABCDunc=0.00494941444298;}
+	    else if(pt > 40.0 && pt <= 45.0){triggerSFABCD=0.982749255218; triggerSFABCDunc=0.00465578298111;}
+	    else if(pt > 45.0 && pt <= 50.0){triggerSFABCD=0.984508302475; triggerSFABCDunc=0.00453720177682;}
+	    else if(pt > 50.0 && pt <= 60.0){triggerSFABCD=0.984211706209; triggerSFABCDunc=0.00317949601845;}
+	    else if(pt > 60.0 && pt >= 100.0){triggerSFABCD=0.985833185857; triggerSFABCDunc=0.00175732224141;}
+	    else if(pt > 100.0 && pt >= 200.0){triggerSFABCD=0.9894052249; triggerSFABCDunc=0.00162976487427;}
+	    else if(pt >200.0 && pt >= 300.0){triggerSFABCD=0.98573388878; triggerSFABCDunc=0.00344224738942;}
+	}
+	else if (eta > 0.8 && eta <= 1.442){
+	    if(pt >25.0 && pt <= 30.0){triggerSFABCD=0.940534308542; triggerSFABCDunc=0.00945493136507;}
+	    else if(pt >30.0 && pt <= 35.0){triggerSFABCD=0.977250612414; triggerSFABCDunc=0.00720613736371;}
+	    else if(pt > 35.0 && pt <= 40.0){triggerSFABCD=0.978939288095; triggerSFABCDunc=0.00691089368913;}
+	    else if(pt > 40.0 && pt <= 45.0){triggerSFABCD=1.00221553593; triggerSFABCDunc=0.0060361955257;}
+	    else if(pt > 45.0 && pt <= 50.0){triggerSFABCD=0.98279079978; triggerSFABCDunc=0.00628465006595;}
+	    else if(pt > 50.0 && pt <= 60.0){triggerSFABCD=0.982680516659; triggerSFABCDunc=0.00452110678634;}
+	    else if(pt > 60.0 && pt >= 100.0){triggerSFABCD=0.983137416465; triggerSFABCDunc=0.00257052834567;}
+	    else if(pt > 100.0 && pt >= 200.0){triggerSFABCD=0.983626984691; triggerSFABCDunc=0.00275793170224;}
+	    else if(pt >200.0 && pt >= 300.0){triggerSFABCD=0.977732187568; triggerSFABCDunc=0.00592051551757;}
+	}
+	else if (eta > 1.442 && eta <= 2.0){
+	    if(pt >25.0 && pt <= 30.0){triggerSFABCD=0.984935935005; triggerSFABCDunc=0.0274745597906;}
+	    else if(pt >30.0 && pt <= 35.0){triggerSFABCD=0.993393945563; triggerSFABCDunc=0.0224931800147;}
+	    else if(pt > 35.0 && pt <= 40.0){triggerSFABCD=0.969211890199; triggerSFABCDunc=0.0126944223266;}
+	    else if(pt > 40.0 && pt <= 45.0){triggerSFABCD=1.01711048762; triggerSFABCDunc=0.0237901621894;}
+	    else if(pt > 45.0 && pt <= 50.0){triggerSFABCD=1.00678501376; triggerSFABCDunc=0.0111245808153;}
+	    else if(pt > 50.0 && pt <= 60.0){triggerSFABCD=1.02287293295; triggerSFABCDunc=0.0182139340892;}
+	    else if(pt > 60.0 && pt >= 100.0){triggerSFABCD=1.00718248827; triggerSFABCDunc=0.00559986702137;}
+	    else if(pt > 100.0 && pt >= 200.0){triggerSFABCD=1.01037269188; triggerSFABCDunc=0.00556910617477;}
+	    else if(pt >200.0 && pt >= 300.0){triggerSFABCD=1.0257553878; triggerSFABCDunc=0.0105437651897;}
+	}
+	else if (eta > 2.0 && eta <= 2.4){
+	    if(pt >25.0 && pt <= 30.0){triggerSFABCD=0.88440469579; triggerSFABCDunc=0.0414085800527;}
+	    else if(pt >30.0 && pt <= 35.0){triggerSFABCD=0.969619810729; triggerSFABCDunc=0.0356664367863;}
+	    else if(pt > 35.0 && pt <= 40.0){triggerSFABCD=1.01974116338; triggerSFABCDunc=0.031654361893;}
+	    else if(pt > 40.0 && pt <= 45.0){triggerSFABCD=1.02253219101; triggerSFABCDunc=0.0290017650303;}
+	    else if(pt > 45.0 && pt <= 50.0){triggerSFABCD=1.0096846675; triggerSFABCDunc=0.0315634676889;}
+	    else if(pt > 50.0 && pt <= 60.0){triggerSFABCD=1.04752858664; triggerSFABCDunc=0.0214622072212;}
+	    else if(pt > 60.0 && pt >= 100.0){triggerSFABCD=0.995781529538; triggerSFABCDunc=0.0175074289416;}
+	    else if(pt > 100.0 && pt >= 200.0){triggerSFABCD=1.03167948671; triggerSFABCDunc=0.0188983168656;}
+	    else if(pt >200.0 && pt >= 300.0){triggerSFABCD=0.980451308225; triggerSFABCDunc=0.0530839815221;}
+	}
+
+	/*if (ht > 500.0 && ht < 750.0){
+	  if (pt > 20.0 && pt < 50.0){triggerSFAB = 0.938;triggerSFCD = 0.948;}
+	  else if (pt >=50.0 && pt <= 300.0){triggerSFAB = 0.985;triggerSFCD = 0.996;}
+	}
+	else if (ht >= 750.0 && ht < 3000.0){
+	    if (pt > 20.0 && pt < 50.0){triggerSFAB = 0.921;triggerSFCD = 0.941;}
+	    else if (pt >=50.0 && pt <= 300.0){triggerSFAB = 0.974;triggerSFCD = 0.984;}
+	}*/
+	return triggerSFABCD;
 }
 
 /*.-----------------------------------------------------------------.
