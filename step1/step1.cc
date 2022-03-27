@@ -1353,7 +1353,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         }
         else if( MCLepPastTrigger == 0 && MCPastTriggerX == 1 ){ 
           triggerSF = 1.0;
-          triggerXSF = hardcodedConditions.GetElectronTriggerXSF( leppt, lepeta, year );
+          triggerXSF = hardcodedConditions.GetElectronTriggerXSF( leppt, lepeta, Year );
         }
         else{ 
           triggerSF = hardcodedConditions.GetElectronTriggerSF(leppt, lepeta, Year);
@@ -1384,7 +1384,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         }
         else if( MCLepPastTrigger == 0 && MCPastTriggerX == 1 ){ 
           triggerSF = 1.0;
-          triggerXSF = hardcodedConditions.GetMuonTriggerXSF( leppt, lepeta, year );
+          triggerXSF = hardcodedConditions.GetMuonTriggerXSF( leppt, lepeta, Year );
         }
         else{ 
           triggerSF = hardcodedConditions.GetMuonTriggerSF(leppt, lepeta, Year);

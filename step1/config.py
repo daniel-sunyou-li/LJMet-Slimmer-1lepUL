@@ -67,8 +67,10 @@ samples = {
       "TTTW_TuneCP5_13TeV-madgraph-pythia8",
       "TTTJ_TuneCP5_13TeV-madgraph-pythia8"
     ],
-    "DATA": [
-      "SingleElectron",
+    "DATAE": [
+      "SingleElectron"
+     ],
+     "DATAM": [
       "SingleMuon"
     ],
     "CHARGEDHIGGS": [
@@ -97,9 +99,9 @@ samples = {
     ],
     "TTBAR": [
       "TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8",
-      "TTToHadronic_TuneCP5_13TeV-powheg-pythia8",
-      "TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8",
-      "TTToSemiLepton_HT500Njet9_TuneCP5_13TeV-powheg-pythia8"
+      #"TTToHadronic_TuneCP5_13TeV-powheg-pythia8",
+      #"TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8",
+      #"TTToSemiLepton_HT500Njet9_TuneCP5_13TeV-powheg-pythia8"
     ],
     "TTBAR_SHIFTS": [
       "TTToSemiLeptonic_hdampUP_TuneCP5_13TeV-powheg-pythia8",
@@ -178,8 +180,10 @@ samples = {
       "TTTW_TuneCP5_13TeV-madgraph-pythia8",
       "TTTJ_TuneCP5_13TeV-madgraph-pythia8"
     ],
-    "DATA": [
+    "DATAE": [
       "SingleElectron",
+    ],
+    "DATAM": [
       "SingleMuon"
     ],
     "CHARGEDHIGGS": [
@@ -208,9 +212,9 @@ samples = {
     ],
     "TTBAR": [
       "TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8",
-      "TTToHadronic_TuneCP5_13TeV-powheg-pythia8",
-      "TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8",
-      "TTToSemiLepton_HT500Njet9_TuneCP5_13TeV-powheg-pythia8"
+      #"TTToHadronic_TuneCP5_13TeV-powheg-pythia8",
+      #"TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8",
+      #"TTToSemiLepton_HT500Njet9_TuneCP5_13TeV-powheg-pythia8"
     ],
     "TTBAR_SHIFTS": [
       "TTToSemiLeptonic_hdampUP_TuneCP5_13TeV-powheg-pythia8",
@@ -400,8 +404,10 @@ samples = {
     "TEST": [
       "TTTW_TuneCP5_13TeV-madgraph-pythia8"
     ],
-    "DATA": [
-      "SingleElectron",
+    "DATAE": [
+      "EGamma"
+    ],
+    "DATAM": [
       "SingleMuon"
     ],
     "CHARGEDHIGGS": [

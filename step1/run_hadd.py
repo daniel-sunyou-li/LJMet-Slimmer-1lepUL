@@ -48,6 +48,7 @@ for shift in shifts:
 
 for shift in shifts:
   for sample in samples[ shift ]:
+    if args.year == "18" and sample == "SingleElectron": sample = "EGamma"
     if shift != "nominal":
       if "Single" in sample or "EGamma" in sample or "up" in sample.lower() or "down" in sample.lower(): continue
     outList = []

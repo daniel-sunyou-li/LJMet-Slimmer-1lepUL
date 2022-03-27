@@ -58,6 +58,7 @@ for shift in shifts:
 for shift in samples:
   print( "[START] Submitting step1 jobs for shift: {}".format( shift ) )
   for sample in sorted( samples[ shift ] ):
+    if args.year == "18" and sample == "SingleElectron": sample = "EGamma"
     outList = []
     if "TTToSemiLeptonic" in sample and "up" not in sample.lower() and "down" not in sample.lower(): 
       for HT_key in [ "HT0Njet0", "HT500Njet9" ]:

@@ -2259,12 +2259,13 @@ double HardcodedConditions::GetElectronTriggerSF(double pt, double eta, std::str
   else if (year=="2016") return GetElectronTriggerSF2016(pt, eta);
   else if (year=="2017") return GetElectronTriggerSF2017(pt, eta);
   else if (year=="2018") return GetElectronTriggerSF2018(pt, eta);
-  else return 0.;
+  else return 1.0;
 }//end GetElectronTriggerSF
 
 // using EOY SF for HLT_ele32_eta2p1_WPTight_Gsf_v* approved by KIT for Run 2016
 // https://github.com/TopBrussels/TopTreeAnalysisBase/blob/CMSSW_80X/Calibrations/LeptonSF/ElectronSF/SF_HLT_Ele32_eta2p1.root
 double HardcodedConditions::GetElectronTriggerSF2016APV(double pt, double eta){
+  double triggerSFHLT;
   if (eta < -1.8){
     if     (pt < 32 ){triggerSFHLT = 0.394531250000;}
     else if(pt < 34 ){triggerSFHLT = 0.721804499626;}
@@ -2649,11 +2650,13 @@ double HardcodedConditions::GetElectronTriggerSF2016APV(double pt, double eta){
     else if(pt < 200){triggerSFHLT = 0.939393937588;}
     else             {triggerSFHLT = 0.935235977173;}
   }
+  return triggerSFHLT;
 }
 
 // using EOY SF for HLT_ele32_eta2p1_WPTight_Gsf_v* approved by KIT for Run 2016
 // https://github.com/TopBrussels/TopTreeAnalysisBase/blob/CMSSW_80X/Calibrations/LeptonSF/ElectronSF/SF_HLT_Ele32_eta2p1.root
 double HardcodedConditions::GetElectronTriggerSF2016(double pt, double eta){
+  double triggerSFHLT;
   if (eta < -1.8){
     if     (pt < 32 ){triggerSFHLT = 0.394531250000;}
     else if(pt < 34 ){triggerSFHLT = 0.721804499626;}
@@ -3038,13 +3041,14 @@ double HardcodedConditions::GetElectronTriggerSF2016(double pt, double eta){
     else if(pt < 200){triggerSFHLT = 0.939393937588;}
     else             {triggerSFHLT = 0.935235977173;}
   }
+  return triggerSFHLT;
 }
 
 double HardcodedConditions::GetElectronTriggerSF2017(double pt, double eta){
-	// Trigger Scale Factors, SF2017B_Bkg_LepPtEta_EOR.png & SF2017CDEF_Bkg_LepPtEta_EOR.png
-	float sf_B;
-	float sf_C;
-	float sf_DEF;
+  // Trigger Scale Factors, SF2017B_Bkg_LepPtEta_EOR.png & SF2017CDEF_Bkg_LepPtEta_EOR.png
+  float sf_B;
+  float sf_C;
+  float sf_DEF;
   float lumi_B = 4.823;
   float lumi_C = 9.664;
   float lumi_DEF = 27.07;
@@ -3199,7 +3203,7 @@ double HardcodedConditions::GetElectronTriggerXSF2016(double pt, double eta){
   return 1.000 ;
 }
 
-double HardcodedConditions::GetElectronTriggerXSF2017(double leppt, double lepeta){
+double HardcodedConditions::GetElectronTriggerXSF2017(double pt, double eta){
   if ( pt < 25.0 ) {
     if ( fabs(eta) < 0.8000 ) return 1.25125;
     else if ( fabs(eta) < 1.4442 ) return 1.35693;
@@ -3262,7 +3266,7 @@ double HardcodedConditions::GetElectronTriggerXSF2017(double leppt, double lepet
     else return 0.93021; }
 }
 
-double HardcodedConditions::GetElectronTriggerXSF2018(double leppt, double lepeta){
+double HardcodedConditions::GetElectronTriggerXSF2018(double pt, double eta){
   if ( pt < 25.0 ) {
     if ( fabs(eta) < 0.8000 ) return 1.15281;
     else if ( fabs(eta) < 1.4442 ) return 1.26278;
@@ -3833,7 +3837,7 @@ double HardcodedConditions::GetMuonTriggerXSF2016(double pt, double eta){
   return 1.000 ;
 }
   
-double HardcodedConditions::GetMuonTriggerXSF2017(double leppt, double lepeta){
+double HardcodedConditions::GetMuonTriggerXSF2017(double pt, double eta){
   if ( pt < 25.0 ) {
     if ( fabs(eta) < 0.8000 ) return 1.04047;
     else if ( fabs(eta) < 1.4420 ) return 1.04543;
@@ -3896,7 +3900,7 @@ double HardcodedConditions::GetMuonTriggerXSF2017(double leppt, double lepeta){
     else return 1.01167; }
 }
 
-double HardcodedConditions::GetMuonTriggerXSF2018(double leppt, double lepeta){
+double HardcodedConditions::GetMuonTriggerXSF2018(double pt, double eta){
   if ( pt < 25.0 ) {
     if ( fabs(eta) < 0.8000 ) return 1.02381;
     else if ( fabs(eta) < 1.4442 ) return 1.03722;
