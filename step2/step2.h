@@ -31,10 +31,11 @@ public :
   
 // Fixed size dimensions of array or collections stored in the TTree if any.
    Int_t           isTraining;
-   Bool_t          isTTbar;
-   Bool_t          isTTTT;   
+   Bool_t          isTTbar = false;
    Float_t         xsecEff; //this is the weight actually!! so (Lumi * xsec)/nEvents, but keeping the naming the same to be consistent with TMVA setup
-
+   Bool_t          isTTTT = false;
+   Bool_t          isTTTW = false;
+   Bool_t          isTTTJ = false;
    Bool_t          isST = false;
    Bool_t          isSTs = false;
    Bool_t          isSTt = false;
@@ -45,6 +46,13 @@ public :
    Bool_t          isTTCC = false; 
    Bool_t          isTTLF = false; 
    Bool_t          isWJets = false;
+   Bool_t          isQCD = false;
+   Bool_t          isDYM = false;
+   Bool_t          isEWK = false;
+   Bool_t          isTTHB = false;
+   Bool_t          isTTHnonB = false;
+   Bool_t          isTTHH = false;
+   Bool_t          isTTXY = false;
    Bool_t          isCHM200 = false;  
    Bool_t          isCHM220 = false;
    Bool_t          isCHM250 = false;
@@ -849,58 +857,33 @@ public :
 step2::step2(TString inputFileName, TString outputFileName)// : inputTree(0), inputFile(0), outputFile(0) 
 {   //weight branches to be used in the BDT training, xsecEff is the weight
 
-   // TT bkg divided into TTToSemiLep, TTToHadronic, TT high mass appear below
-
-
    //Initialize SFs
    hardcodedConditions = S2HardcodedConditions();
-   //TTToSemiLep
-   if (inputFileName.Contains("TTToSemiLeptonic_TuneCP5_PSweights_13TeV-powheg-pythia8_Mtt0to700")) xsecEff = 0.137784841012;
-   else if (inputFileName.Contains("TTToSemiLeptonic_TuneCP5_PSweights_13TeV-powheg-pythia8_Mtt1000toInf")) xsecEff = 0.0309363357165;
-   else if (inputFileName.Contains("TTToSemiLeptonic_TuneCP5_PSweights_13TeV-powheg-pythia8_Mtt700to1000")) xsecEff = 0.0514566653858;
-   else if (inputFileName.Contains("TTToSemiLeptonic_TuneCP5_PSweights_13TeV-powheg-pythia8_HT0Njet0")) xsecEff = 0.138647459815; 
-   else if (inputFileName.Contains("TTToSemiLepton_HT500Njet9_TuneCP5_PSweights_13TeV-powheg-pythia8")) xsecEff = 0.00930297719566;
-   else if (inputFileName.Contains("TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8_HT0Njet0")) xsecEff = 0.217217486269; // 2018
-   else if (inputFileName.Contains("TTToSemiLepton_HT500Njet9_TuneCP5_13TeV-powheg-pythia8")) xsecEff = 0.0138805494029; // 2018
- 
-   //TTToHadronic
-   else if (inputFileName.Contains("TTToHadronic_TuneCP5_PSweights_13TeV-powheg-pythia8_Mtt0to700")) xsecEff =  0.121490806141;
-   else if (inputFileName.Contains("TTToHadronic_TuneCP5_PSweights_13TeV-powheg-pythia8_Mtt1000toInf")) xsecEff = 0.030031985381;
-   else if (inputFileName.Contains("TTToHadronic_TuneCP5_PSweights_13TeV-powheg-pythia8_Mtt700to1000")) xsecEff = 0.0490022856079;
-   else if (inputFileName.Contains("TTToHadronic_TuneCP5_PSweights_13TeV-powheg-pythia8")) xsecEff = 0.122285168091;
-   else if (inputFileName.Contains("TTToHadronic_TuneCP5_13TeV-powheg-pythia8")) xsecEff = 0.172212015144; // 2018 
-
-   //TTTo2l2nu
-   else if (inputFileName.Contains("TTTo2L2Nu_TuneCP5_PSweights_13TeV-powheg-pythia8_Mtt0to700")) xsecEff = 0.0525799344238;
-   else if (inputFileName.Contains("TTTo2L2Nu_TuneCP5_PSweights_13TeV-powheg-pythia8_Mtt1000toInf")) xsecEff = 0.0226832371713;
-   else if (inputFileName.Contains("TTTo2L2Nu_TuneCP5_PSweights_13TeV-powheg-pythia8_Mtt700to1000")) xsecEff = 0.0320566270444;
-   else if (inputFileName.Contains("TTTo2L2Nu_TuneCP5_PSweights_13TeV-powheg-pythia8")) xsecEff =  0.0529890846128;
-   else if (inputFileName.Contains("TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8")) xsecEff = 0.0821029333006; // 2018
-   //TT high mass 
-   else if (inputFileName.Contains("TT_Mtt-1000toInf_TuneCP5_PSweights_13TeV-powheg-pythia8")) xsecEff = 0.0294081434678;
-   else if (inputFileName.Contains("TT_Mtt-700to1000_TuneCP5_13TeV-powheg-pythia8")) xsecEff = 0.0473629131251;
    
-   //TTTT signal below
+   xsecEff = hardcodedConditions::GetCrossSectionEfficiency( inputFileName, Year );
+      
+   isTTbar = ( inputFileName.Contains( "TT_" ) || inputFileName.Contains( "TTTo" ) );
+   isTTTT  = inputFileName.Contains( "TTTT" );
+   isTTTW  = inputFileName.Contains( "TTTW" );
+   isTTTJ  = inputFileName.Contains( "TTTJ" );
+   isST    = inputFileName.Contains( "ST_" );
+   isSTs   = inputFileName.Contains( "ST_s-channel" );
+   isSTt   = inputFileName.Contains( "ST_t-channel" );
+   isSTtw  = inputFileName.Contains( "ST_tW" );
+   isTTBB  = inputFileName.Contains( "_ttbb" );
+   isTT2B  = inputFileName.Contains( "_tt2b" );
+   isTT1B  = inputFileName.Contains( "_tt1b" );
+   isTTCC  = inputFileName.Contains( "_ttcc" );
+   isTTLF  = inputFileName.Contains( "_ttjj" );
+   isWJets = inputFileName.Contains( "WJetsToLNu" );
+   isQCD   = inputFileName.Contains( "QCD" );
+   isDYM   = inputFileName.Contains( "DYJetsToLL" );
+   isEWK   = ( inputFileName.BeginsWith( "WW" ) || inputFileName.BeginsWith( "WZ" ) || inputFileName.BeginsWith( "ZZ" ) );
+   isTTHB  = inputFileName.Contains( "ttHTobb" );
+   isTTHnonB = inputFileName.Contains( "ttHToNonbb" );
+   isTTHH  = inputFileName.Contains( "TTHH" );
+   isTTXY  = ( inputFileName.Contains( "TTZZ" ) && inputFileName.Contains( "TTWW" ) && inputFileName.Contains( "TTWZ" ) && inputFileName.Contains( "TTZH" ) && inputFileName.Contains( "TTWH" ) );
    
-   else if (inputFileName.Contains("TTTT_TuneCP5_PSweights_13TeV-amcatnlo-pythia8")) xsecEff = 0.000586330715183; 
-   else if (inputFileName.Contains("TTTT_TuneCP5_13TeV-amcatnlo-pythia8")) xsecEff = 0.000815849917354; // 2018
-   //For everything else, just have this branch be dummy at the moment, 1 will do nothing
-   else xsecEff = 1.0;
-   isTTbar = false;
-   isTTTT = false;
-   if (inputFileName.Contains("TT_")) isTTbar = true;      
-   else if (inputFileName.Contains("TTTo")) isTTbar = true;      
-   else if (inputFileName.Contains("TTTT")) isTTTT = true;        
-
-   isST = (inputFileName.Contains("ST_t-channel") || inputFileName.Contains("ST_tW") || inputFileName.Contains("ST_s-channel"));
-   isSTs = inputFileName.Contains("ST_s-channel");
-   isSTt = inputFileName.Contains("ST_t-channel");
-   isSTtw = inputFileName.Contains("ST_tW");
-   isTTBB = inputFileName.Contains("_ttbb");
-   isTT2B = inputFileName.Contains("_tt2b");
-   isTT1B = inputFileName.Contains("_tt1b");
-   isTTCC = inputFileName.Contains("_ttcc");
-   isTTLF = inputFileName.Contains("_ttjj");
    isCHM200 = (inputFileName.Contains("ChargedHiggs") && inputFileName.Contains("M-200"));  
    isCHM220 = (inputFileName.Contains("ChargedHiggs") && inputFileName.Contains("M-220"));
    isCHM250 = (inputFileName.Contains("ChargedHiggs") && inputFileName.Contains("M-250"));
@@ -919,20 +902,6 @@ step2::step2(TString inputFileName, TString outputFileName)// : inputTree(0), in
    isCHM2500= (inputFileName.Contains("ChargedHiggs") && inputFileName.Contains("M-2500"));
    isCHM3000= (inputFileName.Contains("ChargedHiggs") && inputFileName.Contains("M-3000"));
 
-
-   
-   //isWJets = inputFileName.BeginsWith("WJetsToLNu");
-
-  sample_ = inputFileName;
-  Int_t slash = sample_.Last('/');
-  sample_.Remove(0,slash+1);
-  Int_t uscore = sample_.Last('_');
-  Int_t thelength = sample_.Length();
-  sample_.Remove(uscore,thelength);
-  isWJets = sample_.BeginsWith("WJetsToLNu");
-  sample = (std::string)sample_;   
-
-    
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
 //    if (tree == 0) {
@@ -944,14 +913,13 @@ step2::step2(TString inputFileName, TString outputFileName)// : inputTree(0), in
 // 
 //    } 
 
-//   inputFile=new TFile(inputFileName);
   if(!(inputFile=TFile::Open(inputFileName))){
     std::cout<<"WARNING! File doesn't exist! Exiting" << std::endl;
     exit(1);
-   }
+  }
 
    inputTree = (TTree*)inputFile->Get("ljmet");  
-   inputTree->SetBranchStatus("*",1);   
+   inputTree->SetBranchStatus( "*", 1 );   
    Init(inputTree);
    outputFile = new TFile(outputFileName,"RECREATE");   
 }
