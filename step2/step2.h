@@ -71,12 +71,6 @@ public :
    Bool_t          isCHM2500= false;
    Bool_t          isCHM3000= false;
 
-
-
-
-
-
-  
    TString         sample_ = "";
    std::string     sample = "";
   
@@ -136,7 +130,7 @@ public :
    Float_t         secondcsvb_bb;        
    Float_t         thirdcsvb_bb;        
    Float_t         fourthcsvb_bb;  
-   Float_t 	   thirdcsvb_bb_BTagBHad;
+   Float_t 	       thirdcsvb_bb_BTagBHad;
    Float_t         thirdcsvb_bb_BTagNBHad;
    Float_t         thirdcsvb_bb_NBTagBHad;
    Float_t         thirdcsvb_bb_NBTagNBHad;
@@ -211,13 +205,13 @@ public :
    Float_t         M_allJet_W;
    Float_t         ratio_HTdHT4leadjets;
    Float_t         W_PtdM;
-   Float_t	   BDTtrijet2;
+   Float_t	       BDTtrijet2;
    Float_t         BDTtrijet1;
    Float_t         BDTtrijet3;
    Float_t         BDTtrijet4;
    
-   Float_t	   HOTGoodTrijet1_mass;
-   Float_t	   HOTGoodTrijet1_dijetmass;
+   Float_t	       HOTGoodTrijet1_mass;
+   Float_t	       HOTGoodTrijet1_dijetmass;
    Float_t         HOTGoodTrijet1_pTratio;
    Float_t         HOTGoodTrijet1_dRtridijet;
    Float_t         HOTGoodTrijet1_dRtrijetJetnotdijet;
@@ -343,7 +337,6 @@ public :
    Float_t         MT_lepMetmod;
    Float_t         minDPhi_MetJet;
 
-
    Float_t         recLeptonicTopPt;
    Float_t         recLeptonicTopEta;
    Float_t         recLeptonicTopPhi;
@@ -351,7 +344,6 @@ public :
    Int_t           recLeptonicTopJetIdx;
    Float_t         recLeptonicTopJetCSV;
    Float_t         recLeptonicTopJetPt;
-
 
    vector<double>  *theJetPt_JetSubCalc;
    vector<double>  *theJetEta_JetSubCalc;
@@ -532,7 +524,6 @@ public :
    Int_t           NJetsCSVwithSF_MultiLepCalc_lSFup;
    Int_t           NJetsCSVwithSF_MultiLepCalc_lSFdn;
 
-
    Float_t        BestTop_Discriminator;
    Float_t        BestTop_Pt;
    Float_t        BestTop_Phi;
@@ -568,7 +559,6 @@ public :
  
    Float_t        HadronicTB1_Eta;
    Float_t        HadronicTB2_Eta;
-
 
    // List of branches
    TBranch        *b_event_CommonCalc;   //!
@@ -837,8 +827,6 @@ public :
    //TBranch        *b_NoTop_Jet2_Phi;
    //TBranch        *b_NoTop_Jet2_Eta;
    //TBranch        *b_NoTop_Jet2_Mass;         
-
-
 
    step2(TString inputFileName, TString outputFileName);
    virtual ~step2();
