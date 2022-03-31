@@ -64,15 +64,15 @@ float HardcodedConditions::GetDeepJetRenorm2DSF_HTnj( float HT, int njets, std::
   int njets_idx = njets;
   if( njets_idx > 7 ) njets_idx = 7;
 
-  if( sampleType == "tttw" ){
+  if( sampleType == "TTTW" ){
     return hscale_tttw[ sysType ]->GetBinContent( hscale_tttw[ sysType ]->FindBin( njets_idx, HT ) );
   }
 
-  if( sampleType == "tttj" ){
+  if( sampleType == "TTTJ" ){
     return hscale_tttj[ sysType ]->GetBinContent( hscale_tttj[ sysType ]->FindBin( njets_idx, HT ) );
   }  
 
-  if( sampleType == "tttt" ){
+  if( sampleType == "TTTT" ){
     return hscale_tttt[ sysType ]->GetBinContent( hscale_tttt[ sysType ]->FindBin( njets_idx, HT ) );
   }  
 
@@ -96,23 +96,23 @@ float HardcodedConditions::GetDeepJetRenorm2DSF_HTnj( float HT, int njets, std::
     return hscale_tt1b[ sysType ]->GetBinContent( hscale_tt1b[ sysType ]->FindBin( njets_idx, HT ) );
   }  
 
-  if( sampleType == "HT500Njet9_ttjj" ){
+  if( sampleType == "HT500ttjj" ){
     return hscale_HT500ttjj[ sysType ]->GetBinContent( hscale_HT500ttjj[ sysType ]->FindBin( njets_idx, HT ) );
   }  
 
-  if( sampleType == "HT500Njet9_ttcc" ){
+  if( sampleType == "HT500ttcc" ){
     return hscale_HT500ttcc[ sysType ]->GetBinContent( hscale_HT500ttcc[ sysType ]->FindBin( njets_idx, HT ) );
   }
 
-  if( sampleType == "HT500Njet9_ttbb" ){
+  if( sampleType == "HT500ttbb" ){
     return hscale_HT500ttbb[ sysType ]->GetBinContent( hscale_HT500ttbb[ sysType ]->FindBin( njets_idx, HT ) );
   }  
 
-  if( sampleType == "HT500Njet9_tt2b" ){
+  if( sampleType == "HT500tt2b" ){
     return hscale_HT500tt2b[ sysType ]->GetBinContent( hscale_HT500tt2b[ sysType ]->FindBin( njets_idx, HT ) );
   }
   
-  if( sampleType == "HT500Njet9_tt1b" ){
+  if( sampleType == "HT500tt1b" ){
     return hscale_HT500tt1b[ sysType ]->GetBinContent( hscale_HT500tt1b[ sysType ]->FindBin( njets_idx, HT ) );
   }  
 
@@ -137,10 +137,10 @@ float HardcodedConditions::GetDeepJetRenorm2DSF_HTnj( float HT, int njets, std::
   if( sampleType == "DYM" ){
     return hscale_DYM[ sysType ]->GetBinContent( hscale_DYM[ sysType ]->FindBin( njets_idx, HT ) );
   }
-  if( sampleType == "TTHB" ){
+  if( sampleType == "ttHTobb" ){
     return hscale_TTHB[ sysType ]->GetBinContent( hscale_TTHB[ sysType ]->FindBin( njets_idx, HT ) );
   }
-  if( sampleType == "TTHnonB" ){
+  if( sampleType == "ttHToNonbb" ){
     return hscale_TTHnonB[ sysType ]->GetBinContent( hscale_TTHnonB[ sysType ]->FindBin( njets_idx, HT ) );
   }
   if( sampleType == "TTHH" ){
