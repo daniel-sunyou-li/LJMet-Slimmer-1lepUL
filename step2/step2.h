@@ -33,6 +33,7 @@ public :
    Int_t           isTraining;
    Bool_t          isTTbar = false;
    Float_t         xsecEff; //this is the weight actually!! so (Lumi * xsec)/nEvents, but keeping the naming the same to be consistent with TMVA setup
+   Bool_t          isHT500 = false;
    Bool_t          isTTTT = false;
    Bool_t          isTTTW = false;
    Bool_t          isTTTJ = false;
@@ -863,6 +864,7 @@ step2::step2(TString inputFileName, TString outputFileName)// : inputTree(0), in
    isTT1B  = inputFileName.Contains( "_tt1b" );
    isTTCC  = inputFileName.Contains( "_ttcc" );
    isTTLF  = inputFileName.Contains( "_ttjj" );
+   isHT500 = inputFileName.Contains( "HT500" );
    isWJets = inputFileName.Contains( "WJetsToLNu" );
    isQCD   = inputFileName.Contains( "QCD" );
    isDYM   = inputFileName.Contains( "DYJetsToLL" );
