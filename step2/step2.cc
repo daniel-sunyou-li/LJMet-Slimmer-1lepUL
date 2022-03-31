@@ -519,8 +519,6 @@ void step2::Loop()
    TBranch *b_HadronicTB2_Eta                     = outputTree->Branch("HadronicTB2_Eta", &HadronicTB2_Eta, "HadronicTB2_Eta/F");
 
 
-
-
    Long64_t nentries = inputTree->GetEntriesFast();
    Long64_t nbytes = 0, nb = 0;
    TLorentzVector bjet1, bjet2, jet1, jet2, jet3, lep, met, jetTmp, BestTOPjet1, BestTOPjet2, BestTOPjet3, BADTOPjet1, BADTOPjet2, BADTOPjet3, BestGenTop, BestGenTopW1, BestGenTopW2, BestGenTopb;   
@@ -528,19 +526,28 @@ void step2::Loop()
    int allLeptonicWcount = 0;
    int allMatchingCount = 0;   
    float topdiscriminator = 0.95;
-   
-
+  
 
    std::string sampleType = "";
-   if(isTTBB) sampleType = "ttbb";
-   if(isTT2B) sampleType = "tt2b";
-   if(isTT1B) sampleType = "tt1b";
-   if(isTTCC) sampleType = "ttcc";
-   if(isTTLF) sampleType = "ttjj";
-   if(isSTs) sampleType = "STs";
-   if(isSTt) sampleType = "STt";
-   if(isSTtw) sampleType = "STtw";
-   if(isWJets) sampleType = "WJets";
+   if(isTTBB)      sampleType = "ttbb";
+   if(isTT2B)      sampleType = "tt2b";
+   if(isTT1B)      sampleType = "tt1b";
+   if(isTTCC)      sampleType = "ttcc";
+   if(isTTLF)      sampleType = "ttjj";
+   if(isSTs)       sampleType = "STs";
+   if(isSTt)       sampleType = "STt";
+   if(isSTtw)      sampleType = "STtw";
+   if(isWJets)     sampleType = "WJets";
+   if(isQCD)       sampleType = "QCD";
+   if(isDYM)       sampleType = "DYM";
+   if(isEWK)       sampleType = "EWK";
+   if(isTTHB)      sampleType = "ttHTobb";
+   if(isTTHnonB)   sampleType = "ttHToNonbb";
+   if(isTTHH)      sampleType = "TTHH";
+   if(isTTXY)      sampleType = "TTXY";
+   if(isTTTW)      sampleType = "TTTW";
+   if(isTTTJ)      sampleType = "TTTJ";
+   if(isTTTT)      sampleType = "TTTT";
    if(isCHM200 )   sampleType = "CHM200";   
    if(isCHM220 )   sampleType = "CHM220"; 
    if(isCHM250 )   sampleType = "CHM250"; 
@@ -559,14 +566,6 @@ void step2::Loop()
    if(isCHM2500)   sampleType = "CHM2500";
    if(isCHM3000)   sampleType = "CHM3000";
 
-
-
-
-
-
-
- 
-
    std::cout<<sampleType<<std::endl;
          
    for (Long64_t jentry=0; jentry<nentries;jentry++) {
@@ -575,8 +574,7 @@ void step2::Loop()
      nb = inputTree->GetEntry(jentry);   nbytes += nb;
      if (Cut(ientry) != 1) continue;
      //if (jentry > 5000 ) break;  // debug
-//     cout << "\n start event # " << jentry << endl;
-     if(jentry % 1000 ==0) std::cout<<"Completed "<<jentry<<" out of "<<nentries<<" events"<<std::endl;      
+     if( jentry % 1000 == 0 ) std::cout << "Completed " << jentry << " out of " << nentries << " events" <<std::endl;      
 
      std::vector<TLorentzVector> GoodRecoJet1;         
      std::vector<TLorentzVector> GoodRecoJet2;         
@@ -584,9 +582,9 @@ void step2::Loop()
      TRandom3 myseed;
      myseed.SetSeed(static_cast<int>(leptonPhi_MultiLepCalc*1e5));
      double coin = myseed.Rndm();
-     if(coin<1./3.) isTraining = 1;                          // BDT TRAINING
-     else if((coin>=1./3.) && (coin<2./3.))isTraining =2;    // BDT TESTING
-     else if((coin>=2./3.) && (coin<1))isTraining =3;        // BDT APPLICATION
+     if( coin < 0.60 ) isTraining = 1;                              // BDT TRAINING
+     else if( ( coin >= 0.60 ) && ( coin < 0.80 ) ) isTraining = 2; // BDT TESTING
+     else isTraining = 3;                                           // BDT APPLICATION
      minBBdr = 1e9;
      minMleppJet = 1e9;     
      tmp_minMleppBjet = 1e9;          
@@ -691,9 +689,9 @@ void step2::Loop()
     } 
     
      
-    btagDeepJet2DWeight = hardcodedConditions.GetDeepJetRenorm2DSF(nljets, nhjets, sampleType);   
-    btagDeepJet2DWeight_Pt120 = hardcodedConditions.GetDeepJetRenorm2DSF_Pt120(nljets_pt120, nhjets_pt120, sampleType);  
-    btagDeepJet2DWeight_HTnj      = hardcodedConditions.GetDeepJetRenorm2DSF_HTnj(AK4HT, NJets_JetSubCalc, sampleType, "");
+    //btagDeepJet2DWeight = hardcodedConditions.GetDeepJetRenorm2DSF(nljets, nhjets, sampleType);   
+    //btagDeepJet2DWeight_Pt120 = hardcodedConditions.GetDeepJetRenorm2DSF_Pt120(nljets_pt120, nhjets_pt120, sampleType);  
+    btagDeepJet2DWeight_HTnj                = hardcodedConditions.GetDeepJetRenorm2DSF_HTnj(AK4HT, NJets_JetSubCalc, sampleType, "");
     btagDeepJet2DWeight_HTnj_HFup           = hardcodedConditions.GetDeepJetRenorm2DSF_HTnj(AK4HT, NJets_JetSubCalc, sampleType, "_HFup");
     btagDeepJet2DWeight_HTnj_HFdn           = hardcodedConditions.GetDeepJetRenorm2DSF_HTnj(AK4HT, NJets_JetSubCalc, sampleType, "_HFdn");
     btagDeepJet2DWeight_HTnj_LFup           = hardcodedConditions.GetDeepJetRenorm2DSF_HTnj(AK4HT, NJets_JetSubCalc, sampleType, "_LFup");
@@ -1112,6 +1110,7 @@ void step2::Loop()
     
     unsigned int nGenTop = 0;
     if(isTTbar) nGenTop = 2;
+    if(isTTTW || isTTTJ) nGenTop = 3;
     if(isTTTT) nGenTop = 4;
     if (topPt_TTbarMassCalc->size() == nGenTop && genleptonCount == 1 && !is_genMissingDaughter){
         allLeptonicWcount++;
