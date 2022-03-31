@@ -565,6 +565,7 @@ void step2::Loop()
    if(isCHM2000)   sampleType = "CHM2000";
    if(isCHM2500)   sampleType = "CHM2500";
    if(isCHM3000)   sampleType = "CHM3000";
+   if(isHT500)     sampleType = "HT500" + sampleType;
 
    std::cout<<sampleType<<std::endl;
          
