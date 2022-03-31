@@ -15,7 +15,7 @@ from ROOT import TFile, TTree, TH2F
 
 if not os.path.exists( "renorm" ): os.system( "mkdir -v renorm" )
 
-haddPath = "root://cmsxrootd.fnal.gov//store/user/{}/FWLJMET106XUL_singleLep20{}_3t_step1hadds/nominal/".format( config.eosUserName, args.year )
+haddPath = "root://cmsxrootd.fnal.gov/" + config.haddPath[ args.year ][ "LPC" ].split( "uscms" )[-1] + "/nominal/"
 
 if args.local:
   tfile = TFile.Open( args.file )

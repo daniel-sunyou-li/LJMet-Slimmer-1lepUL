@@ -1,18 +1,18 @@
 eosUserName = "dali"
-postfix = "April2022"
+postfix = "3t"
 years = [ "16APV", "16", "17", "18" ]
 
 haddPath = {
   year: {
-    "LPC": "/eos/uscms/store/user/{}/FWLJMET106XUL_singleLep20{}_3t_step1hadds".format( eosUserName, year, postfix ),
-    "BRUX": "/isilon/hadoop/store/user/{}/FWLJMET106XUL_singleLep20{}_3t_step1hadds".format( eosUserName, year, postfix ) 
+    "LPC": "/eos/uscms/store/user/{}/FWLJMET106XUL_singleLep20{}UL_RunIISummer20_{}_step1hadds".format( eosUserName, year, postfix ),
+    "BRUX": "/isilon/hadoop/store/user/{}/FWLJMET106XUL_singleLep20{}UL_RunIISummer20_{}_step1hadds".format( eosUserName, year, postfix ) 
   } for year in years
 }
 
 step2Path = {
   year: {
-    "LPC": "/eos/uscms/store/user/{}/FWLJMET106XUL_singleLep20{}_3t_{}_step2".format( eosUserName, year, postfix ), 
-    "BRUX": "/isilon/hadoop/store/user/{}/FWLJMET106XUL_singleLep20{}_3t_{}_step2".format( eosUserName, year, postfix )
+    "LPC": "/eos/uscms/store/user/{}/FWLJMET106XUL_singleLep20{}UL_RunIISummer20_{}_step2".format( eosUserName, year, postfix ), 
+    "BRUX": "/isilon/hadoop/store/user/{}/FWLJMET106XUL_singleLep20{}UL_RunIISummer20_{}_step2".format( eosUserName, year, postfix )
   } for year in years
 }
 
@@ -195,11 +195,11 @@ nrun = {
   "17": {
     "TTTW": 448000.,
     "TTTJ": 465000.,
-    "TTToHadronic": 1.,
-    "TTToSemiLeptonicNjet0": 1.,
-    "TTToSemiLeptonicNjet9": 1.,
-    "TTToSemiLeptonHT500": 1.,
-    "TTTo2L2Nu": 1.,
+    "TTToHadronic": 0,
+    "TTToSemiLeptonicNjet0": 0,
+    "TTToSemiLeptonicNjet9": 0,
+    "TTToSemiLeptonHT500": 0,
+    "TTTo2L2Nu": 0,
     "TTTT": 5371110.,
     "TTWW": 530000.,
     "TTZZ": 621000.,
