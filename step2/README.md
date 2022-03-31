@@ -17,4 +17,9 @@ One should also modify `GetCrossSectionEfficiency()` in `HardcodedConditions.cc`
 ### 3. Update `config.py`
 The remainder of the parameters that should be checked are listed in `config.py` and are necessary to check for each era. One would update the `haddPath` to match what was used in `step1` or wherever the `step1hadds` files are stored. Then, one can define the path where the `step2` files should be stored.
 
-The luminosity should be checked as this affects the cross section efficiency calculation. One can reference the [luminosity twiki](https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM) for recommended luminosity values by era.
+The luminosity should be checked as this affects the cross section efficiency calculation. One can reference the [luminosity twiki](https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM) for recommended luminosity values by era. It is also recommended by the Luminosity POG to use the `brilcalc` tool to evaluate the luminosity for each analysis.
+
+## Running `step2`
+To run `step2`, follow the instructions:
+
+    python run_step2.py
