@@ -878,11 +878,11 @@ step2::step2(TString inputFileName, TString outputFileName)// : inputTree(0), in
    isWJets = inputFileName.Contains( "WJetsToLNu" );
    isQCD   = inputFileName.Contains( "QCD" );
    isDYM   = inputFileName.Contains( "DYJetsToLL" );
-   isEWK   = ( inputFileName.BeginsWith( "WW" ) || inputFileName.BeginsWith( "WZ" ) || inputFileName.BeginsWith( "ZZ" ) );
    isTTHB  = inputFileName.Contains( "ttHTobb" );
    isTTHnonB = inputFileName.Contains( "ttHToNonbb" );
    isTTHH  = inputFileName.Contains( "TTHH" );
    isTTXY  = ( inputFileName.Contains( "TTZZ" ) && inputFileName.Contains( "TTWW" ) && inputFileName.Contains( "TTWZ" ) && inputFileName.Contains( "TTZH" ) && inputFileName.Contains( "TTWH" ) );
+   isEWK   = ( ( inputFileName.Contains( "WW" ) || inputFileName.Contains( "WZ" ) || inputFileName.Contains( "ZZ" ) ) && !( isTTXY ) );
    
    isCHM200 = (inputFileName.Contains("ChargedHiggs") && inputFileName.Contains("M-200"));  
    isCHM220 = (inputFileName.Contains("ChargedHiggs") && inputFileName.Contains("M-220"));
