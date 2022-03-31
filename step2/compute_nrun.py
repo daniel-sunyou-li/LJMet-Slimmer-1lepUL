@@ -12,12 +12,12 @@ execfile( "../EOSSafeUtils.py" )
 
 import ROOT
 
-if args.year not in [ "16", "17", "18" ]: sys.exit( "[ERR] Invalid year option. Use: 16, 17, 18" )
+if args.year not in [ "16APV", "16", "17", "18" ]: sys.exit( "[ERR] Invalid year option. Use: 16, 17, 18" )
 if args.location not in [ "LPC", "BRUX", "LOCAL" ]: sys.exit( "[ERR] Invalid location option. Use: LPC, BRUX, LOCAL" )
 
 if args.location in [ "LPC", "BRUX" ]:
   if args.location == "LPC":
-    haddDir = "root://cmsxrootd.fnal.gov//store/user/{}/FWLJMET106XUL_1lep20{}_3t_{}_step1hadds/nominal/".format( config.eosUserName, args.year, config.postfix )
+    haddDir = "root://cmsxrootd.fnal.gov//store/user/{}/FWLJMET106XUL_singleLep20{}_3t_step1hadds/nominal/".format( config.eosUserName, args.year )
     samples = EOSlistdir( os.path.join( config.haddPath[ args.year ][ "LPC" ], "nominal" ) )
   else: 
     haddDir = os.path.join( config.haddPath[ args.year ][ args.location ], "nominal" )

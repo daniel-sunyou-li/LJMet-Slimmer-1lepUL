@@ -16,7 +16,7 @@ from ROOT import *
 
 execfile( "../EOSSafeUtils.py" )
 
-shifts = [ "nominal" ] if not args.shifts else [ "nominal", "JECup", "JECdown", "JERup", "JERdown" ]
+shifts = [ "nominal" ] if not args.shifts else [ "JECup", "JECdown", "JERup", "JERdown" ]
 
 step1Dir = {
   shift: os.path.join( config.step1Dir[ args.year ][ args.location ], shift ) for shift in shifts
@@ -46,7 +46,10 @@ for shift in shifts:
       print( "   + {}".format( sample ) )
       samples[ shift ].append( sample )
 
+failed_hadd = {}
+
 for shift in shifts:
+  failed_hadd[shift] = []
   for sample in samples[ shift ]:
     if args.year == "18" and sample == "SingleElectron": sample = "EGamma"
     if shift != "nominal":
@@ -69,8 +72,8 @@ for shift in shifts:
     
       filesPerHadd = int( args.filesPerHadd )
       if "TTToSemiLeptonic" in outSample and outLabel == "HT0Njet0_ttjj": filesPerHadd = 45
-      elif "WJetsToLNu_HT-1200To2500" in outSample: filesPerHadd = 120
-      elif "WJetsToLNu_HT-2500ToInf" in outSample: filesPerHadd = 13
+      #elif "WJetsToLNu_HT-1200To2500" in outSample: filesPerHadd = 120
+      #elif "WJetsToLNu_HT-2500ToInf" in outSample: filesPerHadd = 13
       if "down" in outSample.lower() or "up" in outSample.lower(): filesPerHadd = 900
 
       singleFile = " root://cmseos.fnal.gov/{}/{}/{}".format( step1Dir[shift], outSample, step1Files[-1] )
@@ -100,8 +103,17 @@ for shift in shifts:
           if end > len( step1Files ): end = len( step1Files )
           for j in range( begin, end ):
             haddCommand += " root://cmseos.fnal.gov/{}/{}/{}".format( step1Dir[ shift ], outSample, step1Files[j] )
-          subprocess.call( haddCommand, shell = True )
+          try:
+            subprocess.call( haddCommand, shell = True )
+          except:
+            failed_hadd[ shift ].append( outSample )
         
           if not bool( EOSisfile( "{}/{}_{}_hadd.root".format( haddDir[ shift ], outSample, i + 1 ) ) ): print( haddCommand )
+
+for shift in failed_hadd:
+  if len( failed_hadd[ shift ] ) > 0:
+    print( "[WARN] Failed hadd'ing {}:".format( shift ) )
+    for sample in failed_hadd[ shift ]:
+      print( "  + {}".format( sample ) )
 
 print( "[DONE] Finished hadd'ing samples in {:.2f} minutes.".format( round( time.time() - start_time, 2 ) / 60 ) )

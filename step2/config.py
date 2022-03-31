@@ -1,23 +1,24 @@
 eosUserName = "dali"
-postfix = "deepJetV1"
-years = [ "17" ]
+postfix = "April2022"
+years = [ "16APV", "16", "17", "18" ]
 
 haddPath = {
   year: {
-    "LPC": "/eos/uscms/store/user/{}/FWLJMET106XUL_1lep20{}_3t_{}_step1hadds".format( eosUserName, year, postfix ),
-    "BRUX": "/isilon/hadoop/store/user/{}/FWLJMET106XUL_1lep20{}_3t_{}_step1hadds".format( eosUserName, year, postfix ) 
+    "LPC": "/eos/uscms/store/user/{}/FWLJMET106XUL_singleLep20{}_3t_step1hadds".format( eosUserName, year, postfix ),
+    "BRUX": "/isilon/hadoop/store/user/{}/FWLJMET106XUL_singleLep20{}_3t_step1hadds".format( eosUserName, year, postfix ) 
   } for year in years
 }
 
 step2Path = {
   year: {
-    "LPC": "/eos/uscms/store/user/{}/FWLJMET106XUL_1lep20{}_3t_{}_step2".format( eosUserName, year, postfix ), 
-    "BRUX": "/isilon/hadoop/store/user/{}/FWLJMET106XUL_1lep20{}_3t_step2".format( eosUserName, year, postfix )
+    "LPC": "/eos/uscms/store/user/{}/FWLJMET106XUL_singleLep20{}_3t_{}_step2".format( eosUserName, year, postfix ), 
+    "BRUX": "/isilon/hadoop/store/user/{}/FWLJMET106XUL_singleLep20{}_3t_{}_step2".format( eosUserName, year, postfix )
   } for year in years
 }
 
 lumi = {
-  "16": 35867.,
+  "16APV": 35867.,
+  "16": 1.,
   "17": 41530.,
   "18": 59970.
 }

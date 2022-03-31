@@ -8,18 +8,22 @@ parser = argparse.ArgumentParser()
 parser.add_argument( "-f", "--file", default="", help = "The path to the analysis tree")
 parser.add_argument( "-l", "--label", default="", help = "The name of the output file")
 parser.add_argument( "-y", "--year", default = "17" )
+parser.add_argument( "--local", action = "store_true", help = "Run a local file" )
 args = parser.parse_args()
 
 from ROOT import TFile, TTree, TH2F
 
 if not os.path.exists( "renorm" ): os.system( "mkdir -v renorm" )
 
-haddPath = "root://cmsxrootd.fnal.gov//store/user/{}/FWLJMET106XUL_1lep20{}_3t_{}_step1hadds/nominal/".format( config.eosUserName, args.year, config.postfix )
+haddPath = "root://cmsxrootd.fnal.gov//store/user/{}/FWLJMET106XUL_singleLep20{}_3t_step1hadds/nominal/".format( config.eosUserName, args.year )
 
-tfile = TFile.Open( os.path.join( haddPath, args.file ) )
+if args.local:
+  tfile = TFile.Open( args.file )
+else:
+  tfile = TFile.Open( os.path.join( haddPath, args.file ) )
 limits = {
-  "NJ": [5,3,8],
-  "HT": [40,150,4000]
+  "NJ": [3,4,7],
+  "HT": [10,350,4000]
 }
 
 fout = TFile( "Weights_{}_extended_HT_cuts_sys.root".format( args.label ), "RECREATE" )
@@ -60,11 +64,10 @@ for i in range( nEvents ):
   ttree.GetEntry(i)
   if i in checkpoints: print( ">> Finished processing {:.0f}% ({}/{}) events".format( 100.* float( i ) / float ( nEvents ), i, nEvents ) )
   if not ( ( ttree.leptonPt_MultiLepCalc > 35 and ttree.isElectron ) or ( ttree.leptonPt_MultiLepCalc > 30 and ttree.isMuon ) ): continue
-  if not ( ttree.corr_met_MultiLepCalc > 30 ): continue
-  if not ( ttree.MCPastTrigger ): continue 
+  if not ( ttree.MCPastTriggerX ): continue 
   njet = getattr( ttree, "NJets_JetSubCalc" ) 
   HT = getattr( ttree, "AK4HT" )
-  if njet > 8: njet = 8
+  if njet > 7: njet = 7
 
   h2D[ "origin" ][ "nominal" ].Fill( njet, HT ) # this gets cloned by the other systematics
   h2D[ "weight" ][ "nominal" ].Fill( njet, HT, getattr( ttree, "btagDeepJetWeight" ) )

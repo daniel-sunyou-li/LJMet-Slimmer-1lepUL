@@ -18,13 +18,7 @@ HardcodedConditions::HardcodedConditions( std::string year ) {
     sfFileName = "HT_njets_SF_UL16_sys.root" ); 
   }
   else if( year == "2018" ){
-    sfFileName = "HT_ njets_SF_UL18_sys.root" );
-  }
-  if( year == "2018" ){
-    sfFileName = "HT_njets_SF_3t_UL18_sys.root"; 
-  }
-  else if( year == 2016 ){
-    sfFileName = "HT_njets_SF_3t_UL16_sys.root"; 
+    sfFileName = "HT_njets_SF_UL18_sys.root" );
   }
 
   cout << ">> Reading scale factor file: " << sfFileName << endl;
@@ -37,7 +31,7 @@ HardcodedConditions::HardcodedConditions( std::string year ) {
   for( size_t i = 0; i < 19; i++ ){
     hscale_tttw[SYSs[i]]    = (TH2F*)tfile_HTNJ_SF->Get(("hscale_TTTW"+SYSs[i]).c_str())->Clone();
     hscale_tttj[SYSs[i]]    = (TH2F*)tfile_HTNJ_SF->Get(("hscale_TTTJ"+SYSs[i]).c_str())->Clone();  
-    hscale_tttt[SYSs[i]]   =(TH2F*)tfile_HTNJ_SF->Get(("hscale_TTTT"+SYSs[i]).c_str())->Clone();
+    hscale_tttt[SYSs[i]]    = (TH2F*)tfile_HTNJ_SF->Get(("hscale_TTTT"+SYSs[i]).c_str())->Clone();
     hscale_ttjj[SYSs[i]]    = (TH2F*)tfile_HTNJ_SF->Get(("hscale_ttjj"+SYSs[i]).c_str())->Clone();
     hscale_ttbb[SYSs[i]]    = (TH2F*)tfile_HTNJ_SF->Get(("hscale_ttbb"+SYSs[i]).c_str())->Clone();
     hscale_ttcc[SYSs[i]]    = (TH2F*)tfile_HTNJ_SF->Get(("hscale_ttcc"+SYSs[i]).c_str())->Clone();
@@ -48,10 +42,17 @@ HardcodedConditions::HardcodedConditions( std::string year ) {
     hscale_HT500Njet9_ttcc[SYSs[i]]    = (TH2F*)tfile_HTNJ_SF->Get(("hscale_HT500ttcc"+SYSs[i]).c_str())->Clone();
     hscale_HT500Njet9_tt2b[SYSs[i]]    = (TH2F*)tfile_HTNJ_SF->Get(("hscale_HT500tt2b"+SYSs[i]).c_str())->Clone();
     hscale_HT500Njet9_tt1b[SYSs[i]]    = (TH2F*)tfile_HTNJ_SF->Get(("hscale_HT500tt1b"+SYSs[i]).c_str())->Clone();
-    hscale_STs[SYSs[i]]    = (TH2F*)tfile_HTNJ_SF->Get(("hscale_STs"+SYSs[i]).c_str())->Clone();
+    hscale_STs[SYSs[i]]     = (TH2F*)tfile_HTNJ_SF->Get(("hscale_STs"+SYSs[i]).c_str())->Clone();
     hscale_STtw[SYSs[i]]    = (TH2F*)tfile_HTNJ_SF->Get(("hscale_STtw"+SYSs[i]).c_str())->Clone();
-    hscale_STt[SYSs[i]]    = (TH2F*)tfile_HTNJ_SF->Get(("hscale_STt"+SYSs[i]).c_str())->Clone();
-    hscale_WJets[SYSs[i]]    = (TH2F*)tfile_HTNJ_SF->Get(("hscale_WJets"+SYSs[i]).c_str())->Clone();
+    hscale_STt[SYSs[i]]     = (TH2F*)tfile_HTNJ_SF->Get(("hscale_STt"+SYSs[i]).c_str())->Clone();
+    hscale_WJets[SYSs[i]]   = (TH2F*)tfile_HTNJ_SF->Get(("hscale_WJets"+SYSs[i]).c_str())->Clone();
+    hscale_QCD[SYSs[i]]     = (TH2F*)tfile_HTNJ_SF->Get(("hscale_QCD"+SYSs[i]).c_str())->Clone();
+    hscale_DYM[SYSs[i]]     = (TH2F*)tfile_HTNJ_SF->Get(("hscale_DYM"+SYSs[i]).c_str())->Clone();
+    hscale_TTHB[SYSs[i]]    = (TH2F*)tfile_HTNJ_SF->Get(("hscale_TTHB"+SYSs[i]).c_str())->Clone();
+    hscale_TTHnonB[SYSs[i]] = (TH2F*)tfile_HTNJ_SF->Get(("hscale_TTHnonB"+SYSs[i]).c_str())->Clone();
+    hscale_TTHH[SYSs[i]]    = (TH2F*)tfile_HTNJ_SF->Get(("hscale_TTHH"+SYSs[i]).c_str())->Clone();
+    hscale_TTXY[SYSs[i]]    = (TH2F*)tfile_HTNJ_SF->Get(("hscale_TTXY"+SYSs[i]).c_str())->Clone();
+    hscale_EWK[SYSs[i]]     = (TH2F*)tfile_HTNJ_SF->Get(("hscale_EWK"+SYSs[i]).c_str())->Clone();
   }
 }
 
@@ -61,7 +62,7 @@ float HardcodedConditions::GetDeepJetRenorm2DSF_HTnj( float HT, int njets, std::
   if( hscale_ttjj.find( sysType ) == hscale_ttjj.end() ) return 1.0;
   if( sampleType == "" ) return 1.0;
   int njets_idx = njets;
-  if( njets_idx > 8 ) njets_idx = 8;
+  if( njets_idx > 7 ) njets_idx = 7;
 
   if( sampleType == "tttw" ){
     return hscale_tttw[ sysType ]->GetBinContent( hscale_tttw[ sysType ]->FindBin( njets_idx, HT ) );
@@ -131,15 +132,39 @@ float HardcodedConditions::GetDeepJetRenorm2DSF_HTnj( float HT, int njets, std::
   if( sampleType == "WJets" ){
     return hscale_WJets[ sysType ]->GetBinContent( hscale_WJets[ sysType ]->FindBin( njets_idx, HT ) );
   }
+  if( sampleType == "QCD" ){
+    return hscale_QCD[ sysType ]->GetBinContent( hscale_QCD[ sysType ]->FindBin( njets_idx, HT ) );
+  }
+  if( sampleType == "DYM" ){
+    return hscale_DYM[ sysType ]->GetBinContent( hscale_DYM[ sysType ]->FindBin( njets_idx, HT ) );
+  }
+  if( sampleType == "TTHB" ){
+    return hscale_TTHB[ sysType ]->GetBinContent( hscale_TTHB[ sysType ]->FindBin( njets_idx, HT ) );
+  }
+  if( sampleType == "TTHnonB" ){
+    return hscale_TTHnonB[ sysType ]->GetBinContent( hscale_TTHnonB[ sysType ]->FindBin( njets_idx, HT ) );
+  }
+  if( sampleType == "TTHH" ){
+    return hscale_TTHH[ sysType ]->GetBinContent( hscale_TTHnonB[ sysType ]->FindBin( njets_idx, HT ) );
+  }
+  if( sampleType == "TTXY" ){
+    return hscale_TTXY[ sysType ]->GetBinContent( hscale_TTXY[ sysType ]->FindBin( njets_idx, HT ) );
+  }
+  if( sampleType == "EWK" ){
+    return hscale_EWK[ sysType ]->GetBinContent( hscale_EWK[ sysType ]->FindBin( njets_idx, HT ) );
+  }
 
   return 1.0;  
 } 
 
-float HardcodedConditions::GetCrossSectionEfficiency( TString inputFileName, int Year ){ // used for event weighting, only compute for samples used in DNN training
-  if( Year == 2016 ){
+float HardcodedConditions::GetCrossSectionEfficiency( TString inputFileName, std::string Year ){ // used for event weighting, only compute for samples used in DNN training
+  if( Year == "2016APV" ){
     return 1.0; // hasn't been implemented yet 
   }
-  else if( Year == 2017 ){
+  else if( Year == "2016" ){
+    return 1.0;
+  }
+  else if( Year == "2017" ){
     if( inputFileName.Contains( "TTToSemiLeptonic_TuneCP5" ) && inputFileName.Contains( "HT0Njet0" ) ) return 0.04269313;
     else if( inputFileName.Contains( "TTToSemiLepton_HT500Njet9_TuneCP5" ) ) return 0.00918382;
     else if( inputFileName.Contains( "TTToSemiLeptonic_TuneCP5" ) && inputFileName.Contains( "HT500Njet9" ) ) return 0.00026545;
@@ -148,25 +173,27 @@ float HardcodedConditions::GetCrossSectionEfficiency( TString inputFileName, int
     else if( inputFileName.Contains( "TTTT" ) ) return 0.000109821;
     else if( inputFileName.Contains( "TTTW" ) ) return 0.00008437;
     else if( inputFileName.Contains( "TTTJ" ) ) return 0.00004662;
-    else return 1;
+    else return 1.0;
   }
-  else if( Year == 2018 ){
+  else if( Year == "2018" ){
     return 1.0; // hasn't been implemented yet 
   }
   else return 1.0;
 }
 
-float HardcodedConditions::GetBTagWP( int Year, std::string tagger ){
+float HardcodedConditions::GetBTagWP( std::string Year, std::string tagger ){
   if( tagger == "deepJet" ){
-    if( Year == 2017 ) return 0.3040;
-    else if( Year == 2018 ) return 0.2783;
-    else if( Year == 2016 ) return 0.2489;
+    if( Year == "2017" ) return 0.3040;
+    else if( Year == "2018" ) return 0.2783;
+    else if( Year == "2016" ) return 0.2489;
+    else if( Year == "2016APV" ) return 0.2598;
     else return 1.0;
   }
   else if( tagger == "deepCSV" ){
-    if( Year == 2017 ) return 0.4506;
-    else if( Year == 2018 ) return 0.4168;
-    else if( Year == 2016 ) return 0.5847;
+    if( Year == "2017" ) return 0.4506;
+    else if( Year == "2018" ) return 0.4168;
+    else if( Year == "2016" ) return 0.5847;
+    else if( Year == "2016APV" ) return 0.6001;
     else return 1.0;
   }
   else return 1.0;

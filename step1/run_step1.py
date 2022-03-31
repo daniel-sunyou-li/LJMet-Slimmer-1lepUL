@@ -22,7 +22,7 @@ start_time = time.time()
 #IO directories must be full paths
 if args.year not in [ "16APV", "16", "17", "18" ]: sys.exit( "[ERR] Invalid year option. Use: 16APV, 16, 17, 18" )
 if args.location not in [ "LPC", "BRUX" ]: sys.exit( "[ERR] Invalid location option. Use: BRUX, LPC" )
-shifts = [ "nominal" ] if not args.shifts else [ "nominal", "JECup", "JECdown", "JERup", "JERdown" ]
+shifts = [ "nominal" ] if not args.shifts else [ "JECdown" ]# [ "JECup", "JERup", "JERdown" ]  #[ "JECup", "JECdown", "JERup", "JERdown" ]
 filesPerJob = int( args.filesPerJob )
 postfix = config.postfix
 inputDir = config.ljmetDir[ args.year ][ args.location ]

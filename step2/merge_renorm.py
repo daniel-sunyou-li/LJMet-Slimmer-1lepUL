@@ -3,7 +3,7 @@ from argparse import ArgumentParser
 import math 
 
 parser = ArgumentParser()
-parser.add_argument( "-y", "--year", default = "17", help = "Options: 16,17,18" )
+parser.add_argument( "-y", "--year", default = "17", help = "Options: 16APV,16,17,18" )
 parser.add_argument( "files", nargs = "+", default = [], help = "Files to combine" )
 args = parser.parse_args()
 
