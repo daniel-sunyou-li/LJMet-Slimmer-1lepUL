@@ -9,7 +9,7 @@ execfile( "../EOSSafeUtils.py" )
 start_time = time.time()
 
 parser = ArgumentParser()
-parser.add_argument( "-y", "--year", default = "17", help = "Year options: [16,17,18]" )
+parser.add_argument( "-y", "--year", default = "17", help = "Year options: [16APV,16,17,18]" )
 parser.add_argument( "-t", "--test", action = "store_true" )
 parser.add_argument( "-d", "--dnn", action = "store_true" )
 parser.add_argument( "-s", "--systematics", action = "store_true" )
@@ -18,7 +18,7 @@ args = parser.parse_args()
 
 from ROOT import *
 
-if args.year not in [ "16", "17", "18" ]: sys.exit( "[ERR] Invalid year option used. Choose from: 16, 17, 18" )
+if args.year not in [ "16APV", "16", "17", "18" ]: sys.exit( "[ERR] Invalid year option used. Choose from: 16APV, 16, 17, 18" )
 shifts = [ "nominal" ] if not args.systematics else [ "JECup", "JECdown", "JERup", "JERdown" ]
 
 runDir = os.getcwd()
