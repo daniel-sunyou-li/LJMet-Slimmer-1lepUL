@@ -1,26 +1,27 @@
-import os, sys, getpass, pexpect
+import os, sys
 from argparse import ArgumentParser
 execfile( "step1/config.py" )
+
 # this script is to be used while on BRUX and transferring step1hadds from the LPC eos area
 parser = ArgumentParser()
 parser.add_argument( "-y", "--year", required = True )
 parser.add_argument( "-t", "--tag", default = "3t" )
 parser.add_argument( "-g", "--groups", nargs = "+", required = True )
 parser.add_argument( "-s", "--step", required = True, help = "1hadds,2" )
-parser.add_argumnet( "-o", "--outpath", required = True, help = "/isilon/hadoop/store/<outpath>" )
+parser.add_argument( "-o", "--outpath", required = True, help = "/isilon/hadoop/store/<outpath>" )
 parser.add_argument( "--shifts", action = "store_true" )
 args = parser.parse_args()
 
-out_path = args.outpath
+out_path = os.path.join( "/isilon/hadoop/store/", args.outpath )
 if args.step == "1hadds":
-  out_folder = config.sampleDir[ args.year ] + "_{}_step1hadds".format( args.tag )
-elif:
-  out_folder = config.sampleDir[ args.year ] + "_{}_step2".format( args.tag )
+  out_folder = sampleDir[ args.year ] + "_{}_step1hadds".format( args.tag )
+elif args.step == "2":
+  out_folder = sampleDir[ args.year ] + "_{}_step2".format( args.tag )
 else:
   quit( "[ERR] Invalid 'step' argument used, try: '1hadds', '2'. Quitting..." )
   
 if not os.path.exists( out_path ):
-  quit( "[ERR] {} does not exist, quitting..." )
+  quit( "[ERR] {} does not exist, quitting...".format( out_path ) )
 out_dir = out_path + out_folder
 
 def transfer_samples():
@@ -38,22 +39,22 @@ def transfer_samples():
         done_samples[ syst + shift ] = os.listdir( out_dir + "/{}{}/".format( syst, shift ) )
   
   transfer_samples = []
-    for group in args.groups:
-      for sample in config.samples[ args.year ][ group ]:
-        if "TTTo" in sample:
-          if "SemiLeptonic" in sample:
-            for HT in [ "HT0Njet0", "HT500Njet9" ]:
-              for fs in [ "ttjj", "ttcc", "ttbb", "tt1b", "tt2b" ]:
-                if fs == "ttjj":
-                  for n in [ "", "_1", "_2", "_3", "_4", "_5" ]:
-                    transfer_samples.append( "{}_{}_{}{}_hadd.root".format( sample, HT, fs, n ) )
-                else:
-                  transfer_samples.append( "{}_{}_{}_hadd.root".format( sample, HT, fs ) )
-          else:
+  for group in args.groups:
+    for sample in samples[ args.year ][ group ]:
+      if "TTTo" in sample:
+        if "SemiLeptonic" in sample:
+          for HT in [ "HT0Njet0", "HT500Njet9" ]:
             for fs in [ "ttjj", "ttcc", "ttbb", "tt1b", "tt2b" ]:
-              transfer_samples.append( "{}_{}_hadd.root".format( sample, fs ) )
+              if fs == "ttjj":
+                for n in [ "", "_1", "_2", "_3", "_4", "_5" ]:
+                  transfer_samples.append( "{}_{}_{}{}_hadd.root".format( sample, HT, fs, n ) )
+              else:
+                transfer_samples.append( "{}_{}_{}_hadd.root".format( sample, HT, fs ) )
         else:
-          transfer_samples.append( "{}_hadd.root".format( sample ) )
+          for fs in [ "ttjj", "ttcc", "ttbb", "tt1b", "tt2b" ]:
+            transfer_samples.append( "{}_{}_hadd.root".format( sample, fs ) )
+      else:
+        transfer_samples.append( "{}_hadd.root".format( sample ) )
 
   print( "[INFO] Transferring {} samples:".format( len(transfer_samples) ) )
   for i, sample in enumerate( transfer_samples ):
@@ -62,7 +63,7 @@ def transfer_samples():
     if not args.shifts:
       try:
         os.system( "xrdcp root://cmseos.fnal.gov///store/user/{}/{}/nominal/{} {}/nominal/".format(
-          config.eosUserName, out_folder, sample, out_dir
+          eosUserName, out_folder, sample, out_dir
         ) )
       except:
         print( "[WARN] nominal/{} does not exist, passing...".format( sample ) )
@@ -71,7 +72,7 @@ def transfer_samples():
         for shift in [ "up", "down" ]:
           try:
             os.system( "xrdcp root://cmseos.fnal.gov///store/user/{}/{}/{}{}/{} {}/{}{}/".format(
-              config.eosUserName, out_folder, syst, shift, sample, out_dir, syst, shift
+              eosUserName, out_folder, syst, shift, sample, out_dir, syst, shift
             ) )
           except:
             print( "[WARN] {}{}/{} does not exist, passing...".format( syst, shift, sample ) )

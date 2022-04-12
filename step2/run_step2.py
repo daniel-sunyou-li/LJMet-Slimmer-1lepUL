@@ -13,7 +13,8 @@ parser.add_argument( "-y", "--year", default = "17", help = "Year options: [16AP
 parser.add_argument( "--test", action = "store_true", help = "Run only a single file" )
 parser.add_argument( "--dnn", action = "store_true", help = "Run only files used in step3 DNN training" )
 parser.add_argument( "--shifts", action = "store_true", help = "Run JEC/JER shift samples" )
-parser.add_argument( "-l", "--location", default = "LPC", help = "Step1 location options: LPC, BRUX" )
+parser.add_argument( "-i", "--inLoc", default = "LPC", help = "step1 location options: LPC, BRUX" )
+parser.add_argument( "-o", "--outLoc", default = "LPC", help = "step2 destination options: LPC, BRUX" )
 args = parser.parse_args()
 
 from ROOT import *
@@ -23,37 +24,52 @@ shifts = [ "nominal" ] if not args.shifts else [ "JECup", "JECdown", "JERup", "J
 
 runDir = os.getcwd()
 inputDir = {
-  shift: os.path.join( config.haddPath[ args.year ][ args.location ], shift ) for shift in shifts
+  shift: os.path.join( config.haddPath[ args.year ][ args.inLoc ], shift ) for shift in shifts
 }
 outputDir = {
-  shift: os.path.join( config.step2Path[ args.year ][ "LPC" ], shift ) for shift in shifts
+  shift: os.path.join( config.step2Path[ args.year ][ args.outLoc ], shift ) for shift in shifts
 }
 condorDir = {
   shift: os.path.join( runDir, "logs_UL{}_{}/{}".format( args.year, config.postfix, shift ) ) for shift in shifts
 }
 
-for shift in shifts:
-  os.system( "eos root://cmseos.fnal.gov mkdir -p {}".format( outputDir[ shift ] ) )
-  os.system( "mkdir -p {}".format( condorDir[ shift ] ) )
+if args.outLoc == "LPC":
+  for shift in shifts:
+    os.system( "eos root://cmseos.fnal.gov mkdir -p {}".format( outputDir[ shift ] ) )
+    os.system( "mkdir -p {}".format( condorDir[ shift ] ) )
+else:
+  for shift in shifts:
+    os.system( "mkdir -vp {}".format( outputDir[ shift ] ) )
+    os.system( "mkdir -p {}".format( condorDir[ shift ] ) )
+
 
 gROOT.ProcessLine( ".x compile_step2.C" )
 
 print( ">> Starting step2 Condor submission..." )
 
 step1Files = {}
-if args.location == "LPC":
+if args.inLoc == "LPC":
   step1Files = {
     shift: EOSlistdir( inputDir[ shift ] ) for shift in shifts 
   }
-elif args.location == "BRUX":
+elif args.inLoc == "BRUX":
   xrdClient = client.FileSystem( "root://brux30.hep.brown.edu:1094/" )
   for shift in shifts:
     status, dirList = xrdClient.dirlist( inputDir[ shift ] )
     step1Files[ shift ] = [ item.name for item in dirList ]
+else:
+  quit( "[ERR] Invalid input location, quitting..." )
 
-step2Files = {
-  shift: EOSlistdir( outputDir[ shift ] ) for shift in shifts
-}
+if args.outLoc == "LPC":
+  step2Files = {
+    shift: EOSlistdir( outputDir[ shift ] ) for shift in shifts
+  }
+elif args.outLoc == "BRUX":
+  step2Files = {
+    shift: os.listdir( os.path.join( config.step2Path[ args.year ][ "BRUX" ], shift ) ) for shift in shifts
+  }
+else:
+  quit( "[ERR] Invalid output location, quitting..." )
 
 jobCount = 0
 for shift in shifts:
@@ -61,7 +77,7 @@ for shift in shifts:
     if shift != "nominal": continue
   for rootFile in step1Files[ shift ]:
     if args.test: 
-      if "TTTW" not in rootFile: continue
+      if "TTTJ" not in rootFile: continue
     if args.dnn:
       if "TTTW" not in rootFile and "TTTJ" not in rootFile and "TTTT" not in rootFile and "TTTo" not in rootFile: continue
       if "up" in rootFile.lower() or "down" in rootFile.lower(): continue
@@ -98,7 +114,7 @@ Queue 1"""%jobParams )
     jdf.close()
     os.chdir( condorDir[ shift ] )
     print( ">> Submitting {}: {}".format( shift, rootFile.split( "." )[0] ) )
-    os.system( "condor_submit {}.job".format( rootFile.split( "." )[0] ) )
+    os.system( "condor_submit {}.job -allow-crlf-script".format( rootFile.split( "." )[0] ) )
     os.system( "sleep 0.5" )                                 
     os.chdir( runDir )
     jobCount += 1
