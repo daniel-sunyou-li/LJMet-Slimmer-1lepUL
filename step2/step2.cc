@@ -18,7 +18,7 @@
 #include <TVectorT.h>
 #include "TROOT.h"
 #include "Davismt2.h"
-#include "S2HardcodedConditions.h"
+#include "HardcodedConditions.h"
 #include <bits/stdc++.h> 
 
 using namespace std;

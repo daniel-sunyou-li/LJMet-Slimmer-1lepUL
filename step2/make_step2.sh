@@ -4,11 +4,12 @@ infilename=${1}
 outfilename=${2}
 inputDir=${3}
 outputDir=${4}
+Year=${5}
 
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 export SCRAM_ARCH=slc7_amd64_gcc700
-scramv1 project CMSSW CMSSW_10_6_19
-cd CMSSW_10_6_19
+scramv1 project CMSSW CMSSW_10_6_29
+cd CMSSW_10_6_29
 eval `scramv1 runtime -sh`
 cd -
 
@@ -21,7 +22,7 @@ then
 XRDpath=root://brux30.hep.brown.edu:1094/
 fi
 
-root -l -b -q make_step2.C\(\"$macroDir\",\"$XRDpath/$inputDir/$infilename\",\"$outfilename\"\)
+root -l -b -q make_step2.C\(\"$macroDir\",\"$XRDpath/$inputDir/$infilename\",\"$outfilename\",\"$Year\"\)
 
 xrdcp -f $outfilename root://cmseos.fnal.gov/$outputDir/
 rm $outfilename

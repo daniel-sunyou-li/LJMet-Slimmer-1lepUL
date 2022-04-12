@@ -2,7 +2,7 @@
 #include "Davismt2.cc"
 #include "HardcodedConditions.cc"
 
-void make_step2(TString macroDir, TString inputFile, TString outputFile){
+void make_step2(TString macroDir, TString inputFile, TString outputFile, std::string Year){
 
   gROOT->SetMacroPath(macroDir);
 
@@ -14,7 +14,7 @@ void make_step2(TString macroDir, TString inputFile, TString outputFile){
 
   std::cout << ">> Start make_step2.C " << std::endl; 
   std::cout << ">> Using file: " << inputFile << std::endl;
-  step2 t(inputFile,outputFile);
+  step2 t(inputFile,outputFile,Year);
   std::cout << ">> End of constructor " << std::endl;
   t.Loop();
 

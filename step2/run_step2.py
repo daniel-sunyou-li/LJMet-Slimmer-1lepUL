@@ -10,16 +10,16 @@ start_time = time.time()
 
 parser = ArgumentParser()
 parser.add_argument( "-y", "--year", default = "17", help = "Year options: [16APV,16,17,18]" )
-parser.add_argument( "-t", "--test", action = "store_true" )
-parser.add_argument( "-d", "--dnn", action = "store_true" )
-parser.add_argument( "-s", "--systematics", action = "store_true" )
-parser.add_argument( "-l", "--location", default = "LPC", help = "Options: LPC, BRUX" )
+parser.add_argument( "--test", action = "store_true", help = "Run only a single file" )
+parser.add_argument( "--dnn", action = "store_true", help = "Run only files used in step3 DNN training" )
+parser.add_argument( "--shifts", action = "store_true", help = "Run JEC/JER shift samples" )
+parser.add_argument( "-l", "--location", default = "LPC", help = "Step1 location options: LPC, BRUX" )
 args = parser.parse_args()
 
 from ROOT import *
 
 if args.year not in [ "16APV", "16", "17", "18" ]: sys.exit( "[ERR] Invalid year option used. Choose from: 16APV, 16, 17, 18" )
-shifts = [ "nominal" ] if not args.systematics else [ "JECup", "JECdown", "JERup", "JERdown" ]
+shifts = [ "nominal" ] if not args.shifts else [ "JECup", "JECdown", "JERup", "JERdown" ]
 
 runDir = os.getcwd()
 inputDir = {
@@ -75,7 +75,8 @@ for shift in shifts:
       "CONDORDIR": condorDir[ shift ], 
       "INPUTDIR": inputDir[ shift ], 
       "FILENAME": rootFile.split( "." )[0], 
-      "SYSFILE": "renorm/HT_njets_SF_3t_UL{}_sys.root".format( args.year ),
+      "YEAR": "20" + args.year,
+      "SYSFILE": "renorm/HT_njets_SF_UL{}_sys.root".format( args.year ),
       "OUTPUTDIR": outputDir[ shift ]
     }
     jdfName = os.path.join( condorDir[ shift ], rootFile.split( "." )[0] ) + ".job"
@@ -92,7 +93,7 @@ Error = %(FILENAME)s.err
 Log = %(FILENAME)s.log
 JobBatchName = step2_3t
 Notification = Never
-Arguments = %(FILENAME)s.root %(FILENAME)s.root %(INPUTDIR)s %(OUTPUTDIR)s
+Arguments = %(FILENAME)s.root %(FILENAME)s.root %(INPUTDIR)s %(OUTPUTDIR)s %(YEAR)s
 Queue 1"""%jobParams )
     jdf.close()
     os.chdir( condorDir[ shift ] )

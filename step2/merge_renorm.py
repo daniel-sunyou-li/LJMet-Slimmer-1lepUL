@@ -12,7 +12,7 @@ import ROOT
 from ROOT import TFile, TCanvas, TH1F 
 from ROOT import gStyle
 
-foutName = "HT_njets_SF_3t_UL{}_sys.root".format( args.year )
+foutName = "HT_njets_SF_UL{}_sys.root".format( args.year )
 fout = TFile( foutName, "RECREATE" )
 
 TFiles = {}

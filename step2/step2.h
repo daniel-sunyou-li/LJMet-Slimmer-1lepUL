@@ -17,7 +17,7 @@
 #include "vector"
 #include "TLorentzVector.h"
 #include "Davismt2.h"
-#include "S2HardcodedConditions.h"
+#include "HardcodedConditions.h"
 
 class step2 {
 public :
@@ -27,7 +27,7 @@ public :
    Int_t           fCurrent; //!current Tree number in a TChain
 
    //Load Scale Factors
-   S2HardcodedConditions hardcodedConditions;
+   HardcodedConditions hardcodedConditions;
   
 // Fixed size dimensions of array or collections stored in the TTree if any.
    Int_t           isTraining;
@@ -829,7 +829,7 @@ public :
    //TBranch        *b_NoTop_Jet2_Eta;
    //TBranch        *b_NoTop_Jet2_Mass;         
 
-   step2(TString inputFileName, TString outputFileName);
+   step2(TString inputFileName, TString outputFileName, std::string Year);
    virtual ~step2();
    virtual Int_t    Cut(Long64_t entry);
    virtual Int_t    GetEntry(Long64_t entry);
@@ -843,13 +843,13 @@ public :
 #endif
 
 #ifdef step2_cxx
-step2::step2(TString inputFileName, TString outputFileName)// : inputTree(0), inputFile(0), outputFile(0) 
+step2::step2(TString inputFileName, TString outputFileName, std::string Year )// : inputTree(0), inputFile(0), outputFile(0) 
 {   //weight branches to be used in the BDT training, xsecEff is the weight
 
    //Initialize SFs
-   hardcodedConditions = S2HardcodedConditions();
+   hardcodedConditions = HardcodedConditions( Year );
    
-   xsecEff = hardcodedConditions::GetCrossSectionEfficiency( inputFileName, Year );
+   xsecEff = hardcodedConditions.GetCrossSectionEfficiency( inputFileName, Year );
       
    isTTbar = ( inputFileName.Contains( "TT_" ) || inputFileName.Contains( "TTTo" ) );
    isTTTT  = inputFileName.Contains( "TTTT" );

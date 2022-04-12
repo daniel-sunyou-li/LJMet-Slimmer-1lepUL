@@ -13,7 +13,7 @@ args = parser.parse_args()
 
 from ROOT import TFile, TTree, TH2F
 
-if not os.path.exists( "renorm" ): os.system( "mkdir -v renorm" )
+if not os.path.exists( "renorm/UL{}/".format( args.year ) ): os.system( "mkdir -v renorm/UL{}/".format( args.year ) )
 
 haddPath = "root://cmsxrootd.fnal.gov/" + config.haddPath[ args.year ][ "LPC" ].split( "uscms" )[-1] + "/nominal/"
 
@@ -92,4 +92,4 @@ for systematic in systematics:
 
 fout.Close()
 print( "[DONE] {}/{} events passed".format( nPassed, nEvents ) )
-os.system( "mv {} renorm/".format( "Weights_{}_extended_HT_cuts_sys.root".format( args.label ) ) )
+os.system( "mv {} renorm/UL{}/".format( "Weights_{}_extended_HT_cuts_sys.root".format( args.label ), args.year ) )
