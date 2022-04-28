@@ -7,7 +7,7 @@ parser = ArgumentParser()
 parser.add_argument( "-y", "--year", required = True )
 parser.add_argument( "-t", "--tag", default = "3t" )
 parser.add_argument( "-g", "--groups", nargs = "+", required = True )
-parser.add_argument( "-s", "--step", required = True, help = "1hadds,2" )
+parser.add_argument( "-s", "--step", required = True, help = "1hadds,2,3" )
 parser.add_argument( "-o", "--outpath", required = True, help = "/isilon/hadoop/store/<outpath>" )
 parser.add_argument( "--shifts", action = "store_true" )
 args = parser.parse_args()
@@ -17,6 +17,8 @@ if args.step == "1hadds":
   out_folder = sampleDir[ args.year ] + "_{}_step1hadds".format( args.tag )
 elif args.step == "2":
   out_folder = sampleDir[ args.year ] + "_{}_step2".format( args.tag )
+elif args.step == "3":
+  out_folder = sampleDir[ args.year ] + "_{}_step3".format( args.tag )
 else:
   quit( "[ERR] Invalid 'step' argument used, try: '1hadds', '2'. Quitting..." )
   
@@ -46,7 +48,7 @@ def transfer_samples():
           for HT in [ "HT0Njet0", "HT500Njet9" ]:
             for fs in [ "ttjj", "ttcc", "ttbb", "tt1b", "tt2b" ]:
               if fs == "ttjj":
-                for n in [ "", "_1", "_2", "_3", "_4", "_5" ]:
+                for n in [ "", "_1", "_2", "_3", "_4", "_5", "_6", "_7", "_8", "_9", "_10", "_11", "_12" ]:
                   transfer_samples.append( "{}_{}_{}{}_hadd.root".format( sample, HT, fs, n ) )
               else:
                 transfer_samples.append( "{}_{}_{}_hadd.root".format( sample, HT, fs ) )
