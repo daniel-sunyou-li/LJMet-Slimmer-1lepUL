@@ -8,16 +8,19 @@ parser = argparse.ArgumentParser()
 parser.add_argument( "-f", "--file", default="", help = "The path to the analysis tree")
 parser.add_argument( "-l", "--label", default="", help = "The name of the output file")
 parser.add_argument( "-y", "--year", default = "17" )
-parser.add_argument( "--local", action = "store_true", help = "Run a local file" )
+parser.add_argument( "-loc", "--location", required = True, help = "BRUX,LPC,LOCAL" )
 args = parser.parse_args()
 
 from ROOT import TFile, TTree, TH2F
 
 if not os.path.exists( "renorm/UL{}/".format( args.year ) ): os.system( "mkdir -v renorm/UL{}/".format( args.year ) )
 
-haddPath = "root://cmsxrootd.fnal.gov/" + config.haddPath[ args.year ][ "LPC" ].split( "uscms" )[-1] + "/nominal/"
+if args.location == "LPC":
+  haddPath = "root://cmsxrootd.fnal.gov/" + config.haddPath[ args.year ][ "LPC" ].split( "uscms" )[-1] + "/nominal/"
+elif args.location == "BRUX":
+  haddPath = config.haddPath[ args.year ][ "BRUX" ] + "/nominal/"
 
-if args.local:
+if args.location == "LOCAL":
   tfile = TFile.Open( args.file )
 else:
   tfile = TFile.Open( os.path.join( haddPath, args.file ) )

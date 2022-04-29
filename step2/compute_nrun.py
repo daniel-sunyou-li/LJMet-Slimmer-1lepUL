@@ -21,8 +21,11 @@ if args.location in [ "LPC", "BRUX" ]:
     samples = EOSlistdir( os.path.join( config.haddPath[ args.year ][ "LPC" ], "nominal" ) )
   else: 
     haddDir = os.path.join( config.haddPath[ args.year ][ args.location ], "nominal/" )
+    samples = os.listdir( haddDir )
 else:
   haddDir = args.folder
+
+
 
 print( "[INFO] Found {} samples:".format( len( samples ) ) )
 for sample in samples:
@@ -30,7 +33,7 @@ for sample in samples:
 
 print( haddDir )
 
-for sample in samples:
+for sample in sorted( samples ):
   if "single" in sample.lower() or "egamma" in sample.lower(): continue
   rFile = ROOT.TFile.Open( haddDir + sample )
   hist = rFile.Get( "NumTrueHist" ).Clone( "NumTrueHist" )

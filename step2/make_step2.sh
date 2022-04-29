@@ -16,13 +16,19 @@ cd -
 macroDir=${PWD}
 export PATH=$PATH:$macroDir
 
-XRDpath=root://cmseos.fnal.gov/
+rootPath=root://cmseos.fnal.gov/$inputDir
 if [[ $inputDir == /isilon/hadoop/* ]];
 then
-XRDpath=root://brux30.hep.brown.edu:1094/
+rootPath=$inputDir
 fi
 
-root -l -b -q make_step2.C\(\"$macroDir\",\"$XRDpath/$inputDir/$infilename\",\"$outfilename\",\"$Year\"\)
+root -l -b -q make_step2.C\(\"$macroDir\",\"$rootPath/$infilename\",\"$outfilename\",\"$Year\"\)
 
-xrdcp -f $outfilename root://cmseos.fnal.gov/$outputDir/
-rm $outfilename
+if [[ $inputDir == /isilon/hadoop/* ]];
+then
+  mv $outfilename $outputDir
+else
+  xrdcp -f $outfilename root://cmseos.fnal.gov/$outputDir/
+  rm $outfilename
+fi
+
