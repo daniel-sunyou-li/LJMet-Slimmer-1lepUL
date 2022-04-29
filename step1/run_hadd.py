@@ -56,8 +56,8 @@ for shift in shifts:
       if "Single" in sample or "EGamma" in sample or "up" in sample.lower() or "down" in sample.lower(): continue
     outList = []
     if "TTToSemiLeptonic" in sample and "up" not in sample.lower() and "down" not in sample.lower():
-      for HT_key in [ "HT500Njet9" ]:  #[ "HT0Njet0", "HT500Njet9" ]:
-        for fs_key in [ "tt2b" ]:  #[ "ttbb", "tt2b", "tt1b", "ttcc", "ttjj" ]:
+      for HT_key in  [ "HT0Njet0" ]: #[ "HT0Njet0", "HT500Njet9" ]:
+        for fs_key in [ "ttcc" ]:  #[ "ttbb", "tt2b", "tt1b", "ttcc", "ttjj" ]:
           outList.append( "{}_{}".format( HT_key, fs_key ) )
     elif "TTTo" in sample:
       outList = [ "ttbb", "tt2b", "tt1b", "ttcc", "ttjj" ]
