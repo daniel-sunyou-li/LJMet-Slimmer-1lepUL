@@ -81,7 +81,7 @@ for shift in shifts:
     if args.dnn:
       if "TTTW" not in rootFile and "TTTJ" not in rootFile and "TTTT" not in rootFile and "TTTo" not in rootFile: continue
       if "up" in rootFile.lower() or "down" in rootFile.lower(): continue
-    if not rootFile.endswith( ".root" ): continue
+    if not rootFile.endswith( ".root" ) or "hadd" not in rootFile: continue
     if rootFile in step2Files[ shift ]: 
       print( "[WARN] {} step2 completed, skipping...".format( rootFile ) )
       continue # skip finished step2 files

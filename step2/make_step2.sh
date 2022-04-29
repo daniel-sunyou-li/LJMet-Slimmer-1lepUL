@@ -29,6 +29,6 @@ then
   mv $outfilename $outputDir
 else
   xrdcp -f $outfilename root://cmseos.fnal.gov/$outputDir/
+  rm $outfilename
 fi
 
-rm $outfilename
