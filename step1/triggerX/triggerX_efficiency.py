@@ -5,6 +5,7 @@ from argparse import ArgumentParser
 import numpy as np
 import pickle
 import pandas
+from XRootD import client
 import config
 
 execfile( "../../EOSSafeUtils.py" )
@@ -14,6 +15,7 @@ parser.add_argument( "-y", "--year", help = "16APV,16,17,18" )
 parser.add_argument( "-g", "--group" )
 parser.add_argument( "-l", "--lepton", default = "e", help = "e,m" )
 parser.add_argument( "--single", action = "store_true" )
+parser.add_argument( "-loc", "--location", default = "BRUX" )
 args = parser.parse_args()
 
 import ROOT
@@ -70,19 +72,30 @@ else:
 total_nominal = 0
 total_hlt = 0
  
-samples_done = EOSlistdir( os.path.join( config.haddDir[ args.year ][ "LPC" ], "nominal" ) )
+if args.location == "LPC":
+  samples_done = EOSlistdir( os.path.join( config.haddDir[ args.year ][ "LPC" ], "nominal" ) )
+elif args.location == "BRUX":
+  xrdClient = client.FileSystem( "root://brux30.hep.brown.edu:1094/" )
+  status, dirList = xrdClient.dirlist( os.path.join( config.haddDir[ args.year ][ "BRUX" ], "nominal" ) )
+  samples_done = [ item.name for item in dirList ] 
+
 samples = []
 
 print( "[START] Adding the following samples:" )
 for sample_i in config.samples[ args.year ][ args.group ]:
   for sample_j in samples_done:
     if sample_i in sample_j:
+      if "TTToSemiLeptonic" in sample_j and "ttjj" in sample_j and "_1_hadd" not in sample_j: continue
+      if "TTToSemiLeptonic" in sample_j and "ttcc" in sample_j and "_1_hadd" not in sample_j: continue
       print( "  + {}".format( sample_j ) )
       samples.append( sample_j )
 
 for sample in samples:
   if args.group == "DATA" and args.lepton.upper() not in sample.upper(): continue
-  samplePath = os.path.join( config.haddDir[ args.year ][ "LPC" ], "nominal/", sample )
+  if args.location == "BRUX":
+    samplePath = "root://brux30.hep.brown.edu:1049/" + config.haddDir[ args.year ][ "BRUX" ] + "nominal/" + sample 
+  elif args.locataion == "LPC":
+    samplePath = os.path.join( config.haddDir[ args.year ][ "LPC" ], "nominal/", sample )
   # load the sample
   rDF = ROOT.RDataFrame( "ljmet", samplePath )
   total_events = rDF.Count().GetValue()

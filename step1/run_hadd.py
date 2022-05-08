@@ -57,7 +57,7 @@ for shift in shifts:
     outList = []
     if "TTToSemiLeptonic" in sample and "up" not in sample.lower() and "down" not in sample.lower():
       for HT_key in  [ "HT0Njet0" ]: #[ "HT0Njet0", "HT500Njet9" ]:
-        for fs_key in [ "ttcc" ]:  #[ "ttbb", "tt2b", "tt1b", "ttcc", "ttjj" ]:
+        for fs_key in [ "ttjj" ]: # [ "ttbb", "tt2b", "tt1b", "ttcc", "ttjj" ]:
           outList.append( "{}_{}".format( HT_key, fs_key ) )
     elif "TTTo" in sample:
       outList = [ "ttbb", "tt2b", "tt1b", "ttcc", "ttjj" ]
@@ -71,7 +71,7 @@ for shift in shifts:
       print( ">> Hadd'ing {}: {} files".format( outSample, len( step1Files ) ) )
     
       filesPerHadd = int( args.filesPerHadd )
-      if "TTToSemiLeptonic" in outSample and outLabel == "HT0Njet0_ttjj": filesPerHadd = 45
+      if "TTToSemiLeptonic" in outSample and outLabel in [ "HT0Njet0_ttjj" ]: filesPerHadd = 20
       #elif "WJetsToLNu_HT-1200To2500" in outSample: filesPerHadd = 120
       #elif "WJetsToLNu_HT-2500ToInf" in outSample: filesPerHadd = 13
       if "down" in outSample.lower() or "up" in outSample.lower(): filesPerHadd = 900

@@ -318,7 +318,7 @@ samples = {
       "ChargedHiggs_HplusTB_HplusToTB_M-3000_TuneCP5_13TeV_amcatnlo_pythia8"
     ],
     "TTTX": [
-      "TTTT_TuneCP5_13TeV-amcatnlo-pythia8",
+      #"TTTT_TuneCP5_13TeV-amcatnlo-pythia8",
       "TTTJ_TuneCP5_13TeV-madgraph-pythia8",
       "TTTW_TuneCP5_13TeV-madgraph-pythia8"
     ],
