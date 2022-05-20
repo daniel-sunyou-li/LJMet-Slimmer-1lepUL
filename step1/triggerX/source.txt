@@ -1,3 +1,4 @@
 source /cvmfs/cms.cern.ch/cmsset_default.csh
 cmsenv
 source /cvmfs/sft.cern.ch/lcg/views/LCG_98/x86_64-centos7-gcc8-opt/setup.csh
+source /cvmfs/sft.cern.ch/lcg/app/releases/ROOT/6.18.00/x86_64-centos7-gcc48-opt/bin/thisroot.csh

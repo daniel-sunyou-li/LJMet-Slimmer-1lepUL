@@ -115,7 +115,9 @@ public :
    Int_t           HLT_PFHT380_SixPFJet32_DoublePFBTagCSV_2p2 = 0;
    Int_t           HLT_PFHT400_SixPFJet32_DoublePFBTagDeepCSV_2p94 = 0;
 
-
+   Float_t         pileupJetIDWeight;
+   Float_t         pileupJetIDWeightUp;
+   Float_t         pileupJetIDWeightDown;
    Float_t         pileupWeight;
    Float_t         pileupWeightUp;
    Float_t         pileupWeightDown;
@@ -169,6 +171,7 @@ public :
    Int_t           elTrigPresel_MultiLepCalc;
 
    Int_t           NJets_JetSubCalc;
+   Int_t           NJetsPU_JetSubCalc;
    Int_t           NJetsCSV_MultiLepCalc;
    Int_t           NJetsCSVwithSF_MultiLepCalc;
    Int_t           NJetsCSVwithSF_MultiLepCalc_bSFup;
@@ -807,6 +810,7 @@ public :
    vector<double>  *theJetEta_JetSubCalc;
    vector<double>  *theJetPhi_JetSubCalc;
    vector<double>  *theJetPileupJetId_JetSubCalc;
+   vector<bool>    *theJetPileupJetTight_JetSubCalc;
    vector<double>  *theJetPt_JetSubCalc;
    vector<double>  *topBestGenEnergy_HOTTaggerCalc;
    vector<double>  *topBestGenEta_HOTTaggerCalc;
@@ -1261,6 +1265,7 @@ public :
    TBranch        *b_theJetEta_JetSubCalc;   //!
    TBranch        *b_theJetPhi_JetSubCalc;   //!
    TBranch        *b_theJetPileupJetId_JetSubCalc;   //!
+   TBranch        *b_theJetPileupJetTight_JetSubCalc;
    TBranch        *b_theJetPt_JetSubCalc;   //!
    TBranch        *b_topBestGenEnergy_HOTTaggerCalc;   //!
    TBranch        *b_topBestGenEta_HOTTaggerCalc;   //!
@@ -1307,6 +1312,9 @@ public :
    virtual void     Show(Long64_t entry = -1);
    virtual void     saveHistograms();
    bool             applySF(bool& isTagged, float tag_SF, float tag_eff);
+   vector<vector<int>>  get_combinations( int n, int k );
+   double           compute_SFWeight( vector<double>& SF );
+   
 };
 
 #endif
@@ -1813,7 +1821,7 @@ void step1::Init(TTree *tree)
    theJetEnergy_JetSubCalc = 0;
    theJetEta_JetSubCalc = 0;
    theJetPhi_JetSubCalc = 0;
-   theJetPileupJetId_JetSubCalc = 0;
+   //theJetPileupJetId_JetSubCalc = 0;
    theJetPt_JetSubCalc = 0;
    topBestGenEnergy_HOTTaggerCalc = 0;
    topBestGenEta_HOTTaggerCalc = 0;
@@ -2272,6 +2280,7 @@ void step1::Init(TTree *tree)
    inputTree->SetBranchAddress("theJetEta_JetSubCalc", &theJetEta_JetSubCalc, &b_theJetEta_JetSubCalc);
    inputTree->SetBranchAddress("theJetPhi_JetSubCalc", &theJetPhi_JetSubCalc, &b_theJetPhi_JetSubCalc);
    inputTree->SetBranchAddress("theJetPileupJetId_JetSubCalc", &theJetPileupJetId_JetSubCalc, &b_theJetPileupJetId_JetSubCalc);
+   inputTree->SetBranchAddress("theJetPileupJetTight_JetSubCalc", &theJetPileupJetTight_JetSubCalc, &b_theJetPileupJetTight_JetSubCalc);
    inputTree->SetBranchAddress("theJetPt_JetSubCalc", &theJetPt_JetSubCalc, &b_theJetPt_JetSubCalc);
    inputTree->SetBranchAddress("topBestGenEnergy_HOTTaggerCalc", &topBestGenEnergy_HOTTaggerCalc, &b_topBestGenEnergy_HOTTaggerCalc);
    inputTree->SetBranchAddress("topBestGenEta_HOTTaggerCalc", &topBestGenEta_HOTTaggerCalc, &b_topBestGenEta_HOTTaggerCalc);

@@ -24,11 +24,38 @@ using namespace std;
 
 bool comparepair( const std::pair<double,int> a, const std::pair<double,int> b) { return a.first > b.first; }
 bool comparefloat( const float a, const float b) { return a < b; }
+int debug = 0;
 
 TRandom3 Rand;
 
 const double MTOP  = 173.5;
 const double MW    = 80.4; 
+
+vector<vector<int>> step1::get_combinations( int n, int k ){
+  vector<vector<int>> combos;
+  std::string bitmask( k, 1 );
+  bitmask.resize( n, 0 );
+
+  do { 
+    vector<int> combo;
+    for ( int i = 0; i < n; ++i ) {
+      if ( bitmask[i] ){   
+        combo.push_back(i);
+      }
+    }
+    combos.push_back( combo );
+  } while ( std::prev_permutation( bitmask.begin(), bitmask.end() ) );
+
+  return combos;
+}
+
+double step1::compute_SFWeight( vector<double>& SF ){
+  double weight = 1.;
+  for( unsigned int i = 0; i < SF.size(); i++ ){
+    weight *= SF.at(i);
+  }
+  return weight;
+}
 
 bool step1::applySF(bool& isTagged, float tag_SF, float tag_eff){
   
@@ -77,15 +104,20 @@ wgthist->Write();
 // ----------------------------------------------------------------------------
 
 void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationForLJMet* calib = NULL, const BTagCalibrationForLJMet* calib_dj = NULL){
+  vector<std::string> btag_syst;
+  if( debug == 1 ){
+    btag_syst = { "down_hfstats2" };
+  }
+  else {
+    btag_syst = {"up_jes", "down_jes", "up_lf", "down_lf", "up_hfstats1", "down_hfstats1",
+     "up_hfstats2", "down_hfstats2", "up_cferr1", "down_cferr1", "up_cferr2",
+     "down_cferr2", "up_hf", "down_hf", "up_lfstats1", "down_lfstats1",
+     "up_lfstats2", "down_lfstats2"};
+  }
   BTagCalibrationForLJMetReader reader(
     BTagEntryForLJMet::OP_RESHAPING,  // operating point
     "central",             // central sys type
-//    {"down_hfstats2"});
-    {"up_jes", "down_jes", "up_lf", "down_lf", "up_hfstats1", "down_hfstats1",
-     "up_hfstats2", "down_hfstats2", "up_cferr1", "down_cferr1", "up_cferr2",
-     "down_cferr2", "up_hf", "down_hf", "up_lfstats1", "down_lfstats1",
-     "up_lfstats2", "down_lfstats2"}
-    );      // other sys types
+    btag_syst );
  
   reader.load( *calib, BTagEntryForLJMet::FLAV_B, "iterativefit" );       
   reader.load( *calib, BTagEntryForLJMet::FLAV_C, "iterativefit" );   
@@ -94,12 +126,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   BTagCalibrationForLJMetReader reader_dj(
     BTagEntryForLJMet::OP_RESHAPING,  // operating point
     "central",             // central sys type
-//    {"down_hfstats2"});
-    {"up_jes", "down_jes", "up_lf", "down_lf", "up_hfstats1", "down_hfstats1",
-    "up_hfstats2", "down_hfstats2", "up_cferr1", "down_cferr1", "up_cferr2",
-    "down_cferr2", "up_hf", "down_hf", "up_lfstats1", "down_lfstats1",
-    "up_lfstats2", "down_lfstats2"}
-    );      // other sys types
+    btag_syst  );      
   
   reader_dj.load(*calib_dj, BTagEntryForLJMet::FLAV_B, "iterativefit");       
   reader_dj.load(*calib_dj, BTagEntryForLJMet::FLAV_C, "iterativefit");     
@@ -222,6 +249,8 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   inputTree->SetBranchStatus("theJetHFlav_JetSubCalc",1);
   inputTree->SetBranchStatus("theJetPFlav_JetSubCalc",1);
   inputTree->SetBranchStatus("theJetPt_JetSubCalc",1);
+  //inputTree->SetBranchStatus("theJetPileupJetId_JetSubCalc",1);
+  //inputTree->SetBranchStatus("theJetPileupJetTight_JetSubCalc",1);
   inputTree->SetBranchStatus("theJetEta_JetSubCalc",1);
   inputTree->SetBranchStatus("theJetPhi_JetSubCalc",1);
   inputTree->SetBranchStatus("theJetEnergy_JetSubCalc",1);
@@ -390,6 +419,9 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   outputTree->Branch("pdfWeights",&pdfWeights);
   outputTree->Branch("pdfNewWeights",&pdfNewWeights);
   outputTree->Branch("pdfNewNominalWeight",&pdfNewNominalWeight,"pdfNewNominalWeight/F");
+  outputTree->Branch("pileupJetIDWeight",&pileupJetIDWeight,"pileupJetIDWeight/F");
+  outputTree->Branch("pileupJetIDWeightUp",&pileupJetIDWeightUp,"pileupJetIDWeightUp/F");
+  outputTree->Branch("pileupJetIDWeightDown",&pileupJetIDWeightDown,"pileupJetIDWeightDown/F");
   outputTree->Branch("pileupWeight",&pileupWeight,"pileupWeight/F");
   outputTree->Branch("pileupWeightUp",&pileupWeightUp,"pileupWeightUp/F");
   outputTree->Branch("pileupWeightDown",&pileupWeightDown,"pileupWeightDown/F");
@@ -525,6 +557,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   outputTree->Branch("AK4HTpMETpLepPt",&AK4HTpMETpLepPt,"AK4HTpMETpLepPt/F");
   outputTree->Branch("AK4HT",&AK4HT,"AK4HT/F");
   outputTree->Branch("NJets_JetSubCalc",&NJets_JetSubCalc,"NJets_JetSubCalc/I");
+  outputTree->Branch("NJetsPU_JetSubCalc",&NJetsPU_JetSubCalc,"NJets_JetSubCalc/I");
   outputTree->Branch("NJetsCSV_MultiLepCalc",&NJetsCSV_MultiLepCalc,"NJetsCSV_MultiLepCalc/I");
   outputTree->Branch("NJetsCSVwithSF_MultiLepCalc",&NJetsCSVwithSF_MultiLepCalc,"NJetsCSVwithSF_MultiLepCalc/I");
   outputTree->Branch("NJetsCSVwithSF_MultiLepCalc_bSFup",&NJetsCSVwithSF_MultiLepCalc_bSFup,"NJetsCSVwithSF_MultiLepCalc_bSFup/I");
@@ -684,7 +717,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
 
   // basic cuts
   float metCut=20;
-  float htCut=0;
+  float htCut=350;
   int   nAK8jetsCut=0;
   float lepPtCut=20.0;
   float elEtaCut=2.5;
@@ -800,7 +833,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     nb = inputTree->GetEntry(jentry);   nbytes += nb;
     if (Cut(ientry) != 1) continue;
 
-    //if (ientry > 5000) break;
+    if (ientry > 2 && debug == 1) break;
 
     if(jentry % 1000 ==0) std::cout << ">> Completed " << jentry << " out of " << nentries << " events" <<std::endl;
 
@@ -901,6 +934,12 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
       hardcodedConditions.GetPileupWeight(nTrueInteractions_MultiLepCalc, &pileupWeight, &pileupWeightUp, &pileupWeightDown, Year);
     }
 
+     
+    // PU Jet ID weights are determined later based on AK4 jet properties
+    pileupJetIDWeight = 1.0;
+    pileupJetIDWeightUp = 1.0;
+    pileupJetIDWeightDown = 1.0;
+
     btagCSVRenormWeight = 1.0;
 
     std::string sampleType = "";
@@ -919,16 +958,6 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     else if (sample.find("QCD_") != std::string::npos) sampleType = "qcd";
 
 
-    if (isMC) {
-      btagCSVRenormWeight = hardcodedConditions.GetCSVRenormSF(Year, isElectron, NJets_JetSubCalc, sampleType);  
-    }	
-
-    // ----------------------------------------------------------------------------
-    // nJets weight calculation
-    // ----------------------------------------------------------------------------
-    njetsWeight = hardcodedConditions.GetNjetSF(NJets_JetSubCalc, Year, "nominal", isTT);
-    njetsWeightUp = hardcodedConditions.GetNjetSF(NJets_JetSubCalc, Year, "up", isTT);
-    njetsWeightDown = hardcodedConditions.GetNjetSF(NJets_JetSubCalc, Year, "down", isTT);
 
 
     // ----------------------------------------------------------------------------
@@ -976,8 +1005,12 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     // ----------------------------------------------------------------------------
 
     NJets_JetSubCalc = 0;
+    NJetsPU_JetSubCalc = 0;
     AK4HT = 0;
     vector<pair<double,int>> jetptindpair;
+    vector<double> jetPUIDsf;
+    vector<double> jetPUIDsfUp;
+    vector<double> jetPUIDsfDn;
     btagCSVWeight = 1.0;
     btagCSVWeight_HFup = 1.0;
     btagCSVWeight_HFdn = 1.0;
@@ -1011,6 +1044,27 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
       // ----------------------------------------------------------------------------
 
       if( theJetPt_JetSubCalc->at(ijet) < jetPtCut || fabs(theJetEta_JetSubCalc->at(ijet)) > jetEtaCut ) continue;
+
+      // Jet PU ID event re-weighting information 
+      if(isMC){
+        double ijetPt = theJetPt_JetSubCalc->at(ijet);
+        double ijetEta = theJetEta_JetSubCalc->at(ijet);
+        double jetPUIDsf_ = 1.0;
+        double jetPUIDsfUp_ = 1.0;
+        double jetPUIDsfDn_ = 1.0;
+        hardcodedConditions.GetJetPileupIDSF( ijetPt, ijetEta, &jetPUIDsf_, &jetPUIDsfUp_, &jetPUIDsfDn_, Year );
+        if( ijetPt < 50. ){
+          jetPUIDsf.push_back( jetPUIDsf_ );
+          jetPUIDsfUp.push_back( jetPUIDsfUp_ );
+          jetPUIDsfDn.push_back( jetPUIDsfDn_ ); 
+        }
+      }
+
+      // exclude PU jets
+      if( theJetPileupJetTight_JetSubCalc->at(ijet) == 1 ){
+        NJetsPU_JetSubCalc+=1;
+        continue;
+      }
 
       // ----------------------------------------------------------------------------
       // B TAGGING fix
@@ -1080,7 +1134,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         float djetWgt(1.0), djetWgt_hfup(1.0), djetWgt_hfdn(1.0), djetWgt_lfup(1.0), djetWgt_lfdn(1.0), djetWgt_jesup(1.0), djetWgt_jesdn(1.0), 
         djetWgt_hfstats1up(1.0), djetWgt_hfstats1dn(1.0), djetWgt_hfstats2up(1.0), djetWgt_hfstats2dn(1.0), djetWgt_cferr1up(1.0), djetWgt_cferr1dn(1.0), 
         djetWgt_cferr2up(1.0), djetWgt_cferr2dn(1.0), djetWgt_lfstats1up(1.0), djetWgt_lfstats1dn(1.0), djetWgt_lfstats2up(1.0), djetWgt_lfstats2dn(1.0);
-        if (abs(ijetHFlv) ==5) { 
+        if (abs(ijetHFlv) ==5 && debug == 0 ) { 
           csvWgt = reader.eval_auto_bounds("central", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, csv);
           csvWgt_hfup = reader.eval_auto_bounds("up_hf", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, csv);
           csvWgt_hfdn = reader.eval_auto_bounds("down_hf", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, csv);
@@ -1109,7 +1163,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
           djetWgt_cferr2up = reader_dj.eval_auto_bounds("central", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet);
           djetWgt_cferr2dn = reader_dj.eval_auto_bounds("central", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet);     
         }
-        else if (abs(ijetHFlv) ==4) {
+        else if (abs(ijetHFlv) ==4 && debug == 0 ) {
           csvWgt = reader.eval_auto_bounds("central", BTagEntryForLJMet::FLAV_C, jetaForBtag, jptForBtag, csv);
 
           djetWgt = reader_dj.eval_auto_bounds("central", BTagEntryForLJMet::FLAV_C, jetaForBtag, jptForBtag, deepjet);
@@ -1134,7 +1188,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
           djetWgt_cferr2up = reader_dj.eval_auto_bounds("up_cferr2", BTagEntryForLJMet::FLAV_C, jetaForBtag, jptForBtag, deepjet);
           djetWgt_cferr2dn = reader_dj.eval_auto_bounds("down_cferr2", BTagEntryForLJMet::FLAV_C, jetaForBtag, jptForBtag, deepjet);
         }
-        else {
+        else if( debug == 0 ){
           csvWgt = reader.eval_auto_bounds("central", BTagEntryForLJMet::FLAV_UDSG, jetaForBtag, jptForBtag, csv);
           csvWgt_hfup = reader.eval_auto_bounds("up_hf", BTagEntryForLJMet::FLAV_UDSG, jetaForBtag, jptForBtag, csv);
           csvWgt_hfdn = reader.eval_auto_bounds("down_hf", BTagEntryForLJMet::FLAV_UDSG, jetaForBtag, jptForBtag, csv);
@@ -1205,6 +1259,23 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
       AK4HT+=theJetPt_JetSubCalc->at(ijet);
     }
 
+    if(isMC){
+      pileupJetIDWeight     = compute_SFWeight( jetPUIDsf );
+      pileupJetIDWeightUp   = compute_SFWeight( jetPUIDsfUp );
+      pileupJetIDWeightDown = compute_SFWeight( jetPUIDsfDn ); 
+    }
+
+    if (isMC) {
+      btagCSVRenormWeight = hardcodedConditions.GetCSVRenormSF(Year, isElectron, NJets_JetSubCalc, sampleType);  
+    }	
+
+    // ----------------------------------------------------------------------------
+    // nJets weight calculation
+    // ----------------------------------------------------------------------------
+    njetsWeight = hardcodedConditions.GetNjetSF(NJets_JetSubCalc, Year, "nominal", isTT);
+    njetsWeightUp = hardcodedConditions.GetNjetSF(NJets_JetSubCalc, Year, "up", isTT);
+    njetsWeightDown = hardcodedConditions.GetNjetSF(NJets_JetSubCalc, Year, "down", isTT);
+
     //cout << " csv wgt " << btagCSVWeight << endl; // debug -wz
 
 
@@ -1246,20 +1317,20 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     std::vector<std::string> eltriggersX;
     std::vector<std::string> mutriggersX;
     if( Year == "2016APV" ){ 
-      eltriggersX = { "Ele15_IsoVVVL_PFHT350", "Ele15_IsoVVVL_PFHT400", "Ele15_IsoVVVL_PFHT400_PFMET50", "Ele15_IsoVVVL_PFHT600", "Ele50_IsoVVVL_PFHT400", "Ele32_eta2p1_WPTight_Gsf" };
-      mutriggersX = { "Mu15_IsoVVVL_PFHT400", "Mu15_IsoVVVL_PFHT400_PFMET50", "Mu15_IsoVVVL_PFHT600", "Mu50_IsoVVVL_PFHT400", "Mu50" };
+      eltriggersX = { "Ele15_IsoVVVL_PFHT350", "Ele15_IsoVVVL_PFHT400_PFMET50", "Ele50_IsoVVVL_PFHT400", "Ele32_eta2p1_WPTight_Gsf" };
+      mutriggersX = { "Mu15_IsoVVVL_PFHT400", "Mu50", "IsoMu24", "IsoTkMu24" };
     }
     else if( Year == "2016" ){ 
-      eltriggersX = { "Ele15_IsoVVVL_PFHT350", "Ele15_IsoVVVL_PFHT400", "Ele15_IsoVVVL_PFHT400_PFMET50", "Ele15_IsoVVVL_PFHT600", "Ele50_IsoVVVL_PFHT400", "Ele32_eta2p1_WPTight_Gsf" };
-      mutriggersX = { "Mu15_IsoVVVL_PFHT400", "Mu15_IsoVVVL_PFHT400_PFMET50", "Mu15_IsoVVVL_PFHT600", "Mu50_IsoVVVL_PFHT400", "Mu50" };
+      eltriggersX = { "Ele15_IsoVVVL_PFHT350", "Ele15_IsoVVVL_PFHT400_PFMET50", "Ele50_IsoVVVL_PFHT400", "Ele32_eta2p1_WPTight_Gsf" };
+      mutriggersX = { "Mu15_IsoVVVL_PFHT400", "Mu50", "IsoMu24", "IsoTkMu24" };
     }
     else if( Year == "2017" ){
-      eltriggersX = {"Ele15_IsoVVVL_PFHT450","Ele50_IsoVVVL_PFHT450","Ele15_IsoVVVL_PFHT600","Ele35_WPTight_Gsf","Ele38_WPTight_Gsf"};
-      mutriggersX = {"Mu15_IsoVVVL_PFHT450","Mu50_IsoVVVL_PFHT450","Mu15_IsoVVVL_PFHT600","Mu50"};
+      eltriggersX = { "Ele15_IsoVVVL_PFHT450", "Ele50_IsoVVVL_PFHT450", "Ele32_WPTight_Gsf", "Ele35_WPTight_Gsf", "Ele38_WPTight_Gsf" };
+      mutriggersX = { "Mu15_IsoVVVL_PFHT450", "Mu50_IsoVVVL_PFHT450", "Mu15_IsoVVVL_PFHT600", "Mu50", "IsoMu27", "IsoMu24_eta2p1" };
     }
     else if( Year == "2018" ){
-      eltriggersX = {"Ele15_IsoVVVL_PFHT450","Ele50_IsoVVVL_PFHT450","Ele15_IsoVVVL_PFHT600","Ele35_WPTight_Gsf","Ele38_WPTight_Gsf","Ele15_IsoVVVL_PFHT450_PFMET50"};
-      mutriggersX = {"Mu15_IsoVVVL_PFHT450","Mu50_IsoVVVL_PFHT450","Mu15_IsoVVVL_PFHT600","Mu50","TkMu50","Mu15_IsoVVVL_PFHT450_PFMET50"};
+      eltriggersX = { "Ele15_IsoVVVL_PFHT450", "Ele50_IsoVVVL_PFHT450", "Ele32_WPTight_Gsf", "Ele35_WPTight_Gsf", "Ele38_WPTight_Gsf", "Ele15_IsoVVVL_PFHT450_PFMET50"};
+      mutriggersX = { "Mu15_IsoVVVL_PFHT450","Mu50_IsoVVVL_PFHT450","Mu15_IsoVVVL_PFHT600", "Mu50", "TkMu50", "Mu15_IsoVVVL_PFHT450_PFMET50", "IsoMu24" };
     }
     std::string eltrigger;
     std::string mutrigger;
@@ -1366,7 +1437,9 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
       if(isMuon){
         for(unsigned int itrig=0; itrig < vsSelMCTriggersMu_MultiLepCalc->size(); itrig++){
           if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(mutrigger) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCLepPastTrigger = 1;
-          if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(mutrigger2) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCLepPastTrigger = 1;
+          if(Year == "2016APV" || Year == "2016" ){
+            if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(mutrigger2) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCLepPastTrigger = 1;
+          }
           if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find("HLT_IsoMu24") != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) HLT_IsoMu24 = 1;
           if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find("HLT_IsoMu24_eta2p1") != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) HLT_IsoMu24_eta2p1 = 1;
           if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find("HLT_IsoMu27") != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) HLT_IsoMu27 = 1;
@@ -1432,7 +1505,9 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
       if(isMuon) {
         for(unsigned int itrig=0; itrig < vsSelTriggersMu_MultiLepCalc->size(); itrig++){
           if(vsSelTriggersMu_MultiLepCalc->at(itrig).find(mutrigger) != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) DataLepPastTrigger = 1;
-          if(vsSelTriggersMu_MultiLepCalc->at(itrig).find(mutrigger2) != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) DataLepPastTrigger = 1;
+          if( Year == "2016APV" || Year == "2016" ){
+            if(vsSelTriggersMu_MultiLepCalc->at(itrig).find(mutrigger2) != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) DataLepPastTrigger = 1;
+          }
           if(vsSelTriggersMu_MultiLepCalc->at(itrig).find("HLT_IsoMu24") != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) HLT_IsoMu24 = 1;
           if(vsSelTriggersMu_MultiLepCalc->at(itrig).find("HLT_IsoMu24_eta2p1") != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) HLT_IsoMu24_eta2p1 = 1;
           if(vsSelTriggersMu_MultiLepCalc->at(itrig).find("HLT_IsoMu27") != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) HLT_IsoMu27 = 1;
@@ -1452,8 +1527,8 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     }
   
 
-    if(isMC && MCPastTrigger) npass_trigger+=1;
-    if(!isMC && DataPastTrigger) npass_trigger+=1;
+    if(isMC && MCPastTriggerX) npass_trigger+=1;
+    if(!isMC && DataPastTriggerX) npass_trigger+=1;
 
     // ----------------------------------------------------------------------------
     // Loop over AK8 jets for calculations and pt ordering pair
@@ -1512,6 +1587,8 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
           
     if(!(isPastMETcut && isPastHTCut && isPastNAK8JetsCut && isPastNjetsCut && isPastLepPtCut && (isPastElEtaCut || isPastMuEtaCut))) continue;
     npass_all+=1;
+    if( debug == 1 ) std::cout << "[DEBUG] Event passed" << std::endl;
+    if( debug == 1 ) std::cout << "NJetsPU / NJets = " << NJetsPU_JetSubCalc << " / " << NJets_JetSubCalc << std::endl;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2544,7 +2621,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     // ----------------------------------------------------------------------------
     // DONE!! Write the tree
     // ----------------------------------------------------------------------------
-
+    if( debug == 1 ) std::cout << "[DEBUG] Filling tree" << std::endl;
     outputTree->Fill();
   }
   std::cout<<"Nelectrons      = "<<Nelectrons<<" / "<<nentries<<std::endl;

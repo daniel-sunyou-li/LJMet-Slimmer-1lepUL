@@ -16,7 +16,7 @@ from ROOT import *
 
 execfile( "../EOSSafeUtils.py" )
 
-shifts = [ "nominal" ] if not args.shifts else [ "JECup", "JECdown", "JERup", "JERdown" ]
+shifts = [ "nominal" ] if not args.shifts else [ "JECdown" ] # [ "JECup", "JECdown", "JERup", "JERdown" ]
 
 step1Dir = {
   shift: os.path.join( config.step1Dir[ args.year ][ args.location ], shift ) for shift in shifts
@@ -71,7 +71,7 @@ for shift in shifts:
       print( ">> Hadd'ing {}: {} files".format( outSample, len( step1Files ) ) )
     
       filesPerHadd = int( args.filesPerHadd )
-      if "TTToSemiLeptonic" in outSample and outLabel in [ "HT0Njet0_ttjj" ]: filesPerHadd = 20
+      if "TTToSemiLeptonic" in outSample and outLabel in [ "HT0Njet0_ttjj" ]: filesPerHadd = 29
       #elif "WJetsToLNu_HT-1200To2500" in outSample: filesPerHadd = 120
       #elif "WJetsToLNu_HT-2500ToInf" in outSample: filesPerHadd = 13
       if "down" in outSample.lower() or "up" in outSample.lower(): filesPerHadd = 900

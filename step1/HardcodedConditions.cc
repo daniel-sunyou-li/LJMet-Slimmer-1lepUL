@@ -1929,7 +1929,7 @@ double HardcodedConditions::GetElectronIdSF2018(double pt, double eta){
   \     /                                                       \     /
    `---'                                                         `---'*/
 
-// need to update these to UL
+// miniIsolation SF calculated using EGamma TnP
 double HardcodedConditions::GetElectronIsoSF(double pt, double eta, std::string year)
 {
   //The main getter for Electron Iso Scale Factors
@@ -1979,14 +1979,14 @@ double HardcodedConditions::GetElectronIsoSF2016APV(double pt, double eta){
   }
   else if( pt < 100 ){
     if( eta < -2.0 ) return 1.002;
-    else if( eta < -1.5660 ) return 1.003;
+    else if( eta < -1.5660 ) return 1.001;
     else if( eta < -1.4442 ) return 1.013;
     else if( eta < -0.8000 ) return 1.001;
-    else if( eta <  0.0000 ) return 0.998;
+    else if( eta <  0.0000 ) return 0.999;
     else if( eta <  0.8000 ) return 1.000;
-    else if( eta <  1.4442 ) return 1.000;
-    else if( eta <  1.5660 ) return 1.008;
-    else if( eta <  2.0000 ) return 1.002;
+    else if( eta <  1.4442 ) return 0.999;
+    else if( eta <  1.5660 ) return 1.002;
+    else if( eta <  2.0000 ) return 1.001;
     else return 1.004;
   }
   else if( pt < 200 ){
@@ -2018,10 +2018,10 @@ double HardcodedConditions::GetElectronIsoSF2016APV(double pt, double eta){
 double HardcodedConditions::GetElectronIsoSF2016(double pt, double eta){
   if( pt < 20 ){
     if( eta < -2.0 ) return 1.008;
-    else if( eta < -1.5660 ) return 1.005;
+    else if( eta < -1.5660 ) return 1.006;
     else if( eta < -1.4442 ) return 1.074;
     else if( eta < -0.8000 ) return 0.993;
-    else if( eta <  0.0000 ) return 0.992;
+    else if( eta <  0.0000 ) return 0.982;
     else if( eta <  0.8000 ) return 0.990;
     else if( eta <  1.4442 ) return 0.992;
     else if( eta <  1.5660 ) return 0.999;
@@ -2030,7 +2030,7 @@ double HardcodedConditions::GetElectronIsoSF2016(double pt, double eta){
   }
   else if( pt < 35 ){
     if( eta < -2.0 ) return 1.008;
-    else if( eta < -1.5660 ) return 1.005; 
+    else if( eta < -1.5660 ) return 1.006; 
     else if( eta < -1.4442 ) return 1.054;
     else if( eta < -0.8000 ) return 1.001;
     else if( eta <  0.0000 ) return 0.997;
@@ -2086,7 +2086,7 @@ double HardcodedConditions::GetElectronIsoSF2016(double pt, double eta){
     else if( eta <  1.4442 ) return 1.000;
     else if( eta <  1.5660 ) return 0.991;
     else if( eta <  2.0000 ) return 0.997;
-    else return 0.999;
+    else return 0.989;
   }
 }
 
@@ -2095,7 +2095,7 @@ double HardcodedConditions::GetElectronIsoSF2017(double pt, double eta){
     if( eta < -2.0 ) return 1.015;
     else if( eta < -1.5660 ) return 1.021;
     else if( eta < -1.4442 ) return 1.031;
-    else if( eta < -0.8000 ) return 1.005;
+    else if( eta < -0.8000 ) return 1.006;
     else if( eta <  0.0000 ) return 0.998;
     else if( eta <  0.8000 ) return 1.000;
     else if( eta <  1.4442 ) return 1.013;
@@ -2159,7 +2159,7 @@ double HardcodedConditions::GetElectronIsoSF2017(double pt, double eta){
     else if( eta <  0.0000 ) return 1.002;
     else if( eta <  0.8000 ) return 1.000;
     else if( eta <  1.4442 ) return 1.001;
-    else if( eta <  1.5660 ) return 0.996;
+    else if( eta <  1.5660 ) return 0.986;
     else if( eta <  2.0000 ) return 0.999;
     else return 1.009;
   }
@@ -3180,7 +3180,7 @@ double HardcodedConditions::GetIsEHadronTriggerSF2018(double njets, double ht){
  |  /   \                                                       /   \  |
  | |\_.  |                                                     |    /| |
  |\|  | /|      ELECTRON X-TRIGGER SCALE FACTOR SECTION        |\  | |/|
- | `---' |                    (from Nikos)                     | `---' |
+ | `---' |                                                     | `---' |
  |       |                                                     |       |
  |       |-----------------------------------------------------|       |
  \       |                                                     |       /
@@ -3647,88 +3647,102 @@ double HardcodedConditions::GetMuonIsoSF2016APV(double pt, double eta){
   return 1.000;
 }
   
-// using EOY 2016
 double HardcodedConditions::GetMuonIsoSF2016(double pt, double eta){
-  return 1.000;
-}
-
-// using EOY 2017
-double HardcodedConditions::GetMuonIsoSF2017(double pt, double eta){
   if( pt < 30 ){
-    if( fabs(eta) < 0.9 ) return 0.9961;
-    else if( fabs(eta) < 1.2 ) return 0.9921;
-    else if( fabs(eta) < 2.1 ) return 0.9973;
-    else return 0.9990;
+    if( fabs(eta) < 0.9 ) return 0.986;
+    else if( fabs(eta) < 1.2 ) return 0.980;
+    else if( fabs(eta) < 2.1 ) return 0.995;
+    else return 1.000;
   }
   else if( pt < 40 ){
-    if( fabs(eta) < 0.9 ) return 0.9968;
-    else if( fabs(eta) < 1.2 ) return 0.9962;
-    else if( fabs(eta) < 2.1 ) return 0.9978;
-    else return 0.9988;
+    if( fabs(eta) < 0.9 ) return 0.994;
+    else if( fabs(eta) < 1.2 ) return 0.993;
+    else if( fabs(eta) < 2.1 ) return 0.998;
+    else return 1.000;
   }
   else if( pt < 50 ){
-    if( fabs(eta) < 0.9 ) return 0.9984;
-    else if( fabs(eta) < 1.2 ) return 0.9976;
-    else if( fabs(eta) < 2.1 ) return 0.9984;
-    else return 0.9996;
+    if( fabs(eta) < 0.9 ) return 0.996;
+    else if( fabs(eta) < 1.2 ) return 0.995;
+    else if( fabs(eta) < 2.1 ) return 0.999;
+    else return 1.000;
   }
   else if( pt < 60 ){
-    if( fabs(eta) < 0.9 ) return 0.9992;
-    else if( fabs(eta) < 1.2 ) return 0.9989;
-    else if( fabs(eta) < 2.1 ) return 0.9993;
-    else return 0.9988;
-  }
-  else if( pt < 120 ){
-    if( fabs(eta) < 0.9 ) return 0.9996;
-    else if( fabs(eta) < 1.2 ) return 0.9992;
-    else if( fabs(eta) < 2.1 ) return 1.0005;
-    else return 0.9987;
+    if( fabs(eta) < 0.9 ) return 0.998;
+    else if( fabs(eta) < 1.2 ) return 0.997;
+    else if( fabs(eta) < 2.1 ) return 0.999;
+    else return 1.000;
   }
   else {
-    if( fabs(eta) < 0.9 ) return 0.9999;
-    else if( fabs(eta) < 1.2 ) return 0.9992;
-    else if( fabs(eta) < 2.1 ) return 1.0005;
-    else return 0.9964;
+    if( fabs(eta) < 0.9 ) return 1.000;
+    else if( fabs(eta) < 1.2 ) return 0.999;
+    else if( fabs(eta) < 2.1 ) return 0.999;
+    else return 1.002;
   }
 }
 
-// using EOY 2018
-double HardcodedConditions::GetMuonIsoSF2018(double pt, double eta){
+double HardcodedConditions::GetMuonIsoSF2017(double pt, double eta){
   if( pt < 30 ){
-    if( fabs(eta) < 0.9 ) return 0.9925;
-    else if( fabs(eta) < 1.2 ) return 0.9932;
-    else if( fabs(eta) < 2.1 ) return 1.0124;
-    else return 1.0202;
+    if( fabs(eta) < 0.9 ) return 0.996;
+    else if( fabs(eta) < 1.2 ) return 0.998;
+    else if( fabs(eta) < 2.1 ) return 1.001;
+    else return 1.002;
   }
   else if( pt < 40 ){
-    if( fabs(eta) < 0.9 ) return 0.9959;
-    else if( fabs(eta) < 1.2 ) return 0.9957;
-    else if( fabs(eta) < 2.1 ) return 1.0124;
-    else return 1.0202;
+    if( fabs(eta) < 0.9 ) return 0.998;
+    else if( fabs(eta) < 1.2 ) return 0.998;
+    else if( fabs(eta) < 2.1 ) return 1.000;
+    else return 1.001;
   }
   else if( pt < 50 ){
-    if( fabs(eta) < 0.9 ) return 0.9981;
-    else if( fabs(eta) < 1.2 ) return 0.9978;
-    else if( fabs(eta) < 2.1 ) return 1.0040;
-    else return 1.0059;
+    if( fabs(eta) < 0.9 ) return 0.998;
+    else if( fabs(eta) < 1.2 ) return 0.999;
+    else if( fabs(eta) < 2.1 ) return 0.999;
+    else return 1.000;
   }
   else if( pt < 60 ){
-    if( fabs(eta) < 0.9 ) return 0.9989;
-    else if( fabs(eta) < 1.2 ) return 0.9982;
-    else if( fabs(eta) < 2.1 ) return 1.0019;
-    else return 1.0029;
+    if( fabs(eta) < 0.9 ) return 0.999;
+    else if( fabs(eta) < 1.2 ) return 1.000;
+    else if( fabs(eta) < 2.1 ) return 1.000;
+    else return 1.000;
   }
-  else if( pt < 120 ){
-    if( fabs(eta) < 0.9 ) return 0.9997;
-    else if( fabs(eta) < 1.2 ) return 0.9995;
-    else if( fabs(eta) < 2.1 ) return 1.0001;
-    else return 1.0029;
+  else {
+    if( fabs(eta) < 0.9 ) return 1.000;
+    else if( fabs(eta) < 1.2 ) return 1.000;
+    else if( fabs(eta) < 2.1 ) return 1.000;
+    else return 1.000;
+  }
+}
+
+double HardcodedConditions::GetMuonIsoSF2018(double pt, double eta){
+  if( pt < 30 ){
+    if( fabs(eta) < 0.9 ) return 0.986;
+    else if( fabs(eta) < 1.2 ) return 0.980;
+    else if( fabs(eta) < 2.1 ) return 0.995;
+    else return 1.000;
+  }
+  else if( pt < 40 ){
+    if( fabs(eta) < 0.9 ) return 0.994;
+    else if( fabs(eta) < 1.2 ) return 0.993;
+    else if( fabs(eta) < 2.1 ) return 0.998;
+    else return 1.000;
+  }
+  else if( pt < 50 ){
+    if( fabs(eta) < 0.9 ) return 0.996;
+    else if( fabs(eta) < 1.2 ) return 0.995;
+    else if( fabs(eta) < 2.1 ) return 0.999;
+    else return 1.000;
+  }
+  else if( pt < 60 ){
+    if( fabs(eta) < 0.9 ) return 0.998;
+    else if( fabs(eta) < 1.2 ) return 0.997;
+    else if( fabs(eta) < 2.1 ) return 0.999;
+    else return 1.000;
   }
   else{
-    if( fabs(eta) < 0.9 ) return 1.0000;
-    else if( fabs(eta) < 1.2 ) return 1.0016;
-    else if( fabs(eta) < 2.1 ) return 0.9983;
-    else return 1.0000;
+    if( fabs(eta) < 0.9 ) return 1.000;
+    else if( fabs(eta) < 1.2 ) return 0.999;
+    else if( fabs(eta) < 2.1 ) return 0.999;
+    else return 1.002;
   }
 }
 
@@ -4337,6 +4351,316 @@ float HardcodedConditions::GetNjetSF(int njet, std::string year, std::string var
     return njetSF[iSF];
   }
 }
+
+/*.-----------------------------------------------------------------.
+  /  .-.                                                         .-.  \
+  |  /   \                                                       /   \  |
+  | |\_.  |                                                     |    /| |
+  |\|  | /|           Jet pileup ID                             |\  | |/|
+  | `---' |                                                     | `---' |
+  |       |                                                     |       |
+  |       |-----------------------------------------------------|       |
+  \       |                                                     |       /
+   \     /                                                       \     /
+    `---'                                                         `---'*/
+void HardcodedConditions::GetJetPileupIDSF( double pt, double eta, double *puJetIDsf, double *puJetIDsfUp, double *puJetIDsfDn, std::string year ){
+  *puJetIDsf   = 1.0;
+  *puJetIDsfUp = 1.0;
+  *puJetIDsfDn = 1.0;
+  if      ( year == "2016APV" ) GetJetPileupIDSF2016APV( pt, eta, puJetIDsf, puJetIDsfUp, puJetIDsfDn );
+  else if ( year == "2016" ) GetJetPileupIDSF2016( pt, eta, puJetIDsf, puJetIDsfUp, puJetIDsfDn );
+  else if ( year == "2017" ) GetJetPileupIDSF2017( pt, eta, puJetIDsf, puJetIDsfUp, puJetIDsfDn );
+  else if ( year == "2018" ) GetJetPileupIDSF2018( pt, eta, puJetIDsf, puJetIDsfUp, puJetIDsfDn );
+}
+
+void HardcodedConditions::GetJetPileupIDSF2016APV( double pt, double eta, double *puJetIDsf, double *puJetIDsfUp, double *puJetIDsfDn ){
+  if ( pt < 40.0 ) {
+    if ( eta < -2.0 ) {
+      *puJetIDsf   = 0.95920;
+      *puJetIDsfUp = 0.98838;
+      *puJetIDsfDn = 0.98838;
+    }
+    else if ( eta < -1.479 ){
+      *puJetIDsf   = 0.99321;
+      *puJetIDsfUp = 1.00404;
+      *puJetIDsfDn = 1.00404;
+    }
+    else if ( eta < 0.0 ){
+      *puJetIDsf   = 0.97992;
+      *puJetIDsfUp = 0.98665;
+      *puJetIDsfDn = 0.98665;
+    }
+    else if ( eta < 1.479 ){
+      *puJetIDsf   = 0.98129;
+      *puJetIDsfUp = 0.98782;
+      *puJetIDsfDn = 0.98782;
+    }
+    else if ( eta < 2.0 ){
+      *puJetIDsf   = 0.95903;
+      *puJetIDsfUp = 0.97867;
+      *puJetIDsfDn = 0.97867;
+    }
+    else {
+      *puJetIDsf   = 0.97421;
+      *puJetIDsfUp = 0.99375;
+      *puJetIDsfDn = 0.99375;
+    }
+  }
+  else if ( pt < 50.0 ) {
+    if ( eta < -2.0 ) {
+      *puJetIDsf   = 0.96555;
+      *puJetIDsfUp = 0.99042;
+      *puJetIDsfDn = 0.99042;
+    }
+    else if ( eta < -1.479 ){
+      *puJetIDsf   = 0.98388;
+      *puJetIDsfUp = 1.03353;
+      *puJetIDsfDn = 1.03353;
+    }
+    else if ( eta < 0.0 ){
+      *puJetIDsf   = 0.98751;
+      *puJetIDsfUp = 0.99574;
+      *puJetIDsfDn = 0.99574;
+    }
+    else if ( eta < 1.479 ){
+      *puJetIDsf   = 0.99080;
+      *puJetIDsfUp = 0.99729;
+      *puJetIDsfDn = 0.99729;
+    }
+    else if ( eta < 2.0 ){
+      *puJetIDsf   = 0.97770;
+      *puJetIDsfUp = 0.99066;
+      *puJetIDsfDn = 0.99066;
+    }
+    else {
+      *puJetIDsf   = 0.97016;
+      *puJetIDsfUp = 1.00348;
+      *puJetIDsfDn = 1.00348;
+    }
+  }
+  else {
+    *puJetIDsf   = 1.0;
+    *puJetIDsfUp = 1.0;
+    *puJetIDsfDn = 1.0;
+  }
+}
+
+void HardcodedConditions::GetJetPileupIDSF2016( double pt, double eta, double *puJetIDsf, double *puJetIDsfUp, double *puJetIDsfDn ){
+  if ( pt < 40.0 ) {
+    if ( eta < -2.0 ) {
+      *puJetIDsf   = 0.86771;
+      *puJetIDsfUp = 0.88420;
+      *puJetIDsfDn = 0.88420;
+    }
+    else if ( eta < -1.479 ){
+      *puJetIDsf   = 0.91153;
+      *puJetIDsfUp = 0.92341;
+      *puJetIDsfDn = 0.92341;
+    }
+    else if ( eta < 0.0 ){
+      *puJetIDsf   = 0.95379;
+      *puJetIDsfUp = 0.95882;
+      *puJetIDsfDn = 0.95882;
+    }
+    else if ( eta < 1.479 ){
+      *puJetIDsf   = 0.95773;
+      *puJetIDsfUp = 0.96221;
+      *puJetIDsfDn = 0.96221;
+    }
+    else if ( eta < 2.0 ){
+      *puJetIDsf   = 0.92001;
+      *puJetIDsfUp = 0.92690;
+      *puJetIDsfDn = 0.92690;
+    }
+    else {
+      *puJetIDsf   = 0.86779;
+      *puJetIDsfUp = 0.89193;
+      *puJetIDsfDn = 0.89193;
+    }
+  }
+  else if ( pt < 50.0 ) {
+    if ( eta < -2.0 ) {
+      *puJetIDsf   = 0.88277;
+      *puJetIDsfUp = 0.92261;
+      *puJetIDsfDn = 0.92261;
+    }
+    else if ( eta < -1.479 ){
+      *puJetIDsf   = 0.91071;
+      *puJetIDsfUp = 0.93824;
+      *puJetIDsfDn = 0.93824;
+    }
+    else if ( eta < 0.0 ){
+      *puJetIDsf   = 0.95284;
+      *puJetIDsfUp = 0.95935;
+      *puJetIDsfDn = 0.95935;
+    }
+    else if ( eta < 1.479 ){
+      *puJetIDsf   = 0.96283;
+      *puJetIDsfUp = 0.97546;
+      *puJetIDsfDn = 0.97546;
+    }
+    else if ( eta < 2.0 ){
+      *puJetIDsf   = 0.92458;
+      *puJetIDsfUp = 0.95390;
+      *puJetIDsfDn = 0.95390;
+    }
+    else {
+      *puJetIDsf   = 0.88288;
+      *puJetIDsfUp = 0.92152;
+      *puJetIDsfDn = 0.92152;
+    }
+  }
+  else {
+    *puJetIDsf   = 1.0;
+    *puJetIDsfUp = 1.0;
+    *puJetIDsfDn = 1.0;
+  }
+}
+
+void HardcodedConditions::GetJetPileupIDSF2017( double pt, double eta, double *puJetIDsf, double *puJetIDsfUp, double *puJetIDsfDn ){
+  if ( pt < 40.0 ) {
+    if ( eta < -2.0 ) {
+      *puJetIDsf   = 0.90366;
+      *puJetIDsfUp = 0.92574;
+      *puJetIDsfDn = 0.92574;
+    }
+    else if ( eta < -1.479 ){
+      *puJetIDsf   = 0.93747;
+      *puJetIDsfUp = 0.94775;
+      *puJetIDsfDn = 0.94775;
+    }
+    else if ( eta < 0.0 ){
+      *puJetIDsf   = 0.97475;
+      *puJetIDsfUp = 0.98085;
+      *puJetIDsfDn = 0.98085;
+    }
+    else if ( eta < 1.479 ){
+      *puJetIDsf   = 0.98245;
+      *puJetIDsfUp = 0.98852;
+      *puJetIDsfDn = 0.98852;
+    }
+    else if ( eta < 2.0 ){
+      *puJetIDsf   = 0.92917;
+      *puJetIDsfUp = 0.94473;
+      *puJetIDsfDn = 0.94473;
+    }
+    else {
+      *puJetIDsf   = 0.88668;
+      *puJetIDsfUp = 0.91097;
+      *puJetIDsfDn = 0.91097;
+    }
+  }
+  else if ( pt < 50.0 ) {
+    if ( eta < -2.0 ) {
+      *puJetIDsf   = 0.87745;
+      *puJetIDsfUp = 0.91613;
+      *puJetIDsfDn = 0.91613;
+    }
+    else if ( eta < -1.479 ){
+      *puJetIDsf   = 0.93925;
+      *puJetIDsfUp = 0.95844;
+      *puJetIDsfDn = 0.95844;
+    }
+    else if ( eta < 0.0 ){
+      *puJetIDsf   = 0.97620;
+      *puJetIDsfUp = 0.98168;
+      *puJetIDsfDn = 0.98168;
+    }
+    else if ( eta < 1.479 ){
+      *puJetIDsf   = 0.98366;
+      *puJetIDsfUp = 0.99112;
+      *puJetIDsfDn = 0.99112;
+    }
+    else if ( eta < 2.0 ){
+      *puJetIDsf   = 0.92853;
+      *puJetIDsfUp = 0.94687;
+      *puJetIDsfDn = 0.94687;
+    }
+    else {
+      *puJetIDsf   = 0.86179;
+      *puJetIDsfUp = 0.89902;
+      *puJetIDsfDn = 0.89902;
+    }
+  }
+  else {
+    *puJetIDsf   = 1.0;
+    *puJetIDsfUp = 1.0;
+    *puJetIDsfDn = 1.0;
+  }
+}
+
+void HardcodedConditions::GetJetPileupIDSF2018( double pt, double eta, double *puJetIDsf, double *puJetIDsfUp, double *puJetIDsfDn ){
+  if ( pt < 40.0 ) {
+    if ( eta < -2.0 ) {
+      *puJetIDsf   = 0.91464;
+      *puJetIDsfUp = 0.94989;
+      *puJetIDsfDn = 0.94989;
+    }
+    else if ( eta < -1.479 ){
+      *puJetIDsf   = 0.94455;
+      *puJetIDsfUp = 0.96187;
+      *puJetIDsfDn = 0.96187;
+    }
+    else if ( eta < 0.0 ){
+      *puJetIDsf   = 0.96779;
+      *puJetIDsfUp = 0.97529;
+      *puJetIDsfDn = 0.97529;
+    }
+    else if ( eta < 1.479 ){
+      *puJetIDsf   = 0.97057;
+      *puJetIDsfUp = 0.97880;
+      *puJetIDsfDn = 0.97880;
+    }
+    else if ( eta < 2.0 ){
+      *puJetIDsf   = 0.93484;
+      *puJetIDsfUp = 0.95405;
+      *puJetIDsfDn = 0.95405;
+    }
+    else {
+      *puJetIDsf   = 0.91721;
+      *puJetIDsfUp = 0.95018;
+      *puJetIDsfDn = 0.95018;
+    }
+  }
+  else if ( pt < 50.0 ) {
+    if ( eta < -2.0 ) {
+      *puJetIDsf   = 0.88748;
+      *puJetIDsfUp = 0.92029;
+      *puJetIDsfDn = 0.92029;
+    }
+    else if ( eta < -1.479 ){
+      *puJetIDsf   = 0.93207;
+      *puJetIDsfUp = 0.96865;
+      *puJetIDsfDn = 0.96865;
+    }
+    else if ( eta < 0.0 ){
+      *puJetIDsf   = 0.96150;
+      *puJetIDsfUp = 0.97160;
+      *puJetIDsfDn = 0.97160;
+    }
+    else if ( eta < 1.479 ){
+      *puJetIDsf   = 0.96443;
+      *puJetIDsfUp = 0.97089;
+      *puJetIDsfDn = 0.97089;
+    }
+    else if ( eta < 2.0 ){
+      *puJetIDsf   = 0.93855;
+      *puJetIDsfUp = 0.97602;
+      *puJetIDsfDn = 0.97602;
+    }
+    else {
+      *puJetIDsf   = 0.89367;
+      *puJetIDsfUp = 0.93227;
+      *puJetIDsfDn = 0.93227;
+    }
+  }
+  else {
+    *puJetIDsf   = 1.0;
+    *puJetIDsfUp = 1.0;
+    *puJetIDsfDn = 1.0;
+  }
+}
+
 
 /*.-----------------------------------------------------------------.
   /  .-.                                                         .-.  \

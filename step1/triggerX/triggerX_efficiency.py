@@ -23,7 +23,7 @@ import ROOT
 def calculate_efficiency_err( N1, N2 ):
   k = min( N1, N2 )
   n = max( N1, N2 )
-  return ( ( k + 1 ) * ( k + 2 ) )/( ( n + 2 ) * ( n + 3 ) ) - ( ( k + 1 )**2 / ( n + 2 )**2 )
+  return np.sqrt( ( ( k + 1 ) * ( k + 2 ) )/( ( n + 2 ) * ( n + 3 ) ) - ( ( k + 1 )**2 / ( n + 2 )**2 ) )
 
 def print_efficiency( efficiency, efficiency_err, pt_bins, eta_bins ):
   header = "{:<15} |".format( "Eff." )
@@ -85,20 +85,19 @@ print( "[START] Adding the following samples:" )
 for sample_i in config.samples[ args.year ][ args.group ]:
   for sample_j in samples_done:
     if sample_i in sample_j:
-      if "TTToSemiLeptonic" in sample_j and "ttjj" in sample_j and "_1_hadd" not in sample_j: continue
-      if "TTToSemiLeptonic" in sample_j and "ttcc" in sample_j and "_1_hadd" not in sample_j: continue
       print( "  + {}".format( sample_j ) )
       samples.append( sample_j )
 
 for sample in samples:
   if args.group == "DATA" and args.lepton.upper() not in sample.upper(): continue
   if args.location == "BRUX":
-    samplePath = "root://brux30.hep.brown.edu:1049/" + config.haddDir[ args.year ][ "BRUX" ] + "nominal/" + sample 
+    samplePath = "root://brux30.hep.brown.edu:1094/" + config.haddDir[ args.year ][ "BRUX" ] + "/nominal/" + sample 
   elif args.locataion == "LPC":
     samplePath = os.path.join( config.haddDir[ args.year ][ "LPC" ], "nominal/", sample )
   # load the sample
   rDF = ROOT.RDataFrame( "ljmet", samplePath )
   total_events = rDF.Count().GetValue()
+  print( "[INFO] {} has {} total events:".format( sample, total_events ) )
   rDF_nominal = rDF.Filter( filter_string )
   nominal_events = rDF_nominal.Count().GetValue()
   if args.single:
@@ -109,7 +108,6 @@ for sample in samples:
   hlt_events = rDF_hlt.Count().GetValue()
   total_nominal += nominal_events
   total_hlt += hlt_events
-  print( "[INFO] {} has {} total events:".format( sample, total_events ) )
   print( "  + {} passed pre-selection".format( nominal_events ) )
   if args.single:
     print( "  + {} passed pre-selection + trigger = {:.3f}".format( hlt_events, float( hlt_events ) / float( nominal_events )  ) )
@@ -170,7 +168,7 @@ pickle_dict = {
   "PT BINS": config.triggerX_bins[ "PT" ],
   "ETA BINS": config.triggerX_bins[ "ETA" ]
 }
-print( "[INFO] Total efficiency: {}/{} = {:.3f}".format( total_hlt, total_nominal, float( total_hlt ) / float( total_nominal ) ) )
+print( "[INFO] Total efficiency: {}/{} = {:.3f} pm {:.3f}".format( total_hlt, total_nominal, float( total_hlt ) / float( total_nominal ), calculate_efficiency_err( total_hlt, total_nominal ) ) )
 print( ">> Dumping efficiency matrix into pickle" )
 if not os.path.exists( os.path.join( os.getcwd(), "results/" ) ):
   os.mkdir( os.path.join( os.getcwd(), "results/" ) )

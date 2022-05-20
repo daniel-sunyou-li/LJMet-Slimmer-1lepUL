@@ -14,12 +14,21 @@ void make_step1( TString macroDir, TString inputFile, TString outputFile, string
   TString incl("-I");
   incl+=macroDir;
   gSystem->AddIncludePath(incl);
+
+  std::string btagcsvfile;
+  std::string btagdjcsvfile;
   
   // data
-  
-  std::string btagcsvfile( "btag_sf/reshaping_deepCSV_106XUL17_v3.csv" );
-  std::string btagdjcsvfile("btag_sf/reshaping_deepJet_106XUL17_v3.csv");
-  if( Year == "2016APV" ){
+  if( debug == 1 ){
+    std::cout << "[INFO] Running in debug mode, using test b-tag reshaping file" << std::endl;
+    btagcsvfile = "btag_sf/reshaping_deepCSV_106XUL17_test.csv";
+    btagdjcsvfile = "btag_sf/reshaping_deepJet_106XUL17_test.csv";
+  }
+  else if( Year == "2017" ){
+    btagcsvfile = "btag_sf/reshaping_deepCSV_106XUL17_v3.csv";
+    btagdjcsvfile = "btag_sf/reshaping_deepJet_106XUL17_v3.csv";
+  }
+  else if( Year == "2016APV" ){
     btagcsvfile = "btag_sf/reshaping_deepCSV_106XUL16preVFP_v2.csv";
     btagdjcsvfile = "btag_sf/reshaping_deepJet_106XUL16preVFP_v2.csv";
   }

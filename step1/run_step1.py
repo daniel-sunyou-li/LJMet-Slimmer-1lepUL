@@ -22,7 +22,7 @@ start_time = time.time()
 #IO directories must be full paths
 if args.year not in [ "16APV", "16", "17", "18" ]: sys.exit( "[ERR] Invalid year option. Use: 16APV, 16, 17, 18" )
 if args.location not in [ "LPC", "BRUX" ]: sys.exit( "[ERR] Invalid location option. Use: BRUX, LPC" )
-shifts = [ "nominal" ] if not args.shifts else [ "JECup", "JECdown" ] #, "JERup", "JERdown" ]
+shifts = [ "nominal" ] if not args.shifts else [ "JERup" ] #, "JERup", "JERdown" ]
 filesPerJob = int( args.filesPerJob )
 postfix = config.postfix
 inputDir = config.ljmetDir[ args.year ][ args.location ]
@@ -61,7 +61,7 @@ for shift in samples:
     if args.year == "18" and sample == "SingleElectron": sample = "EGamma"
     outList = []
     if "TTToSemiLeptonic" in sample and "up" not in sample.lower() and "down" not in sample.lower(): 
-      for HT_key in [ "HT0Njet0" ]:  #[ "HT0Njet0", "HT500Njet9" ]:
+      for HT_key in [ "HT0Njet0", "HT500Njet9" ]:  #[ "HT0Njet0", "HT500Njet9" ]:
         for fs_key in [ "ttbb", "tt2b", "tt1b", "ttcc", "ttjj" ]:
           outList.append( "{}_{}".format( HT_key, fs_key ) )
     elif "TTTo" in sample: 
