@@ -741,6 +741,8 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   TLorentzVector tjet1_lv;
   TLorentzVector lepton_lv;
   TLorentzVector ak8_lv;
+  TLorentzVector jetPU_lv;
+  TLorentzVector genJetPU_lv;
 
   // Polynominals for WJets HT scaling
   TF1 *poly2 = new TF1("poly2","max([6],[0] + [1]*x + [2]*x*x + [3]*x*x*x + [4]*x*x*x*x + [5]*x*x*x*x*x)",100,5000);
@@ -1001,6 +1003,9 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     vector<double> jetPUIDsf;
     vector<double> jetPUIDsfUp;
     vector<double> jetPUIDsfDn;
+    vector<double> jetPUIDEff;
+    vector<double> jetPUIDEffUp;
+    vector<double> jetPUIDEffDn;
     btagCSVWeight = 1.0;
     btagCSVWeight_HFup = 1.0;
     btagCSVWeight_HFdn = 1.0;
@@ -1039,19 +1044,43 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
       if(isMC){
         double ijetPt = theJetPt_JetSubCalc->at(ijet);
         double ijetEta = theJetEta_JetSubCalc->at(ijet);
+        double ijetPhi = theJetPhi_JetSubCalc->at(ijet);
+        double ijetEng = theJetEnergy_JetSubCalc->at(ijet);
         double jetPUIDsf_ = 1.0;
         double jetPUIDsfUp_ = 1.0;
         double jetPUIDsfDn_ = 1.0;
+        double jetPUIDEff_ = 1.0;
+        double jetPUIDEffUp_ = 1.0;
+        double jetPUIDEffDn_ = 1.0;
         hardcodedConditions.GetJetPileupIDSF( ijetPt, ijetEta, &jetPUIDsf_, &jetPUIDsfUp_, &jetPUIDsfDn_, Year );
+        hardcodedConditions.GetJetPileupIDEff( ijetPt, ijetEta, &jetPUIDEff_, &jetPUIDEffUp_, &jetPUIDEffDn_, Year );
         if( ijetPt < 50. ){
-          jetPUIDsf.push_back( jetPUIDsf_ );
-          jetPUIDsfUp.push_back( jetPUIDsfUp_ );
-          jetPUIDsfDn.push_back( jetPUIDsfDn_ ); 
+          // determine if the reco jet is geometrically matched to a gen jet for PU truth
+          jetPU_lv.SetPtEtaPhiM( ijetPt, ijetEta, ijetPhi, theJetEng );
+          isPU = true;
+          for( unsigned int jjet = 0; jjet < genJetPt_MultiLepCalc->size(); jjet++ ){
+            genJetPU_lv.SetPtEtaPhiE( genJetPt_MultiLepCalc->at(jjet), genJetEta_MultiLepCalc->at(jjet), genJetPhi_MultiLepCalc->at(jjet), genJetEnergy_MultiLepCalc->at(jjet) );
+            if( jetPU_lv.DeltaR( genJetPU_lv ) < 0.4 ){
+              isPU = false;
+              continue; // only need to confirm one reco to gen match
+            }
+          }
+          
+          if( isPU == true ){
+            jetPUIDsf.push_back( jetPUIDsf_ );
+            jetPUIDsfUp.push_back( jetPUIDsfUp_ );
+            jetPUIDsfDn.push_back( jetPUIDsfDn_ );
+            jetPUIDEff.push_back( jetPUIDEff_ );
+            jetPUIDEffUp.push_back( jetPUIDEffUp_ );
+            jetPUIDEffDn.push_back( jetPUIDEffDn_ );
+            if( theJetPileupJetTight_JetSubCalc->at(ijet) == 1 ) jetPUIDTag.push_back( 1 );
+            else jetPUTag.push_back( 0 );
+          }
         }
       }
 
-      // exclude PU jets
-      if( theJetPileupJetTight_JetSubCalc->at(ijet) == 1 ){
+      // exclude jets tagged as PU
+      if( theJetPileupJetTight_JetSubCalc->at(ijet) == 1 && theJetPt_JetSubCalc->at(ijet) < 50. ){
         NJetsPU_JetSubCalc+=1;
         continue;
       }
@@ -1250,9 +1279,9 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     }
 
     if(isMC){
-      pileupJetIDWeight     = compute_SFWeight( jetPUIDsf );
-      pileupJetIDWeightUp   = compute_SFWeight( jetPUIDsfUp );
-      pileupJetIDWeightDown = compute_SFWeight( jetPUIDsfDn ); 
+      pileupJetIDWeight     = compute_SFWeight( jetPUIDsf, jetPUIDEff, jetPUIDTag );
+      pileupJetIDWeightUp   = compute_SFWeight( jetPUIDsfUp, jetPUIDEffUp, jetPUIDTag );
+      pileupJetIDWeightDown = compute_SFWeight( jetPUIDsfDn, jetPUIDEffDn, jetPUIDTag ); 
     }
 
     if (isMC) {
