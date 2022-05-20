@@ -4356,7 +4356,7 @@ float HardcodedConditions::GetNjetSF(int njet, std::string year, std::string var
   /  .-.                                                         .-.  \
   |  /   \                                                       /   \  |
   | |\_.  |                                                     |    /| |
-  |\|  | /|           Jet pileup ID                             |\  | |/|
+  |\|  | /|           Jet pileup ID SF                          |\  | |/|
   | `---' |                                                     | `---' |
   |       |                                                     |       |
   |       |-----------------------------------------------------|       |
@@ -4659,6 +4659,52 @@ void HardcodedConditions::GetJetPileupIDSF2018( double pt, double eta, double *p
     *puJetIDsfUp = 1.0;
     *puJetIDsfDn = 1.0;
   }
+}
+
+
+/*.-----------------------------------------------------------------.
+  /  .-.                                                         .-.  \
+  |  /   \                                                       /   \  |
+  | |\_.  |                                                     |    /| |
+  |\|  | /|           Jet pileup ID Efficiency                  |\  | |/|
+  | `---' |                                                     | `---' |
+  |       |                                                     |       |
+  |       |-----------------------------------------------------|       |
+  \       |                                                     |       /
+   \     /                                                       \     /
+    `---'                                                         `---'*/
+void HardcodedConditions::GetJetPileupIDEff( double pt, double eta, double *puJetIDEff, double *puJetIDEffUp, double *puJetIDEffDn, std::string year ){
+  *puJetIDEff   = 1.0;
+  *puJetIDEffUp = 1.0;
+  *puJetIDEffDn = 1.0;
+  if      ( year == "2016APV" ) GetJetPileupIDEff2016APV( pt, eta, puJetIDEff, puJetIDEffUp, puJetIDEffDn );
+  else if ( year == "2016" ) GetJetPileupIDEff2016( pt, eta, puJetIDEff, puJetIDEffUp, puJetIDEffDn );
+  else if ( year == "2017" ) GetJetPileupIDEff2017( pt, eta, puJetIDEff, puJetIDEffUp, puJetIDEffDn );
+  else if ( year == "2018" ) GetJetPileupIDEff2018( pt, eta, puJetIDEff, puJetIDEffUp, puJetIDEffDn );
+}
+
+void HardcodedConditions::GetJetPileupIDEff2016APV( double pt, double eta, double *puJetIDEff, double *puJetIDEffUp, double *puJetIDEffDn ){
+  *puJetIDEff = 1.0;
+  *puJetIDEffUp = 1.0;
+  *puJetIDEffDn = 1.0;
+}
+
+void HardcodedConditions::GetJetPileupIDEff2016( double pt, double eta, double *puJetIDEff, double *puJetIDEffUp, double *puJetIDEffDn ){
+  *puJetIDEff = 1.0;
+  *puJetIDEffUp = 1.0;
+  *puJetIDEffDn = 1.0;
+}
+
+void HardcodedConditions::GetJetPileupIDEff2017( double pt, double eta, double *puJetIDEff, double *puJetIDEffUp, double *puJetIDEffDn ){
+  *puJetIDEff = 1.0;
+  *puJetIDEffUp = 1.0;
+  *puJetIDEffDn = 1.0;
+}
+
+void HardcodedConditions::GetJetPileupIDEff2018( double pt, double eta, double *puJetIDEff, double *puJetIDEffUp, double *puJetIDEffDn ){
+  *puJetIDEff = 1.0;
+  *puJetIDEffUp = 1.0;
+  *puJetIDEffDn = 1.0;
 }
 
 
