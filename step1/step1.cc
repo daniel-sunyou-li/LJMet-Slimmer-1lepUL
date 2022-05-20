@@ -31,30 +31,20 @@ TRandom3 Rand;
 const double MTOP  = 173.5;
 const double MW    = 80.4; 
 
-vector<vector<int>> step1::get_combinations( int n, int k ){
-  vector<vector<int>> combos;
-  std::string bitmask( k, 1 );
-  bitmask.resize( n, 0 );
-
-  do { 
-    vector<int> combo;
-    for ( int i = 0; i < n; ++i ) {
-      if ( bitmask[i] ){   
-        combo.push_back(i);
-      }
+double step1::compute_SFWeight( vector<double>& SF, vector<double>& Eff, vector<int>& Tag ){
+  double pMC = 1.;
+  double pData = 1.;
+  for( unsigned int i = 0; i < Tag.size(); i++ ){
+    if( Tag.at(i) == 1 ){
+      pMC *= Eff.at(i);
+      pData *= ( SF.at(i) * Eff.at(i) );
     }
-    combos.push_back( combo );
-  } while ( std::prev_permutation( bitmask.begin(), bitmask.end() ) );
-
-  return combos;
-}
-
-double step1::compute_SFWeight( vector<double>& SF ){
-  double weight = 1.;
-  for( unsigned int i = 0; i < SF.size(); i++ ){
-    weight *= SF.at(i);
+    else {
+      pMC *= ( 1. - Eff.at(i) );
+      pData *= ( 1. - SF.at(i) * Eff.at(i) );
+    }
   }
-  return weight;
+  return pData / pMC;
 }
 
 bool step1::applySF(bool& isTagged, float tag_SF, float tag_eff){
