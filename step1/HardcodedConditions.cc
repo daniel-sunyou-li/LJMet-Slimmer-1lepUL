@@ -3762,7 +3762,7 @@ double HardcodedConditions::GetMuonIsoSF2018(double pt, double eta){
 double HardcodedConditions::GetMuonTriggerSF(double pt, double eta, std::string year){
   //The main getter for Muon Trigger Scale Factors
   if      (year=="2016APV") return GetMuonTriggerSF2016APV(pt, eta);
-  else if (year=="2016") return GetMuonTriggerSF2017(pt, eta);
+  else if (year=="2016") return GetMuonTriggerSF2016(pt, eta);
   else if (year=="2017") return GetMuonTriggerSF2017(pt, eta);
   else if (year=="2018") return GetMuonTriggerSF2018(pt, eta);
   else return 0.;

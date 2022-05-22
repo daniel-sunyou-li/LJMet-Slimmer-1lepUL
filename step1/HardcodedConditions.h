@@ -33,6 +33,7 @@ public:
     float GetCSVRenormSF(std::string year, int isE, int njet, std::string sampleType);
 
     void GetJetPileupIDSF( double pt, double eta, double *puJetIDsf, double *puJetIDsfUp, double *puJetIDsfDn, std::string year );
+    void GetJetPileupIDEff( double pt, double eta, double *puJetIDEff, double *puJetIDEffUp, double *puJetIDEffDn, std::string year );
 
     void GetBtaggingSF(double pt, double eta, double *btagsf, double *btagsfunc, std::string tagger="CSVM", int jetHFlav = 5, std::string year = "2017");
     void GetBtaggingEff(double pt, double *eff, std::string tagger="CSVM", int jetHFlav = 5, std::string year = "2017");
@@ -48,6 +49,11 @@ private:
     void GetJetPileupIDSF2016( double pt, double eta, double *puJetIDsf, double *puJetIDsfUp, double *puJetIDsfDn );
     void GetJetPileupIDSF2017( double pt, double eta, double *puJetIDsf, double *puJetIDsfUp, double *puJetIDsfDn );
     void GetJetPileupIDSF2018( double pt, double eta, double *puJetIDsf, double *puJetIDsfUp, double *puJetIDsfDn );
+
+    void GetJetPileupIDEff2016APV( double pt, double eta, double *puJetIDEff, double *puJetIDEffUp, double *puJetIDEffDn );
+    void GetJetPileupIDEff2016( double pt, double eta, double *puJetIDEff, double *puJetIDEffUp, double *puJetIDEffDn );
+    void GetJetPileupIDEff2017( double pt, double eta, double *puJetIDEff, double *puJetIDEffUp, double *puJetIDEffDn );
+    void GetJetPileupIDEff2018( double pt, double eta, double *puJetIDEff, double *puJetIDEffUp, double *puJetIDEffDn );
 
     void GetPileupWeight2016APV(int nTrueInt, float *pileupweight, float *pileupweightup, float *pileupweightdn);
     void GetPileupWeight2016(int nTrueInt, float *pileupweight, float *pileupweightup, float *pileupweightdn);

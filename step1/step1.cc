@@ -24,7 +24,7 @@ using namespace std;
 
 bool comparepair( const std::pair<double,int> a, const std::pair<double,int> b) { return a.first > b.first; }
 bool comparefloat( const float a, const float b) { return a < b; }
-int debug = 0;
+int debug = 1;
 
 TRandom3 Rand;
 
@@ -825,7 +825,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     nb = inputTree->GetEntry(jentry);   nbytes += nb;
     if (Cut(ientry) != 1) continue;
 
-    if (ientry > 2 && debug == 1) break;
+    if (ientry > 100 && debug == 1) break;
 
     if(jentry % 1000 ==0) std::cout << ">> Completed " << jentry << " out of " << nentries << " events" <<std::endl;
 
@@ -1006,6 +1006,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     vector<double> jetPUIDEff;
     vector<double> jetPUIDEffUp;
     vector<double> jetPUIDEffDn;
+    vector<int>    jetPUIDTag;
     btagCSVWeight = 1.0;
     btagCSVWeight_HFup = 1.0;
     btagCSVWeight_HFdn = 1.0;
@@ -1056,8 +1057,8 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         hardcodedConditions.GetJetPileupIDEff( ijetPt, ijetEta, &jetPUIDEff_, &jetPUIDEffUp_, &jetPUIDEffDn_, Year );
         if( ijetPt < 50. ){
           // determine if the reco jet is geometrically matched to a gen jet for PU truth
-          jetPU_lv.SetPtEtaPhiM( ijetPt, ijetEta, ijetPhi, theJetEng );
-          isPU = true;
+          jetPU_lv.SetPtEtaPhiM( ijetPt, ijetEta, ijetPhi, ijetEng );
+          bool isPU = true;
           for( unsigned int jjet = 0; jjet < genJetPt_MultiLepCalc->size(); jjet++ ){
             genJetPU_lv.SetPtEtaPhiE( genJetPt_MultiLepCalc->at(jjet), genJetEta_MultiLepCalc->at(jjet), genJetPhi_MultiLepCalc->at(jjet), genJetEnergy_MultiLepCalc->at(jjet) );
             if( jetPU_lv.DeltaR( genJetPU_lv ) < 0.4 ){
@@ -1074,7 +1075,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
             jetPUIDEffUp.push_back( jetPUIDEffUp_ );
             jetPUIDEffDn.push_back( jetPUIDEffDn_ );
             if( theJetPileupJetTight_JetSubCalc->at(ijet) == 1 ) jetPUIDTag.push_back( 1 );
-            else jetPUTag.push_back( 0 );
+            else jetPUIDTag.push_back( 0 );
           }
         }
       }
@@ -1345,11 +1346,11 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     }
     else if( Year == "2017" ){
       eltriggersX = { "Ele15_IsoVVVL_PFHT450", "Ele50_IsoVVVL_PFHT450", "Ele32_WPTight_Gsf", "Ele35_WPTight_Gsf", "Ele38_WPTight_Gsf" };
-      mutriggersX = { "Mu15_IsoVVVL_PFHT450", "Mu50_IsoVVVL_PFHT450", "Mu15_IsoVVVL_PFHT600", "Mu50", "IsoMu27", "IsoMu24_eta2p1" };
+      mutriggersX = { "Mu15_IsoVVVL_PFHT450", "Mu50", "IsoMu27", "IsoMu24_eta2p1" };
     }
     else if( Year == "2018" ){
-      eltriggersX = { "Ele15_IsoVVVL_PFHT450", "Ele50_IsoVVVL_PFHT450", "Ele32_WPTight_Gsf", "Ele35_WPTight_Gsf", "Ele38_WPTight_Gsf", "Ele15_IsoVVVL_PFHT450_PFMET50"};
-      mutriggersX = { "Mu15_IsoVVVL_PFHT450","Mu50_IsoVVVL_PFHT450","Mu15_IsoVVVL_PFHT600", "Mu50", "TkMu50", "Mu15_IsoVVVL_PFHT450_PFMET50", "IsoMu24" };
+      eltriggersX = { "Ele15_IsoVVVL_PFHT450", "Ele50_IsoVVVL_PFHT450", "Ele32_WPTight_Gsf", "Ele35_WPTight_Gsf", "Ele38_WPTight_Gsf" };
+      mutriggersX = { "Mu15_IsoVVVL_PFHT450", "Mu50", "TkMu50", "IsoMu24" };
     }
     std::string eltrigger;
     std::string mutrigger;
