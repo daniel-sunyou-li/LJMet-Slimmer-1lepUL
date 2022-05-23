@@ -11,7 +11,9 @@ IDLIST=${5}
 ID=${6}
 YEAR=${7}
 SHIFT=${8}
+SITE=${9}
 SCRATCH=${PWD}
+
 
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 export SCRAM_ARCH=slc7_amd64_gcc700
@@ -29,6 +31,10 @@ XRDpath=root://cmseos.fnal.gov/$INPUTDIR
 if [[ $INPUTDIR == /isilon/hadoop/* ]] ;
 then
 XRDpath=root://brux30.hep.brown.edu:1094/$INPUTDIR
+fi
+if [[ $SITE == BRUX ]];
+then
+XRDpath=$INPUTDIR
 fi
 
 echo ">> Running step1 over list: ${IDLIST}"
@@ -59,8 +65,17 @@ echo ">> xrdcp output for condor"
 
 haddFile=${OUTFILENAME}_${ID}${SHIFT}_hadd.root
 hadd ${haddFile} *${SHIFT}.root
+
+if [[ $SITE == LPC ]];
+then
 echo ">> xrdcp -f ${haddFile} root://cmseos.fnal.gov/${OUTPUTDIR//$NOM/$SHIFT}/${haddFile//${SHIFT}_hadd/}"
 xrdcp -f ${haddFile} root://cmseos.fnal.gov/${OUTPUTDIR//$NOM/$SHIFT}/${haddFile//${SHIFT}_hadd/} 2>&1
+fi
+if [[ $SITE == BRUX ]];
+then
+echo ">> mv ${haddFile} ${OUTPUTDIR//$NOM/$SHIFT}/${haddFile//${SHIFT}_hadd/}"
+mv ${haddFile} ${OUTPUTDIR//$NOM/$SHIFT}/${haddFile//${SHIFT}_hadd/}
+fi
 
 XRDEXIT=$?
 if [[ $XRDEXIT -ne 0 ]]; then

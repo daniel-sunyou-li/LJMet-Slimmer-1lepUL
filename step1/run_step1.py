@@ -5,13 +5,14 @@ from argparse import ArgumentParser
 from XRootD import client
 
 parser = ArgumentParser()
-parser.add_argument( "-y", "--year", required = True, help = "Options:16APV,16,17,18" )
-parser.add_argument( "-g", "--groups", nargs = "+" )
-parser.add_argument( "-f", "--filesPerJob", default = "30", help = "Default is 30, but recommended 10 for years 16APV,16" )
-parser.add_argument( "-l", "--location", default = "LPC", help = "Options: LPC, BRUX" )
-parser.add_argument( "-j", "--joblimit", default = "-1", help = "Limit on number of jobs to submit per sample (-1 for all)" )
-parser.add_argument( "--test", action = "store_true", help = "Only submit one job" )
-parser.add_argument( "--shifts", action = "store_true" )
+parser.add_argument( "-y", "--year", required = True, help = "Era to process. Options: 16APV, 16, 17, 18" )
+parser.add_argument( "-g", "--groups", nargs = "+", help = "Sample groups to process, see config.py." )
+parser.add_argument( "-f", "--filesPerJob", default = "30", help = "Number of LJMet files per Condor job. Default is 30, but recommended 10 for years 16APV,16" )
+parser.add_argument( "-l", "--location", default = "LPC", help = "Location of LJMet files. Options: LPC, BRUX." )
+parser.add_argument( "-s", "--site", default = "LPC", help = "Location where running step1. Options: LPC, BRUX." )
+parser.add_argument( "-j", "--joblimit", default = "-1", help = "Limit on number of jobs to submit per sample, per final state (-1 for all)." )
+parser.add_argument( "--test", action = "store_true", help = "Only submit one job." )
+parser.add_argument( "--shifts", action = "store_true", help = "Run on JEC/JER shifts." )
 args = parser.parse_args()
 
 from ROOT import *
@@ -22,17 +23,17 @@ execfile( "../EOSSafeUtils.py" )
 start_time = time.time()
 
 #IO directories must be full paths
-if args.year not in [ "16APV", "16", "17", "18" ]: sys.exit( "[ERR] Invalid year option. Use: 16APV, 16, 17, 18" )
-if args.location not in [ "LPC", "BRUX" ]: sys.exit( "[ERR] Invalid location option. Use: BRUX, LPC" )
-shifts = [ "nominal" ] if not args.shifts else [ "JERup" ] #, "JERup", "JERdown" ]
+if args.year not in [ "16APV", "16", "17", "18" ]: quit( "[ERR] Invalid year option. Use: 16APV, 16, 17, 18. Quitting..." )
+if args.location not in [ "LPC", "BRUX" ]: quit( "[ERR] Invalid location option. Use: BRUX, LPC. Quitting..." )
+if args.site not in [ "LPC", "BRUX" ]: quit( "[ERR] Invalid site option. Use: BRUX, LPC. Quitting..." )
+shifts = [ "nominal" ] if not args.shifts else [ "JECup", "JECdown", "JERup", "JERdown" ]
 filesPerJob = int( args.filesPerJob )
 postfix = config.postfix
+
 inputDir = config.ljmetDir[ args.year ][ args.location ]
-
 outputDir = {
-  shift: os.path.join( config.step1Dir[ args.year ][ "LPC" ], shift ) for shift in shifts
+  shift: os.path.join( config.step1Dir[ args.year ][ args.site ], shift ) for shift in shifts
 }
-
 condorDir = "./logs_UL{}_{}/".format( args.year, postfix )
 for shift in shifts: os.system( "mkdir -p {}".format( os.path.join( condorDir, shift ) ) )
 
@@ -115,7 +116,7 @@ for shift in samples:
           baseFilename = "_".join( ( rootFiles[0].split(".")[0] ).split("_")[:-1] )
 
           for i in range( 0, len(rootFiles), filesPerJob ):
-            if fs_count > float( args.joblimit ) and float( args.joblimit ) > 0: continue
+            if fs_count + 1 > float( args.joblimit ) and float( args.joblimit ) > 0: continue
             fs_count += 1
 
             segments = rootFiles[i].split(".")[0].split("_")                       
@@ -151,7 +152,8 @@ for shift in samples:
               'YEAR': args.year, 
               'SHIFT': shift,
               'DEEPCSV': deepCSV_SF, 
-              'DEEPJET':deepJet_SF
+              'DEEPJET':deepJet_SF,
+              'SITE': args.site
             }
             jdfName = "{}{}/{}_{}.job".format( condorDir, shift, jobParams["OUTFILENAME"], jobParams["ID"] )
             print( ">> {}: {}".format( jdfName, idList ) )
@@ -168,7 +170,7 @@ Output = %(OUTFILENAME)s_%(ID)s.out
 Error = %(OUTFILENAME)s_%(ID)s.err
 Log = %(OUTFILENAME)s_%(ID)s.log
 Notification = Never
-Arguments = "%(FILENAME)s %(OUTFILENAME)s %(INPUTDIR)s/%(SAMPLE)s/%(INPATHSUFFIX)s %(OUTPUTDIR)s/%(OUTFILENAME)s '%(LIST)s' %(ID)s %(YEAR)s %(SHIFT)s"
+Arguments = "%(FILENAME)s %(OUTFILENAME)s %(INPUTDIR)s/%(SAMPLE)s/%(INPATHSUFFIX)s %(OUTPUTDIR)s/%(OUTFILENAME)s '%(LIST)s' %(ID)s %(YEAR)s %(SHIFT)s %(SITE)s"
 Queue 1"""%jobParams)
             jdf.close()
             os.chdir( os.path.join( condorDir, shift ) )
