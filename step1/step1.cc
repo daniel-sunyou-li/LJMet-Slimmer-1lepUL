@@ -24,7 +24,7 @@ using namespace std;
 
 bool comparepair( const std::pair<double,int> a, const std::pair<double,int> b) { return a.first > b.first; }
 bool comparefloat( const float a, const float b) { return a < b; }
-int debug = 0;
+int debug = 1;
 
 TRandom3 Rand;
 
