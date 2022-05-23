@@ -9,6 +9,8 @@ parser.add_argument( "-y", "--year", required = True, help = "Options:16APV,16,1
 parser.add_argument( "-g", "--groups", nargs = "+" )
 parser.add_argument( "-f", "--filesPerJob", default = "30", help = "Default is 30, but recommended 10 for years 16APV,16" )
 parser.add_argument( "-l", "--location", default = "LPC", help = "Options: LPC, BRUX" )
+parser.add_argument( "-j", "--joblimit", default = "-1", help = "Limit on number of jobs to submit per sample (-1 for all)" )
+parser.add_argument( "--test", action = "store_true", help = "Only submit one job" )
 parser.add_argument( "--shifts", action = "store_true" )
 args = parser.parse_args()
 
@@ -61,7 +63,7 @@ for shift in samples:
     if args.year == "18" and sample == "SingleElectron": sample = "EGamma"
     outList = []
     if "TTToSemiLeptonic" in sample and "up" not in sample.lower() and "down" not in sample.lower(): 
-      for HT_key in [ "HT0Njet0", "HT500Njet9" ]:  #[ "HT0Njet0", "HT500Njet9" ]:
+      for HT_key in [ "HT0Njet0", "HT500Njet9" ]:  
         for fs_key in [ "ttbb", "tt2b", "tt1b", "ttcc", "ttjj" ]:
           outList.append( "{}_{}".format( HT_key, fs_key ) )
     elif "TTTo" in sample: 
@@ -88,8 +90,8 @@ for shift in samples:
         status, dirList = xrdClient.dirlist( runPath )
         runList = [ item.name for item in dirList ]
 
-      print( "[INFO] Running {} CRAB directories...".format( len(runList) ) )
-    
+      #print( "[INFO] Running {} CRAB directories...".format( len(runList) ) )
+   
       for run in runList:
         if args.location == "LPC":
           numList = EOSlistdir( "{}/{}/singleLep20{}UL/{}/".format( inputDir, sample, args.year, run ) )
@@ -107,14 +109,13 @@ for shift in samples:
             rootFiles = EOSlist_root_files( numPath )
           elif args.location == "BRUX":
             xrdPath = "{}/{}/singleLep20{}UL/{}/{}/".format( inputDir, sample, args.year, run, num )
-            print( xrdPath )
             status, fileList = xrdClient.dirlist( xrdPath )
             rootFiles = [ item.name for item in fileList if item.name.endswith( ".root" ) ]
           if not rootFiles: continue #Check if rootfiles is empty list (remove failed jobs)
           baseFilename = "_".join( ( rootFiles[0].split(".")[0] ).split("_")[:-1] )
-          print( ">> Running path: {}\t Base filename: {}".format( pathSuffix, baseFilename ) )
 
           for i in range( 0, len(rootFiles), filesPerJob ):
+            if fs_count > float( args.joblimit ) and float( args.joblimit ) > 0: continue
             fs_count += 1
 
             segments = rootFiles[i].split(".")[0].split("_")                       
@@ -137,7 +138,6 @@ for shift in samples:
             #  problematicIDs = ['1048','1177','1217','1412','1413','1414','1415','1416','1417','1418','1419','1429','1441','1664','1883']
             #  for id_ in problematicIDs:
             #    idList = idList.replace( id_, "" ).replace( "  ", " " )
-            print( ">> Running IDs: {}".format( idList ) )
             jobParams = {
               'RUNDIR': os.getcwd(), 
               'SAMPLE': sample, 
@@ -154,7 +154,7 @@ for shift in samples:
               'DEEPJET':deepJet_SF
             }
             jdfName = "{}{}/{}_{}.job".format( condorDir, shift, jobParams["OUTFILENAME"], jobParams["ID"] )
-            print( ">> Storing job information in {}".format( jdfName ) )
+            print( ">> {}: {}".format( jdfName, idList ) )
             jdf = open( jdfName, 'w' )
             jdf.write(
 """use_x509userproxy = true
@@ -176,5 +176,6 @@ Queue 1"""%jobParams)
             os.system( "sleep 0.5" )                                
             os.chdir( jobParams["RUNDIR"] )
             job_count += 1
+            if args.test: quit()
                                                  
 print( "[DONE] {} jobs submitted in {:.2f} minutes".format( job_count, round( time.time() - start_time, 2 ) / 60. ) )

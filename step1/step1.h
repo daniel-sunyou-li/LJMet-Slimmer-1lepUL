@@ -1821,7 +1821,6 @@ void step1::Init(TTree *tree)
    theJetEnergy_JetSubCalc = 0;
    theJetEta_JetSubCalc = 0;
    theJetPhi_JetSubCalc = 0;
-   //theJetPileupJetId_JetSubCalc = 0;
    theJetPt_JetSubCalc = 0;
    topBestGenEnergy_HOTTaggerCalc = 0;
    topBestGenEta_HOTTaggerCalc = 0;

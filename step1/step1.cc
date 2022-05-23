@@ -24,7 +24,7 @@ using namespace std;
 
 bool comparepair( const std::pair<double,int> a, const std::pair<double,int> b) { return a.first > b.first; }
 bool comparefloat( const float a, const float b) { return a < b; }
-int debug = 1;
+int debug = 0;
 
 TRandom3 Rand;
 
@@ -240,7 +240,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   inputTree->SetBranchStatus("theJetPFlav_JetSubCalc",1);
   inputTree->SetBranchStatus("theJetPt_JetSubCalc",1);
   //inputTree->SetBranchStatus("theJetPileupJetId_JetSubCalc",1);
-  //inputTree->SetBranchStatus("theJetPileupJetTight_JetSubCalc",1);
+  inputTree->SetBranchStatus("theJetPileupJetTight_JetSubCalc",1);
   inputTree->SetBranchStatus("theJetEta_JetSubCalc",1);
   inputTree->SetBranchStatus("theJetPhi_JetSubCalc",1);
   inputTree->SetBranchStatus("theJetEnergy_JetSubCalc",1);
@@ -1084,8 +1084,10 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         }
       }
 
+      int ijetPUIDTight = theJetPileupJetTight_JetSubCalc->at(ijet);
+      double ijetPt = theJetPt_JetSubCalc->at(ijet);
       // exclude jets tagged as PU
-      if( theJetPileupJetTight_JetSubCalc->at(ijet) == 1 && theJetPt_JetSubCalc->at(ijet) < 50. ){
+      if( ijetPUIDTight == 1 && ijetPt < 50. ){
         NJetsPU_JetSubCalc+=1;
         continue;
       }
