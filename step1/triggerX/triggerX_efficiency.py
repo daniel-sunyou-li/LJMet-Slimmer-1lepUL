@@ -16,8 +16,9 @@ parser.add_argument( "-g", "--group" )
 parser.add_argument( "-l", "--lepton", default = "e", help = "e,m" )
 parser.add_argument( "--single", action = "store_true" )
 parser.add_argument( "-loc", "--location", default = "BRUX" )
+parser.add_argument( "-s", "--site", default = "BRUX", help = "Site running: BRUX, LPC" )
 args = parser.parse_args()
-
+                    
 import ROOT
 
 def calculate_efficiency_err( N1, N2 ):
@@ -71,13 +72,19 @@ else:
 
 total_nominal = 0
 total_hlt = 0
- 
-if args.location == "LPC":
-  samples_done = EOSlistdir( os.path.join( config.haddDir[ args.year ][ "LPC" ], "nominal" ) )
-elif args.location == "BRUX":
-  xrdClient = client.FileSystem( "root://brux30.hep.brown.edu:1094/" )
-  status, dirList = xrdClient.dirlist( os.path.join( config.haddDir[ args.year ][ "BRUX" ], "nominal" ) )
-  samples_done = [ item.name for item in dirList ] 
+
+if args.site == "LPC":         
+  if args.location == "LPC":
+    samples_done = EOSlistdir( os.path.join( config.haddDir[ args.year ][ "LPC" ], "nominal" ) )
+  elif args.location == "BRUX":
+    xrdClient = client.FileSystem( "root://brux30.hep.brown.edu:1094/" )
+    status, dirList = xrdClient.dirlist( os.path.join( config.haddDir[ args.year ][ "BRUX" ], "nominal" ) )
+    samples_done = [ item.name for item in dirList ] 
+elif args.site == "BRUX":
+  if args.location == "LPC":
+    samples_done = EOSlistdir( os.path.join( config.haddDir[ args.year ][ "LPC" ], "nominal" ) )
+  elif args.location == "BRUX":
+    samples_done = [ fName for fName in os.listdir( config.haddDir[ args.year ][ "BRUX" ], "nominal" ) ]
 
 samples = []
 
@@ -90,32 +97,73 @@ for sample_i in config.samples[ args.year ][ args.group ]:
 
 for sample in samples:
   if args.group == "DATA" and args.lepton.upper() not in sample.upper(): continue
-  if args.location == "BRUX":
-    samplePath = "root://brux30.hep.brown.edu:1094/" + config.haddDir[ args.year ][ "BRUX" ] + "/nominal/" + sample 
-  elif args.locataion == "LPC":
-    samplePath = os.path.join( config.haddDir[ args.year ][ "LPC" ], "nominal/", sample )
+  if args.site == "LPC":
+    if args.location == "BRUX":
+      samplePath = "root://brux30.hep.brown.edu:1094/" + config.haddDir[ args.year ][ "BRUX" ] + "/nominal/" + sample 
+    elif args.locataion == "LPC":
+      samplePath = os.path.join( config.haddDir[ args.year ][ "LPC" ], "nominal/", sample )
+  elif args.site == "BRUX":
+    if args.location == "BRUX":
+      samplePath = config.haddDir[ args.year ][ "BRUX" ] + "/nominal/" + sample 
+    elif args.location == "LPC":
+      samplePath = os.path.join( config.haddDir[ args.year ][ "LPC" ], "nominal/", sample )
   # load the sample
-  rDF = ROOT.RDataFrame( "ljmet", samplePath )
-  total_events = rDF.Count().GetValue()
-  print( "[INFO] {} has {} total events:".format( sample, total_events ) )
-  rDF_nominal = rDF.Filter( filter_string )
-  nominal_events = rDF_nominal.Count().GetValue()
-  if args.single:
-    rDF_hlt = rDF_nominal.Filter( "( MCLepPastTrigger == 1 ) && ( DataLepPastTrigger == 1 )" )
-  else:
-    rDF_hlt = rDF_nominal.Filter( "( MCPastTriggerX == 1 ) && ( DataPastTriggerX == 1 )" )
-  nominal_events = rDF_nominal.Count().GetValue()
-  hlt_events = rDF_hlt.Count().GetValue()
-  total_nominal += nominal_events
-  total_hlt += hlt_events
-  print( "  + {} passed pre-selection".format( nominal_events ) )
-  if args.single:
-    print( "  + {} passed pre-selection + trigger = {:.3f}".format( hlt_events, float( hlt_events ) / float( nominal_events )  ) )
-  else:
-    print( "  + {} passed pre-selection + triggerX = {:.3f}".format( hlt_events, float( hlt_events ) / float( nominal_events ) ) )
-  nom_df = pandas.DataFrame( rDF_nominal.AsNumpy( columns = [ "leptonPt_MultiLepCalc", "leptonEta_MultiLepCalc" ] ) )
-  hlt_df = pandas.DataFrame( rDF_hlt.AsNumpy( columns = [ "leptonPt_MultiLepCalc", "leptonEta_MultiLepCalc" ] ) )
-
+  if args.site == "LPC":
+    rDF = ROOT.RDataFrame( "ljmet", samplePath )
+    total_events = rDF.Count().GetValue()
+    print( "[INFO] {} has {} total events:".format( sample, total_events ) )
+    rDF_nominal = rDF.Filter( filter_string )
+    nominal_events = rDF_nominal.Count().GetValue()
+    if args.single:
+      rDF_hlt = rDF_nominal.Filter( "( MCLepPastTrigger == 1 ) && ( DataLepPastTrigger == 1 )" )
+    else:
+      rDF_hlt = rDF_nominal.Filter( "( MCPastTriggerX == 1 ) && ( DataPastTriggerX == 1 )" )
+    nominal_events = rDF_nominal.Count().GetValue()
+    hlt_events = rDF_hlt.Count().GetValue()
+    total_nominal += nominal_events
+    total_hlt += hlt_events
+    print( "  + {} passed pre-selection".format( nominal_events ) )
+    if args.single:
+      print( "  + {} passed pre-selection + trigger = {:.3f}".format( hlt_events, float( hlt_events ) / float( nominal_events )  ) )
+    else:
+      print( "  + {} passed pre-selection + triggerX = {:.3f}".format( hlt_events, float( hlt_events ) / float( nominal_events ) ) )
+    nom_df = pandas.DataFrame( rDF_nominal.AsNumpy( columns = [ "leptonPt_MultiLepCalc", "leptonEta_MultiLepCalc" ] ) )
+    hlt_df = pandas.DataFrame( rDF_hlt.AsNumpy( columns = [ "leptonPt_MultiLepCalc", "leptonEta_MultiLepCalc" ] ) )
+    
+  elif args.site == "BRUX":
+    events_nom = { "leptonPt_MultiLepCalc": [], "leptonEta_MultiLepCalc": [] }
+    events_hlt = { "leptonPt_MultiLepCalc": [], "leptonEta_MultiLepCalc": [] }
+    rFile = ROOT.TFile( samplePath )
+    rTree = rFile.Get( "ljmet" )
+    for i in tqdm.tqdm( range( rTree.GetEntries() ) ):
+      rTree.GetEntry(i)
+      passFilter = True
+      for filter in config.selection:
+        if config.selection[ filter ][ "CONDITION" ] == ">":
+          if getattr( rTree, str( filter ) ) <= config.selection[ filter ][ "VALUE" ]: passFilter = False
+        if config.selection[ filter ][ "CONDITION" ] == ">=":
+          if getattr( rTree, str( filter ) ) < config.selection[ filter ][ "VALUE" ]: passFilter = False
+        if config.selection[ filter ][ "CONDITION" ] == "<":
+          if getattr( rTree, str( filter ) ) >= config.selection[ filter ][ "VALUE" ]: passFilter = False
+        if config.selection[ filter ][ "CONDITION" ] == "<=":
+          if getattr( rTree, str( filter ) ) > config.selection[ filter ][ "VALUE" ]: passFilter = False
+        if config.selection[ filter ][ "CONDITION" ] == "==":
+          if getattr( rTree, str( filter ) ) != config.selection[ filter ][ "VALUE" ]: passFilter = False
+      if not passFilter: continue
+      events_nom[ "leptonPt_MultiLepCalc" ].append(  getattr( rTree, "leptonPt_MultiLepCalc" ) )
+      events_nom[ "leptonEta_MultiLepCalc" ].append( getattr( rTree, "leptonEta_MultiLepCalc" ) )
+      passHLT = False
+      if args.single:
+        if getattr( rTree, "MCLepPastTrigger" ) == 1 and getattr( rTree, "DataLepPastTrigger" ) == 1: passHLT = True
+      else:
+        if getattr( rTree, "MCPastTriggerX" ) == 1 and getattr( rTree, "DataPastTriggerX" ) == 1: passHLT = True
+      if passHLT:
+        events_hlt[ "leptonPt_MultiLepCalc" ].append(  getattr( rTree, "leptonPt_MultiLepCalc" ) )
+        events_hlt[ "leptonEta_MultiLepCalc" ].append( getattr( rTree, "leptonEta_MultiLepCalc" ) )
+    
+    nom_df  = pd.DataFrame.from_dict( events_nom )
+    nom_hlt = pd.DataFrame.from_dict( events_hlt )
+    
   for i in range( len( config.triggerX_bins[ "PT" ] ) + 1 ):
     if i == 0: 
       pt_pass_nom = ( nom_df[ "leptonPt_MultiLepCalc" ] < config.triggerX_bins[ "PT" ][i] )
