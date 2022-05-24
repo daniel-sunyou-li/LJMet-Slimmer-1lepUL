@@ -24,7 +24,7 @@ using namespace std;
 
 bool comparepair( const std::pair<double,int> a, const std::pair<double,int> b) { return a.first > b.first; }
 bool comparefloat( const float a, const float b) { return a < b; }
-int debug = 1;
+int debug = 0;
 
 TRandom3 Rand;
 
@@ -240,7 +240,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   inputTree->SetBranchStatus("theJetPFlav_JetSubCalc",1);
   inputTree->SetBranchStatus("theJetPt_JetSubCalc",1);
   //inputTree->SetBranchStatus("theJetPileupJetId_JetSubCalc",1);
-  //inputTree->SetBranchStatus("theJetPileupJetTight_JetSubCalc",1);
+  inputTree->SetBranchStatus("theJetPileupJetTight_JetSubCalc",1);
   inputTree->SetBranchStatus("theJetEta_JetSubCalc",1);
   inputTree->SetBranchStatus("theJetPhi_JetSubCalc",1);
   inputTree->SetBranchStatus("theJetEnergy_JetSubCalc",1);
@@ -829,7 +829,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     nb = inputTree->GetEntry(jentry);   nbytes += nb;
     if (Cut(ientry) != 1) continue;
 
-    if (ientry > 100 && debug == 1) break;
+    if(jentry > 100 && debug == 1) break;
 
     if(jentry % 1000 ==0) std::cout << ">> Completed " << jentry << " out of " << nentries << " events" <<std::endl;
 
@@ -1044,13 +1044,14 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
       // ----------------------------------------------------------------------------
 
       if( theJetPt_JetSubCalc->at(ijet) < jetPtCut || fabs(theJetEta_JetSubCalc->at(ijet)) > jetEtaCut ) continue;
+      double ijetPt = theJetPt_JetSubCalc->at(ijet);
+      double ijetEta = theJetEta_JetSubCalc->at(ijet);
+      double ijetPhi = theJetPhi_JetSubCalc->at(ijet);
+      double ijetEng = theJetEnergy_JetSubCalc->at(ijet);
+      bool ijetPUIDTight = theJetPileupJetTight_JetSubCalc->at(ijet);
 
       // Jet PU ID event re-weighting information 
       if(isMC){
-        double ijetPt = theJetPt_JetSubCalc->at(ijet);
-        double ijetEta = theJetEta_JetSubCalc->at(ijet);
-        double ijetPhi = theJetPhi_JetSubCalc->at(ijet);
-        double ijetEng = theJetEnergy_JetSubCalc->at(ijet);
         double jetPUIDsf_ = 1.0;
         double jetPUIDsfUp_ = 1.0;
         double jetPUIDsfDn_ = 1.0;
@@ -1078,16 +1079,14 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
             jetPUIDEff.push_back( jetPUIDEff_ );
             jetPUIDEffUp.push_back( jetPUIDEffUp_ );
             jetPUIDEffDn.push_back( jetPUIDEffDn_ );
-            if( theJetPileupJetTight_JetSubCalc->at(ijet) == 1 ) jetPUIDTag.push_back( 1 );
+            if( ijetPUIDTight == true ) jetPUIDTag.push_back( 1 );
             else jetPUIDTag.push_back( 0 );
           }
         }
       }
 
-      int ijetPUIDTight = theJetPileupJetTight_JetSubCalc->at(ijet);
-      double ijetPt = theJetPt_JetSubCalc->at(ijet);
       // exclude jets tagged as PU
-      if( ijetPUIDTight == 1 && ijetPt < 50. ){
+      if( ijetPUIDTight == true && ijetPt < 50. ){
         NJetsPU_JetSubCalc+=1;
         continue;
       }

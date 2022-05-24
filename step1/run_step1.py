@@ -60,6 +60,8 @@ for shift in shifts:
 # loop through samples and submit job
 for shift in samples:
   print( "[START] Submitting step1 jobs for shift: {}".format( shift ) )
+  if args.site == "BRUX":
+    if not os.path.exists( outputDir[ shift ] ): os.system( "mkdir -p {}".format( outputDir[ shift ] ) ) 
   for sample in sorted( samples[ shift ] ):
     if args.year == "18" and sample == "SingleElectron": sample = "EGamma"
     outList = []
@@ -83,7 +85,10 @@ for shift in samples:
     for outlabel in outList:
       fs_count = 0
       step1_sample = sample if outlabel == "none" else "{}_{}".format( sample, outlabel )
-      os.system( "eos root://cmseos.fnal.gov mkdir -p {}".format( os.path.join( outputDir[ shift ], step1_sample ) ) )
+      if args.site == "LPC":
+        os.system( "eos root://cmseos.fnal.gov mkdir -p {}".format( os.path.join( outputDir[ shift ], step1_sample ) ) )
+      elif args.site == "BRUX":
+        if not os.path.exists( os.path.join( outputDir[ shift ], step1_sample ) ): os.system( "mkdir -p {}".format( os.path.join( outputDir[ shift ], step1_sample ) ) )
       if args.location == "LPC":    
         runList = EOSlistdir( "{}/{}/singleLep20{}UL/".format( inputDir, sample, args.year ) )
       elif args.location == "BRUX":
