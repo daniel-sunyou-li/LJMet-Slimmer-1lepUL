@@ -4398,64 +4398,64 @@ void HardcodedConditions::GetJetPileupIDSF2016APV( double pt, double eta, double
     if ( eta < -2.0 ) {
       *puJetIDsf   = 0.95920;
       *puJetIDsfUp = 0.98838;
-      *puJetIDsfDn = 0.98838;
+      *puJetIDsfDn = 0.93002;
     }
     else if ( eta < -1.479 ){
       *puJetIDsf   = 0.99321;
       *puJetIDsfUp = 1.00404;
-      *puJetIDsfDn = 1.00404;
+      *puJetIDsfDn = 0.98238;
     }
     else if ( eta < 0.0 ){
       *puJetIDsf   = 0.97992;
       *puJetIDsfUp = 0.98665;
-      *puJetIDsfDn = 0.98665;
+      *puJetIDsfDn = 0.97319;
     }
     else if ( eta < 1.479 ){
       *puJetIDsf   = 0.98129;
       *puJetIDsfUp = 0.98782;
-      *puJetIDsfDn = 0.98782;
+      *puJetIDsfDn = 0.97477;
     }
     else if ( eta < 2.0 ){
       *puJetIDsf   = 0.95903;
       *puJetIDsfUp = 0.97867;
-      *puJetIDsfDn = 0.97867;
+      *puJetIDsfDn = 0.93938;
     }
     else {
       *puJetIDsf   = 0.97421;
       *puJetIDsfUp = 0.99375;
-      *puJetIDsfDn = 0.99375;
+      *puJetIDsfDn = 0.95466;
     }
   }
   else if ( pt < 50.0 ) {
     if ( eta < -2.0 ) {
       *puJetIDsf   = 0.96555;
       *puJetIDsfUp = 0.99042;
-      *puJetIDsfDn = 0.99042;
+      *puJetIDsfDn = 0.94068;
     }
     else if ( eta < -1.479 ){
       *puJetIDsf   = 0.98388;
       *puJetIDsfUp = 1.03353;
-      *puJetIDsfDn = 1.03353;
+      *puJetIDsfDn = 0.93424;
     }
     else if ( eta < 0.0 ){
       *puJetIDsf   = 0.98751;
       *puJetIDsfUp = 0.99574;
-      *puJetIDsfDn = 0.99574;
+      *puJetIDsfDn = 0.97929;
     }
     else if ( eta < 1.479 ){
       *puJetIDsf   = 0.99080;
       *puJetIDsfUp = 0.99729;
-      *puJetIDsfDn = 0.99729;
+      *puJetIDsfDn = 0.98431;
     }
     else if ( eta < 2.0 ){
       *puJetIDsf   = 0.97770;
       *puJetIDsfUp = 0.99066;
-      *puJetIDsfDn = 0.99066;
+      *puJetIDsfDn = 0.96475;
     }
     else {
       *puJetIDsf   = 0.97016;
       *puJetIDsfUp = 1.00348;
-      *puJetIDsfDn = 1.00348;
+      *puJetIDsfDn = 0.93684;
     }
   }
   else {
@@ -4470,64 +4470,64 @@ void HardcodedConditions::GetJetPileupIDSF2016( double pt, double eta, double *p
     if ( eta < -2.0 ) {
       *puJetIDsf   = 0.86771;
       *puJetIDsfUp = 0.88420;
-      *puJetIDsfDn = 0.88420;
+      *puJetIDsfDn = 0.85122;
     }
     else if ( eta < -1.479 ){
       *puJetIDsf   = 0.91153;
       *puJetIDsfUp = 0.92341;
-      *puJetIDsfDn = 0.92341;
+      *puJetIDsfDn = 0.89965;
     }
     else if ( eta < 0.0 ){
       *puJetIDsf   = 0.95379;
       *puJetIDsfUp = 0.95882;
-      *puJetIDsfDn = 0.95882;
+      *puJetIDsfDn = 0.94875;
     }
     else if ( eta < 1.479 ){
       *puJetIDsf   = 0.95773;
       *puJetIDsfUp = 0.96221;
-      *puJetIDsfDn = 0.96221;
+      *puJetIDsfDn = 0.95324;
     }
     else if ( eta < 2.0 ){
       *puJetIDsf   = 0.92001;
       *puJetIDsfUp = 0.92690;
-      *puJetIDsfDn = 0.92690;
+      *puJetIDsfDn = 0.91312;
     }
     else {
       *puJetIDsf   = 0.86779;
       *puJetIDsfUp = 0.89193;
-      *puJetIDsfDn = 0.89193;
+      *puJetIDsfDn = 0.84364;
     }
   }
   else if ( pt < 50.0 ) {
     if ( eta < -2.0 ) {
       *puJetIDsf   = 0.88277;
       *puJetIDsfUp = 0.92261;
-      *puJetIDsfDn = 0.92261;
+      *puJetIDsfDn = 0.84293;
     }
     else if ( eta < -1.479 ){
       *puJetIDsf   = 0.91071;
       *puJetIDsfUp = 0.93824;
-      *puJetIDsfDn = 0.93824;
+      *puJetIDsfDn = 0.88317;
     }
     else if ( eta < 0.0 ){
       *puJetIDsf   = 0.95284;
       *puJetIDsfUp = 0.95935;
-      *puJetIDsfDn = 0.95935;
+      *puJetIDsfDn = 0.94632;
     }
     else if ( eta < 1.479 ){
       *puJetIDsf   = 0.96283;
       *puJetIDsfUp = 0.97546;
-      *puJetIDsfDn = 0.97546;
+      *puJetIDsfDn = 0.95019;
     }
     else if ( eta < 2.0 ){
       *puJetIDsf   = 0.92458;
       *puJetIDsfUp = 0.95390;
-      *puJetIDsfDn = 0.95390;
+      *puJetIDsfDn = 0.89526;
     }
     else {
       *puJetIDsf   = 0.88288;
       *puJetIDsfUp = 0.92152;
-      *puJetIDsfDn = 0.92152;
+      *puJetIDsfDn = 0.84424;
     }
   }
   else {
@@ -4542,64 +4542,64 @@ void HardcodedConditions::GetJetPileupIDSF2017( double pt, double eta, double *p
     if ( eta < -2.0 ) {
       *puJetIDsf   = 0.90366;
       *puJetIDsfUp = 0.92574;
-      *puJetIDsfDn = 0.92574;
+      *puJetIDsfDn = 0.88157;
     }
     else if ( eta < -1.479 ){
       *puJetIDsf   = 0.93747;
       *puJetIDsfUp = 0.94775;
-      *puJetIDsfDn = 0.94775;
+      *puJetIDsfDn = 0.92719;
     }
     else if ( eta < 0.0 ){
       *puJetIDsf   = 0.97475;
       *puJetIDsfUp = 0.98085;
-      *puJetIDsfDn = 0.98085;
+      *puJetIDsfDn = 0.96864;
     }
     else if ( eta < 1.479 ){
       *puJetIDsf   = 0.98245;
       *puJetIDsfUp = 0.98852;
-      *puJetIDsfDn = 0.98852;
+      *puJetIDsfDn = 0.97638;
     }
     else if ( eta < 2.0 ){
       *puJetIDsf   = 0.92917;
       *puJetIDsfUp = 0.94473;
-      *puJetIDsfDn = 0.94473;
+      *puJetIDsfDn = 0.91360;
     }
     else {
       *puJetIDsf   = 0.88668;
       *puJetIDsfUp = 0.91097;
-      *puJetIDsfDn = 0.91097;
+      *puJetIDsfDn = 0.86240;
     }
   }
   else if ( pt < 50.0 ) {
     if ( eta < -2.0 ) {
       *puJetIDsf   = 0.87745;
       *puJetIDsfUp = 0.91613;
-      *puJetIDsfDn = 0.91613;
+      *puJetIDsfDn = 0.83877;
     }
     else if ( eta < -1.479 ){
       *puJetIDsf   = 0.93925;
       *puJetIDsfUp = 0.95844;
-      *puJetIDsfDn = 0.95844;
+      *puJetIDsfDn = 0.92006;
     }
     else if ( eta < 0.0 ){
       *puJetIDsf   = 0.97620;
       *puJetIDsfUp = 0.98168;
-      *puJetIDsfDn = 0.98168;
+      *puJetIDsfDn = 0.97073;
     }
     else if ( eta < 1.479 ){
       *puJetIDsf   = 0.98366;
       *puJetIDsfUp = 0.99112;
-      *puJetIDsfDn = 0.99112;
+      *puJetIDsfDn = 0.97620;
     }
     else if ( eta < 2.0 ){
       *puJetIDsf   = 0.92853;
       *puJetIDsfUp = 0.94687;
-      *puJetIDsfDn = 0.94687;
+      *puJetIDsfDn = 0.91019;
     }
     else {
       *puJetIDsf   = 0.86179;
       *puJetIDsfUp = 0.89902;
-      *puJetIDsfDn = 0.89902;
+      *puJetIDsfDn = 0.82455;
     }
   }
   else {
@@ -4614,64 +4614,64 @@ void HardcodedConditions::GetJetPileupIDSF2018( double pt, double eta, double *p
     if ( eta < -2.0 ) {
       *puJetIDsf   = 0.91464;
       *puJetIDsfUp = 0.94989;
-      *puJetIDsfDn = 0.94989;
+      *puJetIDsfDn = 0.87939;
     }
     else if ( eta < -1.479 ){
       *puJetIDsf   = 0.94455;
       *puJetIDsfUp = 0.96187;
-      *puJetIDsfDn = 0.96187;
+      *puJetIDsfDn = 0.92722;
     }
     else if ( eta < 0.0 ){
       *puJetIDsf   = 0.96779;
       *puJetIDsfUp = 0.97529;
-      *puJetIDsfDn = 0.97529;
+      *puJetIDsfDn = 0.96028;
     }
     else if ( eta < 1.479 ){
       *puJetIDsf   = 0.97057;
       *puJetIDsfUp = 0.97880;
-      *puJetIDsfDn = 0.97880;
+      *puJetIDsfDn = 0.96234;
     }
     else if ( eta < 2.0 ){
       *puJetIDsf   = 0.93484;
       *puJetIDsfUp = 0.95405;
-      *puJetIDsfDn = 0.95405;
+      *puJetIDsfDn = 0.91564;
     }
     else {
       *puJetIDsf   = 0.91721;
       *puJetIDsfUp = 0.95018;
-      *puJetIDsfDn = 0.95018;
+      *puJetIDsfDn = 0.88425;
     }
   }
   else if ( pt < 50.0 ) {
     if ( eta < -2.0 ) {
       *puJetIDsf   = 0.88748;
       *puJetIDsfUp = 0.92029;
-      *puJetIDsfDn = 0.92029;
+      *puJetIDsfDn = 0.85468;
     }
     else if ( eta < -1.479 ){
       *puJetIDsf   = 0.93207;
       *puJetIDsfUp = 0.96865;
-      *puJetIDsfDn = 0.96865;
+      *puJetIDsfDn = 0.89549;
     }
     else if ( eta < 0.0 ){
       *puJetIDsf   = 0.96150;
       *puJetIDsfUp = 0.97160;
-      *puJetIDsfDn = 0.97160;
+      *puJetIDsfDn = 0.95140;
     }
     else if ( eta < 1.479 ){
       *puJetIDsf   = 0.96443;
       *puJetIDsfUp = 0.97089;
-      *puJetIDsfDn = 0.97089;
+      *puJetIDsfDn = 0.95798;
     }
     else if ( eta < 2.0 ){
       *puJetIDsf   = 0.93855;
       *puJetIDsfUp = 0.97602;
-      *puJetIDsfDn = 0.97602;
+      *puJetIDsfDn = 0.90108;
     }
     else {
       *puJetIDsf   = 0.89367;
       *puJetIDsfUp = 0.93227;
-      *puJetIDsfDn = 0.93227;
+      *puJetIDsfDn = 0.85506;
     }
   }
   else {
@@ -4693,38 +4693,196 @@ void HardcodedConditions::GetJetPileupIDSF2018( double pt, double eta, double *p
   \       |                                                     |       /
    \     /                                                       \     /
     `---'                                                         `---'*/
-void HardcodedConditions::GetJetPileupIDEff( double pt, double eta, double *puJetIDEff, double *puJetIDEffUp, double *puJetIDEffDn, std::string year ){
+void HardcodedConditions::GetJetPileupIDEff( double pt, double eta, double *puJetIDEff, std::string year ){
   *puJetIDEff   = 1.0;
-  *puJetIDEffUp = 1.0;
-  *puJetIDEffDn = 1.0;
-  if      ( year == "2016APV" ) GetJetPileupIDEff2016APV( pt, eta, puJetIDEff, puJetIDEffUp, puJetIDEffDn );
-  else if ( year == "2016" ) GetJetPileupIDEff2016( pt, eta, puJetIDEff, puJetIDEffUp, puJetIDEffDn );
-  else if ( year == "2017" ) GetJetPileupIDEff2017( pt, eta, puJetIDEff, puJetIDEffUp, puJetIDEffDn );
-  else if ( year == "2018" ) GetJetPileupIDEff2018( pt, eta, puJetIDEff, puJetIDEffUp, puJetIDEffDn );
+  if      ( year == "2016APV" ) GetJetPileupIDEff2016APV( pt, eta, puJetIDEff );
+  else if ( year == "2016" ) GetJetPileupIDEff2016( pt, eta, puJetIDEff );
+  else if ( year == "2017" ) GetJetPileupIDEff2017( pt, eta, puJetIDEff );
+  else if ( year == "2018" ) GetJetPileupIDEff2018( pt, eta, puJetIDEff );
 }
 
-void HardcodedConditions::GetJetPileupIDEff2016APV( double pt, double eta, double *puJetIDEff, double *puJetIDEffUp, double *puJetIDEffDn ){
-  *puJetIDEff = 1.0;
-  *puJetIDEffUp = 1.0;
-  *puJetIDEffDn = 1.0;
+void HardcodedConditions::GetJetPileupIDEff2016APV( double pt, double eta, double *puJetIDEff ){
+  if ( pt < 40.0 ) {
+    if ( eta < -2.0 ) {
+      *puJetIDEff   = 0.55150;
+    }
+    else if ( eta < -1.479 ){
+      *puJetIDEff   = 0.69260;
+    }
+    else if ( eta < 0.0 ){
+      *puJetIDEff   = 0.85670;
+    }
+    else if ( eta < 1.479 ){
+      *puJetIDEff   = 0.86070;
+    }
+    else if ( eta < 2.0 ){
+      *puJetIDEff   = 0.72240;
+    }
+    else {
+      *puJetIDEff   = 0.51950;
+    }
+  }
+  else if ( pt < 50.0 ) {
+    if ( eta < -2.0 ) {
+      *puJetIDEff   = 0.46450;
+    }
+    else if ( eta < -1.479 ){
+      *puJetIDEff   = 0.64530;
+    }
+    else if ( eta < 0.0 ){
+      *puJetIDEff   = 0.83280;
+    }
+    else if ( eta < 1.479 ){
+      *puJetIDEff   = 0.83710;
+    }
+    else if ( eta < 2.0 ){
+      *puJetIDEff   = 0.65480;
+    }
+    else {
+      *puJetIDEff   = 0.44570;
+    }
+  }
+  else {
+    *puJetIDEff   = 1.0;
+  }
 }
 
-void HardcodedConditions::GetJetPileupIDEff2016( double pt, double eta, double *puJetIDEff, double *puJetIDEffUp, double *puJetIDEffDn ){
-  *puJetIDEff = 1.0;
-  *puJetIDEffUp = 1.0;
-  *puJetIDEffDn = 1.0;
+void HardcodedConditions::GetJetPileupIDEff2016( double pt, double eta, double *puJetIDEff ){
+  if ( pt < 40.0 ) {
+    if ( eta < -2.0 ) {
+      *puJetIDEff   = 0.57450;
+    }
+    else if ( eta < -1.479 ){
+      *puJetIDEff   = 0.72680;
+    }
+    else if ( eta < 0.0 ){
+      *puJetIDEff   = 0.86340;
+    }
+    else if ( eta < 1.479 ){
+      *puJetIDEff   = 0.86110;
+    }
+    else if ( eta < 2.0 ){
+      *puJetIDEff   = 0.72760;
+    }
+    else {
+      *puJetIDEff   = 0.55290;
+    }
+  }
+  else if ( pt < 50.0 ) {
+    if ( eta < -2.0 ) {
+      *puJetIDEff   = 0.48280;
+    }
+    else if ( eta < -1.479 ){
+      *puJetIDEff   = 0.66410;
+    }
+    else if ( eta < 0.0 ){
+      *puJetIDEff   = 0.84390;
+    }
+    else if ( eta < 1.479 ){
+      *puJetIDEff   = 0.83390;
+    }
+    else if ( eta < 2.0 ){
+      *puJetIDEff   = 0.66030;
+    }
+    else {
+      *puJetIDEff   = 0.46790;
+    }
+  }
+  else {
+    *puJetIDEff   = 1.0;
+  }
 }
 
-void HardcodedConditions::GetJetPileupIDEff2017( double pt, double eta, double *puJetIDEff, double *puJetIDEffUp, double *puJetIDEffDn ){
-  *puJetIDEff = 1.0;
-  *puJetIDEffUp = 1.0;
-  *puJetIDEffDn = 1.0;
+void HardcodedConditions::GetJetPileupIDEff2017( double pt, double eta, double *puJetIDEff ){
+  if ( pt < 40.0 ) {
+    if ( eta < -2.0 ) {
+      *puJetIDEff   = 0.67780;
+    }
+    else if ( eta < -1.479 ){
+      *puJetIDEff   = 0.75160;
+    }
+    else if ( eta < 0.0 ){
+      *puJetIDEff   = 0.85140;
+    }
+    else if ( eta < 1.479 ){
+      *puJetIDEff   = 0.84320;
+    }
+    else if ( eta < 2.0 ){
+      *puJetIDEff   = 0.74260;
+    }
+    else {
+      *puJetIDEff   = 0.64510;
+    }
+  }
+  else if ( pt < 50.0 ) {
+    if ( eta < -2.0 ) {
+      *puJetIDEff   = 0.62180;
+    }
+    else if ( eta < -1.479 ){
+      *puJetIDEff   = 0.70950;
+    }
+    else if ( eta < 0.0 ){
+      *puJetIDEff   = 0.83630;
+    }
+    else if ( eta < 1.479 ){
+      *puJetIDEff   = 0.82640;
+    }
+    else if ( eta < 2.0 ){
+      *puJetIDEff   = 0.69960;
+    }
+    else {
+      *puJetIDEff   = 0.58460;
+    }
+  }
+  else {
+    *puJetIDEff   = 1.0;
+  }
 }
 
-void HardcodedConditions::GetJetPileupIDEff2018( double pt, double eta, double *puJetIDEff, double *puJetIDEffUp, double *puJetIDEffDn ){
-  *puJetIDEff = 1.0;
-  *puJetIDEffUp = 1.0;
-  *puJetIDEffDn = 1.0;
+void HardcodedConditions::GetJetPileupIDEff2018( double pt, double eta, double *puJetIDEff ){
+  if ( pt < 40.0 ) {
+    if ( eta < -2.0 ) {
+      *puJetIDEff   = 0.63850;
+    }
+    else if ( eta < -1.479 ){
+      *puJetIDEff   = 0.71230;
+    }
+    else if ( eta < 0.0 ){
+      *puJetIDEff   = 0.82270;
+    }
+    else if ( eta < 1.479 ){
+      *puJetIDEff   = 0.81550;
+    }
+    else if ( eta < 2.0 ){
+      *puJetIDEff   = 0.71980;
+    }
+    else {
+      *puJetIDEff   = 0.62330;
+    }
+  }
+  else if ( pt < 50.0 ) {
+    if ( eta < -2.0 ) {
+      *puJetIDEff   = 0.56970;
+    }
+    else if ( eta < -1.479 ){
+      *puJetIDEff   = 0.67130;
+    }
+    else if ( eta < 0.0 ){
+      *puJetIDEff   = 0.80000;
+    }
+    else if ( eta < 1.479 ){
+      *puJetIDEff   = 0.79290;
+    }
+    else if ( eta < 2.0 ){
+      *puJetIDEff   = 0.66230;
+    }
+    else {
+      *puJetIDEff   = 0.56050;
+    }
+  }
+  else {
+    *puJetIDEff   = 1.0;
+  }
 }
 
 
