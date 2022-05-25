@@ -3196,129 +3196,78 @@ double HardcodedConditions::GetElectronTriggerXSF(double pt, double eta, std::st
 }
 
 double HardcodedConditions::GetElectronTriggerXSF2016APV(double pt, double eta){
+  double scaleCDEF = 17.516 / 20.442;
+  double scaleB    = ( 1. - scaleCDEF );
   if ( pt < 25.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.08596;
-    else if ( fabs(eta) < 1.4442 ) return 1.12867;
+    if ( fabs(eta) < 0.8000 ) return 1.08659 * scaleCDEF;
+    else if ( fabs(eta) < 1.4442 ) return 1.12455 * scaleCDEF;
     else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 1.24203;
-    else return 1.24135; }
+    else if ( fabs(eta) < 2.0000 ) return 1.20537 * scaleCDEF;
+    else return 1.21035 * scaleCDEF; }
   else if ( pt < 30.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.07781;
-    else if ( fabs(eta) < 1.4442 ) return 1.09538;
+    if ( fabs(eta) < 0.8000 ) return 1.06639 * scaleCDEF;
+    else if ( fabs(eta) < 1.4442 ) return 1.09437 * scaleCDEF;
     else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 1.15562;
-    else return 1.22798; }
+    else if ( fabs(eta) < 2.0000 ) return 1.16554 * scaleCDEF;
+    else return 1.14364 * scaleCDEF; }
+  else if ( pt < 32.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 1.06292 * scaleCDEF;
+    else if ( fabs(eta) < 1.4442 ) return 1.07619 * scaleCDEF;
+    else if ( fabs(eta) < 1.5660 ) return 1.00000;
+    else if ( fabs(eta) < 2.0000 ) return 1.12446 * scaleCDEF;
+    else return 1.12838 * scaleCDEF; }
   else if ( pt < 35.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.06647;
-    else if ( fabs(eta) < 1.4442 ) return 1.07529;
+    if ( fabs(eta) < 0.8000 ) return 1.58314 * scaleB + 1.06292 * scaleCDEF;
+    else if ( fabs(eta) < 1.4442 ) return 2.06786 * scaleB + 1.07619 * scaleCDEF;
     else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 1.11760;
-    else return 1.13290; }
+    else if ( fabs(eta) < 2.0000 ) return 1.01020 * scaleB + 1.12446 * scaleCDEF;
+    else return 0.38932 * scaleB + 1.12838 * scaleCDEF; }
   else if ( pt < 40.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.05202;
-    else if ( fabs(eta) < 1.4442 ) return 1.07941;
+    if ( fabs(eta) < 0.8000 ) return 1.19383 * scaleB + 1.05618 * scaleCDEF;
+    else if ( fabs(eta) < 1.4442 ) return 1.12618 * scaleB + 1.06484 * scaleCDEF;
     else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 1.12179;
-    else return 1.08603; }
+    else if ( fabs(eta) < 2.0000 ) return 0.95816 * scaleB + 1.10320 * scaleCDEF;
+    else return 0.78417 * scaleB + 1.08899 * scaleCDEF; }
   else if ( pt < 45.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.05622;
-    else if ( fabs(eta) < 1.4442 ) return 1.05048;
+    if ( fabs(eta) < 0.8000 ) return 1.23217 * scaleB + 1.04434 * scaleCDEF;
+    else if ( fabs(eta) < 1.4442 ) return 1.14523 * scaleB + 1.05515 * scaleCDEF;
     else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 1.11880;
-    else return 1.08003; }
+    else if ( fabs(eta) < 2.0000 ) return 1.04984 * scaleB + 1.08740 * scaleCDEF;
+    else return 0.81113 * scaleB + 1.06669 * scaleCDEF; }
   else if ( pt < 50.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.04037;
-    else if ( fabs(eta) < 1.4442 ) return 1.04686;
+    if ( fabs(eta) < 0.8000 ) return 1.24198 * scaleB + 1.03586 * scaleCDEF;
+    else if ( fabs(eta) < 1.4442 ) return 1.17750 * scaleB + 1.04011 * scaleCDEF;
     else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 1.08116;
-    else return 1.14176; }
+    else if ( fabs(eta) < 2.0000 ) return 0.99915 * scaleB + 1.07163 * scaleCDEF;
+    else return 0.82839 * scaleB + 1.08415 * scaleCDEF; }
   else if ( pt < 60.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.02084;
-    else if ( fabs(eta) < 1.4442 ) return 1.01208;
+    if ( fabs(eta) < 0.8000 ) return 1.21713 * scaleB + 1.01997 * scaleCDEF;
+    else if ( fabs(eta) < 1.4442 ) return 1.17750 * scaleB + 1.01249 * scaleCDEF;
     else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 1.06681;
-    else return 1.05761; }
+    else if ( fabs(eta) < 2.0000 ) return 0.97647 * scaleB + 1.04264 * scaleCDEF;
+    else return 0.90637 * scaleB + 1.06095 * scaleCDEF; }
   else if ( pt < 70.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.02816;
-    else if ( fabs(eta) < 1.4442 ) return 1.03062;
+    if ( fabs(eta) < 0.8000 ) return 1.22371 * scaleB + 1.01803 * scaleCDEF;
+    else if ( fabs(eta) < 1.4442 ) return 1.15302 * scaleB + 1.01639 * scaleCDEF;
     else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 1.03222;
-    else return 1.01098; }
+    else if ( fabs(eta) < 2.0000 ) return 0.97647 * scaleB + 1.02749 * scaleCDEF;
+    else return 0.91517 * scaleB + 1.03794 * scaleCDEF; }
   else if ( pt < 100.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.01400;
-    else if ( fabs(eta) < 1.4442 ) return 1.01176;
+    if ( fabs(eta) < 0.8000 ) return 1.20704 * scaleB + 1.01061 * scaleCDEF;
+    else if ( fabs(eta) < 1.4442 ) return 1.14614 * scaleB + 1.00398 * scaleCDEF;
     else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 1.01796;
-    else return 1.04261; }
+    else if ( fabs(eta) < 2.0000 ) return 0.88450 * scaleB + 1.00616 * scaleCDEF;
+    else return 0.83138 * scaleB + 1.03170 * scaleCDEF; }
   else {
-    if ( fabs(eta) < 0.8000 ) return 1.00475;
-    else if ( fabs(eta) < 1.4442 ) return 0.99587;
+    if ( fabs(eta) < 0.8000 ) return 1.18790 * scaleB + 1.00237 * scaleCDEF;
+    else if ( fabs(eta) < 1.4442 ) return 1.10756 * scaleB + 0.99051 * scaleCDEF;
     else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 1.02673;
-    else return 1.02521; }
+    else if ( fabs(eta) < 2.0000 ) return 0.77335 * scaleB + 0.98468 * scaleCDEF;
+    else return 0.62373 * scaleB + 1.00085 * scaleCDEF; }
 }
 
 double HardcodedConditions::GetElectronTriggerXSF2016(double pt, double eta){
-  if ( pt < 25.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.09221;
-    else if ( fabs(eta) < 1.4442 ) return 1.14226;
-    else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 1.26727;
-    else return 1.22196; }
-  else if ( pt < 30.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.00993;
-    else if ( fabs(eta) < 1.4442 ) return 1.06625;
-    else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 1.21897;
-    else return 0.97542; }
-  else if ( pt < 35.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.03458;
-    else if ( fabs(eta) < 1.4442 ) return 1.08296;
-    else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 0.93202;
-    else return 1.06019; }
-  else if ( pt < 40.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.05665;
-    else if ( fabs(eta) < 1.4442 ) return 1.07855;
-    else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 1.11290;
-    else return 1.12424; }
-  else if ( pt < 45.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.04774;
-    else if ( fabs(eta) < 1.4442 ) return 1.06399;
-    else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 1.06135;
-    else return 1.15436; }
-  else if ( pt < 50.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.01869;
-    else if ( fabs(eta) < 1.4442 ) return 1.04700;
-    else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 1.01348;
-    else return 1.01928; }
-  else if ( pt < 60.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 0.99955;
-    else if ( fabs(eta) < 1.4442 ) return 1.03377;
-    else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 0.94502;
-    else return 0.96244; }
-  else if ( pt < 70.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.01244;
-    else if ( fabs(eta) < 1.4442 ) return 1.03263;
-    else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 1.10807;
-    else return 0.98928; }
-  else if ( pt < 100.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.00304;
-    else if ( fabs(eta) < 1.4442 ) return 1.01588;
-    else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 0.94997;
-    else return 0.99818; }
-  else {
-    if ( fabs(eta) < 0.8000 ) return 1.00897;
-    else if ( fabs(eta) < 1.4442 ) return 0.99386;
-    else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 0.81674;
-    else return 0.92973; }
+
 }
 
 double HardcodedConditions::GetElectronTriggerXSF2017(double pt, double eta){
@@ -3388,65 +3337,65 @@ double HardcodedConditions::GetElectronTriggerXSF2017(double pt, double eta){
 
 double HardcodedConditions::GetElectronTriggerXSF2018(double pt, double eta){
   if ( pt < 25.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.15281;
-    else if ( fabs(eta) < 1.4442 ) return 1.26278;
+    if ( fabs(eta) < 0.8000 ) return 1.11580;
+    else if ( fabs(eta) < 1.4442 ) return 1.16769;
     else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 1.29767;
-    else return 1.62984; }
+    else if ( fabs(eta) < 2.0000 ) return 1.20519;
+    else return 1.33363; }
   else if ( pt < 30.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.08957;
-    else if ( fabs(eta) < 1.4442 ) return 1.22166;
+    if ( fabs(eta) < 0.8000 ) return 1.07938;
+    else if ( fabs(eta) < 1.4442 ) return 1.11691;
     else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 1.14964;
-    else return 1.33147; }
+    else if ( fabs(eta) < 2.0000 ) return 1.11615;
+    else return 1.25092; }
   else if ( pt < 35.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 0.89512;
-    else if ( fabs(eta) < 1.4442 ) return 0.98056;
+    if ( fabs(eta) < 0.8000 ) return 0.95119;
+    else if ( fabs(eta) < 1.4442 ) return 0.97900;
     else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 1.06338;
-    else return 1.05929; }
+    else if ( fabs(eta) < 2.0000 ) return 0.98137;
+    else return 1.09154; }
   else if ( pt < 40.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.01805;
-    else if ( fabs(eta) < 1.4442 ) return 1.03937;
+    if ( fabs(eta) < 0.8000 ) return 1.01169;
+    else if ( fabs(eta) < 1.4442 ) return 1.01965;
     else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 1.10848;
-    else return 1.17526; }
+    else if ( fabs(eta) < 2.0000 ) return 1.10725;
+    else return 1.14393; }
   else if ( pt < 45.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.02264;
-    else if ( fabs(eta) < 1.4442 ) return 1.04793;
+    if ( fabs(eta) < 0.8000 ) return 1.02757;
+    else if ( fabs(eta) < 1.4442 ) return 1.03462;
     else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 1.04741;
-    else return 1.05390; }
+    else if ( fabs(eta) < 2.0000 ) return 1.04519;
+    else return 1.07198; }
   else if ( pt < 50.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.02046;
-    else if ( fabs(eta) < 1.4442 ) return 1.05621;
+    if ( fabs(eta) < 0.8000 ) return 1.02310;
+    else if ( fabs(eta) < 1.4442 ) return 1.03258;
     else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 1.02299;
-    else return 1.04027; }
+    else if ( fabs(eta) < 2.0000 ) return 1.03339;
+    else return 1.04745; }
   else if ( pt < 60.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.01860;
-    else if ( fabs(eta) < 1.4442 ) return 1.02164;
+    if ( fabs(eta) < 0.8000 ) return 1.00964;
+    else if ( fabs(eta) < 1.4442 ) return 1.01093;
     else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 0.99611;
-    else return 1.03701; }
+    else if ( fabs(eta) < 2.0000 ) return 0.98731;
+    else return 0.99402; }
   else if ( pt < 70.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.01257;
-    else if ( fabs(eta) < 1.4442 ) return 1.01218;
+    if ( fabs(eta) < 0.8000 ) return 1.00401;
+    else if ( fabs(eta) < 1.4442 ) return 1.00521;
     else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 0.98758;
-    else return 1.01239; }
+    else if ( fabs(eta) < 2.0000 ) return 0.97122;
+    else return 0.97675; }
   else if ( pt < 100.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.00336;
-    else if ( fabs(eta) < 1.4442 ) return 1.00980;
+    if ( fabs(eta) < 0.8000 ) return 1.00350;
+    else if ( fabs(eta) < 1.4442 ) return 0.99915;
     else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 0.98508;
-    else return 0.99090; }
+    else if ( fabs(eta) < 2.0000 ) return 0.96440;
+    else return 0.95686; }
   else {
-    if ( fabs(eta) < 0.8000 ) return 0.99642;
-    else if ( fabs(eta) < 1.4442 ) return 0.99183;
+    if ( fabs(eta) < 0.8000 ) return 0.99735;
+    else if ( fabs(eta) < 1.4442 ) return 0.98921;
     else if ( fabs(eta) < 1.5660 ) return 1.00000;
-    else if ( fabs(eta) < 2.0000 ) return 0.95218;
-    else return 0.88562; }
+    else if ( fabs(eta) < 2.0000 ) return 0.88982;
+    else return 0.87290; }
 }
 
 
@@ -3964,129 +3913,72 @@ double HardcodedConditions::GetMuonTriggerXSF(double pt, double eta, std::string
 }
 
 double HardcodedConditions::GetMuonTriggerXSF2016APV(double pt, double eta){
-  if ( pt < 25.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.04357;
-    else if ( fabs(eta) < 1.4442 ) return 1.05987;
-    else if ( fabs(eta) < 1.5660 ) return 1.05463;
-    else if ( fabs(eta) < 2.0000 ) return 1.04683;
-    else return 1.01670; }
+  double scaleCDEF = 17.516 / 20.442;
+  double scaleB    = ( 1. - scaleCDEF );
+  if ( pt < 24.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 0.94637 * scaleCDEF;
+    else if ( fabs(eta) < 1.4442 ) return 0.95790 * scaleCDEF;
+    else if ( fabs(eta) < 1.5660 ) return 0.96069 * scaleCDEF;
+    else if ( fabs(eta) < 2.0000 ) return 0.94582 * scaleCDEF;
+    else return 0.96144 * scaleCDEF; }
   else if ( pt < 30.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 0.96447;
-    else if ( fabs(eta) < 1.4442 ) return 0.94137;
-    else if ( fabs(eta) < 1.5660 ) return 0.91985;
-    else if ( fabs(eta) < 2.0000 ) return 0.93624;
-    else return 0.95943; }
+    if ( fabs(eta) < 0.8000 ) return 0.90268 * scaleB + 0.98041 * scaleCDEF;
+    else if ( fabs(eta) < 1.4442 ) return 0.85771 * scaleB + 0.97109 * scaleCDEF;
+    else if ( fabs(eta) < 1.5660 ) return 0.84791 * scaleB + 0.96496 * scaleCDEF;
+    else if ( fabs(eta) < 2.0000 ) return 0.79518 * scaleB + 0.97183 * scaleCDEF;
+    else return 0.76612 * scaleB + 0.95758 * scaleCDEF; }
   else if ( pt < 35.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 0.94737;
-    else if ( fabs(eta) < 1.4442 ) return 0.91818;
-    else if ( fabs(eta) < 1.5660 ) return 1.07255;
-    else if ( fabs(eta) < 2.0000 ) return 0.96553;
-    else return 0.91483; }
+    if ( fabs(eta) < 0.8000 ) return 0.93709 * scaleB +  0.99020 * scaleCDEF;
+    else if ( fabs(eta) < 1.4442 ) return 0.91127 * scaleB +  0.98104 * scaleCDEF;
+    else if ( fabs(eta) < 1.5660 ) return 0.94939 * scaleB + 0.97632 * scaleCDEF;
+    else if ( fabs(eta) < 2.0000 ) return 0.81169 * scaleB + 0.97472 * scaleCDEF;
+    else return 0.84489 * scaleB + 0.96909 * scaleCDEF; }
   else if ( pt < 40.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 0.93086;
-    else if ( fabs(eta) < 1.4442 ) return 0.90895;
-    else if ( fabs(eta) < 1.5660 ) return 0.97364;
-    else if ( fabs(eta) < 2.0000 ) return 0.89490;
-    else return 0.93512; }
+    if ( fabs(eta) < 0.8000 ) return 0.96469 * scaleB +  0.99018 * scaleCDEF;
+    else if ( fabs(eta) < 1.4442 ) return 0.94609 * scaleB + 0.98580 * scaleCDEF;
+    else if ( fabs(eta) < 1.5660 ) return 0.92322 * scaleB + 0.97837 * scaleCDEF;
+    else if ( fabs(eta) < 2.0000 ) return 0.90132 * scaleB + 0.98298 * scaleCDEF;
+    else return 0.84854 * scaleB + 0.97462 * scaleCDEF; }
   else if ( pt < 45.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 0.91621;
-    else if ( fabs(eta) < 1.4442 ) return 0.90210;
-    else if ( fabs(eta) < 1.5660 ) return 0.96149;
-    else if ( fabs(eta) < 2.0000 ) return 0.92139;
-    else return 0.91677; }
+    if ( fabs(eta) < 0.8000 ) return 0.97705 * scaleB +  0.98983 * scaleCDEF;
+    else if ( fabs(eta) < 1.4442 ) return 0.95378 * scaleB + 0.98734 * scaleCDEF;
+    else if ( fabs(eta) < 1.5660 ) return 0.99804 * scaleB + 0.98989 * scaleCDEF;
+    else if ( fabs(eta) < 2.0000 ) return 0.89635 * scaleB + 0.97871 * scaleCDEF;
+    else return 0.88036 * scaleB + 0.97240 * scaleCDEF; }
   else if ( pt < 50.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 0.91070;
-    else if ( fabs(eta) < 1.4442 ) return 0.91143;
-    else if ( fabs(eta) < 1.5660 ) return 0.88930;
-    else if ( fabs(eta) < 2.0000 ) return 0.90925;
-    else return 0.92678; }
+    if ( fabs(eta) < 0.8000 ) return 0.97953 * scaleB + 0.99292 * scaleCDEF;
+    else if ( fabs(eta) < 1.4442 ) return 0.96676 * scaleB + 0.99010 * scaleCDEF;
+    else if ( fabs(eta) < 1.5660 ) return 0.99105 * scaleB + 0.97212 * scaleCDEF;
+    else if ( fabs(eta) < 2.0000 ) return 0.92806 * scaleB + 0.98668 * scaleCDEF;
+    else return 0.90748 * scaleB + 0.97892 * scaleCDEF; }
   else if ( pt < 60.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.00345;
-    else if ( fabs(eta) < 1.4442 ) return 0.99444;
-    else if ( fabs(eta) < 1.5660 ) return 1.00645;
-    else if ( fabs(eta) < 2.0000 ) return 0.99547;
-    else return 0.97827; }
+    if ( fabs(eta) < 0.8000 ) return 0.98185 * scaleB + 1.00465 * scaleCDEF;
+    else if ( fabs(eta) < 1.4442 ) return 0.95578 * scaleB + 0.99896 * scaleCDEF;
+    else if ( fabs(eta) < 1.5660 ) return 1.04354 * scaleB + 1.00392 * scaleCDEF;
+    else if ( fabs(eta) < 2.0000 ) return 0.90934 * scaleB + 1.00204 * scaleCDEF;
+    else return 0.90253 * scaleB + 0.99439 * scaleCDEF; }
   else if ( pt < 70.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.00272;
-    else if ( fabs(eta) < 1.4442 ) return 0.99710;
-    else if ( fabs(eta) < 1.5660 ) return 0.99858;
-    else if ( fabs(eta) < 2.0000 ) return 1.00325;
-    else return 0.99749; }
+    if ( fabs(eta) < 0.8000 ) return 0.98316 * scaleB + 1.00496 * scaleCDEF;
+    else if ( fabs(eta) < 1.4442 ) return 0.94568 * scaleB + 0.99818 * scaleCDEF;
+    else if ( fabs(eta) < 1.5660 ) return 0.96182 * scaleB + 0.99807 * scaleCDEF;
+    else if ( fabs(eta) < 2.0000 ) return 0.89956 * scaleB + 0.99386 * scaleCDEF;
+    else return 0.88652 * scaleB + 0.99079 * scaleCDEF; }
   else if ( pt < 100.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.00782;
-    else if ( fabs(eta) < 1.4442 ) return 0.99734;
-    else if ( fabs(eta) < 1.5660 ) return 1.00094;
-    else if ( fabs(eta) < 2.0000 ) return 1.00544;
-    else return 0.99387; }
+    if ( fabs(eta) < 0.8000 ) return 0.97398 * scaleB + 1.00483 * scaleCDEF;
+    else if ( fabs(eta) < 1.4442 ) return 0.93595 * scaleB + 0.99915 * scaleCDEF;
+    else if ( fabs(eta) < 1.5660 ) return 0.97581 * scaleB + 0.99748 * scaleCDEF;
+    else if ( fabs(eta) < 2.0000 ) return 0.90511 * scaleB + 1.00200 * scaleCDEF;
+    else return 0.88652 * scaleB + 0.99931 * scaleCDEF; }
   else {
-    if ( fabs(eta) < 0.8000 ) return 1.00429;
-    else if ( fabs(eta) < 1.4442 ) return 0.99636;
-    else if ( fabs(eta) < 1.5660 ) return 0.97871;
-    else if ( fabs(eta) < 2.0000 ) return 1.00663;
-    else return 0.99077; }
+    if ( fabs(eta) < 0.8000 ) return 0.97179 * scaleB + 1.00386 * scaleCDEF;
+    else if ( fabs(eta) < 1.4442 ) return 0.93244 * scaleB + 0.99792 * scaleCDEF;
+    else if ( fabs(eta) < 1.5660 ) return 0.98308 * scaleB + 0.98862 * scaleCDEF;
+    else if ( fabs(eta) < 2.0000 ) return 0.91301 * scaleB + 0.99701 * scaleCDEF;
+    else return 0.92678 * scaleB + 0.99505 * scaleCDEF; }
 }
 
 double HardcodedConditions::GetMuonTriggerXSF2016(double pt, double eta){
-  if ( pt < 25.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.19213;
-    else if ( fabs(eta) < 1.4442 ) return 1.18228;
-    else if ( fabs(eta) < 1.5660 ) return 1.20649;
-    else if ( fabs(eta) < 2.0000 ) return 1.18598;
-    else return 1.16004; }
-  else if ( pt < 30.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 0.99447;
-    else if ( fabs(eta) < 1.4442 ) return 0.94227;
-    else if ( fabs(eta) < 1.5660 ) return 0.94335;
-    else if ( fabs(eta) < 2.0000 ) return 1.08765;
-    else return 1.05567; }
-  else if ( pt < 35.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.06775;
-    else if ( fabs(eta) < 1.4442 ) return 0.98920;
-    else if ( fabs(eta) < 1.5660 ) return 1.10938;
-    else if ( fabs(eta) < 2.0000 ) return 1.07440;
-    else return 0.98994; }
-  else if ( pt < 40.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 0.99666;
-    else if ( fabs(eta) < 1.4442 ) return 0.99403;
-    else if ( fabs(eta) < 1.5660 ) return 1.01937;
-    else if ( fabs(eta) < 2.0000 ) return 0.97368;
-    else return 0.98467; }
-  else if ( pt < 45.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.00506;
-    else if ( fabs(eta) < 1.4442 ) return 1.00333;
-    else if ( fabs(eta) < 1.5660 ) return 1.05941;
-    else if ( fabs(eta) < 2.0000 ) return 1.05121;
-    else return 1.03244; }
-  else if ( pt < 50.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.04028;
-    else if ( fabs(eta) < 1.4442 ) return 0.99862;
-    else if ( fabs(eta) < 1.5660 ) return 1.08333;
-    else if ( fabs(eta) < 2.0000 ) return 1.03465;
-    else return 1.05919; }
-  else if ( pt < 60.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.00989;
-    else if ( fabs(eta) < 1.4442 ) return 1.01069;
-    else if ( fabs(eta) < 1.5660 ) return 1.00667;
-    else if ( fabs(eta) < 2.0000 ) return 1.01868;
-    else return 1.02139; }
-  else if ( pt < 70.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.00884;
-    else if ( fabs(eta) < 1.4442 ) return 1.00614;
-    else if ( fabs(eta) < 1.5660 ) return 1.01724;
-    else if ( fabs(eta) < 2.0000 ) return 1.02928;
-    else return 1.01896; }
-  else if ( pt < 100.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.00509;
-    else if ( fabs(eta) < 1.4442 ) return 1.00511;
-    else if ( fabs(eta) < 1.5660 ) return 1.01439;
-    else if ( fabs(eta) < 2.0000 ) return 1.01789;
-    else return 1.02405; }
-  else {
-    if ( fabs(eta) < 0.8000 ) return 1.00981;
-    else if ( fabs(eta) < 1.4442 ) return 1.00981;
-    else if ( fabs(eta) < 1.5660 ) return 1.01366;
-    else if ( fabs(eta) < 2.0000 ) return 1.02283;
-    else return 1.01607; }
+
 }
   
 double HardcodedConditions::GetMuonTriggerXSF2017(double pt, double eta){
@@ -4162,65 +4054,65 @@ double HardcodedConditions::GetMuonTriggerXSF2017(double pt, double eta){
 
 double HardcodedConditions::GetMuonTriggerXSF2018(double pt, double eta){
   if ( pt < 25.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.02381;
-    else if ( fabs(eta) < 1.4442 ) return 1.03722;
-    else if ( fabs(eta) < 1.5660 ) return 1.12683;
-    else if ( fabs(eta) < 2.0000 ) return 1.05901;
-    else return 1.09535; }
+    if ( fabs(eta) < 0.8000 ) return 1.02489;
+    else if ( fabs(eta) < 1.4442 ) return 1.02709;
+    else if ( fabs(eta) < 1.5660 ) return 1.03265;
+    else if ( fabs(eta) < 2.0000 ) return 1.03443;
+    else return 1.04119; }
   else if ( pt < 30.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 0.95180;
-    else if ( fabs(eta) < 1.4442 ) return 0.94922;
-    else if ( fabs(eta) < 1.5660 ) return 0.92120;
-    else if ( fabs(eta) < 2.0000 ) return 0.98591;
-    else return 1.17111; }
+    if ( fabs(eta) < 0.8000 ) return 1.00544;
+    else if ( fabs(eta) < 1.4442 ) return 1.00717;
+    else if ( fabs(eta) < 1.5660 ) return 1.00706;
+    else if ( fabs(eta) < 2.0000 ) return 1.01314;
+    else return 1.01741; }
   else if ( pt < 35.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 0.85366;
-    else if ( fabs(eta) < 1.4442 ) return 0.83559;
-    else if ( fabs(eta) < 1.5660 ) return 0.83611;
-    else if ( fabs(eta) < 2.0000 ) return 0.95780;
-    else return 0.99253; }
+    if ( fabs(eta) < 0.8000 ) return 1.00656;
+    else if ( fabs(eta) < 1.4442 ) return 1.00657;
+    else if ( fabs(eta) < 1.5660 ) return 1.00586;
+    else if ( fabs(eta) < 2.0000 ) return 1.01576;
+    else return 1.01581; }
   else if ( pt < 40.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 0.87396;
-    else if ( fabs(eta) < 1.4442 ) return 0.92349;
-    else if ( fabs(eta) < 1.5660 ) return 1.01818;
-    else if ( fabs(eta) < 2.0000 ) return 0.94413;
-    else return 0.92710; }
+    if ( fabs(eta) < 0.8000 ) return 1.00591;
+    else if ( fabs(eta) < 1.4442 ) return 1.00609;
+    else if ( fabs(eta) < 1.5660 ) return 1.00586;
+    else if ( fabs(eta) < 2.0000 ) return 1.01260;
+    else return 1.01824; }
   else if ( pt < 45.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 0.88117;
-    else if ( fabs(eta) < 1.4442 ) return 0.88920;
-    else if ( fabs(eta) < 1.5660 ) return 0.76018;
-    else if ( fabs(eta) < 2.0000 ) return 0.86646;
-    else return 0.95270; }
+    if ( fabs(eta) < 0.8000 ) return 1.00523;
+    else if ( fabs(eta) < 1.4442 ) return 1.00514;
+    else if ( fabs(eta) < 1.5660 ) return 1.00521;
+    else if ( fabs(eta) < 2.0000 ) return 1.01283;
+    else return 1.01783; }
   else if ( pt < 50.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 0.87631;
-    else if ( fabs(eta) < 1.4442 ) return 0.91128;
-    else if ( fabs(eta) < 1.5660 ) return 0.78631;
-    else if ( fabs(eta) < 2.0000 ) return 0.91075;
-    else return 0.88859; }
+    if ( fabs(eta) < 0.8000 ) return 1.00443;
+    else if ( fabs(eta) < 1.4442 ) return 1.00446;
+    else if ( fabs(eta) < 1.5660 ) return 1.00553;
+    else if ( fabs(eta) < 2.0000 ) return 1.01023;
+    else return 1.01518; }
   else if ( pt < 60.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.00037;
-    else if ( fabs(eta) < 1.4442 ) return 1.00047;
-    else if ( fabs(eta) < 1.5660 ) return 1.02478;
-    else if ( fabs(eta) < 2.0000 ) return 1.01820;
-    else return 1.00427; }
+    if ( fabs(eta) < 0.8000 ) return 1.00409;
+    else if ( fabs(eta) < 1.4442 ) return 1.00417;
+    else if ( fabs(eta) < 1.5660 ) return 1.00183;
+    else if ( fabs(eta) < 2.0000 ) return 1.01035;
+    else return 1.01210; }
   else if ( pt < 70.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.00272;
-    else if ( fabs(eta) < 1.4442 ) return 1.00524;
-    else if ( fabs(eta) < 1.5660 ) return 0.99881;
-    else if ( fabs(eta) < 2.0000 ) return 1.02445;
-    else return 1.02087; }
+    if ( fabs(eta) < 0.8000 ) return 1.00404;
+    else if ( fabs(eta) < 1.4442 ) return 1.00411;
+    else if ( fabs(eta) < 1.5660 ) return 1.00287;
+    else if ( fabs(eta) < 2.0000 ) return 1.01023;
+    else return 1.01158; }
   else if ( pt < 100.0 ) {
-    if ( fabs(eta) < 0.8000 ) return 1.00651;
-    else if ( fabs(eta) < 1.4442 ) return 1.00371;
-    else if ( fabs(eta) < 1.5660 ) return 1.00900;
-    else if ( fabs(eta) < 2.0000 ) return 1.00996;
-    else return 1.02628; }
+    if ( fabs(eta) < 0.8000 ) return 1.00429;
+    else if ( fabs(eta) < 1.4442 ) return 1.00362;
+    else if ( fabs(eta) < 1.5660 ) return 1.00169;
+    else if ( fabs(eta) < 2.0000 ) return 1.00911;
+    else return 1.01205; }
   else {
-    if ( fabs(eta) < 0.8000 ) return 1.00541;
-    else if ( fabs(eta) < 1.4442 ) return 1.00346;
-    else if ( fabs(eta) < 1.5660 ) return 1.00648;
-    else if ( fabs(eta) < 2.0000 ) return 1.00782;
-    else return 1.00739; }
+    if ( fabs(eta) < 0.8000 ) return 1.00346;
+    else if ( fabs(eta) < 1.4442 ) return 1.00283;
+    else if ( fabs(eta) < 1.5660 ) return 1.00078;
+    else if ( fabs(eta) < 2.0000 ) return 1.00830;
+    else return 1.00893; }
 }
 
 /*.-----------------------------------------------------------------.
