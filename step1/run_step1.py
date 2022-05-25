@@ -161,7 +161,7 @@ for shift in samples:
               'SITE': args.site
             }
             jdfName = "{}{}/{}_{}.job".format( condorDir, shift, jobParams["OUTFILENAME"], jobParams["ID"] )
-            print( ">> {}: {}".format( jdfName, idList ) )
+            print( ">> {}: {}".format( jdfName.split( "/" )[-1], idList ) )
             jdf = open( jdfName, 'w' )
             jdf.write(
 """use_x509userproxy = true
