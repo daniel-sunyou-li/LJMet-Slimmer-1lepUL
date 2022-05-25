@@ -3267,7 +3267,66 @@ double HardcodedConditions::GetElectronTriggerXSF2016APV(double pt, double eta){
 }
 
 double HardcodedConditions::GetElectronTriggerXSF2016(double pt, double eta){
-
+  if ( pt < 25.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 1.14782;
+    else if ( fabs(eta) < 1.4442 ) return 1.18631;
+    else if ( fabs(eta) < 1.5660 ) return 1.00000;
+    else if ( fabs(eta) < 2.0000 ) return 1.29749;
+    else return 1.24157; }
+  else if ( pt < 30.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 1.08915;
+    else if ( fabs(eta) < 1.4442 ) return 1.11135;
+    else if ( fabs(eta) < 1.5660 ) return 1.00000;
+    else if ( fabs(eta) < 2.0000 ) return 1.19278;
+    else return 1.16119; }
+  else if ( pt < 35.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 1.06652;
+    else if ( fabs(eta) < 1.4442 ) return 1.08731;
+    else if ( fabs(eta) < 1.5660 ) return 1.00000;
+    else if ( fabs(eta) < 2.0000 ) return 1.13757;
+    else return 1.09036; }
+  else if ( pt < 40.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 1.05907;
+    else if ( fabs(eta) < 1.4442 ) return 1.07224;
+    else if ( fabs(eta) < 1.5660 ) return 1.00000;
+    else if ( fabs(eta) < 2.0000 ) return 1.11212;
+    else return 1.10263; }
+  else if ( pt < 45.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 1.04784;
+    else if ( fabs(eta) < 1.4442 ) return 1.05666;
+    else if ( fabs(eta) < 1.5660 ) return 1.00000;
+    else if ( fabs(eta) < 2.0000 ) return 1.09641;
+    else return 1.08932; }
+  else if ( pt < 50.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 1.03015;
+    else if ( fabs(eta) < 1.4442 ) return 1.04212;
+    else if ( fabs(eta) < 1.5660 ) return 1.00000;
+    else if ( fabs(eta) < 2.0000 ) return 1.05615;
+    else return 1.06802; }
+  else if ( pt < 60.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 1.01940;
+    else if ( fabs(eta) < 1.4442 ) return 1.01754;
+    else if ( fabs(eta) < 1.5660 ) return 1.00000;
+    else if ( fabs(eta) < 2.0000 ) return 0.99054;
+    else return 0.99812; }
+  else if ( pt < 70.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 1.01138;
+    else if ( fabs(eta) < 1.4442 ) return 1.00831;
+    else if ( fabs(eta) < 1.5660 ) return 1.00000;
+    else if ( fabs(eta) < 2.0000 ) return 0.97730;
+    else return 0.97372; }
+  else if ( pt < 100.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 1.00496;
+    else if ( fabs(eta) < 1.4442 ) return 0.99992;
+    else if ( fabs(eta) < 1.5660 ) return 1.00000;
+    else if ( fabs(eta) < 2.0000 ) return 0.95467;
+    else return 0.95763; }
+  else {
+    if ( fabs(eta) < 0.8000 ) return 0.98566;
+    else if ( fabs(eta) < 1.4442 ) return 0.96761;
+    else if ( fabs(eta) < 1.5660 ) return 1.00000;
+    else if ( fabs(eta) < 2.0000 ) return 0.81423;
+    else return 0.81549; }
 }
 
 double HardcodedConditions::GetElectronTriggerXSF2017(double pt, double eta){
@@ -3978,7 +4037,66 @@ double HardcodedConditions::GetMuonTriggerXSF2016APV(double pt, double eta){
 }
 
 double HardcodedConditions::GetMuonTriggerXSF2016(double pt, double eta){
-
+  if ( pt < 25.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 1.09582;
+    else if ( fabs(eta) < 1.4442 ) return 1.10100;
+    else if ( fabs(eta) < 1.5660 ) return 1.09695;
+    else if ( fabs(eta) < 2.0000 ) return 1.10252;
+    else return 1.09121; }
+  else if ( pt < 30.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 1.01244;
+    else if ( fabs(eta) < 1.4442 ) return 1.01534;
+    else if ( fabs(eta) < 1.5660 ) return 1.01917;
+    else if ( fabs(eta) < 2.0000 ) return 1.02772;
+    else return 1.03346; }
+  else if ( pt < 35.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 1.00962;
+    else if ( fabs(eta) < 1.4442 ) return 1.01127;
+    else if ( fabs(eta) < 1.5660 ) return 1.01008;
+    else if ( fabs(eta) < 2.0000 ) return 1.02566;
+    else return 1.02116; }
+  else if ( pt < 40.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 1.00799;
+    else if ( fabs(eta) < 1.4442 ) return 1.00832;
+    else if ( fabs(eta) < 1.5660 ) return 1.00635;
+    else if ( fabs(eta) < 2.0000 ) return 1.02640;
+    else return 1.02238; }
+  else if ( pt < 45.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 1.00799;
+    else if ( fabs(eta) < 1.4442 ) return 1.01116;
+    else if ( fabs(eta) < 1.5660 ) return 1.01524;
+    else if ( fabs(eta) < 2.0000 ) return 1.02745;
+    else return 1.01212; }
+  else if ( pt < 50.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 1.00754;
+    else if ( fabs(eta) < 1.4442 ) return 1.00776;
+    else if ( fabs(eta) < 1.5660 ) return 1.01083;
+    else if ( fabs(eta) < 2.0000 ) return 1.01895;
+    else return 1.01396; }
+  else if ( pt < 60.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 1.00701;
+    else if ( fabs(eta) < 1.4442 ) return 1.00747;
+    else if ( fabs(eta) < 1.5660 ) return 1.00836;
+    else if ( fabs(eta) < 2.0000 ) return 1.01638;
+    else return 1.01108; }
+  else if ( pt < 70.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 1.00685;
+    else if ( fabs(eta) < 1.4442 ) return 1.00631;
+    else if ( fabs(eta) < 1.5660 ) return 1.01235;
+    else if ( fabs(eta) < 2.0000 ) return 1.01837;
+    else return 1.01113; }
+  else if ( pt < 100.0 ) {
+    if ( fabs(eta) < 0.8000 ) return 1.00707;
+    else if ( fabs(eta) < 1.4442 ) return 1.00776;
+    else if ( fabs(eta) < 1.5660 ) return 1.01112;
+    else if ( fabs(eta) < 2.0000 ) return 1.01595;
+    else return 1.01239; }
+  else {
+    if ( fabs(eta) < 0.8000 ) return 1.00912;
+    else if ( fabs(eta) < 1.4442 ) return 1.00764;
+    else if ( fabs(eta) < 1.5660 ) return 1.01059;
+    else if ( fabs(eta) < 2.0000 ) return 1.02018;
+    else return 1.01372; }
 }
   
 double HardcodedConditions::GetMuonTriggerXSF2017(double pt, double eta){
