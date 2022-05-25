@@ -7,6 +7,7 @@ import pickle
 import pandas
 from XRootD import client
 import config
+import tqdm
 
 execfile( "../../EOSSafeUtils.py" )
 
@@ -17,6 +18,7 @@ parser.add_argument( "-l", "--lepton", default = "e", help = "e,m" )
 parser.add_argument( "--single", action = "store_true" )
 parser.add_argument( "-loc", "--location", default = "BRUX" )
 parser.add_argument( "-s", "--site", default = "BRUX", help = "Site running: BRUX, LPC" )
+parser.add_argument( "--verbose", action = "store_true" )
 args = parser.parse_args()
                     
 import ROOT
@@ -84,7 +86,7 @@ elif args.site == "BRUX":
   if args.location == "LPC":
     samples_done = EOSlistdir( os.path.join( config.haddDir[ args.year ][ "LPC" ], "nominal" ) )
   elif args.location == "BRUX":
-    samples_done = [ fName for fName in os.listdir( config.haddDir[ args.year ][ "BRUX" ], "nominal" ) ]
+    samples_done = [ fName for fName in os.listdir( os.path.join( config.haddDir[ args.year ][ "BRUX" ], "nominal" ) ) ]
 
 samples = []
 
@@ -135,9 +137,16 @@ for sample in samples:
     events_hlt = { "leptonPt_MultiLepCalc": [], "leptonEta_MultiLepCalc": [] }
     rFile = ROOT.TFile( samplePath )
     rTree = rFile.Get( "ljmet" )
+    total_events = rTree.GetEntries()
+    nominal_events = 0
+    hlt_events = 0
     for i in tqdm.tqdm( range( rTree.GetEntries() ) ):
       rTree.GetEntry(i)
       passFilter = True
+      if args.lepton.lower() in [ "e", "el" ]:
+        if getattr( rTree, "isElectron" ) != 1: continue
+      elif args.lepton.lower() in [ "m", "mu" ]:
+        if getattr( rTree, "isMuon" ) != 1: continue
       for filter in config.selection:
         if config.selection[ filter ][ "CONDITION" ] == ">":
           if getattr( rTree, str( filter ) ) <= config.selection[ filter ][ "VALUE" ]: passFilter = False
@@ -152,6 +161,7 @@ for sample in samples:
       if not passFilter: continue
       events_nom[ "leptonPt_MultiLepCalc" ].append(  getattr( rTree, "leptonPt_MultiLepCalc" ) )
       events_nom[ "leptonEta_MultiLepCalc" ].append( getattr( rTree, "leptonEta_MultiLepCalc" ) )
+      nominal_events += 1
       passHLT = False
       if args.single:
         if getattr( rTree, "MCLepPastTrigger" ) == 1 and getattr( rTree, "DataLepPastTrigger" ) == 1: passHLT = True
@@ -160,9 +170,14 @@ for sample in samples:
       if passHLT:
         events_hlt[ "leptonPt_MultiLepCalc" ].append(  getattr( rTree, "leptonPt_MultiLepCalc" ) )
         events_hlt[ "leptonEta_MultiLepCalc" ].append( getattr( rTree, "leptonEta_MultiLepCalc" ) )
-    
-    nom_df  = pd.DataFrame.from_dict( events_nom )
-    nom_hlt = pd.DataFrame.from_dict( events_hlt )
+        hlt_events += 1
+    total_nominal += nominal_events
+    total_hlt += hlt_events
+    print( "[INFO] {} has {} total events".format( sample, total_events ) )
+    print( "   + {} passed pre-selection".format( nominal_events ) )
+    print( "   + {} passed pre-selection + trigger".format( hlt_events ) ) 
+    nom_df  = pandas.DataFrame.from_dict( events_nom )
+    hlt_df = pandas.DataFrame.from_dict( events_hlt )
     
   for i in range( len( config.triggerX_bins[ "PT" ] ) + 1 ):
     if i == 0: 
@@ -184,12 +199,13 @@ for sample in samples:
       else:
         eta_pass_nom = ( nom_df[ "leptonEta_MultiLepCalc" ].abs() >= config.triggerX_bins[ "ETA" ][j-1] ) & ( nom_df[ "leptonEta_MultiLepCalc" ].abs() < config.triggerX_bins[ "ETA" ][j] )
         eta_pass_hlt = ( hlt_df[ "leptonEta_MultiLepCalc" ].abs() >= config.triggerX_bins[ "ETA" ][j-1] ) & ( hlt_df[ "leptonEta_MultiLepCalc" ].abs() < config.triggerX_bins[ "ETA" ][j] )
-      
-      print( ">> Bin (i,j) = ({},{}):".format( i, j ) )
-      try:
-        print( "   + HLT / NOM = {} / {} ({:.3f})".format( len( hlt_df[ ( pt_pass_hlt ) & ( eta_pass_hlt ) ] ), len( nom_df[ ( pt_pass_nom ) & ( eta_pass_nom ) ] ), float( len( hlt_df[ ( pt_pass_hlt ) & ( eta_pass_hlt ) ] ) ) / len( nom_df[ ( pt_pass_nom ) & ( eta_pass_nom ) ] ) ) ) 
-      except:
-        print( "   + HLT / NOM = 0 / 0" )
+     
+      if args.verbose:
+        print( ">> Bin (i,j) = ({},{}):".format( i, j ) )
+        try:
+          print( "   + HLT / NOM = {} / {} ({:.3f})".format( len( hlt_df[ ( pt_pass_hlt ) & ( eta_pass_hlt ) ] ), len( nom_df[ ( pt_pass_nom ) & ( eta_pass_nom ) ] ), float( len( hlt_df[ ( pt_pass_hlt ) & ( eta_pass_hlt ) ] ) ) / len( nom_df[ ( pt_pass_nom ) & ( eta_pass_nom ) ] ) ) ) 
+        except:
+          print( "   + HLT / NOM = 0 / 0" )
 
       yields[ "NOMINAL" ][i][j] += len( nom_df[ ( pt_pass_nom ) & ( eta_pass_nom ) ] )
       yields[ "HLT" ][i][j] += len( hlt_df[ ( pt_pass_hlt ) & ( eta_pass_hlt ) ] )
