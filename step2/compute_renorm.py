@@ -66,7 +66,7 @@ nPassed = 0
 for i in range( nEvents ):
   ttree.GetEntry(i)
   if i in checkpoints: print( ">> Finished processing {:.0f}% ({}/{}) events".format( 100.* float( i ) / float ( nEvents ), i, nEvents ) )
-  if not ( ( ttree.leptonPt_MultiLepCalc > 35 and ttree.isElectron ) or ( ttree.leptonPt_MultiLepCalc > 30 and ttree.isMuon ) ): continue
+  if not ( ( ttree.leptonPt_MultiLepCalc > 20 and ttree.isElectron ) or ( ttree.leptonPt_MultiLepCalc > 20 and ttree.isMuon ) ): continue
   if not ( ttree.MCPastTriggerX ): continue 
   njet = getattr( ttree, "NJets_JetSubCalc" ) 
   HT = getattr( ttree, "AK4HT" )

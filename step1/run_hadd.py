@@ -77,10 +77,10 @@ for shift in shifts:
       print( ">> Hadd'ing {}: {} files".format( outSample, len( step1Files ) ) )
     
       filesPerHadd = int( args.filesPerHadd )
-      if "TTToSemiLeptonic" in outSample and outLabel in [ "HT0Njet0_ttjj" ]: filesPerHadd = 30
+      if "TTToSemiLeptonic" in outSample and outLabel in [ "HT0Njet0_ttjj" ]: filesPerHadd = 45
       #elif "WJetsToLNu_HT-1200To2500" in outSample: filesPerHadd = 120
       #elif "WJetsToLNu_HT-2500ToInf" in outSample: filesPerHadd = 13
-      if "down" in outSample.lower() or "up" in outSample.lower(): filesPerHadd = 900
+      if "hdamp" in outSample.lower() or "tunecp5up" in outSample.lower() or "tunecp5down" in outSample.lower(): filesPerHadd = 900
 
       singleFile = " root://cmseos.fnal.gov/{}/{}/{}".format( step1Dir[shift], outSample, step1Files[-1] )
       multipleFiles = filesPerHadd * singleFile
