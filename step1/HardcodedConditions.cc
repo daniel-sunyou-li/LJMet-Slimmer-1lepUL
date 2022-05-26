@@ -3654,69 +3654,98 @@ double HardcodedConditions::GetMuonIsoSF(double pt, double eta, std::string year
 
 // using EOY 2016
 double HardcodedConditions::GetMuonIsoSF2016APV(double pt, double eta){
-  return 1.000;
-}
-  
-double HardcodedConditions::GetMuonIsoSF2016(double pt, double eta){
   if( pt < 30 ){
-    if( fabs(eta) < 0.9 ) return 0.986;
-    else if( fabs(eta) < 1.2 ) return 0.980;
+    if( fabs(eta) < 0.9 ) return 0.991;
+    else if( fabs(eta) < 1.2 ) return 0.996;
     else if( fabs(eta) < 2.1 ) return 0.995;
-    else return 1.000;
+    else return 0.995;
   }
   else if( pt < 40 ){
-    if( fabs(eta) < 0.9 ) return 0.994;
-    else if( fabs(eta) < 1.2 ) return 0.993;
-    else if( fabs(eta) < 2.1 ) return 0.998;
-    else return 1.000;
-  }
-  else if( pt < 50 ){
-    if( fabs(eta) < 0.9 ) return 0.996;
-    else if( fabs(eta) < 1.2 ) return 0.995;
-    else if( fabs(eta) < 2.1 ) return 0.999;
-    else return 1.000;
-  }
-  else if( pt < 60 ){
-    if( fabs(eta) < 0.9 ) return 0.998;
-    else if( fabs(eta) < 1.2 ) return 0.997;
-    else if( fabs(eta) < 2.1 ) return 0.999;
-    else return 1.000;
-  }
-  else {
-    if( fabs(eta) < 0.9 ) return 1.000;
+    if( fabs(eta) < 0.9 ) return 0.997;
     else if( fabs(eta) < 1.2 ) return 0.999;
     else if( fabs(eta) < 2.1 ) return 0.999;
-    else return 1.002;
-  }
-}
-
-double HardcodedConditions::GetMuonIsoSF2017(double pt, double eta){
-  if( pt < 30 ){
-    if( fabs(eta) < 0.9 ) return 0.996;
-    else if( fabs(eta) < 1.2 ) return 0.998;
-    else if( fabs(eta) < 2.1 ) return 1.001;
-    else return 1.002;
-  }
-  else if( pt < 40 ){
-    if( fabs(eta) < 0.9 ) return 0.998;
-    else if( fabs(eta) < 1.2 ) return 0.998;
-    else if( fabs(eta) < 2.1 ) return 1.000;
     else return 1.001;
   }
   else if( pt < 50 ){
     if( fabs(eta) < 0.9 ) return 0.998;
-    else if( fabs(eta) < 1.2 ) return 0.999;
+    else if( fabs(eta) < 1.2 ) return 0.998;
     else if( fabs(eta) < 2.1 ) return 0.999;
     else return 1.000;
   }
   else if( pt < 60 ){
     if( fabs(eta) < 0.9 ) return 0.999;
-    else if( fabs(eta) < 1.2 ) return 1.000;
+    else if( fabs(eta) < 1.2 ) return 0.999;
     else if( fabs(eta) < 2.1 ) return 1.000;
     else return 1.000;
   }
   else {
+    if( fabs(eta) < 0.9 ) return 0.999;
+    else if( fabs(eta) < 1.2 ) return 1.000;
+    else if( fabs(eta) < 2.1 ) return 1.000;
+    else return 0.999;
+  }
+}
+  
+double HardcodedConditions::GetMuonIsoSF2016(double pt, double eta){
+  if( pt < 30 ){
+    if( fabs(eta) < 0.9 ) return 0.985;
+    else if( fabs(eta) < 1.2 ) return 0.990;
+    else if( fabs(eta) < 2.1 ) return 0.993;
+    else return 1.000;
+  }
+  else if( pt < 40 ){
+    if( fabs(eta) < 0.9 ) return 0.995;
+    else if( fabs(eta) < 1.2 ) return 0.997;
+    else if( fabs(eta) < 2.1 ) return 0.999;
+    else return 1.000;
+  }
+  else if( pt < 50 ){
+    if( fabs(eta) < 0.9 ) return 0.997;
+    else if( fabs(eta) < 1.2 ) return 0.998;
+    else if( fabs(eta) < 2.1 ) return 0.998;
+    else return 1.000;
+  }
+  else if( pt < 60 ){
+    if( fabs(eta) < 0.9 ) return 0.998;
+    else if( fabs(eta) < 1.2 ) return 0.998;
+    else if( fabs(eta) < 2.1 ) return 0.998;
+    else return 1.001;
+  }
+  else {
     if( fabs(eta) < 0.9 ) return 1.000;
+    else if( fabs(eta) < 1.2 ) return 0.999;
+    else if( fabs(eta) < 2.1 ) return 1.000;
+    else return 1.001;
+  }
+}
+
+double HardcodedConditions::GetMuonIsoSF2017(double pt, double eta){
+  if( pt < 30 ){
+    if( fabs(eta) < 0.9 ) return 0.992;
+    else if( fabs(eta) < 1.2 ) return 0.991;
+    else if( fabs(eta) < 2.1 ) return 1.001;
+    else return 1.004;
+  }
+  else if( pt < 40 ){
+    if( fabs(eta) < 0.9 ) return 0.996;
+    else if( fabs(eta) < 1.2 ) return 0.998;
+    else if( fabs(eta) < 2.1 ) return 1.001;
+    else return 1.002;
+  }
+  else if( pt < 50 ){
+    if( fabs(eta) < 0.9 ) return 0.998;
+    else if( fabs(eta) < 1.2 ) return 0.998;
+    else if( fabs(eta) < 2.1 ) return 1.000;
+    else return 1.001;
+  }
+  else if( pt < 60 ){
+    if( fabs(eta) < 0.9 ) return 0.998;
+    else if( fabs(eta) < 1.2 ) return 0.999;
+    else if( fabs(eta) < 2.1 ) return 0.999;
+    else return 1.000;
+  }
+  else {
+    if( fabs(eta) < 0.9 ) return 0.999;
     else if( fabs(eta) < 1.2 ) return 1.000;
     else if( fabs(eta) < 2.1 ) return 1.000;
     else return 1.000;
@@ -3725,34 +3754,34 @@ double HardcodedConditions::GetMuonIsoSF2017(double pt, double eta){
 
 double HardcodedConditions::GetMuonIsoSF2018(double pt, double eta){
   if( pt < 30 ){
-    if( fabs(eta) < 0.9 ) return 0.986;
-    else if( fabs(eta) < 1.2 ) return 0.980;
-    else if( fabs(eta) < 2.1 ) return 0.995;
-    else return 1.000;
+    if( fabs(eta) < 0.9 ) return 0.990;
+    else if( fabs(eta) < 1.2 ) return 0.982;
+    else if( fabs(eta) < 2.1 ) return 0.998;
+    else return 1.001;
   }
   else if( pt < 40 ){
-    if( fabs(eta) < 0.9 ) return 0.994;
-    else if( fabs(eta) < 1.2 ) return 0.993;
-    else if( fabs(eta) < 2.1 ) return 0.998;
-    else return 1.000;
+    if( fabs(eta) < 0.9 ) return 0.996;
+    else if( fabs(eta) < 1.2 ) return 0.994;
+    else if( fabs(eta) < 2.1 ) return 0.999;
+    else return 1.001;
   }
   else if( pt < 50 ){
-    if( fabs(eta) < 0.9 ) return 0.996;
-    else if( fabs(eta) < 1.2 ) return 0.995;
+    if( fabs(eta) < 0.9 ) return 0.997;
+    else if( fabs(eta) < 1.2 ) return 0.996;
     else if( fabs(eta) < 2.1 ) return 0.999;
-    else return 1.000;
+    else return 1.001;
   }
   else if( pt < 60 ){
     if( fabs(eta) < 0.9 ) return 0.998;
-    else if( fabs(eta) < 1.2 ) return 0.997;
+    else if( fabs(eta) < 1.2 ) return 0.998;
     else if( fabs(eta) < 2.1 ) return 0.999;
-    else return 1.000;
+    else return 1.001;
   }
   else{
-    if( fabs(eta) < 0.9 ) return 1.000;
+    if( fabs(eta) < 0.9 ) return 0.999;
     else if( fabs(eta) < 1.2 ) return 0.999;
     else if( fabs(eta) < 2.1 ) return 0.999;
-    else return 1.002;
+    else return 1.003;
   }
 }
 

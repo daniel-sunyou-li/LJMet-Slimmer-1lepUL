@@ -1008,8 +1008,6 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     vector<double> jetPUIDsfUp;
     vector<double> jetPUIDsfDn;
     vector<double> jetPUIDEff;
-    vector<double> jetPUIDEffUp;
-    vector<double> jetPUIDEffDn;
     vector<int>    jetPUIDTag;
     btagCSVWeight = 1.0;
     btagCSVWeight_HFup = 1.0;
@@ -1056,16 +1054,14 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         double jetPUIDsfUp_ = 1.0;
         double jetPUIDsfDn_ = 1.0;
         double jetPUIDEff_ = 1.0;
-        double jetPUIDEffUp_ = 1.0;
-        double jetPUIDEffDn_ = 1.0;
         hardcodedConditions.GetJetPileupIDSF( ijetPt, ijetEta, &jetPUIDsf_, &jetPUIDsfUp_, &jetPUIDsfDn_, Year );
-        hardcodedConditions.GetJetPileupIDEff( ijetPt, ijetEta, &jetPUIDEff_, &jetPUIDEffUp_, &jetPUIDEffDn_, Year );
+        hardcodedConditions.GetJetPileupIDEff( ijetPt, ijetEta, &jetPUIDEff_, Year );
         if( ijetPt < 50. ){
           // determine if the reco jet is geometrically matched to a gen jet for PU truth
           jetPU_lv.SetPtEtaPhiM( ijetPt, ijetEta, ijetPhi, ijetEng );
           bool isPU = true;
           for( unsigned int jjet = 0; jjet < genJetPt_MultiLepCalc->size(); jjet++ ){
-            genJetPU_lv.SetPtEtaPhiE( genJetPt_MultiLepCalc->at(jjet), genJetEta_MultiLepCalc->at(jjet), genJetPhi_MultiLepCalc->at(jjet), genJetEnergy_MultiLepCalc->at(jjet) );
+            genJetPU_lv.SetPtEtaPhiE( genJetPtNoClean_MultiLepCalc->at(jjet), genJetEtaNoClean_MultiLepCalc->at(jjet), genJetPhiNoClean_MultiLepCalc->at(jjet), genJetEnergyNoClean_MultiLepCalc->at(jjet) );
             if( jetPU_lv.DeltaR( genJetPU_lv ) < 0.4 ){
               isPU = false;
               continue; // only need to confirm one reco to gen match
@@ -1077,8 +1073,6 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
             jetPUIDsfUp.push_back( jetPUIDsfUp_ );
             jetPUIDsfDn.push_back( jetPUIDsfDn_ );
             jetPUIDEff.push_back( jetPUIDEff_ );
-            jetPUIDEffUp.push_back( jetPUIDEffUp_ );
-            jetPUIDEffDn.push_back( jetPUIDEffDn_ );
             if( ijetPUIDTight == true ) jetPUIDTag.push_back( 1 );
             else jetPUIDTag.push_back( 0 );
           }
@@ -1286,8 +1280,8 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
 
     if(isMC){
       pileupJetIDWeight     = compute_SFWeight( jetPUIDsf, jetPUIDEff, jetPUIDTag );
-      pileupJetIDWeightUp   = compute_SFWeight( jetPUIDsfUp, jetPUIDEffUp, jetPUIDTag );
-      pileupJetIDWeightDown = compute_SFWeight( jetPUIDsfDn, jetPUIDEffDn, jetPUIDTag ); 
+      pileupJetIDWeightUp   = compute_SFWeight( jetPUIDsfUp, jetPUIDEff, jetPUIDTag );
+      pileupJetIDWeightDown = compute_SFWeight( jetPUIDsfDn, jetPUIDEff, jetPUIDTag ); 
     }
 
     if (isMC) {
