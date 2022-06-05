@@ -18,17 +18,11 @@
 * Muon ID: using the JSON POG Muon `.json` scale factors with the working point 
 * Muon Trigger: using the JSON POG Muon `.json` scale factors with the working point `NUM_IsoMu24_or_IsoTkMu24_DEN_CutBasedIdTight_and_PFIsoTight`
 * Pileup Weight: using the JSON POG Lum `.json` scale factors 
+* Pileup Jet ID Weights: using the JSON POG JMAR `.json` scale factors and efficiencies
+* TriggerX: calculated using cut-and-count in [triggerX folder](https://github.com/daniel-sunyou-li/LJMet-Slimmer-1lepUL/tree/main/step1/triggerX)
+* Electron miniIso: calculated using EGamma POG tag and probe tool
+* Muon miniIso: calculated using Muon POG spark tag and probe tool
 
 #### _Scale factors needing UL update_:
-* (Optional) Jet-by-jet b-tagging (`deepCSV` and `deepJet`)
 * Top-tagging scale factors and efficiencies
 * W-tagging scale factors and efficiencies
-* Electron MiniISO scale factors and efficiencies: need to run the Tag and Probe code 
-* Electron Cross-Trigger scale factors and efficiencies
-* Muon MiniISO scale factors and efficiencies: need to run the Tag and Probe code
-* Muon Cross-Trigger scale factors and efficiencies
-* Hadronic-Leptonic (aka "HadLep") trigger (muon channel)
-* Hadronic-Leptonic (aka "Hadlep") trigger (electron channel)
-* (Optional) Calculate `njet` scale factors
-* (Optional) Update `ttHF` scale factors
-* (Optional) Calculate b-tagging CSV re-normalization
