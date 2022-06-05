@@ -24,11 +24,14 @@ elif args.loc == "BRUX":
   hadd_command = "hadd -f {}/{}_renorm.root".format( haddDir, args.tag )
 
 customFiles = [
-"TTWH_TuneCP5_13TeV-madgraph-pythia8_hadd.root",
-"TTWW_TuneCP5_13TeV-madgraph-pythia8_hadd.root",
-"TTWZ_TuneCP5_13TeV-madgraph-pythia8_hadd.root",
-"TTZH_TuneCP5_13TeV-madgraph-pythia8_hadd.root",
-"TTZZ_TuneCP5_13TeV-madgraph-pythia8_hadd.root"
+#"TTWH_TuneCP5_13TeV-madgraph-pythia8_hadd.root",
+#"TTWW_TuneCP5_13TeV-madgraph-pythia8_hadd.root",
+#"TTWZ_TuneCP5_13TeV-madgraph-pythia8_hadd.root",
+#"TTZH_TuneCP5_13TeV-madgraph-pythia8_hadd.root",
+#"TTZZ_TuneCP5_13TeV-madgraph-pythia8_hadd.root"
+"WW_TuneCP5_13TeV-pythia8_hadd.root",
+"WZ_TuneCP5_13TeV-pythia8_hadd.root",
+"ZZ_TuneCP5_13TeV-pythia8_hadd.root",
 ]
 
 

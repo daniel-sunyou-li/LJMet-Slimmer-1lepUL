@@ -31,6 +31,8 @@ filesPerJob = int( args.filesPerJob )
 postfix = config.postfix
 
 inputDir = config.ljmetDir[ args.year ][ args.location ]
+if args.site == "BRUX" and args.location == "LPC":
+  inputDir = inputDir.replace( "/eos/uscms", "" )
 outputDir = {
   shift: os.path.join( config.step1Dir[ args.year ][ args.site ], shift ) for shift in shifts
 }
@@ -90,7 +92,10 @@ for shift in samples:
       elif args.site == "BRUX":
         if not os.path.exists( os.path.join( outputDir[ shift ], step1_sample ) ): os.system( "mkdir -p {}".format( os.path.join( outputDir[ shift ], step1_sample ) ) )
       if args.location == "LPC":    
-        runList = EOSlistdir( "{}/{}/singleLep20{}UL/".format( inputDir, sample, args.year ) )
+        if args.site == "LPC":
+          runList = EOSlistdir( "{}/{}/singleLep20{}UL/".format( inputDir, sample, args.year ) )
+        elif args.site == "BRUX":
+          runList = [ item.strip().split("/")[-1] for item in os.popen( "xrdfs root://cmseos.fnal.gov/ ls {}/{}/singleLep20{}UL/".format( inputDir, sample, args.year ) ).readlines() ]
       elif args.location == "BRUX":
         runPath = "{}/{}/singleLep20{}UL/".format( inputDir, sample, args.year ) 
         status, dirList = xrdClient.dirlist( runPath )
@@ -100,7 +105,10 @@ for shift in samples:
    
       for run in runList:
         if args.location == "LPC":
-          numList = EOSlistdir( "{}/{}/singleLep20{}UL/{}/".format( inputDir, sample, args.year, run ) )
+          if args.site == "LPC":
+            numList = EOSlistdir( "{}/{}/singleLep20{}UL/{}/".format( inputDir, sample, args.year, run ) )
+          elif args.site == "BRUX":
+            numList = [ item.strip().split("/")[-1] for item in os.popen( "xrdfs root://cmseos.fnal.gov/ ls {}/{}/singleLep20{}UL/{}".format( inputDir, sample, args.year, run ) ).readlines() ]
         elif args.location == "BRUX":
           xrd_command = "{}/{}/singleLep20{}UL/{}".format( inputDir, sample, args.year, run )
           status, dirList = xrdClient.dirlist( xrd_command )
@@ -112,7 +120,14 @@ for shift in samples:
           pathSuffix = "/".join( pathSuffix )
 
           if args.location == "LPC":
-            rootFiles = EOSlist_root_files( numPath )
+            if args.site == "LPC":
+              rootFiles = EOSlist_root_files( numPath )
+            elif args.site == "BRUX":
+              fileList = [ item.strip().split("/")[-1] for item in os.popen( "xrdfs root://cmseos.fnal.gov/ ls {}/{}/singleLep20{}UL/{}/{}".format( inputDir, sample, args.year, run, num ) ).readlines() ]
+              rootFiles = []
+              for fName in fileList:
+                if fName.endswith( ".root" ): rootFiles.append( fName )
+
           elif args.location == "BRUX":
             xrdPath = "{}/{}/singleLep20{}UL/{}/{}/".format( inputDir, sample, args.year, run, num )
             status, fileList = xrdClient.dirlist( xrdPath )
@@ -147,6 +162,7 @@ for shift in samples:
             jobParams = {
               'RUNDIR': os.getcwd(), 
               'SAMPLE': sample, 
+              'TAG': sample.split( "_TuneCP5_" )[0],
               'INPATHSUFFIX': pathSuffix, 
               'INPUTDIR': inputDir, 
               'FILENAME': baseFilename, 
@@ -158,7 +174,8 @@ for shift in samples:
               'SHIFT': shift,
               'DEEPCSV': deepCSV_SF, 
               'DEEPJET':deepJet_SF,
-              'SITE': args.site
+              'SITE': args.site,
+              'LOCATION': args.location
             }
             jdfName = "{}{}/{}_{}.job".format( condorDir, shift, jobParams["OUTFILENAME"], jobParams["ID"] )
             print( ">> {}: {}".format( jdfName.split( "/" )[-1], idList ) )
@@ -174,8 +191,9 @@ request_memory = 6144
 Output = %(OUTFILENAME)s_%(ID)s.out
 Error = %(OUTFILENAME)s_%(ID)s.err
 Log = %(OUTFILENAME)s_%(ID)s.log
+JobBatchName = step1_%(SHIFT)sUL%(YEAR)s_%(TAG)s 
 Notification = Never
-Arguments = "%(FILENAME)s %(OUTFILENAME)s %(INPUTDIR)s/%(SAMPLE)s/%(INPATHSUFFIX)s %(OUTPUTDIR)s/%(OUTFILENAME)s '%(LIST)s' %(ID)s %(YEAR)s %(SHIFT)s %(SITE)s"
+Arguments = "%(FILENAME)s %(OUTFILENAME)s %(INPUTDIR)s/%(SAMPLE)s/%(INPATHSUFFIX)s %(OUTPUTDIR)s/%(OUTFILENAME)s '%(LIST)s' %(ID)s %(YEAR)s %(SHIFT)s %(SITE)s %(LOCATION)s"
 Queue 1"""%jobParams)
             jdf.close()
             os.chdir( os.path.join( condorDir, shift ) )

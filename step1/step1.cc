@@ -1068,7 +1068,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
             }
           }
           
-          if( isPU == true ){
+          if( isPU == false ){
             jetPUIDsf.push_back( jetPUIDsf_ );
             jetPUIDsfUp.push_back( jetPUIDsfUp_ );
             jetPUIDsfDn.push_back( jetPUIDsfDn_ );

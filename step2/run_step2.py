@@ -90,7 +90,9 @@ for shift in shifts:
       "RUNDIR": runDir, 
       "CONDORDIR": condorDir[ shift ], 
       "INPUTDIR": inputDir[ shift ], 
+      "SHIFT": shift,
       "FILENAME": rootFile.split( "." )[0], 
+      "TAG": rootFile.split( "_TuneCP5" )[0],
       "YEAR": "20" + args.year,
       "SYSFILE": "renorm/HT_njets_SF_UL{}_sys.root".format( args.year ),
       "OUTPUTDIR": outputDir[ shift ]
@@ -107,7 +109,7 @@ Transfer_Input_Files = %(RUNDIR)s/%(SYSFILE)s, %(RUNDIR)s/HardcodedConditions.cc
 Output = %(FILENAME)s.out
 Error = %(FILENAME)s.err
 Log = %(FILENAME)s.log
-JobBatchName = step2_3t
+JobBatchName = step2_UL%(YEAR)s_%(SHIFT)s_%(TAG)s
 Notification = Never
 Arguments = %(FILENAME)s.root %(FILENAME)s.root %(INPUTDIR)s %(OUTPUTDIR)s %(YEAR)s
 Queue 1"""%jobParams )

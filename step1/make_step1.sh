@@ -12,6 +12,7 @@ ID=${6}
 YEAR=${7}
 SHIFT=${8}
 SITE=${9}
+LOCATION=${10}
 SCRATCH=${PWD}
 
 
@@ -27,15 +28,22 @@ macroDir=${PWD}
 export PATH=$PATH:$macroDir
 root -l -b -q compile_step1.C
 
-XRDpath=root://cmseos.fnal.gov/$INPUTDIR
-if [[ $INPUTDIR == /isilon/hadoop/* ]] ;
+echo ">> Running on $SITE, $INFILENAME stored on $LOCATION"
+
+if [[ $SITE == BRUX && $LOCATION == BRUX ]];
 then
-XRDpath=root://brux30.hep.brown.edu:1094/$INPUTDIR
-fi
-if [[ $SITE == BRUX ]];
+  XRDpath=$INPUTDIR
+elif [[ $SITE == BRUX && $LOCATION == LPC ]];
 then
-XRDpath=$INPUTDIR
+  XRDpath=root://cmseos.fnal.gov/$INPUTDIR
+elif [[ $SITE == LPC && $LOCATION == BRUX ]];
+then
+  XRDpath=root://brux30.hep.brown.edu:1094/$INPUTDIR
+elif [[ $SITE == LPC && $LOCATION == LPC ]];
+then
+  XRDpath=root://cmseos.fnal.gov/$INPUTDIR
 fi
+echo ">> Input file path: $XRDpath"
 
 echo ">> Running step1 over list: ${IDLIST}"
 
