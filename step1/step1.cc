@@ -416,6 +416,9 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   outputTree->Branch("pileupJetIDWeight",&pileupJetIDWeight,"pileupJetIDWeight/F");
   outputTree->Branch("pileupJetIDWeightUp",&pileupJetIDWeightUp,"pileupJetIDWeightUp/F");
   outputTree->Branch("pileupJetIDWeightDown",&pileupJetIDWeightDown,"pileupJetIDWeightDown/F");
+  outputTree->Branch("pileupJetIDWeight_tag",&pileupJetIDWeight_tag,"pileupJetIDWeight_tag/F");
+  outputTree->Branch("pileupJetIDWeightUp_tag",&pileupJetIDWeightUp_tag,"pileupJetIDWeightUp_tag/F");
+  outputTree->Branch("pileupJetIDWeightDown_tag",&pileupJetIDWeightDown_tag,"pileupJetIDWeightDown_tag/F");
   outputTree->Branch("pileupWeight",&pileupWeight,"pileupWeight/F");
   outputTree->Branch("pileupWeightUp",&pileupWeightUp,"pileupWeightUp/F");
   outputTree->Branch("pileupWeightDown",&pileupWeightDown,"pileupWeightDown/F");
@@ -935,6 +938,9 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     pileupJetIDWeight = 1.0;
     pileupJetIDWeightUp = 1.0;
     pileupJetIDWeightDown = 1.0;
+    pileupJetIDWeight_tag = 1.0;
+    pileupJetIDWeightUp_tag = 1.0;
+    pileupJetIDWeightDown_tag = 1.0;
 
     btagCSVRenormWeight = 1.0;
 
@@ -1009,6 +1015,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     vector<double> jetPUIDsfDn;
     vector<double> jetPUIDEff;
     vector<int>    jetPUIDTag;
+    vector<int>    jetPUIDTag_tag;
     btagCSVWeight = 1.0;
     btagCSVWeight_HFup = 1.0;
     btagCSVWeight_HFdn = 1.0;
@@ -1069,12 +1076,14 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
           }
           
           if( isPU == false ){
-            jetPUIDsf.push_back( jetPUIDsf_ );
-            jetPUIDsfUp.push_back( jetPUIDsfUp_ );
-            jetPUIDsfDn.push_back( jetPUIDsfDn_ );
-            jetPUIDEff.push_back( jetPUIDEff_ );
-            if( ijetPUIDTight == true ) jetPUIDTag.push_back( 1 );
-            else jetPUIDTag.push_back( 0 );
+            if( ijetPUIDTight == false ){ 
+              jetPUIDTag.push_back( 0 ); // only apply SF to hard jets that aren't PU tagged
+              jetPUIDTag_tag.push_back( 1 ); // in case it's intended to consider real tagged jets as (1-Eff*SF) and not Eff*SF
+              jetPUIDsf.push_back( jetPUIDsf_ );
+              jetPUIDsfUp.push_back( jetPUIDsfUp_ );
+              jetPUIDsfDn.push_back( jetPUIDsfDn_ );
+              jetPUIDEff.push_back( jetPUIDEff_ );
+            }
           }
         }
       }
@@ -1282,6 +1291,9 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
       pileupJetIDWeight     = compute_SFWeight( jetPUIDsf, jetPUIDEff, jetPUIDTag );
       pileupJetIDWeightUp   = compute_SFWeight( jetPUIDsfUp, jetPUIDEff, jetPUIDTag );
       pileupJetIDWeightDown = compute_SFWeight( jetPUIDsfDn, jetPUIDEff, jetPUIDTag ); 
+      pileupJetIDWeight_tag     = compute_SFWeight( jetPUIDsf, jetPUIDEff, jetPUIDTag_tag );
+      pileupJetIDWeightUp_tag   = compute_SFWeight( jetPUIDsfUp, jetPUIDEff, jetPUIDTag_tag );
+      pileupJetIDWeightDown_tag = compute_SFWeight( jetPUIDsfDn, jetPUIDEff, jetPUIDTag_tag );
     }
 
     if (isMC) {
@@ -1336,7 +1348,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     std::vector<std::string> eltriggersX;
     std::vector<std::string> mutriggersX;
     if( Year == "2016APV" ){ 
-      eltriggersX = { "Ele15_IsoVVVL_PFHT350", "Ele15_IsoVVVL_PFHT400", "Ele32_eta2p1_WPTight_Gsf" };
+      eltriggersX = { "Ele15_IsoVVVL_PFHT400", "Ele32_eta2p1_WPTight_Gsf" };
       mutriggersX = { "Mu15_IsoVVVL_PFHT400", "Mu50", "IsoMu24", "IsoTkMu24" };
     }
     else if( Year == "2016" ){ 
@@ -1439,7 +1451,11 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         EGammaGsfSF = hardcodedConditions.GetEGammaGsfSF( leppt, lepeta, Year );
         lepIdSF = hardcodedConditions.GetElectronIdSF( leppt, lepeta, Year );
         isoSF = hardcodedConditions.GetElectronIsoSF( leppt, lepeta, Year );
-        if( MCLepPastTrigger == 1 && MCPastTriggerX == 1 ){ // defaults to using the single-object trigger if available
+        if( Year == "2016APV" ){ // there are no centrally maintained 2016APV SF, so use the SF separately
+          triggerSF = hardcodedConditions.GetElectronTriggerSF( leppt, lepeta, Year );
+          triggerXSF = hardcodedConditions.GetElectronTriggerXSF( leppt, lepeta, Year );
+        }
+        else if( MCLepPastTrigger == 1 && MCPastTriggerX == 1 ){ // defaults to using the single-object trigger if available
           triggerSF = hardcodedConditions.GetElectronTriggerSF( leppt, lepeta, Year );
           triggerXSF = 1.0; 
         }
@@ -2356,7 +2372,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     minDRtopDs.clear();
     for(int i = 0; i < 3; i++){ minDRtopDs.push_back(0); }
     for(unsigned int itop=0; itop < topDiscriminator_HOTTaggerCalc->size(); itop++){
-      if(isMC && !isSig){
+      if(isMC){
 
         // ------------------------------------------------------------------------------------------------------------------
         // TRUTH MATCHING

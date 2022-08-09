@@ -1,4 +1,5 @@
 import os,shutil,time
+import numpy as np
 import getpass
 import config
 from argparse import ArgumentParser

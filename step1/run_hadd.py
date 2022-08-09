@@ -1,4 +1,5 @@
 import os, sys, time, subprocess, math
+import numpy as np
 from argparse import ArgumentParser
 import config
 
@@ -16,7 +17,7 @@ from ROOT import *
 
 execfile( "../EOSSafeUtils.py" )
 
-shifts = [ "nominal" ] if not args.shifts else [ "JECup" ]  # [ "JECup", "JECdown", "JERup", "JERdown" ]
+shifts = [ "nominal" ] if not args.shifts else [ "JECup", "JECdown", "JERup", "JERdown" ]
 
 step1Dir = {
   shift: os.path.join( config.step1Dir[ args.year ][ args.location ], shift ) for shift in shifts
@@ -59,8 +60,8 @@ for shift in shifts:
       if "Single" in sample or "EGamma" in sample or "up" in sample.lower() or "down" in sample.lower(): continue
     outList = []
     if "TTToSemiLeptonic" in sample and "up" not in sample.lower() and "down" not in sample.lower():
-      for HT_key in [ "HT0Njet0", "HT500Njet9" ]:
-        for fs_key in [ "ttjj", "ttbb", "tt2b", "tt1b", "ttcc", "ttjj" ]:
+      for HT_key in [ "HT0Njet0" ]:  #[ "HT0Njet0", "HT500Njet9" ]:
+        for fs_key in [ "ttjj" ]:  #[ "ttjj", "ttbb", "tt2b", "tt1b", "ttcc", "ttjj" ]:
           outList.append( "{}_{}".format( HT_key, fs_key ) )
     elif "TTTo" in sample:
       outList = [ "ttbb", "tt2b", "tt1b", "ttcc", "ttjj" ]
@@ -77,7 +78,10 @@ for shift in shifts:
       print( ">> Hadd'ing {}: {} files".format( outSample, len( step1Files ) ) )
     
       filesPerHadd = int( args.filesPerHadd )
-      if "TTToSemiLeptonic" in outSample and outLabel in [ "HT0Njet0_ttjj" ]: filesPerHadd = 45
+      if "TTToSemiLeptonic" in outSample and outLabel in [ "HT0Njet0_ttjj" ]: 
+        filesPerHadd = 5
+        #filesPerHadd = int( np.ceil( len(step1Files) / 10. ) )
+      
       #elif "WJetsToLNu_HT-1200To2500" in outSample: filesPerHadd = 120
       #elif "WJetsToLNu_HT-2500ToInf" in outSample: filesPerHadd = 13
       if "hdamp" in outSample.lower() or "tunecp5up" in outSample.lower() or "tunecp5down" in outSample.lower(): filesPerHadd = 900

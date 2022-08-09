@@ -93,15 +93,15 @@ samples = {
       "ChargedHiggs_HplusTB_HplusToTB_M-3000_TuneCP5_13TeV_amcatnlo_pythia8"
     ],
     "TTTX": [
-      #"TTTT_TuneCP5_13TeV-amcatnlo-pythia8",
+      "TTTT_TuneCP5_13TeV-amcatnlo-pythia8",
       "TTTJ_TuneCP5_13TeV-madgraph-pythia8",
       "TTTW_TuneCP5_13TeV-madgraph-pythia8"
     ],
     "TTBAR": [
       "TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8",
-      "TTToHadronic_TuneCP5_13TeV-powheg-pythia8",
-      "TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8",
-      "TTToSemiLepton_HT500Njet9_TuneCP5_13TeV-powheg-pythia8"
+      #"TTToHadronic_TuneCP5_13TeV-powheg-pythia8",
+      #"TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8",
+      #"TTToSemiLepton_HT500Njet9_TuneCP5_13TeV-powheg-pythia8"
     ],
     "TTBAR_SHIFTS": [
       "TTToSemiLeptonic_hdampUP_TuneCP5_13TeV-powheg-pythia8",
@@ -206,7 +206,7 @@ samples = {
       "ChargedHiggs_HplusTB_HplusToTB_M-3000_TuneCP5_13TeV_amcatnlo_pythia8"
     ],
     "TTTX": [
-      #"TTTT_TuneCP5_13TeV-amcatnlo-pythia8",
+      "TTTT_TuneCP5_13TeV-amcatnlo-pythia8",
       "TTTJ_TuneCP5_13TeV-madgraph-pythia8",
       "TTTW_TuneCP5_13TeV-madgraph-pythia8"
     ],
@@ -319,15 +319,15 @@ samples = {
       "ChargedHiggs_HplusTB_HplusToTB_M-3000_TuneCP5_13TeV_amcatnlo_pythia8"
     ],
     "TTTX": [
-      #"TTTT_TuneCP5_13TeV-amcatnlo-pythia8",
+      "TTTT_TuneCP5_13TeV-amcatnlo-pythia8",
       "TTTJ_TuneCP5_13TeV-madgraph-pythia8",
       "TTTW_TuneCP5_13TeV-madgraph-pythia8"
     ],
     "TTBAR": [
       "TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8",
-      #"TTToHadronic_TuneCP5_13TeV-powheg-pythia8",
-      #"TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8",
-      #"TTToSemiLepton_HT500Njet9_TuneCP5_13TeV-powheg-pythia8"
+      "TTToHadronic_TuneCP5_13TeV-powheg-pythia8",
+      "TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8",
+      "TTToSemiLepton_HT500Njet9_TuneCP5_13TeV-powheg-pythia8"
     ],
     "TTBAR_SHIFTS": [
       "TTToSemiLeptonic_hdampUP_TuneCP5_13TeV-powheg-pythia8",
@@ -433,8 +433,8 @@ samples = {
     ],
     "TTTX": [
       "TTTT_TuneCP5_13TeV-amcatnlo-pythia8",
-      "TTTJ_TuneCP5_13TeV-madgraph-pythia8",
-      "TTTW_TuneCP5_13TeV-madgraph-pythia8"
+      #"TTTJ_TuneCP5_13TeV-madgraph-pythia8",
+      #"TTTW_TuneCP5_13TeV-madgraph-pythia8"
     ],
     "TTBAR": [
       "TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8",

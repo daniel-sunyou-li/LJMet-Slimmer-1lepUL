@@ -118,6 +118,9 @@ public :
    Float_t         pileupJetIDWeight;
    Float_t         pileupJetIDWeightUp;
    Float_t         pileupJetIDWeightDown;
+   Float_t         pileupJetIDWeight_tag;
+   Float_t         pileupJetIDWeightUp_tag;
+   Float_t         pileupJetIDWeightDown_tag;
    Float_t         pileupWeight;
    Float_t         pileupWeightUp;
    Float_t         pileupWeightDown;
@@ -1380,7 +1383,7 @@ step1::step1(TString inputFileName, TString outputFileName, TString Year_) : inp
   isTTV = (inputFileName.Contains("TTZTo") || inputFileName.Contains("TTWJetsTo"));
   isTTHbb = inputFileName.Contains("ttHTobb_");
   isTTHnonbb = inputFileName.Contains("ttHToNonbb_");
-  isTTTX = (inputFileName.Contains("TTTJ_Tune") || inputFileName.Contains("TTTW_Tune"));
+  isTTTX = (inputFileName.Contains("TTTJ") || inputFileName.Contains("TTTW"));
   isTTVV = (inputFileName.Contains("TTHH_Tune") || inputFileName.Contains("TTWH_Tune") || inputFileName.Contains("TTWW_Tune") || inputFileName.Contains("TTWZ_Tune") || inputFileName.Contains("TTZH_Tune") || inputFileName.Contains("TTZZ_Tune"));
   isVV = (inputFileName.Contains("WW_") || inputFileName.Contains("WZ_") || inputFileName.Contains("ZZ_"));
   isMC = !(inputFileName.Contains("Single") || inputFileName.Contains("Data18") || inputFileName.Contains("JetHTRun20"));

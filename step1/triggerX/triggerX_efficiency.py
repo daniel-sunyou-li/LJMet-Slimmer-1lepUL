@@ -15,6 +15,7 @@ parser = ArgumentParser()
 parser.add_argument( "-y", "--year", help = "16APV,16,17,18" )
 parser.add_argument( "-g", "--group" )
 parser.add_argument( "-l", "--lepton", default = "e", help = "e,m" )
+parser.add_argument( "-p", "--percent", default = "100", help = "Percent of events to consider" )
 parser.add_argument( "--single", action = "store_true" )
 parser.add_argument( "-loc", "--location", default = "BRUX" )
 parser.add_argument( "-s", "--site", default = "BRUX", help = "Site running: BRUX, LPC" )
@@ -140,7 +141,8 @@ for sample in samples:
     total_events = rTree.GetEntries()
     nominal_events = 0
     hlt_events = 0
-    for i in tqdm.tqdm( range( rTree.GetEntries() ) ):
+    nEntries = int( rTree.GetEntries() * float( args.percent ) / 100. )
+    for i in tqdm.tqdm( range( nEntries ) ):
       rTree.GetEntry(i)
       passFilter = True
       if args.lepton.lower() in [ "e", "el" ]:
