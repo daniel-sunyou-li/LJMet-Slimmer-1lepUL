@@ -13,7 +13,7 @@ args = parser.parse_args()
 
 from ROOT import TFile, TTree, TH2F
 
-if not os.path.exists( "renorm/UL{}/".format( args.year ) ): os.system( "mkdir -v renorm/UL{}/".format( args.year ) )
+if not os.path.exists( "renorm/UL{}/".format( args.year ) ): os.system( "mkdir -vp renorm/UL{}/".format( args.year ) )
 
 if args.location == "LPC":
   haddPath = "root://cmsxrootd.fnal.gov/" + config.haddPath[ args.year ][ "LPC" ].split( "uscms" )[-1] + "/nominal/"
