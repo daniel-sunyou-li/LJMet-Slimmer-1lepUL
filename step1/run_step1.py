@@ -27,7 +27,17 @@ start_time = time.time()
 if args.year not in [ "16APV", "16", "17", "18" ]: quit( "[ERR] Invalid year option. Use: 16APV, 16, 17, 18. Quitting..." )
 if args.location not in [ "LPC", "BRUX" ]: quit( "[ERR] Invalid location option. Use: BRUX, LPC. Quitting..." )
 if args.site not in [ "LPC", "BRUX" ]: quit( "[ERR] Invalid site option. Use: BRUX, LPC. Quitting..." )
-shifts = [ "nominal" ] if not args.shifts else [ "JECup", "JECdown", "JERup", "JERdown" ]
+if not args.shifts:
+  shifts = [ "nominal" ]
+else:
+  shifts = []
+  print( "[INFO] Running step1 on shifts:" )
+  for syst in config.JES_shifts:
+    for shift in [ "up", "down" ]:
+      sName = syst.replace( "Era", "20{}".format( args.year.replace( "APV", "" ) ) ) + shift
+      print( "  + {}".format( sName ) )
+      shifts.append( sName )
+  
 filesPerJob = int( args.filesPerJob )
 postfix = config.postfix
 
@@ -42,6 +52,7 @@ for shift in shifts: os.system( "mkdir -p {}".format( os.path.join( condorDir, s
 
 deepCSV_SF = config.deepCSV_SF[ args.year ]
 deepJet_SF = config.deepJet_SF[ args.year ]
+JEC_file = config.JEC_files[ args.year ]
 
 # Start processing
 gROOT.ProcessLine( ".x compile_step1.C" )
@@ -50,15 +61,15 @@ job_count = 0
 
 samples = { shift: [] for shift in shifts }
 
+# compile list of samples to submit for each shift
 for shift in shifts:
   for group in args.groups:
     if group not in config.samples[ args.year ].keys():
       print( "[WARN] {} not a valid group for 20{}, skipping".format( group, args.year ) )
       continue
-    print( "[INFO] Preparing {} condor jobs for group: {}".format( shift, group ) )
     for sample in config.samples[ args.year ][ group ]:
-      print( "   + {}".format( sample ) )
       samples[ shift ].append( sample )
+  print( "[INFO] {} has {} samples".format( shift, len( samples[ shift ] ) ) )
       
 # loop through samples and submit job
 for shift in samples:
