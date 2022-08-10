@@ -1,8 +1,5 @@
 #!/bin/bash
 
-hostname
-date
-
 INFILENAME=${1}
 OUTFILENAME=${2}
 INPUTDIR=${3}
