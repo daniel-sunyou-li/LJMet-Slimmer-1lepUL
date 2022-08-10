@@ -1,28 +1,34 @@
 # LJMet-Slimmer-1lepUL -- `step1` 
-### Updates:
-* Switched `Year` argument from `int` to `std::string` to accomodate `2016APV` as an argument
-* Defaulted scale factors that haven't had an UL update to `1.0` (and their uncertainties to `0.0`) 
-* Defaulted efficiencies that haven't had an UL update to `1.0`
-* Updated the b-tagging working points and changed file versions in `step1.cc` to just "reshaping"
-* Updated the pileup reweighting scheme so that all eras have `0` to `99` true interaction entries  
 
+As an example, to run `step1` for 2017 single electron data on BRUX to store files on BRUX, do:
 
-#### __Notes:__
-* Kept the HOT-tagging UL SF, mistag and efficiencies the same as for Legacy SF and duplicated the `2016` values over to `2016APV`
-* UL Top tagging was calculated for only 2017 and 2018 for the `RunIISummer19` production, and each era will be added with the switch to the `RunIISummer20` production
-* Temporarily removed the VLQ trigger SF
+    run_step1.py -y 17 -g DATAE -l BRUX -s BRUX 
+    
+You can find all the possible arguments for `-g` in `config.py` under the `samples` dictionary. This script was made to run on both LPC and BRUX with the respective paths modifiable in `config.py`. To run `step1` on the JEC/JER shift samples, include the argument `--shifts`.  You can also use the following options:
+* `-f` (default = `30`) for number of files per Condor job
+* `-j` (default = `-1`) for number of jobs to submit per sample
+* `--test` to only submit one job
 
-#### __Scale factors updated to UL:__
-* EGamma Gsf: using the JSON POG EGamma `.json` scale factors with the working point `RecoAbove20`
-* Electron ID: using the JSON POG EGamma `.json` scale factors with the working point `ID`
-* Muon ID: using the JSON POG Muon `.json` scale factors with the working point 
-* Muon Trigger: using the JSON POG Muon `.json` scale factors with the working point `NUM_IsoMu24_or_IsoTkMu24_DEN_CutBasedIdTight_and_PFIsoTight`
-* Pileup Weight: using the JSON POG Lum `.json` scale factors 
-* Pileup Jet ID Weights: using the JSON POG JMAR `.json` scale factors and efficiencies
-* TriggerX: calculated using cut-and-count in [triggerX folder](https://github.com/daniel-sunyou-li/LJMet-Slimmer-1lepUL/tree/main/step1/triggerX)
-* Electron miniIso: calculated using EGamma POG tag and probe tool
-* Muon miniIso: calculated using Muon POG spark tag and probe tool
+After running `run_step1.py` and having the `step1` files stored either on BRUX or LPC. You need to `hadd` together the separate files using `run_hadd.py`:
 
-#### _Scale factors needing UL update_:
-* Top-tagging scale factors and efficiencies
-* W-tagging scale factors and efficiencies
+    run_hadd.py -y 17 -g DATAE -l BRUX
+    
+You can also include the argument `-f` to indicate how many files to hadd together.
+
+You can find code for calculating the triggerX efficiencies using the cut-and-count method in the `triggerX` directory. This requires having produced some `step1` files for the data and ttbar background to make the calculation.
+
+## Script descriptions
+
+For a more comprehensive explanation of what each script in `step1` does:
+* `BTagCalibForLJMet.cpp` - loads and parses through the b-tagging scale factors (both `deepCSV` and `deepJet`)
+* `BTagCalibForLJMet.h` - header file for `BTagCalibForLJMet.cpp`
+* `HardcodedConditions.cc` - scale factor configuration file, edit if updating scale factors or adding new scale factors
+* `HardcodedConditions.h` - header file for `HardcodedConditions.cc`, be sure to update if adding new scale factors
+* `compile_step1.C` - run in `run_step1.py` to compile the necessary `C++` scripts used for `step1`
+* `config.py` - various configurable parameters used in `step1` including file paths, sample names, etc. Be sure to edit for your specific analysis.
+* `make_step1.C` - wrapper for running `step1.cc` 
+* `make_step1.sh` - condor submission shell script for running `step1`
+* `run_hadd.py` - `hadds` (consolidates) all the individual `step1` files into fewer files (typically a single one)
+* `run_step1.py` - submits condor jobs that will run `step1`
+* `step1.cc` - applies pre-selection to LJMet ntuples as well as computes various higher-level variables and adds scale factors
+* `step1.h` - header file for `step1.cc`
