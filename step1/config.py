@@ -52,7 +52,8 @@ JEC_files = {
 }
 
 JES_shifts = {
-  "Total": False, # fully de-correlated, corresponds to JEC/JER from LJMet
+  "JER": False,
+  "JEC": False, # fully de-correlated, corresponds to total JEC from LJMet
   "FlavorQCD": True,
   "RelativeBal": True,
   "RelativeSamples_Era": True,
