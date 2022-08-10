@@ -51,8 +51,8 @@ JEC_files = {
   "18": "RegroupedV2_Summer19UL18_V5_MC_UncertaintySources_AK4PFchs.txt"
 }
 
-JEC_shifts = {
-  "Total": False, # fully de-correlated
+JES_shifts = {
+  "Total": False, # fully de-correlated, corresponds to JEC/JER from LJMet
   "FlavorQCD": True,
   "RelativeBal": True,
   "RelativeSamples_Era": True,
