@@ -112,8 +112,6 @@ for shift in samples:
         runPath = "{}/{}/singleLep20{}UL/".format( inputDir, sample, args.year ) 
         status, dirList = xrdClient.dirlist( runPath )
         runList = [ item.name for item in dirList ]
-
-      #print( "[INFO] Running {} CRAB directories...".format( len(runList) ) )
    
       for run in runList:
         if args.location == "LPC":
@@ -166,11 +164,6 @@ for shift in samples:
                 idList += "{} ".format( rootFiles[j].split(".")[0].split("_")[-1] )
 
             idList = idList.strip()
-            #remove the problematic 2018 fwljmet jobs
-            #if args.year == "18" and sample == "ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8":
-            #  problematicIDs = ['1048','1177','1217','1412','1413','1414','1415','1416','1417','1418','1419','1429','1441','1664','1883']
-            #  for id_ in problematicIDs:
-            #    idList = idList.replace( id_, "" ).replace( "  ", " " )
             jobParams = {
               'RUNDIR': os.getcwd(), 
               'SAMPLE': sample, 
@@ -185,7 +178,8 @@ for shift in samples:
               'YEAR': args.year, 
               'SHIFT': shift,
               'DEEPCSV': deepCSV_SF, 
-              'DEEPJET':deepJet_SF,
+              'DEEPJET': deepJet_SF,
+              'JEC': JEC_file,
               'SITE': args.site,
               'LOCATION': args.location
             }
@@ -198,7 +192,7 @@ universe = vanilla
 Executable = %(RUNDIR)s/make_step1.sh
 should_transfer_files = YES
 when_to_transfer_output = ON_EXIT
-Transfer_Input_Files = %(RUNDIR)s/compile_step1.C, %(RUNDIR)s/make_step1.C, %(RUNDIR)s/step1.cc, %(RUNDIR)s/step1.h, %(RUNDIR)s/HardcodedConditions.cc, %(RUNDIR)s/HardcodedConditions.h, %(RUNDIR)s/BTagCalibForLJMet.cpp, %(RUNDIR)s/BTagCalibForLJMet.h, %(RUNDIR)s/%(DEEPCSV)s, %(RUNDIR)s/%(DEEPJET)s
+Transfer_Input_Files = %(RUNDIR)s/compile_step1.C, %(RUNDIR)s/make_step1.C, %(RUNDIR)s/step1.cc, %(RUNDIR)s/step1.h, %(RUNDIR)s/HardcodedConditions.cc, %(RUNDIR)s/HardcodedConditions.h, %(RUNDIR)s/BTagCalibForLJMet.cpp, %(RUNDIR)s/BTagCalibForLJMet.h, %(RUNDIR)s/%(DEEPCSV)s, %(RUNDIR)s/%(DEEPJET)s, %(RUNDIR)s/%(JEC)s
 request_memory = 6144
 Output = %(OUTFILENAME)s_%(ID)s.out
 Error = %(OUTFILENAME)s_%(ID)s.err
