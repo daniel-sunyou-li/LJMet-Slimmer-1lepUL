@@ -750,6 +750,8 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   TLorentzVector ak8_lv;
   TLorentzVector jetPU_lv;
   TLorentzVector genJetPU_lv;
+  TLorentzVector jet_jec;
+  TLorentzVector MET_corr_p4;
 
   // Polynominals for WJets HT scaling
   TF1 *poly2 = new TF1("poly2","max([6],[0] + [1]*x + [2]*x*x + [3]*x*x*x + [4]*x*x*x*x + [5]*x*x*x*x*x)",100,5000);
@@ -795,6 +797,23 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     btagWPdjet = 0.2783;
     btagWPdcsv = 0.4168;
   }
+  
+  // Reduced JEC systematic uncertainties
+  bool shiftUp;
+  if ( isMC && !( Syst == "nominal" || Syst == "JECup" || Syst == "JECdown" || Syst == "JERup" || Syst == "JECdown" ) ){
+    // select the corresponding file for the year
+    std::string fJEC( "btag_sf/RegroupedV2_Summer19UL16APV_V7_MC_UncertaintySources_AK4PFchs.txt" );
+    if( Year == "2016" ) fJEC = "btag_sf/RegroupedV2_Summer19UL16_V7_MC_UncertaintySources_AK4PFchs.txt";
+    else if( Year == "2017" ) fJEC = "btag_sf/RegroupedV2_Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt";
+    else if( Year == "2018" ) fJEC = "btag_sf/RegroupedV2_Summer19UL18_V5_MC_UncertaintySources_AK4PFchs.txt";
+    
+    if( Syst.Endswith( "up" ) ) shiftUp = true;
+    else if( Syst.Endswith( "down" ) ) shiftUp = false;
+    
+    std::string bSyst( Syst.ReplaceAll( "JEC_", "" ).ReplaceAll( "up", "" ).ReplaceAll( "down", "" ) ); // base name of the systematic
+    jecUnc = std::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty( *( new JetCorrectorParameters( fJEC, bSyst ) ) ) );
+  }
+  
   
   // ----------------------------------------------------------------------------
   // RUN THE EVENT LOOP
@@ -959,9 +978,6 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     else if (sample.find("DYJetsToLL_") != std::string::npos) sampleType = "ZJets";
     else if (sample.find("QCD_") != std::string::npos) sampleType = "qcd";
 
-
-
-
     // ----------------------------------------------------------------------------
     // ttHF weight calculation
     // ----------------------------------------------------------------------------
@@ -999,8 +1015,6 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
       lepphi = elPhi_MultiLepCalc->at(0);
       lepton_lv.SetPtEtaPhiM(elPt_MultiLepCalc->at(0),elEta_MultiLepCalc->at(0),elPhi_MultiLepCalc->at(0),lepM);
     }      
-
-    MT_lepMet = sqrt(2*leppt*corr_met_MultiLepCalc*(1 - cos(lepphi - corr_met_phi_MultiLepCalc)));
 
     // ----------------------------------------------------------------------------
     // Loop over AK4 jets for calculations and pt ordering pair
@@ -1041,9 +1055,52 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     btagDeepJetWeight_lfstats1dn = 1.0;
     btagDeepJetWeight_lfstats2up = 1.0;
     btagDeepJetWeight_lfstats2dn = 1.0;
+    
+    double MET_corr_px = corr_met_MultiLepCalc * cos( corr_met_phi_MultiLepCalc );
+    double MET_corr_py = corr_met_MultiLepCalc * sin( corr_met_phi_MultiLepCalc );
 
     // looping through jets now
     for(unsigned int ijet=0; ijet < theJetPt_JetSubCalc->size(); ijet++){
+      // For MC reduced JEC shifts, propagate the uncertainty to each jet before other calculations
+      if( isMC && !( Syst == "nominal" || Syst == "JECup" || Syst == "JECdown" || Syst == "JERup" || Syst == "JERdown") ) {
+        jet_lv.SetPtEtaPhiE( theJetPt_JetSubCalc->at(ijet), theJetEta_JetSubCalc->at(ijet), theJetPhi_JetSubCalc->at(ijet), theJetEnergy_JetSubCalc->at(ijet) );
+        jet_jec = jet_lv;
+        jecUnc->setJetEta( theJetEta_JetSubCalc->at(ijet) );
+        jecUnc->setJetPt( theJetPt_JetSubCalc->at(ijet) );
+        float shift; // multiplicative factor to the jet energy
+        if( shiftUp ){
+          try{
+            shift = 1.0 + jecUnc->getUncertainty(true);
+          }
+          catch(...){
+            std::cout << "[Warning] Exception thrown by JetCorrectionUncertainty. Possibly trying to correct a jet energy outside range. Skipping correction." << std::endl;
+            shift = 1.0;
+          }
+        }
+        else{
+          try{
+            shift = 1.0 - jecUnc->getUncertainty(false);
+          }
+          catch(...){
+            std::cout << "[Warning] Exception thrown by JetCorrectionUncertainty. Possibly trying to correct a jet energy outside range. Skipping correction." << std::endl;
+            shift = 1.0;
+          }
+          // these conditions for jet pt < 10 GeV come from JetMETCorrHelper.cc in LJMet
+          if( theJetPt_JetSubCalc->at(ijet) < 10.0 && shiftUp ) shift = 2.0;
+          if( theJetPt_JetSubCalc->at(ijet) < 10.0 && !shiftUp ) shift = 0.01;
+          
+          jet_jec = jet_lv * shift;
+          // the MET components are treated separately
+          MET_corr_px += ( jet_lv - jet_jec ).Px();
+          MET_corr_py += ( jet_lv - jet_jec ).Py();
+          theJetPt_JetSubCalc->at(ijet) = jet_jec.Pt();
+          theJetEta_JetSubCalc->at(ijet) = jet_jec.Eta();
+          theJetEta_JetSubCalc->at(ijet) = jet_jec.Phi();
+          theJetEnergy_JetSubCalc->at(ijet) = jet_jec.Energy();
+        }
+      }
+      
+      
       // ----------------------------------------------------------------------------
       // Basic cuts
       // ----------------------------------------------------------------------------
@@ -1284,8 +1341,18 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
 
       jetptindpair.push_back(std::make_pair(theJetPt_JetSubCalc->at(ijet),ijet));
       NJets_JetSubCalc+=1;
-      AK4HT+=theJetPt_JetSubCalc->at(ijet);
+      AK4HT += theJetPt_JetSubCalc->at(ijet);
     }
+    
+    // Correct MET for JEC
+    
+    if( isMC && !( Syst == "nominal" || Syst == "JECup" || Syst == "JECdown" || Syst == "JERup" || Syst == "JERdown" ) ) {
+      MET_corr_p4.SetPxPyPzE( MET_corr_px, MET_corr_p, 0, sqrt( MET_corr_px * MET_corr_px + MET_corr_py * MET_corr_py ) ); 
+      corr_met_MultiLepCalc = MET_corr_p4.Pt();
+      corr_met_phi_MultiLepCalc = MET_corr_p4.Phi();
+    }
+    
+    MT_lepMet = sqrt( 2 * leppt * corr_met_MultiLepCalc * (1 - cos( lepphi - corr_met_phi_MultiLepCalc ) ) );
 
     if(isMC){
       pileupJetIDWeight     = compute_SFWeight( jetPUIDsf, jetPUIDEff, jetPUIDTag );
