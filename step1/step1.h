@@ -19,6 +19,8 @@
 #include "TLorentzVector.h"
 #include "HardcodedConditions.h"
 #include "BTagCalibForLJMet.h"
+#include "CondFormats/JetMETObjects/interface/JetCorrectorParameters.h"
+#include "CondFormats/JetMETObjects/interface/JetCorrectionUncertainty.h"
 
 enum shift:char;
 
@@ -68,10 +70,12 @@ public :
    TString         Era="";
    TString         sample_="";
    std::string     sample="";
+   TString         Syst="nominal";
    
    // Fixed size dimensions of array or collections stored in the TTree if any.
 
    // NEW BRANCHES
+   std::shared_ptr<JetCorrectionUncertainty> jecUnc;
    Int_t           isHTgt500Njetge9;
    Int_t           isElectron;
    Int_t           isMuon;
@@ -1304,7 +1308,7 @@ public :
    TBranch        *b_vsSelTriggersHad_MultiLepCalc;   //!
    TBranch        *b_vsSelTriggersMu_MultiLepCalc;   //!
  
-   step1(TString inputFileName, TString outputFileName, TString Year_);
+   step1(TString inputFileName, TString outputFileName, TString Year_, TString Syst_);
    virtual ~step1();
    virtual Int_t    Cut(Long64_t entry);
    virtual Int_t    GetEntry(Long64_t entry);
@@ -1323,12 +1327,13 @@ public :
 #endif
 
 #ifdef step1_cxx
-step1::step1(TString inputFileName, TString outputFileName, TString Year_) : inputTree(0), inputFile(0), outputFile(0) 
+step1::step1( TString inputFileName, TString outputFileName, TString Year_, TString Syst_ ) : inputTree(0), inputFile(0), outputFile(0) 
 {
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
 
   Year = Year_;
+  Syst = Syst_;
   isSig  = ( inputFileName.Contains("TTTJ") || inputFileName.Contains("TTTW") || inputFileName.Contains("prime") || inputFileName.Contains("X53") || inputFileName.Contains("ChargedHiggs_Hplus"));
   if(isSig){
     if(inputFileName.Contains("Tprime")) isTpTp = true;
