@@ -2,6 +2,8 @@
 
 As an example, to run `step1` for 2017 single electron data on BRUX to store files on BRUX, do:
 
+    cmsenv
+    source /cvmfs/cms.cern.ch/cmsset_default.sh
     run_step1.py -y 17 -g DATAE -l BRUX -s BRUX 
     
 You can find all the possible arguments for `-g` in `config.py` under the `samples` dictionary. This script was made to run on both LPC and BRUX with the respective paths modifiable in `config.py`. To run `step1` on the JEC/JER shift samples, include the argument `--shifts`.  You can also use the following options:
@@ -11,6 +13,8 @@ You can find all the possible arguments for `-g` in `config.py` under the `sampl
 
 After running `run_step1.py` and having the `step1` files stored either on BRUX or LPC. You need to `hadd` together the separate files using `run_hadd.py`:
 
+    cmsenv
+    source /cvmfs/cms.cern.ch/cmsset_default.sh
     run_hadd.py -y 17 -g DATAE -l BRUX
     
 You can also include the argument `-f` to indicate how many files to hadd together.
