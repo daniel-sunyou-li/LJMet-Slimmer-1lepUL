@@ -799,7 +799,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   }
   
   // Reduced JEC systematic uncertainties
-  bool shiftUp;
+  bool shiftUp = true;
   if ( isMC && !( Syst == "nominal" || Syst == "JECup" || Syst == "JECdown" || Syst == "JERup" || Syst == "JECdown" ) ){
     // select the corresponding file for the year
     std::string fJEC( "btag_sf/RegroupedV2_Summer19UL16APV_V7_MC_UncertaintySources_AK4PFchs.txt" );
@@ -807,10 +807,10 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     else if( Year == "2017" ) fJEC = "btag_sf/RegroupedV2_Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt";
     else if( Year == "2018" ) fJEC = "btag_sf/RegroupedV2_Summer19UL18_V5_MC_UncertaintySources_AK4PFchs.txt";
     
-    if( Syst.Endswith( "up" ) ) shiftUp = true;
-    else if( Syst.Endswith( "down" ) ) shiftUp = false;
+    if( Syst.EndsWith( "up" ) ) shiftUp = true;
+    else if( Syst.EndsWith( "down" ) ) shiftUp = false;
     
-    std::string bSyst( Syst.ReplaceAll( "JEC_", "" ).ReplaceAll( "up", "" ).ReplaceAll( "down", "" ) ); // base name of the systematic
+    std::string bSyst( (std::string)Syst.ReplaceAll( "JEC_", "" ).ReplaceAll( "up", "" ).ReplaceAll( "down", "" ) ); // base name of the systematic
     jecUnc = std::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty( *( new JetCorrectorParameters( fJEC, bSyst ) ) ) );
   }
   
@@ -1347,7 +1347,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     // Correct MET for JEC
     
     if( isMC && !( Syst == "nominal" || Syst == "JECup" || Syst == "JECdown" || Syst == "JERup" || Syst == "JERdown" ) ) {
-      MET_corr_p4.SetPxPyPzE( MET_corr_px, MET_corr_p, 0, sqrt( MET_corr_px * MET_corr_px + MET_corr_py * MET_corr_py ) ); 
+      MET_corr_p4.SetPxPyPzE( MET_corr_px, MET_corr_py, 0, sqrt( MET_corr_px * MET_corr_px + MET_corr_py * MET_corr_py ) ); 
       corr_met_MultiLepCalc = MET_corr_p4.Pt();
       corr_met_phi_MultiLepCalc = MET_corr_p4.Phi();
     }

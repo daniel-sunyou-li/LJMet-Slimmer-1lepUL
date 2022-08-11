@@ -1,3 +1,4 @@
+#include <TSystem.h>
 #include "step1.cc"
 #include "BTagCalibForLJMet.cpp"
 #include "HardcodedConditions.cc"
@@ -45,12 +46,13 @@ void make_step1( TString macroDir, TString inputFile, TString outputFile, string
   cout << "[OPT] Using deepJet reshaping file: "<< btagdjcsvfile << endl;
   auto dc_calib = new const BTagCalibrationForLJMet( "DeepCSV", btagcsvfile ); 
   auto dj_calib = new const BTagCalibrationForLJMet( "DeepJet", btagdjcsvfile );
+    
+  outputFile.ReplaceAll( ".root", "" );
 
   if ( inputFile.Contains("Run2016") || inputFile.Contains("Run2017") || inputFile.Contains("Run2018") || inputFile.Contains("Single") || inputFile.Contains("Double") || inputFile.Contains("MuonEG") || inputFile.Contains("EGamma") || inputFile.Contains("JetHT") ) { 
     cout << endl << "[START] Running step1 for data" << endl;
-    outputFile.ReplaceAll( ".root", "" );
     step1 t( inputFile, outputFile + "nominal.root", Year );
-    t.Loop( "ljmet", "ljmet", dc_calib, dj_calib); 
+    t.Loop( "ljmet", "ljmet", dc_calib, dj_calib ); 
   }
   else { // MC
     cout << endl << "[START] Running step1 for MC shift: " << shift << endl;
@@ -77,7 +79,7 @@ void make_step1( TString macroDir, string filelist, string shift, string Year ){
   string line;
   ifstream myfile (filelist);
   vector<pair<string,string> > Files;
-  if (myfile.is_open())
+  if( myfile.is_open() )
   {
     while ( getline (myfile,line) )
     {
@@ -102,8 +104,7 @@ void make_step1( TString macroDir, string filelist, string shift, string Year ){
     }
     
     cout << "[OPT] Using deepCSV reshaping file: " << btagcsvfile << endl;
-    cout << "[OPT] Using deepJet reshaping file: "<< btagdjcsvfile << endl;
-    cout << "[OPT] Using JEC reduced sources file: " << jecfile << endl;
+    cout << "[OPT] Using deepJet reshaping file: " << btagdjcsvfile << endl;
     auto dc_calib = new const BTagCalibrationForLJMet( "DeepCSV", btagcsvfile ); 
     auto dj_calib = new const BTagCalibrationForLJMet( "DeepJet", btagdjcsvfile );
    

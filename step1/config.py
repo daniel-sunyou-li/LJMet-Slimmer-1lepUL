@@ -46,25 +46,25 @@ deepJet_SF = {
 
 JEC_files = {
   "16APV": "btag_sf/RegroupedV2_Summer19UL16APV_V7_MC_UncertaintySources_AK4PFchs.txt",
-  "16": "RegroupedV2_Summer19UL16_V7_MC_UncertaintySources_AK4PFchs.txt",
-  "17": "RegroupedV2_Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt",
-  "18": "RegroupedV2_Summer19UL18_V5_MC_UncertaintySources_AK4PFchs.txt"
+  "16": "btag_sf/RegroupedV2_Summer19UL16_V7_MC_UncertaintySources_AK4PFchs.txt",
+  "17": "btag_sf/RegroupedV2_Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt",
+  "18": "btag_sf/RegroupedV2_Summer19UL18_V5_MC_UncertaintySources_AK4PFchs.txt"
 }
 
 JES_shifts = {
   "JER": False,
   "JEC": False, # fully de-correlated, corresponds to total JEC from LJMet
-  "FlavorQCD": True,
-  "RelativeBal": True,
-  "RelativeSamples_Era": True,
-  "HF": True,
-  "HF_Era": True,
-  "BBEC1": True,
-  "BBEC1_Era": True,
-  "EC2": True,
-  "EC2_Era": True,
+  "FlavorQCD": False,
+  "RelativeBal": False,
+  "RelativeSamples_Era": False,
+  "HF": False,
+  "HF_Era": False,
+  "BBEC1": False,
+  "BBEC1_Era": False,
+  "EC2": False,
+  "EC2_Era": False,
   "Absolute": True,
-  "Absolute_Era": True
+  "Absolute_Era": False
 }
 
 selection = {
@@ -122,9 +122,9 @@ samples = {
     ],
     "TTBAR": [
       "TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8",
-      #"TTToHadronic_TuneCP5_13TeV-powheg-pythia8",
-      #"TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8",
-      #"TTToSemiLepton_HT500Njet9_TuneCP5_13TeV-powheg-pythia8"
+      "TTToHadronic_TuneCP5_13TeV-powheg-pythia8",
+      "TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8",
+      "TTToSemiLepton_HT500Njet9_TuneCP5_13TeV-powheg-pythia8"
     ],
     "TTBAR_SHIFTS": [
       "TTToSemiLeptonic_hdampUP_TuneCP5_13TeV-powheg-pythia8",
@@ -314,7 +314,7 @@ samples = {
   "17": {
     "TEST": [
       "TTTJ_TuneCP5_13TeV-madgraph-pythia8",
-      "SingleMuon"
+      #"SingleMuon"
     ],
     "DATAE": [
       "SingleElectron"

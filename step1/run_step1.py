@@ -34,9 +34,10 @@ else:
   print( "[INFO] Running step1 on shifts:" )
   for syst in config.JES_shifts:
     for shift in [ "up", "down" ]:
-      sName = syst.replace( "Era", "20{}".format( args.year.replace( "APV", "" ) ) ) + shift
-      print( "  + {}".format( sName ) )
-      shifts.append( sName )
+      if config.JES_shifts[ syst ]:
+        sName = syst.replace( "Era", "20{}".format( args.year.replace( "APV", "" ) ) ) + shift
+        print( "  + {}".format( sName ) )
+        shifts.append( sName )
   
 filesPerJob = int( args.filesPerJob )
 postfix = config.postfix
@@ -110,8 +111,11 @@ for shift in samples:
           runList = [ item.strip().split("/")[-1] for item in os.popen( "xrdfs root://cmseos.fnal.gov/ ls {}/{}/singleLep20{}UL/".format( inputDir, sample, args.year ) ).readlines() ]
       elif args.location == "BRUX":
         runPath = "{}/{}/singleLep20{}UL/".format( inputDir, sample, args.year ) 
-        status, dirList = xrdClient.dirlist( runPath )
-        runList = [ item.name for item in dirList ]
+        if args.site == "LPC":
+          status, dirList = xrdClient.dirlist( runPath )
+          runList = [ item.name for item in dirList ]
+        elif args.site == "BRUX":
+          runList = [ item for item in os.listdir( runPath ) ]
    
       for run in runList:
         if args.location == "LPC":
@@ -120,18 +124,21 @@ for shift in samples:
           elif args.site == "BRUX":
             numList = [ item.strip().split("/")[-1] for item in os.popen( "xrdfs root://cmseos.fnal.gov/ ls {}/{}/singleLep20{}UL/{}".format( inputDir, sample, args.year, run ) ).readlines() ]
         elif args.location == "BRUX":
-          xrd_command = "{}/{}/singleLep20{}UL/{}".format( inputDir, sample, args.year, run )
-          status, dirList = xrdClient.dirlist( xrd_command )
-          numList = [ item.name for item in dirList ]
+          numPath = "{}/{}/singleLep20{}UL/{}".format( inputDir, sample, args.year, run )
+          if args.site == "LPC":
+            status, dirList = xrdClient.dirlist( numPath )
+            numList = [ item.name for item in dirList ]
+          elif args.site == "BRUX":
+            numList = [ item for item in os.listdir( numPath ) ]
         
         for num in numList:
-          numPath = "{}/{}/singleLep20{}UL/{}/{}".format( inputDir, sample, args.year, run, num )
-          pathSuffix = numPath.split("/")[-3:]
+          filePath = "{}/{}/singleLep20{}UL/{}/{}".format( inputDir, sample, args.year, run, num )
+          pathSuffix = filePath.split("/")[-3:]
           pathSuffix = "/".join( pathSuffix )
 
           if args.location == "LPC":
             if args.site == "LPC":
-              rootFiles = EOSlist_root_files( numPath )
+              rootFiles = EOSlist_root_files( filePath )
             elif args.site == "BRUX":
               fileList = [ item.strip().split("/")[-1] for item in os.popen( "xrdfs root://cmseos.fnal.gov/ ls {}/{}/singleLep20{}UL/{}/{}".format( inputDir, sample, args.year, run, num ) ).readlines() ]
               rootFiles = []
@@ -139,9 +146,11 @@ for shift in samples:
                 if fName.endswith( ".root" ): rootFiles.append( fName )
 
           elif args.location == "BRUX":
-            xrdPath = "{}/{}/singleLep20{}UL/{}/{}/".format( inputDir, sample, args.year, run, num )
-            status, fileList = xrdClient.dirlist( xrdPath )
-            rootFiles = [ item.name for item in fileList if item.name.endswith( ".root" ) ]
+            if args.site == "LPC":
+              status, fileList = xrdClient.dirlist( filePath )
+              rootFiles = [ item.name for item in fileList if item.name.endswith( ".root" ) ]
+            elif args.site == "BRUX":
+              rootFiles = [ item for item in os.listdir( filePath ) ]
           if not rootFiles: continue #Check if rootfiles is empty list (remove failed jobs)
           baseFilename = "_".join( ( rootFiles[0].split(".")[0] ).split("_")[:-1] )
 
