@@ -810,7 +810,9 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     if( Syst.EndsWith( "up" ) ) shiftUp = true;
     else if( Syst.EndsWith( "down" ) ) shiftUp = false;
     
-    std::string bSyst( (std::string)Syst.ReplaceAll( "JEC_", "" ).ReplaceAll( "up", "" ).ReplaceAll( "down", "" ) ); // base name of the systematic
+    std::string bSyst = (std::string)Syst.ReplaceAll( "JEC_", "" ).ReplaceAll( "up", "" ).ReplaceAll( "down", "" ); // base name of the systematic
+    cout << "[INFO] Running reduced JEC source: " << Syst << endl;
+    cout << ">> Base systematic: " << bSyst << endl; 
     jecUnc = std::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty( *( new JetCorrectorParameters( fJEC, bSyst ) ) ) );
   }
   
