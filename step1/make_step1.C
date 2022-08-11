@@ -51,7 +51,7 @@ void make_step1( TString macroDir, TString inputFile, TString outputFile, string
 
   if ( inputFile.Contains("Run2016") || inputFile.Contains("Run2017") || inputFile.Contains("Run2018") || inputFile.Contains("Single") || inputFile.Contains("Double") || inputFile.Contains("MuonEG") || inputFile.Contains("EGamma") || inputFile.Contains("JetHT") ) { 
     cout << endl << "[START] Running step1 for data" << endl;
-    step1 t( inputFile, outputFile + "nominal.root", Year );
+    step1 t( inputFile, outputFile + "nominal.root", Year, "nominal" );
     t.Loop( "ljmet", "ljmet", dc_calib, dj_calib ); 
   }
   else { // MC

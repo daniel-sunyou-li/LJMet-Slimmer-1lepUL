@@ -58,7 +58,9 @@ for iFile in $IDLIST; do
   echo  $XRDpath/${INFILENAME}_${inFile}.root,${OUTFILENAME}_${iFile}.root>> filelist
 done
 
-root -l -b -q -g make_step1.C\(\"$macroDir\",\"filelist\",\"$SHIFT\",\"20${YEAR}\"\)
+#root -l -b -q -g make_step1.C\(\"$macroDir\",\"filelist\",\"$SHIFT\",\"20${YEAR}\"\)
+echo gROOT-\>LoadMacro\(\"make_step1.C++\"\)\; make_step1\(\"$macroDir\",\"filelist\",\"$SHIFT\",\"20${YEAR}\"\)\; | root -b -l
+
 
 echo ">> Available ROOT Files:"
 ls -l *.root
