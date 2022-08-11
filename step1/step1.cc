@@ -1221,16 +1221,53 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         float djetWgt(1.0), djetWgt_hfup(1.0), djetWgt_hfdn(1.0), djetWgt_lfup(1.0), djetWgt_lfdn(1.0), djetWgt_jesup(1.0), djetWgt_jesdn(1.0), 
         djetWgt_hfstats1up(1.0), djetWgt_hfstats1dn(1.0), djetWgt_hfstats2up(1.0), djetWgt_hfstats2dn(1.0), djetWgt_cferr1up(1.0), djetWgt_cferr1dn(1.0), 
         djetWgt_cferr2up(1.0), djetWgt_cferr2dn(1.0), djetWgt_lfstats1up(1.0), djetWgt_lfstats1dn(1.0), djetWgt_lfstats2up(1.0), djetWgt_lfstats2dn(1.0);
-        string csv_jec = "central";
         
-        if (abs(ijetHFlv) ==5 && debug == 0 ) { 
+        // necessary to run through all the combinations to accomodate for the reduced sources in jec but not in btag
+        string csv_prefix = "up_";
+        string csv_flav = BTagEntryForLJMet::FLAV_UDSG;
+        if( !shiftUp ) csv_prefix = "down_";
+        if( abs(ijetHFlv) == 5 ) csv_flav = BTagEntryForLJMet::FLAV_B;
+        
+        if( bSyst == "Absolute" || bSyst == "Absolute_" + Year ){
+          float djetWgt1 = reader_dj.eval_auto_bounds( csv_prefix + "jesAbsoluteStat", csv_flav, jetaForBtag, jptForBtag, deepjet); 
+          float djetWgt2 = reader_dj.eval_auto_bounds( csv_prefix + "jesAbsoluteMPFBias", csv_flav, jetaForBtag, jptForBtag, deepjet);
+          float djetWgt3 = reader_dj.eval_auto_bounds( csv_prefix + "jesAbsoluteScale", csv_flav, jetaForBtag, jptForBtag, deepjet);
+          djetWgt = sqrt( djetWgt1*djetWgt1 + djetWgt2*djetWgt2 + djetWgt3*djetWgt3 );
+        }
+        else if( bSyst == "HF" || bSyst == "HF_" + Year ){
+          float djetWgt1 = reader_dj.eval_auto_bounds( csv_prefix + "jesRelativeStatHF", csv_flav, jetaForBtag, jptForBtag, deepjet);
+          float djetWgt2 = reader_dj.eval_auto_bounds( csv_prefix + "jesRelativePtHF", csv_flav, jetaForBtag, jptForBtag, deepjet);
+          float djetWgt3 = reader_dj.eval_auto_bounds( csv_prefix + "jesPileUpPtHF", csv_flav, jetaForBtag, jptForBtag, deepjet);
+          float djetWgt4 = reader_dj.eval_auto_bounds( csv_prefix + "jesRelativeJERHF", csv_flav, jetaForBtag, jptForBtag, deepjet);
+          djetWgt = sqrt( djetWgt1*djetWgt1 + djetWgt2*djetWgt2 + djetWgt3*djetWgt3 + djetWgt4*djetWgt4 );
+        }
+        else if( bSyst == "BBEC1" || bSyst == "BBEC1_" + Year ){
+          float djetWgt1 = reader_dj.eval_auto_bounds( csv_prefix + "jesPileUpPtBB", csv_flav, jetaForBtag, jptForBtag, deepjet);
+          float djetWgt2 = reader_dj.eval_auto_bounds( csv_prefix + "jesRelativePtBB", csv_flav, jetaForBtag, jptForBtag, deepjet);
+          float djetWgt3 = reader_dj.eval_auto_bounds( csv_prefix + "jesRelativeJEREC1", csv_flav, jetaForBtag, jptForBtag, deepjet);
+          float djetWgt4 = reader_dj.eval_auto_bounds( csv_prefix + "jesPileUpPtEC1", csv_flav, jetaForBtag, jptForBtag, deepjet);
+          float djetWgt5 = reader_dj.eval_auto_bounds( csv_prefix + "jesRelativePtEC1", csv_flav, jetaForBtag, jptForBtag, deepjet);
+          djetWgt = sqrt( djetWgt1*djetWgt1 + djetWgt2*djetWgt2 + djetWgt3*djetWgt3 + djetWgt4*djetWgt4 + djetWgt5*djetWgt5 );
+        }
+        else if( bSyst == "EC2" || bSyst == "EC2_" + Year ){
+          float djetWgt1 = reader_dj.eval_auto_bounds( csv_prefix + "jesRelativeJEREC2", csv_flav, jetaForBtag, jptForBtag, deepjet);
+          float djetWgt2 = reader_dj.eval_auto_bounds( csv_prefix + "jesPileUpPtEC2", csv_flav, jetaForBtag, jptForBtag, deepjet);
+          float djetWgt3 = reader_dj.eval_auto_bounds( csv_prefix + "jesRelativePtEC2", csv_flav, jetaForBtag, jptForBtag, deepjet);
+          djetWgt = sqrt( djetWgt1*djetWgt1 + djetWgt2*djetWgt2 + djetWgt3*djetWgt3 );
+        }
+        else if( bSyst == "FlavorQCD" || bSyst == "RelativeBal" || bSyst == "RelativeSample" ){
+          djetWgt = reader_dj.eval_auto_bounds( csv_prefix + "jes" + bSyst, csv_flav, jetaForBtag, jptForBtag, deepjet);
+        }
+        else{
+          djetWgt = reader_dj.eval_auto_bounds( "central", csv_flav, jetaForBtag, jptForBtag, deepjet);
+        }
+        
+        if (abs(ijetHFlv) == 5 && debug == 0 ) { 
           csvWgt = reader.eval_auto_bounds("central", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, csv);
           csvWgt_hfup = reader.eval_auto_bounds("up_hf", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, csv);
           csvWgt_hfdn = reader.eval_auto_bounds("down_hf", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, csv);
           csvWgt_lfup = reader.eval_auto_bounds("up_lf", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, csv);
           csvWgt_lfdn = reader.eval_auto_bounds("down_lf", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, csv);           
-
-          djetWgt = reader_dj.eval_auto_bounds( csv_jec, BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet);
 
           djetWgt_hfup = reader_dj.eval_auto_bounds( "up_hf", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet); 
           djetWgt_hfdn = reader_dj.eval_auto_bounds( "down_hf", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet); 
@@ -1246,7 +1283,8 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
           djetWgt_lfstats1dn = reader_dj.eval_auto_bounds( "down_lfstats1", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet); 
           djetWgt_lfstats2up = reader_dj.eval_auto_bounds( "up_lfstats2", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet); 
           djetWgt_lfstats2dn = reader_dj.eval_auto_bounds( "down_lfstats2", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet);
-
+          
+          // no cferr for b-tagged jets so use nominal
           djetWgt_cferr1up = reader_dj.eval_auto_bounds( "central", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet);
           djetWgt_cferr1dn = reader_dj.eval_auto_bounds( "central", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet);
           djetWgt_cferr2up = reader_dj.eval_auto_bounds( "central", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet);
@@ -1255,8 +1293,9 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         else if (abs(ijetHFlv) ==4 && debug == 0 ) {
           csvWgt = reader.eval_auto_bounds("central", BTagEntryForLJMet::FLAV_C, jetaForBtag, jptForBtag, csv);
 
-          djetWgt = reader_dj.eval_auto_bounds( csv_jec, BTagEntryForLJMet::FLAV_C, jetaForBtag, jptForBtag, deepjet);
-
+          djetWgt = reader_dj.eval_auto_bounds( "central", BTagEntryForLJMet::FLAV_C, jetaForBtag, jptForBtag, deepjet);
+          
+          // no heavy or light flavor systs for c-tagged jets so use nominal
           djetWgt_hfup = reader_dj.eval_auto_bounds("central", BTagEntryForLJMet::FLAV_C, jetaForBtag, jptForBtag, deepjet); 
           djetWgt_hfdn = reader_dj.eval_auto_bounds("central", BTagEntryForLJMet::FLAV_C, jetaForBtag, jptForBtag, deepjet); 
           djetWgt_lfup = reader_dj.eval_auto_bounds("central", BTagEntryForLJMet::FLAV_C, jetaForBtag, jptForBtag, deepjet); 
@@ -1283,8 +1322,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
           csvWgt_hfdn = reader.eval_auto_bounds("down_hf", BTagEntryForLJMet::FLAV_UDSG, jetaForBtag, jptForBtag, csv);
           csvWgt_lfup = reader.eval_auto_bounds("up_lf", BTagEntryForLJMet::FLAV_UDSG, jetaForBtag, jptForBtag, csv);
           csvWgt_lfdn = reader.eval_auto_bounds("down_lf", BTagEntryForLJMet::FLAV_UDSG, jetaForBtag, jptForBtag, csv);
-
-          djetWgt = reader_dj.eval_auto_bounds( csv_jet, BTagEntryForLJMet::FLAV_UDSG, jetaForBtag, jptForBtag, deepjet);
+          
           djetWgt_hfup = reader_dj.eval_auto_bounds("up_hf", BTagEntryForLJMet::FLAV_UDSG, jetaForBtag, jptForBtag, deepjet);
           djetWgt_hfdn = reader_dj.eval_auto_bounds("down_hf", BTagEntryForLJMet::FLAV_UDSG, jetaForBtag, jptForBtag, deepjet);
           djetWgt_lfup = reader_dj.eval_auto_bounds("up_lf", BTagEntryForLJMet::FLAV_UDSG, jetaForBtag, jptForBtag, deepjet);
