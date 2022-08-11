@@ -1219,6 +1219,8 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         float djetWgt(1.0), djetWgt_hfup(1.0), djetWgt_hfdn(1.0), djetWgt_lfup(1.0), djetWgt_lfdn(1.0), djetWgt_jesup(1.0), djetWgt_jesdn(1.0), 
         djetWgt_hfstats1up(1.0), djetWgt_hfstats1dn(1.0), djetWgt_hfstats2up(1.0), djetWgt_hfstats2dn(1.0), djetWgt_cferr1up(1.0), djetWgt_cferr1dn(1.0), 
         djetWgt_cferr2up(1.0), djetWgt_cferr2dn(1.0), djetWgt_lfstats1up(1.0), djetWgt_lfstats1dn(1.0), djetWgt_lfstats2up(1.0), djetWgt_lfstats2dn(1.0);
+        string csv_jec = "central";
+        
         if (abs(ijetHFlv) ==5 && debug == 0 ) { 
           csvWgt = reader.eval_auto_bounds("central", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, csv);
           csvWgt_hfup = reader.eval_auto_bounds("up_hf", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, csv);
@@ -1226,32 +1228,32 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
           csvWgt_lfup = reader.eval_auto_bounds("up_lf", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, csv);
           csvWgt_lfdn = reader.eval_auto_bounds("down_lf", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, csv);           
 
-          djetWgt = reader_dj.eval_auto_bounds("central", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet);
+          djetWgt = reader_dj.eval_auto_bounds( csv_jec, BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet);
 
-          djetWgt_hfup = reader_dj.eval_auto_bounds("up_hf", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet); 
-          djetWgt_hfdn = reader_dj.eval_auto_bounds("down_hf", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet); 
-          djetWgt_lfup = reader_dj.eval_auto_bounds("up_lf", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet); 
-          djetWgt_lfdn = reader_dj.eval_auto_bounds("down_lf", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet);
-          djetWgt_jesup = reader_dj.eval_auto_bounds("up_jes", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet); 
-          djetWgt_jesdn = reader_dj.eval_auto_bounds("down_jes", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet); 
-          djetWgt_hfstats1up = reader_dj.eval_auto_bounds("up_hfstats1", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet); 
-          djetWgt_hfstats1dn = reader_dj.eval_auto_bounds("down_hfstats1", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet);
-          djetWgt_hfstats2up = reader_dj.eval_auto_bounds("up_hfstats2", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet); 
-          djetWgt_hfstats2dn = reader_dj.eval_auto_bounds("down_hfstats2", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet);
-          djetWgt_lfstats1up = reader_dj.eval_auto_bounds("up_lfstats1", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet); 
-          djetWgt_lfstats1dn = reader_dj.eval_auto_bounds("down_lfstats1", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet); 
-          djetWgt_lfstats2up = reader_dj.eval_auto_bounds("up_lfstats2", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet); 
-          djetWgt_lfstats2dn = reader_dj.eval_auto_bounds("down_lfstats2", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet);
+          djetWgt_hfup = reader_dj.eval_auto_bounds( "up_hf", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet); 
+          djetWgt_hfdn = reader_dj.eval_auto_bounds( "down_hf", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet); 
+          djetWgt_lfup = reader_dj.eval_auto_bounds( "up_lf", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet); 
+          djetWgt_lfdn = reader_dj.eval_auto_bounds( "down_lf", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet);
+          djetWgt_jesup = reader_dj.eval_auto_bounds( "up_jes", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet); 
+          djetWgt_jesdn = reader_dj.eval_auto_bounds( "down_jes", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet); 
+          djetWgt_hfstats1up = reader_dj.eval_auto_bounds( "up_hfstats1", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet); 
+          djetWgt_hfstats1dn = reader_dj.eval_auto_bounds( "down_hfstats1", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet);
+          djetWgt_hfstats2up = reader_dj.eval_auto_bounds( "up_hfstats2", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet); 
+          djetWgt_hfstats2dn = reader_dj.eval_auto_bounds( "down_hfstats2", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet);
+          djetWgt_lfstats1up = reader_dj.eval_auto_bounds( "up_lfstats1", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet); 
+          djetWgt_lfstats1dn = reader_dj.eval_auto_bounds( "down_lfstats1", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet); 
+          djetWgt_lfstats2up = reader_dj.eval_auto_bounds( "up_lfstats2", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet); 
+          djetWgt_lfstats2dn = reader_dj.eval_auto_bounds( "down_lfstats2", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet);
 
-          djetWgt_cferr1up = reader_dj.eval_auto_bounds("central", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet);
-          djetWgt_cferr1dn = reader_dj.eval_auto_bounds("central", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet);
-          djetWgt_cferr2up = reader_dj.eval_auto_bounds("central", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet);
-          djetWgt_cferr2dn = reader_dj.eval_auto_bounds("central", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet);     
+          djetWgt_cferr1up = reader_dj.eval_auto_bounds( "central", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet);
+          djetWgt_cferr1dn = reader_dj.eval_auto_bounds( "central", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet);
+          djetWgt_cferr2up = reader_dj.eval_auto_bounds( "central", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet);
+          djetWgt_cferr2dn = reader_dj.eval_auto_bounds( "central", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, deepjet);     
         }
         else if (abs(ijetHFlv) ==4 && debug == 0 ) {
           csvWgt = reader.eval_auto_bounds("central", BTagEntryForLJMet::FLAV_C, jetaForBtag, jptForBtag, csv);
 
-          djetWgt = reader_dj.eval_auto_bounds("central", BTagEntryForLJMet::FLAV_C, jetaForBtag, jptForBtag, deepjet);
+          djetWgt = reader_dj.eval_auto_bounds( csv_jec, BTagEntryForLJMet::FLAV_C, jetaForBtag, jptForBtag, deepjet);
 
           djetWgt_hfup = reader_dj.eval_auto_bounds("central", BTagEntryForLJMet::FLAV_C, jetaForBtag, jptForBtag, deepjet); 
           djetWgt_hfdn = reader_dj.eval_auto_bounds("central", BTagEntryForLJMet::FLAV_C, jetaForBtag, jptForBtag, deepjet); 
@@ -1280,7 +1282,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
           csvWgt_lfup = reader.eval_auto_bounds("up_lf", BTagEntryForLJMet::FLAV_UDSG, jetaForBtag, jptForBtag, csv);
           csvWgt_lfdn = reader.eval_auto_bounds("down_lf", BTagEntryForLJMet::FLAV_UDSG, jetaForBtag, jptForBtag, csv);
 
-          djetWgt = reader_dj.eval_auto_bounds("central", BTagEntryForLJMet::FLAV_UDSG, jetaForBtag, jptForBtag, deepjet);
+          djetWgt = reader_dj.eval_auto_bounds( csv_jet, BTagEntryForLJMet::FLAV_UDSG, jetaForBtag, jptForBtag, deepjet);
           djetWgt_hfup = reader_dj.eval_auto_bounds("up_hf", BTagEntryForLJMet::FLAV_UDSG, jetaForBtag, jptForBtag, deepjet);
           djetWgt_hfdn = reader_dj.eval_auto_bounds("down_hf", BTagEntryForLJMet::FLAV_UDSG, jetaForBtag, jptForBtag, deepjet);
           djetWgt_lfup = reader_dj.eval_auto_bounds("up_lf", BTagEntryForLJMet::FLAV_UDSG, jetaForBtag, jptForBtag, deepjet);
