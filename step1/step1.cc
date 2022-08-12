@@ -800,19 +800,24 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   
   // Reduced JEC systematic uncertainties
   bool shiftUp = true;
-  if ( isMC && !( Syst == "nominal" || Syst == "JECup" || Syst == "JECdown" || Syst == "JERup" || Syst == "JECdown" ) ){
+  string bSyst = "nominal";
+  if( isMC && !( Syst == "nominal" || Syst == "JECup" || Syst == "JECdown" || Syst == "JERup" || Syst == "JECdown" ) ){
     // select the corresponding file for the year
-    std::string fJEC( "btag_sf/RegroupedV2_Summer19UL16APV_V7_MC_UncertaintySources_AK4PFchs.txt" );
-    if( Year == "2016" ) fJEC = "btag_sf/RegroupedV2_Summer19UL16_V7_MC_UncertaintySources_AK4PFchs.txt";
-    else if( Year == "2017" ) fJEC = "btag_sf/RegroupedV2_Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt";
-    else if( Year == "2018" ) fJEC = "btag_sf/RegroupedV2_Summer19UL18_V5_MC_UncertaintySources_AK4PFchs.txt";
-    
+    string fJEC( "RegroupedV2_Summer19UL16APV_V7_MC_UncertaintySources_AK4PFchs.txt" );
+    if( Year == "2016" ) fJEC = "RegroupedV2_Summer19UL16_V7_MC_UncertaintySources_AK4PFchs.txt";
+    else if( Year == "2017" ) fJEC = "RegroupedV2_Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt";
+    else if( Year == "2018" ) fJEC = "RegroupedV2_Summer19UL18_V5_MC_UncertaintySources_AK4PFchs.txt";
+
+    cout << ">> Syst: " << Syst << endl;
     if( Syst.EndsWith( "up" ) ) shiftUp = true;
     else if( Syst.EndsWith( "down" ) ) shiftUp = false;
-    
-    std::string bSyst = (std::string)Syst.ReplaceAll( "JEC_", "" ).ReplaceAll( "up", "" ).ReplaceAll( "down", "" ); // base name of the systematic
+
+    bSyst = (std::string)Syst.ReplaceAll( "JEC_", "" ).ReplaceAll( "up", "" ).ReplaceAll( "down", "" ); // base name of the systematic
     cout << "[INFO] Running reduced JEC source: " << Syst << endl;
-    cout << ">> Base systematic: " << bSyst << endl; 
+    cout << ">> JEC File: " << fJEC << endl;
+    cout << ">> Shift: ";
+    if( shiftUp ) cout << "up" << endl;
+    else cout << "down" << endl;
     jecUnc = std::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty( *( new JetCorrectorParameters( fJEC, bSyst ) ) ) );
   }
   
@@ -855,7 +860,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
 
     if(jentry > 100 && debug == 1) break;
 
-    if(jentry % 1000 ==0) std::cout << ">> Completed " << jentry << " out of " << nentries << " events" <<std::endl;
+    if(jentry % 100 ==0) std::cout << ">> Completed " << jentry << " out of " << nentries << " events" <<std::endl;
 
     // ----------------------------------------------------------------------------
     // Filter input file by mass or decay
@@ -1069,38 +1074,41 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         jet_jec = jet_lv;
         jecUnc->setJetEta( theJetEta_JetSubCalc->at(ijet) );
         jecUnc->setJetPt( theJetPt_JetSubCalc->at(ijet) );
-        float shift; // multiplicative factor to the jet energy
+        float shift = 1.0; // multiplicative factor to the jet energy
         if( shiftUp ){
           try{
-            shift = 1.0 + jecUnc->getUncertainty(true);
+            shift = jecUnc->getUncertainty(true);
           }
           catch(...){
             std::cout << "[Warning] Exception thrown by JetCorrectionUncertainty. Possibly trying to correct a jet energy outside range. Skipping correction." << std::endl;
-            shift = 1.0;
+            shift = 0.0;
           }
+          shift = 1.0 + shift;
         }
         else{
           try{
-            shift = 1.0 - jecUnc->getUncertainty(false);
+            shift = jecUnc->getUncertainty(false);
           }
           catch(...){
             std::cout << "[Warning] Exception thrown by JetCorrectionUncertainty. Possibly trying to correct a jet energy outside range. Skipping correction." << std::endl;
-            shift = 1.0;
+            shift = 0.0;
           }
-          // these conditions for jet pt < 10 GeV come from JetMETCorrHelper.cc in LJMet
-          if( theJetPt_JetSubCalc->at(ijet) < 10.0 && shiftUp ) shift = 2.0;
-          if( theJetPt_JetSubCalc->at(ijet) < 10.0 && !shiftUp ) shift = 0.01;
-          
-          jet_jec = jet_lv * shift;
-          // the MET components are treated separately
-          MET_corr_px += ( jet_lv - jet_jec ).Px();
-          MET_corr_py += ( jet_lv - jet_jec ).Py();
-          theJetPt_JetSubCalc->at(ijet) = jet_jec.Pt();
-          theJetEta_JetSubCalc->at(ijet) = jet_jec.Eta();
-          theJetEta_JetSubCalc->at(ijet) = jet_jec.Phi();
-          theJetEnergy_JetSubCalc->at(ijet) = jet_jec.Energy();
+          shift = 1.0 - shift;
         }
-      }
+        // these conditions for jet pt < 10 GeV come from JetMETCorrHelper.cc in LJMet
+        if( theJetPt_JetSubCalc->at(ijet) < 10.0 && shiftUp ) shift = 2.0;
+        if( theJetPt_JetSubCalc->at(ijet) < 10.0 && !shiftUp ) shift = 0.01;
+          
+        jet_jec = jet_lv * shift;
+        // the MET components are treated separately
+        MET_corr_px += ( jet_lv - jet_jec ).Px();
+        MET_corr_py += ( jet_lv - jet_jec ).Py();
+        theJetPt_JetSubCalc->at(ijet) = jet_jec.Pt();
+        theJetEta_JetSubCalc->at(ijet) = jet_jec.Eta();
+        theJetEta_JetSubCalc->at(ijet) = jet_jec.Phi();
+        theJetEnergy_JetSubCalc->at(ijet) = jet_jec.Energy();
+        }
+      
       
       
       // ----------------------------------------------------------------------------
@@ -1224,7 +1232,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         
         // necessary to run through all the combinations to accomodate for the reduced sources in jec but not in btag
         string csv_prefix = "up_";
-        string csv_flav = BTagEntryForLJMet::FLAV_UDSG;
+        auto csv_flav = BTagEntryForLJMet::FLAV_UDSG;
         if( !shiftUp ) csv_prefix = "down_";
         if( abs(ijetHFlv) == 5 ) csv_flav = BTagEntryForLJMet::FLAV_B;
         
