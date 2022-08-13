@@ -24,7 +24,7 @@ using namespace std;
 
 bool comparepair( const std::pair<double,int> a, const std::pair<double,int> b) { return a.first > b.first; }
 bool comparefloat( const float a, const float b) { return a < b; }
-int debug = 0;
+int debug = 1;
 
 TRandom3 Rand;
 
@@ -94,7 +94,9 @@ wgthist->Write();
 // ----------------------------------------------------------------------------
 
 void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationForLJMet* calib = NULL, const BTagCalibrationForLJMet* calib_dj = NULL){
-  vector<std::string> btag_syst;
+  if( debug == 1 ) cout << "[DEBUG] Running in debugging mode" << endl;
+
+  vector<string> btag_syst;
   if( debug == 1 ){
     btag_syst = { "down_hfstats2" };
   }
@@ -129,15 +131,15 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   // Turn on input tree branches
   // ----------------------------------------------------------------------------
   inputTree=(TTree*)inputFile->Get(inTreeName+"/"+inTreeName);
-  if(inputTree->GetEntries()==0) {
-    std::cout<< "[step1.cc] WARNING! Found 0 events in the tree!!!!"<<std::endl;
+  if( inputTree->GetEntries() == 0 ) {
+    cout << "[WARNING] Found 0 events in the tree, quitting..." << endl;
     return;
   }
-  Init(inputTree);
+  Init( inputTree );
 
-  if (inputTree == 0) return;
+  if ( inputTree == 0 ) return;
 
-  inputTree->SetBranchStatus("*",0);
+  inputTree->SetBranchStatus( "*", 0 );
 
 
   //Event info
@@ -860,7 +862,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
 
     if(jentry > 100 && debug == 1) break;
 
-    if(jentry % 100 ==0) std::cout << ">> Completed " << jentry << " out of " << nentries << " events" <<std::endl;
+    if(jentry % 1 == 0 ) std::cout << ">> Completed " << jentry << " out of " << nentries << " events" <<std::endl;
 
     // ----------------------------------------------------------------------------
     // Filter input file by mass or decay
@@ -1067,15 +1069,18 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     double MET_corr_py = corr_met_MultiLepCalc * sin( corr_met_phi_MultiLepCalc );
 
     // looping through jets now
-    for(unsigned int ijet=0; ijet < theJetPt_JetSubCalc->size(); ijet++){
+    if( debug == 1 ) cout << "[DEBUG] Looping through jets" << endl;
+    for( unsigned int ijet=0; ijet < theJetPt_JetSubCalc->size(); ijet++){
       // For MC reduced JEC shifts, propagate the uncertainty to each jet before other calculations
-      if( isMC && !( Syst == "nominal" || Syst == "JECup" || Syst == "JECdown" || Syst == "JERup" || Syst == "JERdown") ) {
+      if( isMC && !( Syst == "nominal" || Syst == "JECup" || Syst == "JECdown" || Syst == "JERup" || Syst == "JERdown") ){
         jet_lv.SetPtEtaPhiE( theJetPt_JetSubCalc->at(ijet), theJetEta_JetSubCalc->at(ijet), theJetPhi_JetSubCalc->at(ijet), theJetEnergy_JetSubCalc->at(ijet) );
         jet_jec = jet_lv;
         jecUnc->setJetEta( theJetEta_JetSubCalc->at(ijet) );
         jecUnc->setJetPt( theJetPt_JetSubCalc->at(ijet) );
-        float shift = 1.0; // multiplicative factor to the jet energy
+        double shift = 1.0; // multiplicative factor to the jet energy
         if( shiftUp ){
+          if( debug == 1 ) cout << "[DEBUG] Running shift up" << endl;
+          shift = jecUnc->getUncertainty(true);
           try{
             shift = jecUnc->getUncertainty(true);
           }
@@ -1086,6 +1091,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
           shift = 1.0 + shift;
         }
         else{
+          if( debug == 1 ) cout << "[DEBUG] Running shift down" << endl;
           try{
             shift = jecUnc->getUncertainty(false);
           }
@@ -1107,7 +1113,8 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         theJetEta_JetSubCalc->at(ijet) = jet_jec.Eta();
         theJetEta_JetSubCalc->at(ijet) = jet_jec.Phi();
         theJetEnergy_JetSubCalc->at(ijet) = jet_jec.Energy();
-        }
+        if( debug == 1 ) cout << "[DEBUG] Done retrieving reduced JEC source: " << shift << endl;
+      }
       
       
       
@@ -1123,6 +1130,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
       bool ijetPUIDTight = theJetPileupJetTight_JetSubCalc->at(ijet);
 
       // Jet PU ID event re-weighting information 
+      if( debug == 1 ) cout << "[DEBUG] Running pileup SF correction" << endl;
       if(isMC){
         double jetPUIDsf_ = 1.0;
         double jetPUIDsfUp_ = 1.0;
@@ -1164,6 +1172,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
       // ----------------------------------------------------------------------------
       // B TAGGING fix
       // ----------------------------------------------------------------------------
+      if( debug == 1 ) cout << "[DEBUG] B-tagging fix" << endl;
       if(isMC){
         // First fix b tagging for DeepFlv
         double btagSF = 1.0;
@@ -1236,7 +1245,12 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         if( !shiftUp ) csv_prefix = "down_";
         if( abs(ijetHFlv) == 5 ) csv_flav = BTagEntryForLJMet::FLAV_B;
         
-        if( bSyst == "Absolute" || bSyst == "Absolute_" + Year ){
+        if( debug == 1 ) cout << "[DEBUG] Evaluating deepJet weight with reduced JES source" << endl;
+
+        if( debug == 1 ){
+          djetWgt = reader_dj.eval_auto_bounds( "central", csv_flav, jetaForBtag, jptForBtag, deepjet );
+        }
+        else if( bSyst == "Absolute" || bSyst == "Absolute_" + Year ){
           float djetWgt1 = reader_dj.eval_auto_bounds( csv_prefix + "jesAbsoluteStat", csv_flav, jetaForBtag, jptForBtag, deepjet); 
           float djetWgt2 = reader_dj.eval_auto_bounds( csv_prefix + "jesAbsoluteMPFBias", csv_flav, jetaForBtag, jptForBtag, deepjet);
           float djetWgt3 = reader_dj.eval_auto_bounds( csv_prefix + "jesAbsoluteScale", csv_flav, jetaForBtag, jptForBtag, deepjet);
@@ -1270,6 +1284,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
           djetWgt = reader_dj.eval_auto_bounds( "central", csv_flav, jetaForBtag, jptForBtag, deepjet);
         }
         
+        if( debug == 1 ) cout << "[DEBUG] Loading btag systematics" << endl;
         if (abs(ijetHFlv) == 5 && debug == 0 ) { 
           csvWgt = reader.eval_auto_bounds("central", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, csv);
           csvWgt_hfup = reader.eval_auto_bounds("up_hf", BTagEntryForLJMet::FLAV_B, jetaForBtag, jptForBtag, csv);
@@ -1393,6 +1408,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
       NJets_JetSubCalc+=1;
       AK4HT += theJetPt_JetSubCalc->at(ijet);
     }
+    if( debug == 1 ) cout << "[DEBUG] Done looping through jets" << endl;
     
     // Correct MET for JEC
     
