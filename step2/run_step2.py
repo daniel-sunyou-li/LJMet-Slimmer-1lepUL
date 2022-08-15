@@ -19,8 +19,20 @@ args = parser.parse_args()
 
 from ROOT import *
 
-if args.year not in [ "16APV", "16", "17", "18" ]: sys.exit( "[ERR] Invalid year option used. Choose from: 16APV, 16, 17, 18" )
-shifts = [ "nominal" ] if not args.shifts else [ "JECup", "JECdown", "JERup", "JERdown" ]
+if args.year not in [ "16APV", "16", "17", "18" ]: 
+  sys.exit( "[ERR] Invalid year option used. Choose from: 16APV, 16, 17, 18" )
+
+shifts = []
+if not args.shifts:
+  shifts.append( "nominal" )
+else:
+  print( "[INFO] Running step2 on shifts:" )
+  for syst in config.JES_shifts:
+    for shift in [ "up", "down" ]:
+      if config.JES_shifts[ syst ]:
+        sName = syst.replace( "Era", "20{}".format( args.year ) ) + shift
+        print( "  + {}".format( sName ) )
+        shifts.append( sName )
 
 runDir = os.getcwd()
 inputDir = {
