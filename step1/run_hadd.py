@@ -17,7 +17,17 @@ from ROOT import *
 
 execfile( "../EOSSafeUtils.py" )
 
-shifts = [ "nominal" ] if not args.shifts else [ "JECup", "JECdown", "JERup", "JERdown" ]
+shifts = []
+if not args.shifts:
+  shifts.append( "nominal" )
+else:
+  print( "[INFO] Running step1 hadd on shifts:" )
+  for syst in config.JES_shifts:
+    for shift in [ "up", "down" ]:
+      if config.JES_shifts[ syst ]:
+        sName = syst.replace( "Era", "20{}".format( args.year.replace( "APV", "" ) ) ) + shift
+        print( "  + {}".format( sName ) )
+        shifts.append( sName )
 
 step1Dir = {
   shift: os.path.join( config.step1Dir[ args.year ][ args.location ], shift ) for shift in shifts
