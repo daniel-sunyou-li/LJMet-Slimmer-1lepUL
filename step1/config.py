@@ -55,16 +55,16 @@ JES_shifts = {
   "JER": False,
   "JEC": False, # fully de-correlated, corresponds to total JEC from LJMet
   "FlavorQCD": True,
-  "RelativeBal": True,
-  "RelativeSamples_Era": True,
-  "HF": True,
-  "HF_Era": True,
-  "BBEC1": True,
-  "BBEC1_Era": True,
-  "EC2": True,
-  "EC2_Era": True,
-  "Absolute": True,
-  "Absolute_Era": True
+  "RelativeBal": False,
+  "RelativeSamples_Era": False,
+  "HF": False,
+  "HF_Era": False,
+  "BBEC1": False,
+  "BBEC1_Era": False,
+  "EC2": False,
+  "EC2_Era": False,
+  "Absolute": False,
+  "Absolute_Era": False
 }
 
 selection = {
