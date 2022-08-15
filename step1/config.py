@@ -56,14 +56,14 @@ JES_shifts = {
   "JEC": False, # fully de-correlated, corresponds to total JEC from LJMet
   "FlavorQCD": False,
   "RelativeBal": False,
-  "RelativeSamples_Era": False,
+  "RelativeSamples_Era": True,
   "HF": False,
   "HF_Era": False,
   "BBEC1": False,
   "BBEC1_Era": False,
   "EC2": False,
   "EC2_Era": False,
-  "Absolute": True,
+  "Absolute": False,
   "Absolute_Era": False
 }
 
@@ -342,12 +342,12 @@ samples = {
       "ChargedHiggs_HplusTB_HplusToTB_M-3000_TuneCP5_13TeV_amcatnlo_pythia8"
     ],
     "TTTX": [
-      #"TTTT_TuneCP5_13TeV-amcatnlo-pythia8",
-      #"TTTJ_TuneCP5_13TeV-madgraph-pythia8",
+      "TTTT_TuneCP5_13TeV-amcatnlo-pythia8",
+      "TTTJ_TuneCP5_13TeV-madgraph-pythia8",
       "TTTW_TuneCP5_13TeV-madgraph-pythia8"
     ],
     "TTBAR": [
-      "TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8",
+      #"TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8",
       "TTToHadronic_TuneCP5_13TeV-powheg-pythia8",
       "TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8",
       "TTToSemiLepton_HT500Njet9_TuneCP5_13TeV-powheg-pythia8"

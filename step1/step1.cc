@@ -24,7 +24,7 @@ using namespace std;
 
 bool comparepair( const std::pair<double,int> a, const std::pair<double,int> b) { return a.first > b.first; }
 bool comparefloat( const float a, const float b) { return a < b; }
-int debug = 1;
+int debug = 0;
 
 TRandom3 Rand;
 
@@ -95,7 +95,32 @@ wgthist->Write();
 
 void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationForLJMet* calib = NULL, const BTagCalibrationForLJMet* calib_dj = NULL){
   if( debug == 1 ) cout << "[DEBUG] Running in debugging mode" << endl;
+  
+  // Reduced JEC systematic uncertainties
+  bool shiftUp = true;
+  string bSyst = "nominal";
+  if( isMC && !( Syst == "nominal" || Syst == "JECup" || Syst == "JECdown" || Syst == "JERup" || Syst == "JECdown" ) ){
+    // select the corresponding file for the year
+    string fJEC( "RegroupedV2_Summer19UL16APV_V7_MC_UncertaintySources_AK4PFchs.txt" );
+    if( Year == "2016" ) fJEC = "RegroupedV2_Summer19UL16_V7_MC_UncertaintySources_AK4PFchs.txt";
+    else if( Year == "2017" ) fJEC = "RegroupedV2_Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt";
+    else if( Year == "2018" ) fJEC = "RegroupedV2_Summer19UL18_V5_MC_UncertaintySources_AK4PFchs.txt";
 
+    cout << ">> Syst: " << Syst << endl;
+    if( Syst.EndsWith( "up" ) ) shiftUp = true;
+    else if( Syst.EndsWith( "down" ) ) shiftUp = false;
+
+    bSyst = (std::string)Syst.ReplaceAll( "JEC_", "" ).ReplaceAll( "up", "" ).ReplaceAll( "down", "" ); // base name of the systematic
+    cout << "[INFO] Running reduced JEC source: " << Syst << endl;
+    cout << ">> JEC File: " << fJEC << endl;
+    cout << ">> Shift: ";
+    if( shiftUp ) cout << "up" << endl;
+    else cout << "down" << endl;
+    jecUnc = std::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty( *( new JetCorrectorParameters( fJEC, bSyst ) ) ) );
+  }
+
+  string btag_prefix = "up_";
+  if( !shiftUp ) btag_prefix = "down_";
   vector<string> btag_syst;
   if( debug == 1 ){
     btag_syst = { "down_hfstats2" };
@@ -106,6 +131,34 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
      "down_cferr2", "up_hf", "down_hf", "up_lfstats1", "down_lfstats1",
      "up_lfstats2", "down_lfstats2"};
   }
+  if( bSyst == "Absolute" || bSyst == "Absolute_" + Year ){ 
+    btag_syst.push_back( btag_prefix + "jesAbsoluteStat" );
+    btag_syst.push_back( btag_prefix + "jesAbsoluteMPFBias" );
+    btag_syst.push_back( btag_prefix + "jesAbsoluteScale" );
+  }
+  else if( bSyst == "HF" || bSyst == "HF_" + Year ){
+    btag_syst.push_back( btag_prefix + "jesRelativeStatHF" );
+    btag_syst.push_back( btag_prefix + "jesRelativePtHF" );
+    btag_syst.push_back( btag_prefix + "jesPileUpPtHF" );
+    btag_syst.push_back( btag_prefix + "jesRelativeJERHF" );
+  }
+  else if( bSyst == "BBEC1" || bSyst == "BBEC1_" + Year ){
+    btag_syst.push_back( btag_prefix + "jesPileUpPtBB" );
+    btag_syst.push_back( btag_prefix + "jesRelativePtBB" );
+    btag_syst.push_back( btag_prefix + "jesRelativeJEREC1" );
+    btag_syst.push_back( btag_prefix + "jesPileUpPtEC1" );
+    btag_syst.push_back( btag_prefix + "jesRelativePtEC1" );
+  }
+  else if( bSyst == "EC2" || bSyst == "EC2_" + Year ){
+    btag_syst.push_back( btag_prefix + "jesRelativeJEREC2" );
+    btag_syst.push_back( btag_prefix + "jesPileUpPtEC2" );
+    btag_syst.push_back( btag_prefix + "jesRelativePtEC2" );
+  }
+  else if( bSyst == "FlavorQCD" ) btag_syst.push_back( btag_prefix + "jesFlavorQCD" );
+  else if( bSyst == "RelativeBal" ) btag_syst.push_back( btag_prefix + "jesRelativeBal" );
+  else if( bSyst == "RelativeSample" ) btag_syst.push_back( btag_prefix + "jesRelativeSample" );
+
+
   BTagCalibrationForLJMetReader reader(
     BTagEntryForLJMet::OP_RESHAPING,  // operating point
     "central",             // central sys type
@@ -800,28 +853,6 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     btagWPdcsv = 0.4168;
   }
   
-  // Reduced JEC systematic uncertainties
-  bool shiftUp = true;
-  string bSyst = "nominal";
-  if( isMC && !( Syst == "nominal" || Syst == "JECup" || Syst == "JECdown" || Syst == "JERup" || Syst == "JECdown" ) ){
-    // select the corresponding file for the year
-    string fJEC( "RegroupedV2_Summer19UL16APV_V7_MC_UncertaintySources_AK4PFchs.txt" );
-    if( Year == "2016" ) fJEC = "RegroupedV2_Summer19UL16_V7_MC_UncertaintySources_AK4PFchs.txt";
-    else if( Year == "2017" ) fJEC = "RegroupedV2_Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt";
-    else if( Year == "2018" ) fJEC = "RegroupedV2_Summer19UL18_V5_MC_UncertaintySources_AK4PFchs.txt";
-
-    cout << ">> Syst: " << Syst << endl;
-    if( Syst.EndsWith( "up" ) ) shiftUp = true;
-    else if( Syst.EndsWith( "down" ) ) shiftUp = false;
-
-    bSyst = (std::string)Syst.ReplaceAll( "JEC_", "" ).ReplaceAll( "up", "" ).ReplaceAll( "down", "" ); // base name of the systematic
-    cout << "[INFO] Running reduced JEC source: " << Syst << endl;
-    cout << ">> JEC File: " << fJEC << endl;
-    cout << ">> Shift: ";
-    if( shiftUp ) cout << "up" << endl;
-    else cout << "down" << endl;
-    jecUnc = std::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty( *( new JetCorrectorParameters( fJEC, bSyst ) ) ) );
-  }
   
   
   // ----------------------------------------------------------------------------
@@ -862,7 +893,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
 
     if(jentry > 100 && debug == 1) break;
 
-    if(jentry % 1 == 0 ) std::cout << ">> Completed " << jentry << " out of " << nentries << " events" <<std::endl;
+    if(jentry % 1000 == 0 ) std::cout << ">> Completed " << jentry << " out of " << nentries << " events" <<std::endl;
 
     // ----------------------------------------------------------------------------
     // Filter input file by mass or decay
@@ -1080,7 +1111,6 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         double shift = 1.0; // multiplicative factor to the jet energy
         if( shiftUp ){
           if( debug == 1 ) cout << "[DEBUG] Running shift up" << endl;
-          shift = jecUnc->getUncertainty(true);
           try{
             shift = jecUnc->getUncertainty(true);
           }

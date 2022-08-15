@@ -95,7 +95,7 @@ void make_step1( TString macroDir, string filelist, string shift, string Year ){
       btagcsvfile = "reshaping_deepCSV_106XUL17_test.csv";
       btagdjcsvfile = "reshaping_deepJet_106XUL17_test.csv";
     }
-    if( Year == "2016" ){
+    else if( Year == "2016" ){
       btagcsvfile = "reshaping_deepCSV_106XUL16postVFP_v3.csv";
       btagdjcsvfile = "reshaping_deepJet_106XUL16postVFP_v3.csv";
     }

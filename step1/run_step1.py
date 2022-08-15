@@ -55,6 +55,10 @@ deepCSV_SF = config.deepCSV_SF[ args.year ]
 deepJet_SF = config.deepJet_SF[ args.year ]
 JEC_file = config.JEC_files[ args.year ]
 
+if args.test:
+  deepCSV_SF = "btag_sf/reshaping_deepCSV_106XUL17_test.csv"
+  deepJet_SF = "btag_sf/reshaping_deepJet_106XUL17_test.csv"
+
 # Start processing
 gROOT.ProcessLine( ".x compile_step1.C" )
 print( "[START] Submitting step1 condor jobs" )
@@ -115,7 +119,7 @@ for shift in samples:
           status, dirList = xrdClient.dirlist( runPath )
           runList = [ item.name for item in dirList ]
         elif args.site == "BRUX":
-          runList = [ item for item in os.listdir( runPath ) ]
+          runList = [ item for item in next( os.walk( runPath ) )[1] ]
    
       for run in runList:
         if args.location == "LPC":
@@ -129,7 +133,7 @@ for shift in samples:
             status, dirList = xrdClient.dirlist( numPath )
             numList = [ item.name for item in dirList ]
           elif args.site == "BRUX":
-            numList = [ item for item in os.listdir( numPath ) ]
+            numList = [ item for item in next( os.walk( numPath ) )[1] if item != "log" ]
         
         for num in numList:
           filePath = "{}/{}/singleLep20{}UL/{}/{}".format( inputDir, sample, args.year, run, num )
@@ -150,7 +154,7 @@ for shift in samples:
               status, fileList = xrdClient.dirlist( filePath )
               rootFiles = [ item.name for item in fileList if item.name.endswith( ".root" ) ]
             elif args.site == "BRUX":
-              rootFiles = [ item for item in os.listdir( filePath ) ]
+              rootFiles = [ item for item in next( os.walk( filePath ) )[2] ]
           if not rootFiles: continue #Check if rootfiles is empty list (remove failed jobs)
           baseFilename = "_".join( ( rootFiles[0].split(".")[0] ).split("_")[:-1] )
 
