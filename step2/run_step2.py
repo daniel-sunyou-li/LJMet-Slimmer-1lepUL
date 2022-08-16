@@ -67,7 +67,7 @@ if args.inLoc == "LPC":
 elif args.inLoc == "BRUX":
   xrdClient = client.FileSystem( "root://brux30.hep.brown.edu:1094/" )
   for shift in shifts:
-    status, dirList = xrdClient.dirlist( inputDir[ shift ].replace( "/isilon/hadoop", "" )
+    status, dirList = xrdClient.dirlist( inputDir[ shift ].replace( "/isilon/hadoop", "" ) )
     step1Files[ shift ] = [ item.name for item in dirList ]
 else:
   quit( "[ERR] Invalid input location, quitting..." )
