@@ -131,32 +131,20 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
      "down_cferr2", "up_hf", "down_hf", "up_lfstats1", "down_lfstats1",
      "up_lfstats2", "down_lfstats2"};
   }
-  if( bSyst == "Absolute" || bSyst == "Absolute_" + Year ){ 
-    btag_syst.push_back( btag_prefix + "jesAbsoluteStat" );
-    btag_syst.push_back( btag_prefix + "jesAbsoluteMPFBias" );
-    btag_syst.push_back( btag_prefix + "jesAbsoluteScale" );
-  }
-  else if( bSyst == "HF" || bSyst == "HF_" + Year ){
-    btag_syst.push_back( btag_prefix + "jesRelativeStatHF" );
-    btag_syst.push_back( btag_prefix + "jesRelativePtHF" );
-    btag_syst.push_back( btag_prefix + "jesPileUpPtHF" );
-    btag_syst.push_back( btag_prefix + "jesRelativeJERHF" );
-  }
-  else if( bSyst == "BBEC1" || bSyst == "BBEC1_" + Year ){
-    btag_syst.push_back( btag_prefix + "jesPileUpPtBB" );
-    btag_syst.push_back( btag_prefix + "jesRelativePtBB" );
-    btag_syst.push_back( btag_prefix + "jesRelativeJEREC1" );
-    btag_syst.push_back( btag_prefix + "jesPileUpPtEC1" );
-    btag_syst.push_back( btag_prefix + "jesRelativePtEC1" );
-  }
-  else if( bSyst == "EC2" || bSyst == "EC2_" + Year ){
-    btag_syst.push_back( btag_prefix + "jesRelativeJEREC2" );
-    btag_syst.push_back( btag_prefix + "jesPileUpPtEC2" );
-    btag_syst.push_back( btag_prefix + "jesRelativePtEC2" );
-  }
+  auto bYear = Year;
+  if( Year == "2016APV" ) bYear = "2016";
+
+  if( bSyst == "Absolute" ) btag_syst.push_back( btag_prefix + "jesAbsolute" );
+  else if( bSyst == "Absolute_" + bYear ) btag_syst.push_back( btag_prefix + "jesAbsolute_" + bYear );
+  else if( bSyst == "HF" ) btag_syst.push_back( btag_prefix + "jesHF" );
+  else if( bSyst == "HF_" + bYear ) btag_syst.push_back( btag_prefix + "jesHF_" + bYear );
+  else if( bSyst == "BBEC1" ) btag_syst.push_back( btag_prefix + "jesBBEC1" );
+  else if( bSyst == "BBEC1_" + bYear ) btag_syst.push_back( btag_prefix + "jesBBEC1_" + bYear );
+  else if( bSyst == "EC2" ) btag_syst.push_back( btag_prefix + "jesEC2" );
+  else if( bSyst == "EC2_" + bYear ) btag_syst.push_back( btag_prefix + "jesEC2_" + bYear );
   else if( bSyst == "FlavorQCD" ) btag_syst.push_back( btag_prefix + "jesFlavorQCD" );
   else if( bSyst == "RelativeBal" ) btag_syst.push_back( btag_prefix + "jesRelativeBal" );
-  else if( bSyst == "RelativeSamples_" + Year ) btag_syst.push_back( btag_prefix + "jesRelativeSample" );
+  else if( bSyst == "RelativeSample_" + bYear ) btag_syst.push_back( btag_prefix + "jesRelativeSample_" + bYear );
 
 
   BTagCalibrationForLJMetReader reader(
@@ -1280,41 +1268,19 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         if( debug == 1 ){
           djetWgt = reader_dj.eval_auto_bounds( "central", csv_flav, jetaForBtag, jptForBtag, deepjet );
         }
-        else if( bSyst == "Absolute" || bSyst == "Absolute_" + Year ){
-          float djetWgt1 = reader_dj.eval_auto_bounds( csv_prefix + "jesAbsoluteStat", csv_flav, jetaForBtag, jptForBtag, deepjet); 
-          float djetWgt2 = reader_dj.eval_auto_bounds( csv_prefix + "jesAbsoluteMPFBias", csv_flav, jetaForBtag, jptForBtag, deepjet);
-          float djetWgt3 = reader_dj.eval_auto_bounds( csv_prefix + "jesAbsoluteScale", csv_flav, jetaForBtag, jptForBtag, deepjet);
-          //djetWgt = sqrt( djetWgt1*djetWgt1 + djetWgt2*djetWgt2 + djetWgt3*djetWgt3 );
-          djetWgt = djetWgt1*djetWgt2*djetWgt3; 
-        }
-        else if( bSyst == "HF" || bSyst == "HF_" + Year ){
-          float djetWgt1 = reader_dj.eval_auto_bounds( csv_prefix + "jesRelativeStatHF", csv_flav, jetaForBtag, jptForBtag, deepjet);
-          float djetWgt2 = reader_dj.eval_auto_bounds( csv_prefix + "jesRelativePtHF", csv_flav, jetaForBtag, jptForBtag, deepjet);
-          float djetWgt3 = reader_dj.eval_auto_bounds( csv_prefix + "jesPileUpPtHF", csv_flav, jetaForBtag, jptForBtag, deepjet);
-          float djetWgt4 = reader_dj.eval_auto_bounds( csv_prefix + "jesRelativeJERHF", csv_flav, jetaForBtag, jptForBtag, deepjet);
-          //djetWgt = sqrt( djetWgt1*djetWgt1 + djetWgt2*djetWgt2 + djetWgt3*djetWgt3 + djetWgt4*djetWgt4 );
-          djetWgt = djetWgt1 * djetWgt2 * djetWgt3 * djetWgt4;
-        }
-        else if( bSyst == "BBEC1" || bSyst == "BBEC1_" + Year ){
-          float djetWgt1 = reader_dj.eval_auto_bounds( csv_prefix + "jesPileUpPtBB", csv_flav, jetaForBtag, jptForBtag, deepjet);
-          float djetWgt2 = reader_dj.eval_auto_bounds( csv_prefix + "jesRelativePtBB", csv_flav, jetaForBtag, jptForBtag, deepjet);
-          float djetWgt3 = reader_dj.eval_auto_bounds( csv_prefix + "jesRelativeJEREC1", csv_flav, jetaForBtag, jptForBtag, deepjet);
-          float djetWgt4 = reader_dj.eval_auto_bounds( csv_prefix + "jesPileUpPtEC1", csv_flav, jetaForBtag, jptForBtag, deepjet);
-          float djetWgt5 = reader_dj.eval_auto_bounds( csv_prefix + "jesRelativePtEC1", csv_flav, jetaForBtag, jptForBtag, deepjet);
-          //djetWgt = sqrt( djetWgt1*djetWgt1 + djetWgt2*djetWgt2 + djetWgt3*djetWgt3 + djetWgt4*djetWgt4 + djetWgt5*djetWgt5 );
-          djetWgt = djetWgt1 * djetWgt2 * djetWgt3 * djetWgt4 * djetWgt5;
-        }
-        else if( bSyst == "EC2" || bSyst == "EC2_" + Year ){
-          float djetWgt1 = reader_dj.eval_auto_bounds( csv_prefix + "jesRelativeJEREC2", csv_flav, jetaForBtag, jptForBtag, deepjet);
-          float djetWgt2 = reader_dj.eval_auto_bounds( csv_prefix + "jesPileUpPtEC2", csv_flav, jetaForBtag, jptForBtag, deepjet);
-          float djetWgt3 = reader_dj.eval_auto_bounds( csv_prefix + "jesRelativePtEC2", csv_flav, jetaForBtag, jptForBtag, deepjet);
-          //djetWgt = sqrt( djetWgt1*djetWgt1 + djetWgt2*djetWgt2 + djetWgt3*djetWgt3 );
-          djetWgt = djetWgt1 * djetWgt2 * djetWgt3;
-        }
-        else if( bSyst == "FlavorQCD" || bSyst == "RelativeBal" || bSyst == "RelativeSamples_" + Year ){
-          djetWgt = reader_dj.eval_auto_bounds( csv_prefix + "jes" + bSyst, csv_flav, jetaForBtag, jptForBtag, deepjet);
-        }
+        else if( bSyst == "Absolute" ) djetWgt = reader_dj.eval_auto_bounds( csv_prefix + "jesAbsolute", csv_flav, jetaForBtag, jptForBtag, deepjet );
+        else if( bSyst == "Absolute_" + bYear ) djetWgt = reader_dj.eval_auto_bounds( csv_prefix + "jesAbsolute_" + bYear, csv_flav, jetaForBtag, jptForBtag, deepjet );
+        else if( bSyst == "HF" ) djetWgt = reader_dj.eval_auto_bounds( csv_prefix + "jesHF", csv_flav, jetaForBtag, jptForBtag, deepjet );
+        else if( bSyst == "HF_" + bYear ) djetWgt = reader_dj.eval_auto_bounds( csv_prefix + "jesHF_" + bYear, csv_flav, jetaForBtag, jptForBtag, deepjet );
+        else if( bSyst == "BBEC1" ) djetWgt = reader_dj.eval_auto_bounds( csv_prefix + "jesBBEC1", csv_flav, jetaForBtag, jptForBtag, deepjet );
+        else if( bSyst == "BBEC1_" + bYear ) djetWgt = reader_dj.eval_auto_bounds( csv_prefix + "jesBBEC1_" + bYear, csv_flav, jetaForBtag, jptForBtag, deepjet );
+        else if( bSyst == "EC2" ) djetWgt = reader_dj.eval_auto_bounds( csv_prefix + "jesEC2", csv_flav, jetaForBtag, jptForBtag, deepjet );
+        else if( bSyst == "EC2_" + bYear ) djetWgt = reader_dj.eval_auto_bounds( csv_prefix + "jesEC2_" + bYear, csv_flav, jetaForBtag, jptForBtag, deepjet );
+        else if( bSyst == "FlavorQCD" ) djetWgt = reader_dj.eval_auto_bounds( csv_prefix + "jesFlavorQCD", csv_flav, jetaForBtag, jptForBtag, deepjet );
+        else if( bSyst == "RelativeBal" ) djetWgt = reader_dj.eval_auto_bounds( csv_prefix + "jesRelativeBal", csv_flav, jetaForBtag, jptForBtag, deepjet );
+        else if( bSyst == "RelativeSample_" + bYear ) djetWgt = reader_dj.eval_auto_bounds( csv_prefix + "jesRelativeSample_" + bYear, csv_flav, jetaForBtag, jptForBtag, deepjet );
         else{
+          if( jentry == 0 && ijet == 0 ) cout << "[INFO] Defaulting to central deepJet weight for: " << bSyst << endl;
           djetWgt = reader_dj.eval_auto_bounds( "central", csv_flav, jetaForBtag, jptForBtag, deepjet);
         }
         
