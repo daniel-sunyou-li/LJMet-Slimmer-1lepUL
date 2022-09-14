@@ -52,19 +52,19 @@ JEC_files = {
 }
 
 JES_shifts = {
-  "JER": False,
-  "JEC": False, # fully de-correlated, corresponds to total JEC from LJMet
-  "FlavorQCD": True,
-  "RelativeBal": True,
-  "RelativeSample_Era": True,
-  "HF": True,
-  "HF_Era": True,
-  "BBEC1": True,
-  "BBEC1_Era": True,
-  "EC2": True,
-  "EC2_Era": True,
-  "Absolute": True,
-  "Absolute_Era": True
+  "JER": True,
+  "JEC": True, # fully de-correlated, corresponds to total JEC from LJMet
+  #"FlavorQCD": True,
+  #"RelativeBal": True,
+  #"RelativeSample_Era": True,
+  #"HF": True,
+  #"HF_Era": True,
+  #"BBEC1": True,
+  #"BBEC1_Era": True,
+  #"EC2": True,
+  #"EC2_Era": True,
+  #"Absolute": True,
+  #"Absolute_Era": True
 }
 
 selection = {
@@ -348,9 +348,9 @@ samples = {
     ],
     "TTBAR": [
       "TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8",
-      #"TTToHadronic_TuneCP5_13TeV-powheg-pythia8",
-      #"TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8",
-      #"TTToSemiLepton_HT500Njet9_TuneCP5_13TeV-powheg-pythia8"
+      "TTToHadronic_TuneCP5_13TeV-powheg-pythia8",
+      "TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8",
+      "TTToSemiLepton_HT500Njet9_TuneCP5_13TeV-powheg-pythia8"
     ],
     "TTBAR_SHIFTS": [
       "TTToSemiLeptonic_hdampUP_TuneCP5_13TeV-powheg-pythia8",

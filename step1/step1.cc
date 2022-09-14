@@ -1098,7 +1098,6 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         jecUnc->setJetPt( theJetPt_JetSubCalc->at(ijet) );
         double shift = 1.0; // multiplicative factor to the jet energy
         if( shiftUp ){
-          if( debug == 1 ) cout << "[DEBUG] Running shift up" << endl;
           try{
             shift = jecUnc->getUncertainty(true);
           }
@@ -1109,7 +1108,6 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
           shift = 1.0 + shift;
         }
         else{
-          if( debug == 1 ) cout << "[DEBUG] Running shift down" << endl;
           try{
             shift = jecUnc->getUncertainty(false);
           }
@@ -1119,9 +1117,6 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
           }
           shift = 1.0 - shift;
         }
-        // these conditions for jet pt < 10 GeV come from JetMETCorrHelper.cc in LJMet
-        if( theJetPt_JetSubCalc->at(ijet) < 10.0 && shiftUp ) shift = 2.0;
-        if( theJetPt_JetSubCalc->at(ijet) < 10.0 && !shiftUp ) shift = 0.01;
           
         jet_jec = jet_lv * shift;
         // the MET components are treated separately
@@ -1129,9 +1124,8 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         MET_corr_py += ( jet_lv - jet_jec ).Py();
         theJetPt_JetSubCalc->at(ijet) = jet_jec.Pt();
         theJetEta_JetSubCalc->at(ijet) = jet_jec.Eta();
-        theJetEta_JetSubCalc->at(ijet) = jet_jec.Phi();
+        theJetPhi_JetSubCalc->at(ijet) = jet_jec.Phi();
         theJetEnergy_JetSubCalc->at(ijet) = jet_jec.Energy();
-        if( debug == 1 ) cout << "[DEBUG] Done retrieving reduced JEC source: " << shift << endl;
       }
       
       

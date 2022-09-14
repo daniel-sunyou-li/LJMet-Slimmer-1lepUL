@@ -70,8 +70,8 @@ for shift in shifts:
       if "Single" in sample or "EGamma" in sample or "up" in sample.lower() or "down" in sample.lower(): continue
     outList = []
     if "TTToSemiLeptonic" in sample and "up" not in sample.lower() and "down" not in sample.lower():
-      for HT_key in [ "HT0Njet0" ]:  #[ "HT0Njet0", "HT500Njet9" ]:
-        for fs_key in [ "ttjj" ]:  #[ "ttjj", "ttbb", "tt2b", "tt1b", "ttcc", "ttjj" ]:
+      for HT_key in [ "HT0Njet0", "HT500Njet9" ]:
+        for fs_key in [ "ttjj", "ttbb", "tt2b", "tt1b", "ttcc" ]:
           outList.append( "{}_{}".format( HT_key, fs_key ) )
     elif "TTTo" in sample:
       outList = [ "ttbb", "tt2b", "tt1b", "ttcc", "ttjj" ]
@@ -89,13 +89,16 @@ for shift in shifts:
     
       filesPerHadd = int( args.filesPerHadd )
       if "TTToSemiLeptonic" in outSample and outLabel in [ "HT0Njet0_ttjj" ]: 
-        filesPerHadd = 5
+        filesPerHadd = 2
         #filesPerHadd = int( np.ceil( len(step1Files) / 10. ) )
       
       #elif "WJetsToLNu_HT-1200To2500" in outSample: filesPerHadd = 120
       #elif "WJetsToLNu_HT-2500ToInf" in outSample: filesPerHadd = 13
       if "hdamp" in outSample.lower() or "tunecp5up" in outSample.lower() or "tunecp5down" in outSample.lower(): filesPerHadd = 900
 
+      if len( step1Files ) == 0:
+        failed_hadd[shift].append( outSample )
+        continue
       singleFile = " root://cmseos.fnal.gov/{}/{}/{}".format( step1Dir[shift], outSample, step1Files[-1] )
       multipleFiles = filesPerHadd * singleFile
       lengthCheck = len( "hadd -f root://cmseos.fnal.gov/{}/{}_hadd.root {}".format( haddDir[shift], outSample, multipleFiles ) )

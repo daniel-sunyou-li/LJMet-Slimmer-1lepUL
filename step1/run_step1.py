@@ -226,7 +226,8 @@ Queue 1"""%jobParams)
             job_submit.append( jdfName.split( "/" )[-1] )
             del jdf
             if args.test: quit()
-                                                 
+
+print( "[CONDOR] Submitting {} jobs".format( len( job_submit ) ) )
 for i in tqdm( range( len( job_submit ) ) ):
   os.chdir( os.path.join( condorDir, job_shift[i] ) )
   submit = subprocess.call( [ "condor_submit", job_submit[i] ], stdout = open( os.devnull, "w" ), stderr = subprocess.STDOUT )
