@@ -27,7 +27,7 @@ void make_step1( TString macroDir, TString inputFile, TString outputFile, string
   }
   else if( Year == "2017" ){
     btagcsvfile = "btag_sf/reshaping_deepCSV_106XUL17_v3.csv";
-    btagdjcsvfile = "btag_sf/reshaping_deepJet_106XUL17_v3.csv";
+    btagdjcsvfile = "btag_sf/reshaping_deepJet_106XUL17_v4.csv";
   }
   else if( Year == "2016APV" ){
     btagcsvfile = "btag_sf/reshaping_deepCSV_106XUL16preVFP_v2.csv";
@@ -39,7 +39,7 @@ void make_step1( TString macroDir, TString inputFile, TString outputFile, string
   }
   else if( Year == "2018" ){
     btagcsvfile = "btag_sf/reshaping_deepCSV_106XUL18_v2.csv";
-    btagdjcsvfile = "btag_sf/reshaping_deepJet_106XUL18_v2.csv";
+    btagdjcsvfile = "btag_sf/reshaping_deepJet_106XUL18_v3.csv";
   }
 
   cout << "[OPT] Using deepCSV reshaping file: " << btagcsvfile << endl;
@@ -101,11 +101,11 @@ void make_step1( TString macroDir, string filelist, string shift, string Year ){
     }
     else if( Year == "2017" ){
       btagcsvfile = "reshaping_deepCSV_106XUL17_v3.csv";
-      btagdjcsvfile = "reshaping_deepJet_106XUL17_v3.csv";
+      btagdjcsvfile = "reshaping_deepJet_106XUL17_v4.csv";
     }
     else if( Year == "2018" ){
       btagcsvfile = "reshaping_deepCSV_106XUL18_v2.csv";
-      btagdjcsvfile = "reshaping_deepJet_106XUL18_v2.csv";
+      btagdjcsvfile = "reshaping_deepJet_106XUL18_v3.csv";
     }
     
     cout << "[OPT] Using deepCSV reshaping file: " << btagcsvfile << endl;
