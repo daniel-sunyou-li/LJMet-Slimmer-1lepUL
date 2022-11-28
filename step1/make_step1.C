@@ -100,11 +100,11 @@ void make_step1( TString macroDir, string filelist, string shift, string Year ){
       btagdjcsvfile = "reshaping_deepJet_106XUL16postVFP_v3.csv";
     }
     else if( Year == "2017" ){
-      btagcsvfile = "reshaping_deepCSV_106XUL17_v3.csv";
+      btagcsvfile = "reshaping_deepCSV_106XUL17_v4.csv";
       btagdjcsvfile = "reshaping_deepJet_106XUL17_v4.csv";
     }
     else if( Year == "2018" ){
-      btagcsvfile = "reshaping_deepCSV_106XUL18_v2.csv";
+      btagcsvfile = "reshaping_deepCSV_106XUL18_v3.csv";
       btagdjcsvfile = "reshaping_deepJet_106XUL18_v3.csv";
     }
     

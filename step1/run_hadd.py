@@ -89,8 +89,10 @@ for shift in shifts:
     
       filesPerHadd = int( args.filesPerHadd )
       if "TTToSemiLeptonic" in outSample and outLabel in [ "HT0Njet0_ttjj" ]: 
-        filesPerHadd = 2
+        filesPerHadd = 5
         #filesPerHadd = int( np.ceil( len(step1Files) / 10. ) )
+      if "TTTT" in outSample and args.year == "18":
+        filesPerHadd = 2
       
       #elif "WJetsToLNu_HT-1200To2500" in outSample: filesPerHadd = 120
       #elif "WJetsToLNu_HT-2500ToInf" in outSample: filesPerHadd = 13

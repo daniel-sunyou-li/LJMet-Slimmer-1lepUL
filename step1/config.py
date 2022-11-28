@@ -33,8 +33,8 @@ haddDir = {
 deepCSV_SF = {
   "16APV": "btag_sf/reshaping_deepCSV_106XUL16preVFP_v2.csv",
   "16":    "btag_sf/reshaping_deepCSV_106XUL16postVFP_v3.csv",
-  "17":    "btag_sf/reshaping_deepCSV_106XUL17_v3.csv",
-  "18":    "btag_sf/reshaping_deepCSV_106XUL18_v2.csv"
+  "17":    "btag_sf/reshaping_deepCSV_106XUL17_v4.csv",
+  "18":    "btag_sf/reshaping_deepCSV_106XUL18_v3.csv"
 }
 
 deepJet_SF = {
@@ -53,18 +53,18 @@ JEC_files = {
 
 JES_shifts = {
   "JER": False,
-  "JEC": False, # fully de-correlated, corresponds to total JEC from LJMet
-  "FlavorQCD": True,
-  "RelativeBal": True,
-  "RelativeSample_Era": True,
-  "HF": True,
-  "HF_Era": True,
-  "BBEC1": True,
-  "BBEC1_Era": True,
-  "EC2": True,
-  "EC2_Era": True,
-  "Absolute": True,
-  "Absolute_Era": True
+  "JEC": True, # fully de-correlated, corresponds to total JEC from LJMet
+  #"FlavorQCD": True,
+  #"RelativeBal": True,
+  #"RelativeSample_Era": True,
+  #"HF": True,
+  #"HF_Era": True,
+  #"BBEC1": True,
+  #"BBEC1_Era": True,
+  #"EC2": True,
+  #"EC2_Era": True,
+  #"Absolute": True,
+  #"Absolute_Era": True
 }
 
 selection = {
@@ -456,8 +456,8 @@ samples = {
     ],
     "TTTX": [
       "TTTT_TuneCP5_13TeV-amcatnlo-pythia8",
-      "TTTJ_TuneCP5_13TeV-madgraph-pythia8",
-      "TTTW_TuneCP5_13TeV-madgraph-pythia8"
+      #"TTTJ_TuneCP5_13TeV-madgraph-pythia8",
+      #"TTTW_TuneCP5_13TeV-madgraph-pythia8"
     ],
     "TTBAR": [
       "TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8",
