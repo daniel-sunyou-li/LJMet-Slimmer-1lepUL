@@ -31,6 +31,7 @@ else:
     for shift in [ "up", "down" ]:
       if config.JES_shifts[ syst ]:
         sName = syst.replace( "Era", "20{}".format( args.year ) ) + shift
+        sName = sName.replace( "2016APV", "2016" )
         print( "  + {}".format( sName ) )
         shifts.append( sName )
 

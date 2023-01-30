@@ -99,7 +99,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   // Reduced JEC systematic uncertainties
   bool shiftUp = true;
   string bSyst = "nominal";
-  if( isMC && !( Syst == "nominal" || Syst == "JECup" || Syst == "JECdown" || Syst == "JERup" || Syst == "JECdown" ) ){
+  if( isMC && !( Syst == "nominal" || Syst == "JECup" || Syst == "JECdown" || Syst == "JERup" || Syst == "JERdown" ) ){
     // select the corresponding file for the year
     string fJEC( "RegroupedV2_Summer19UL16APV_V7_MC_UncertaintySources_AK4PFchs.txt" );
     if( Year == "2016" ) fJEC = "RegroupedV2_Summer19UL16_V7_MC_UncertaintySources_AK4PFchs.txt";

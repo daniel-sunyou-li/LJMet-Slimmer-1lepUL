@@ -25,19 +25,19 @@ lumi = {
 }
 
 JES_shifts = {
-  "JER": False,
-  "JEC": False, # fully de-correlated, corresponds to total JEC from LJMet
+  "JER": True,
+  "JEC": True, # fully de-correlated, corresponds to total JEC from LJMet
   "FlavorQCD": True,
-  "RelativeBal": False,
-  "RelativeSamples_Era": False,
-  "HF": False,
-  "HF_Era": False,
-  "BBEC1": False,
-  "BBEC1_Era": False,
-  "EC2": False,
-  "EC2_Era": False,
-  "Absolute": False,
-  "Absolute_Era": False
+  "RelativeBal": True,
+  "RelativeSample_Era": True,
+  "HF": True,
+  "HF_Era": True,
+  "BBEC1": True,
+  "BBEC1_Era": True,
+  "EC2": True,
+  "EC2_Era": True,
+  "Absolute": True,
+  "Absolute_Era": True
 }
 
 xsec_ttbar = 831.8 # +19.8+35.1 -29.2-35.1 https://pdg.lbl.gov/2018/reviews/rpp2018-rev-top-quark.pdf

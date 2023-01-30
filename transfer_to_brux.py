@@ -13,7 +13,9 @@ parser.add_argument( "--shifts", action = "store_true" )
 args = parser.parse_args()
 
 out_path = os.path.join( "/isilon/hadoop/store/", args.outpath )
-if args.step == "1hadds":
+if args.step == "LJMET":
+  out_folder = sampleDir[ args.year ] 
+elif args.step == "1hadds":
   out_folder = sampleDir[ args.year ] + "_{}_step1hadds".format( args.tag )
 elif args.step == "2":
   out_folder = sampleDir[ args.year ] + "_{}_step2".format( args.tag )
@@ -32,36 +34,43 @@ def transfer_samples():
   if not os.path.exists( out_dir + "/nominal/" ):
     os.system( "mkdir -vp {}/nominal/".format( out_dir ) )
   if args.shifts:
-    for syst in [ "JEC", "JER" ]:
+    for syst in JES_shifts:
+      if not JES_shifts[ syst ]: continue
       for shift in [ "up", "down" ]:
-        if not os.path.exists( out_dir + "/{}{}/".format( syst, shift ) ):
-          os.system( "mkdir -vp {}/{}{}/".format( out_dir, syst, shift ) )
+        bSyst = syst.replace( "Era", "20" + str(args.year) ).replace( "16APV", "16" )
+        if not os.path.exists( out_dir + "/{}{}/".format( bSyst, shift ) ):
+          os.system( "mkdir -vp {}/{}{}/".format( out_dir, bSyst, shift ) )
   done_samples = { "nominal": os.listdir( out_dir + "/nominal/" ) }
   if args.shifts:
-    for syst in [ "JEC", "JER" ]:
+    for syst in JES_shifts:
+      if not JES_shifts[ syst ]: continue
       for shift in [ "up", "down" ]:
-        done_samples[ syst + shift ] = os.listdir( out_dir + "/{}{}/".format( syst, shift ) )
+        bSyst = syst.replace( "Era", "20" + str(args.year) ).replace( "16APV", "16" )
+        done_samples[ syst + shift ] = os.listdir( out_dir + "/{}{}/".format( bSyst, shift ) )
   
   transfer_samples = []
   for group in args.groups:
     for sample in samples[ args.year ][ group ]:
-      if "TTTT" in sample:
-        for n in [ "", "_1", "_2", "_3" ]:
-          transfer_samples.append( "{}{}_hadd.root".format( sample, n ) )
-      if "TTTo" in sample:
-        if "SemiLeptonic" in sample:
-          for HT in [ "HT0Njet0", "HT500Njet9" ]:
-            for fs in [ "ttjj", "ttcc", "ttbb", "tt1b", "tt2b" ]:
-              if fs == "ttjj":
-                for n in [ "", "_1", "_2", "_3", "_4", "_5", "_6", "_7", "_8", "_9", "_10", "_11", "_12" ]:
-                  transfer_samples.append( "{}_{}_{}{}_hadd.root".format( sample, HT, fs, n ) )
-              else:
-                transfer_samples.append( "{}_{}_{}_hadd.root".format( sample, HT, fs ) )
-        else:
-          for fs in [ "ttjj", "ttcc", "ttbb", "tt1b", "tt2b" ]:
-            transfer_samples.append( "{}_{}_hadd.root".format( sample, fs ) )
+      if args.step == "LJMET":
+        transfer_samples.append( sample )
       else:
-        transfer_samples.append( "{}_hadd.root".format( sample ) )
+        if "TTTT" in sample:
+          for n in [ "", "_1", "_2", "_3" ]:
+            transfer_samples.append( "{}{}_hadd.root".format( sample, n ) )
+        if "TTTo" in sample:
+          if "SemiLeptonic" in sample:
+            for HT in [ "HT0Njet0", "HT500Njet9" ]:
+              for fs in [ "ttjj", "ttcc", "ttbb", "tt1b", "tt2b" ]:
+                if fs == "ttjj":
+                  for n in [ "", "_1", "_2", "_3", "_4", "_5", "_6", "_7", "_8", "_9", "_10", "_11", "_12" ]:
+                    transfer_samples.append( "{}_{}_{}{}_hadd.root".format( sample, HT, fs, n ) )
+                else:
+                  transfer_samples.append( "{}_{}_{}_hadd.root".format( sample, HT, fs ) )
+          else:
+            for fs in [ "ttjj", "ttcc", "ttbb", "tt1b", "tt2b" ]:
+              transfer_samples.append( "{}_{}_hadd.root".format( sample, fs ) )
+        else:
+          transfer_samples.append( "{}_hadd.root".format( sample ) )
 
   print( "[INFO] Transferring {} samples:".format( len(transfer_samples) ) )
   for i, sample in enumerate( transfer_samples ):
@@ -70,23 +79,35 @@ def transfer_samples():
     if not args.shifts:
       try:
         if args.step == "ABCDnn":
-          os.system( "xrdcp root://cmseos.fnal.gov///store/user/{}/{}/nominal/{} {}/nominal/".format(
-            eosUserName, out_folder, sample.replace( "hadd", "ABCDnn_hadd" ), out_dir
+          os.system( "xrdcp root://cmseos.fnal.gov///store/group/{}/{}/nominal/{} {}/nominal/".format(
+            "lpcljm", out_folder, sample.replace( "hadd", "ABCDnn_hadd" ), out_dir
+          ) )
+        elif args.step == "LJMET":
+          os.system( "xrdcp -r root://cmseos.fnal.gov///store/user/{}/{}/{} {}/".format(
+            "dali", out_folder, sample, out_dir
           ) )
         else:
-          os.system( "xrdcp root://cmseos.fnal.gov///store/user/{}/{}/nominal/{} {}/nominal/".format(
-            eosUserName, out_folder, sample, out_dir
+          os.system( "xrdcp root://cmseos.fnal.gov///store/group/{}/{}/nominal/{} {}/nominal/".format(
+            "lpcljm", out_folder, sample, out_dir
           ) )
       except:
         print( "[WARN] nominal/{} does not exist, passing...".format( sample ) )
     if args.shifts:
-      for syst in [ "JEC", "JER" ]:
+      for syst in JES_shifts:
+        if not JES_shifts[ syst ]: continue
+        bSyst = syst.replace( "Era", "20" + str(args.year) ).replace( "16APV", "16" )
         for shift in [ "up", "down" ]:
           try:
-            os.system( "xrdcp root://cmseos.fnal.gov///store/user/{}/{}/{}{}/{} {}/{}{}/".format(
-              eosUserName, out_folder, syst, shift, sample, out_dir, syst, shift
-            ) )
+            if args.step == "ABCDnn":
+              os.system( "xrdcp root://cmseos.fnal.gov///store/user/{}/{}/{}{}/{} {}/{}{}".format(
+                "dali", out_folder, bSyst, shift, sample.replace( "hadd", "ABCDnn_hadd" ), out_dir, bSyst, shift 
+                )
+              )
+            else:
+              os.system( "xrdcp root://cmseos.fnal.gov///store/group/{}/{}/{}{}/{} {}/{}{}/".format(
+                "lpcljm", out_folder, bSyst, shift, sample, out_dir, bSyst, shift
+              ) )
           except:
-            print( "[WARN] {}{}/{} does not exist, passing...".format( syst, shift, sample ) )
+            print( "[WARN] {}{}/{} does not exist, passing...".format( bSyst, shift, sample ) )
          
 transfer_samples()
