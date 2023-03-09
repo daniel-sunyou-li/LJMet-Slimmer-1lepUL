@@ -1,5 +1,5 @@
 eosUserName = "dali" # EDIT ME
-postfix = "3t" # EDIT ME
+postfix = "JetEta3p0" # EDIT ME
 years = [ "16APV", "16", "17", "18" ]
 
 sampleDir = {
@@ -54,7 +54,7 @@ JEC_files = {
 JES_shifts = {
   #"JER": True,
   #"JEC": True, # fully de-correlated, corresponds to total JEC from LJMet
-  "FlavorQCD": True,
+  #"FlavorQCD": True,
   #"RelativeBal": True,
   #"RelativeSample_Era": True,
   #"HF": True,
@@ -456,8 +456,8 @@ samples = {
     ],
     "TTTX": [
       "TTTT_TuneCP5_13TeV-amcatnlo-pythia8",
-      #"TTTJ_TuneCP5_13TeV-madgraph-pythia8",
-      #"TTTW_TuneCP5_13TeV-madgraph-pythia8"
+      "TTTJ_TuneCP5_13TeV-madgraph-pythia8",
+      "TTTW_TuneCP5_13TeV-madgraph-pythia8"
     ],
     "TTBAR": [
       "TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8",

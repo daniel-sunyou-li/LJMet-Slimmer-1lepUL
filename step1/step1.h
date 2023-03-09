@@ -179,6 +179,7 @@ public :
 
    Int_t           NJets_JetSubCalc;
    Int_t           NJetsPU_JetSubCalc;
+   Int_t           NJetsForward_JetSubCalc;
    Int_t           NJetsCSV_MultiLepCalc;
    Int_t           NJetsCSVwithSF_MultiLepCalc;
    Int_t           NJetsCSVwithSF_MultiLepCalc_bSFup;

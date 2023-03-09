@@ -101,10 +101,10 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   string bSyst = "nominal";
   if( isMC && !( Syst == "nominal" || Syst == "JECup" || Syst == "JECdown" || Syst == "JERup" || Syst == "JERdown" ) ){
     // select the corresponding file for the year
-    string fJEC( "RegroupedV2_Summer19UL16APV_V7_MC_UncertaintySources_AK4PFchs.txt" );
-    if( Year == "2016" ) fJEC = "RegroupedV2_Summer19UL16_V7_MC_UncertaintySources_AK4PFchs.txt";
-    else if( Year == "2017" ) fJEC = "RegroupedV2_Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt";
-    else if( Year == "2018" ) fJEC = "RegroupedV2_Summer19UL18_V5_MC_UncertaintySources_AK4PFchs.txt";
+    string fJEC( "Summer19UL16APV_V7_MC_UncertaintySources_AK4PFchs.txt" );
+    if( Year == "2016" ) fJEC = "Summer19UL16_V7_MC_UncertaintySources_AK4PFchs.txt";
+    else if( Year == "2017" ) fJEC = "Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt";
+    else if( Year == "2018" ) fJEC = "Summer19UL18_V5_MC_UncertaintySources_AK4PFchs.txt";
 
     cout << ">> Syst: " << Syst << endl;
     if( Syst.EndsWith( "up" ) ) shiftUp = true;
@@ -143,6 +143,10 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   else if( bSyst == "EC2" ) btag_syst.push_back( btag_prefix + "jesEC2" );
   else if( bSyst == "EC2_" + bYear ) btag_syst.push_back( btag_prefix + "jesEC2_" + bYear );
   else if( bSyst == "FlavorQCD" ) btag_syst.push_back( btag_prefix + "jesFlavorQCD" );
+  else if( bSyst == "FlavorPureGluon" ) btag_syst.push_back( btag_prefix + "jesFlavorQCD" ); // no FlavorPureGluon shift in deepJet systematics as of 03/09/2023
+  else if( bSyst == "FlavorPureQuark" ) btag_syst.push_back( btag_prefix + "jesFlavorQCD" ); // no FlavorPureQuark shift in deepJet systematics as of 03/09/2023
+  else if( bSyst == "FlavorPureCharm" ) btag_syst.push_back( btag_prefix + "jesFlavorQCD" ); // no FlavorPureCharm shift in deepJet systematics as of 03/09/2023
+  else if( bSyst == "FlavorPureBottom" ) btag_syst.push_back( btag_prefix + "jesFlavorQCD" ); // no FlavorPureBottom shift in deepJet systematics as of 03/09/2023
   else if( bSyst == "RelativeBal" ) btag_syst.push_back( btag_prefix + "jesRelativeBal" );
   else if( bSyst == "RelativeSample_" + bYear ) btag_syst.push_back( btag_prefix + "jesRelativeSample_" + bYear );
 
@@ -597,7 +601,8 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   outputTree->Branch("AK4HTpMETpLepPt",&AK4HTpMETpLepPt,"AK4HTpMETpLepPt/F");
   outputTree->Branch("AK4HT",&AK4HT,"AK4HT/F");
   outputTree->Branch("NJets_JetSubCalc",&NJets_JetSubCalc,"NJets_JetSubCalc/I");
-  outputTree->Branch("NJetsPU_JetSubCalc",&NJetsPU_JetSubCalc,"NJets_JetSubCalc/I");
+  outputTree->Branch("NJetsPU_JetSubCalc",&NJetsPU_JetSubCalc,"NJetsPU_JetSubCalc/I");
+  outputTree->Branch("NJetsForward_JetSubCalc",&NJetsForward_JetSubCalc,"NJetsForward_JetSubCalc/I");
   outputTree->Branch("NJetsCSV_MultiLepCalc",&NJetsCSV_MultiLepCalc,"NJetsCSV_MultiLepCalc/I");
   outputTree->Branch("NJetsCSVwithSF_MultiLepCalc",&NJetsCSVwithSF_MultiLepCalc,"NJetsCSVwithSF_MultiLepCalc/I");
   outputTree->Branch("NJetsCSVwithSF_MultiLepCalc_bSFup",&NJetsCSVwithSF_MultiLepCalc_bSFup,"NJetsCSVwithSF_MultiLepCalc_bSFup/I");
@@ -757,7 +762,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
 
   // basic cuts
   float metCut=20;
-  float htCut=350;
+  float htCut=400;
   int   nAK8jetsCut=0;
   float lepPtCut=20.0;
   float elEtaCut=2.5;
@@ -765,7 +770,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   int   njetsCut=4;
   int   nbjetsCut=0; // events with # of b-tags <nbjetsCut (incl. btag shifts) are removed!
   float jetPtCut=30;
-  float jetEtaCut=2.4;
+  float jetEtaCut=3.0;
   float ak8EtaCut=2.4;
   float ak8PtCut=200;
 
@@ -1050,6 +1055,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
 
     NJets_JetSubCalc = 0;
     NJetsPU_JetSubCalc = 0;
+    NJetsForward_JetSubCalc = 0;
     AK4HT = 0;
     vector<pair<double,int>> jetptindpair;
     vector<double> jetPUIDsf;
@@ -1271,7 +1277,10 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         else if( bSyst == "EC2" ) djetWgt = reader_dj.eval_auto_bounds( csv_prefix + "jesEC2", csv_flav, jetaForBtag, jptForBtag, deepjet );
         else if( bSyst == "EC2_" + bYear ) djetWgt = reader_dj.eval_auto_bounds( csv_prefix + "jesEC2_" + bYear, csv_flav, jetaForBtag, jptForBtag, deepjet );
         else if( bSyst == "FlavorQCD" ) djetWgt = reader_dj.eval_auto_bounds( csv_prefix + "jesFlavorQCD", csv_flav, jetaForBtag, jptForBtag, deepjet );
-        else if( bSyst == "RelativeBal" ) djetWgt = reader_dj.eval_auto_bounds( csv_prefix + "jesRelativeBal", csv_flav, jetaForBtag, jptForBtag, deepjet );
+        else if( bSyst == "FlavorPureQuark" ) djetWgt = reader_dj.eval_auto_bounds( csv_prefix + "jesFlavorQCD", csv_flav, jetaForBtag, jptForBtag, deepjet );
+        else if( bSyst == "FlavorPureGluon" ) djetWgt = reader_dj.eval_auto_bounds( csv_prefix + "jesFlavorQCD", csv_flav, jetaForBtag, jptForBtag, deepjet );
+        else if( bSyst == "FlavorPureCharm" ) djetWgt = reader_dj.eval_auto_bounds( csv_prefix + "jesFlavorQCD", csv_flav, jetaForBtag, jptForBtag, deepjet );
+        else if( bSyst == "FlavorPureBottom" ) djetWgt = reader_dj.eval_auto_bounds( csv_prefix + "jesRelativeBal", csv_flav, jetaForBtag, jptForBtag, deepjet );
         else if( bSyst == "RelativeSample_" + bYear ) djetWgt = reader_dj.eval_auto_bounds( csv_prefix + "jesRelativeSample_" + bYear, csv_flav, jetaForBtag, jptForBtag, deepjet );
         else{
           if( jentry == 0 && ijet == 0 ) cout << "[INFO] Defaulting to central deepJet weight for: " << bSyst << endl;
@@ -1401,6 +1410,8 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
       jetptindpair.push_back(std::make_pair(theJetPt_JetSubCalc->at(ijet),ijet));
       NJets_JetSubCalc+=1;
       AK4HT += theJetPt_JetSubCalc->at(ijet);
+      if fabs(ijetEta) > 2.4:
+        NJetsForward_JetSubCalc+=1;
     }
     if( debug == 1 ) cout << "[DEBUG] Done looping through jets" << endl;
     
@@ -2691,6 +2702,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     // 2 = isrRedHi isr:muRfac=0.707, 3 = fsrRedHi fsr:muRfac=0.707, 4 = isrRedLo isr:muRfac=1.414, 5 = fsrRedLo fsr:muRfac=1.414, 
     // 6 = isrDefHi isr:muRfac=0.5, 7 = fsrDefHi fsr:muRfac=0.5,  8 = isrDefLo isr:muRfac=2.0,   9 = fsrDefLo fsr:muRfac=2.0, 
     // 10 = isrConHi isr:muRfac=0.25, 11 = fsrConHi fsr:muRfac=0.25, 12 = isrConLo isr:muRfac=4.0, 13 = fsrConLo fsr:muRfac=4.0
+    // additional IDs from 14 to 45 corresponding to decorrelated PS variations in case ISR/FSR uncertainty is tightly constrained
     double the_ps_weight=1.0;
     if ( evtWeightsMC_MultiLepCalc->size() >= 14 ) for(auto & i: {6,7,8,9}) {
       the_ps_weight = evtWeightsMC_MultiLepCalc->at(i)/evtWeightsMC_MultiLepCalc->at(0);
@@ -2700,6 +2712,14 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         renormPSWeights.push_back(the_ps_weight);
     }
     else renormPSWeights={1,1,1,1};
+    if ( evtWeightsMC_MultiLepCalc->size() >= 45 ) for( int i = 14; i < 46; i++ ){
+      the_ps_weight = evtWeightsMC_MultiLepCalc->at(i)/evtWeightsMC_MultiLepCalc->at(0);
+      if ( fabs( the_ps_weight ) > 100 ) renormPSWeights.push_back(1.0);
+      else renormPSWeights.push_back( the_ps_weight )
+    } else for( int i = 14; i < 46; i++ ){
+      renormPSWeights.push_back(1.0);
+    }
+
 
     //std::cout<<"yes 2"<<std::endl;
     //ME-PS
