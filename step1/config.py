@@ -1,5 +1,5 @@
 eosUserName = "dali" # EDIT ME
-postfix = "JetEta3p0" # EDIT ME
+postfix = "3t" # EDIT ME
 years = [ "16APV", "16", "17", "18" ]
 
 sampleDir = {
@@ -45,26 +45,30 @@ deepJet_SF = {
 }
 
 JEC_files = {
-  "16APV": "btag_sf/RegroupedV2_Summer19UL16APV_V7_MC_UncertaintySources_AK4PFchs.txt",
-  "16": "btag_sf/RegroupedV2_Summer19UL16_V7_MC_UncertaintySources_AK4PFchs.txt",
-  "17": "btag_sf/RegroupedV2_Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt",
-  "18": "btag_sf/RegroupedV2_Summer19UL18_V5_MC_UncertaintySources_AK4PFchs.txt"
+  "16APV": "btag_sf/Summer19UL16APV_V7_MC_UncertaintySources_AK4PFchs.txt",
+  "16": "btag_sf/Summer19UL16_V7_MC_UncertaintySources_AK4PFchs.txt",
+  "17": "btag_sf/Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt",
+  "18": "btag_sf/Summer19UL18_V5_MC_UncertaintySources_AK4PFchs.txt"
 }
 
 JES_shifts = {
-  #"JER": True,
-  #"JEC": True, # fully de-correlated, corresponds to total JEC from LJMet
-  #"FlavorQCD": True,
-  #"RelativeBal": True,
-  #"RelativeSample_Era": True,
-  #"HF": True,
-  #"HF_Era": True,
-  #"BBEC1": True,
-  #"BBEC1_Era": True,
-  #"EC2": True,
-  #"EC2_Era": True,
-  #"Absolute": True,
-  #"Absolute_Era": True
+  "JER": False,
+  "JEC": False, # fully de-correlated, corresponds to total JEC from LJMet
+  "FlavorQCD": False,
+  "FlavorPureGluon": True,
+  "FlavorPureQuark": True,
+  "FlavorPureCharm": True,
+  "FlavorPureBottom": True,
+  "RelativeBal": False,
+  "RelativeSample_Era": False,
+  "HF": False,
+  "HF_Era": False,
+  "BBEC1": False,
+  "BBEC1_Era": False,
+  "EC2": False,
+  "EC2_Era": False,
+  "Absolute": False,
+  "Absolute_Era": False
 }
 
 selection = {
@@ -343,7 +347,7 @@ samples = {
     ],
     "TTTX": [
       "TTTT_TuneCP5_13TeV-amcatnlo-pythia8",
-      "TTTJ_TuneCP5_13TeV-madgraph-pythia8",
+      #"TTTJ_TuneCP5_13TeV-madgraph-pythia8",
       "TTTW_TuneCP5_13TeV-madgraph-pythia8"
     ],
     "TTBAR": [

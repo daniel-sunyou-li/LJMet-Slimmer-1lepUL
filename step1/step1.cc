@@ -762,7 +762,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
 
   // basic cuts
   float metCut=20;
-  float htCut=400;
+  float htCut=350;
   int   nAK8jetsCut=0;
   float lepPtCut=20.0;
   float elEtaCut=2.5;
@@ -770,7 +770,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   int   njetsCut=4;
   int   nbjetsCut=0; // events with # of b-tags <nbjetsCut (incl. btag shifts) are removed!
   float jetPtCut=30;
-  float jetEtaCut=3.0;
+  float jetEtaCut=2.4;
   float ak8EtaCut=2.4;
   float ak8PtCut=200;
 
@@ -1410,8 +1410,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
       jetptindpair.push_back(std::make_pair(theJetPt_JetSubCalc->at(ijet),ijet));
       NJets_JetSubCalc+=1;
       AK4HT += theJetPt_JetSubCalc->at(ijet);
-      if fabs(ijetEta) > 2.4:
-        NJetsForward_JetSubCalc+=1;
+      if( fabs(ijetEta) > 2.4 ) NJetsForward_JetSubCalc+=1;
     }
     if( debug == 1 ) cout << "[DEBUG] Done looping through jets" << endl;
     
@@ -2715,7 +2714,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     if ( evtWeightsMC_MultiLepCalc->size() >= 45 ) for( int i = 14; i < 46; i++ ){
       the_ps_weight = evtWeightsMC_MultiLepCalc->at(i)/evtWeightsMC_MultiLepCalc->at(0);
       if ( fabs( the_ps_weight ) > 100 ) renormPSWeights.push_back(1.0);
-      else renormPSWeights.push_back( the_ps_weight )
+      else renormPSWeights.push_back( the_ps_weight );
     } else for( int i = 14; i < 46; i++ ){
       renormPSWeights.push_back(1.0);
     }
@@ -2737,7 +2736,6 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         }
       }
     }
-        
     else if(isTTTT){
       for(unsigned int i = 0; i < LHEweightids_MultiLepCalc->size(); i++){
         if(LHEweightids_MultiLepCalc->at(i) > 1001 && LHEweightids_MultiLepCalc->at(i) < 1010){
