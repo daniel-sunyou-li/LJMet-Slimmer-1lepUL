@@ -203,6 +203,14 @@ public :
    Float_t         theJetEtaPtWeighted_JetSubCalc;
    Float_t         theJetEtaAverageNotBJet_JetSubCalc;
    Float_t         theJetEta_JetNotBJetMaxPt_JetSubCalc;
+   Float_t         theJetEta0_JetSubCalc;
+   Float_t         theJetEta1_JetSubCalc;
+   Float_t         theJetEta2_JetSubCalc;
+   Float_t         theJetEta3_JetSubCalc;
+   Float_t         theJetPhi0_JetSubCalc;
+   Float_t         theJetPhi1_JetSubCalc;
+   Float_t         theJetPhi2_JetSubCalc;
+   Float_t         theJetPhi3_JetSubCalc;
 
    vector<int>     maxProb_JetSubCalc_PtOrdered;
    vector<int>     dnn_largest_BestCalc_PtOrdered;
