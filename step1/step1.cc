@@ -617,6 +617,14 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   outputTree->Branch("theJetEtaPtWeighted_JetSubCalc",&theJetEtaPtWeighted_JetSubCalc,"theJetEtaPtWeighted_JetSubCalc/F");
   outputTree->Branch("theJetEtaAverageNotBJet_JetSubCalc",&theJetEtaAverageNotBJet_JetSubCalc,"theJetEtaAverageNotBJet_JetSubCalc/F");
   outputTree->Branch("theJetEta_JetNotBJetMaxPt_JetSubCalc",&theJetEta_JetNotBJetMaxPt_JetSubCalc,"theJetEta_JetNotBJetMaxPt_JetSubCalc/F");
+  outputTree->Branch("theJetEta0_JetSubCalc",&theJetEta0_JetSubCalc,"theJetEta0_JetSubCalc/F");
+  outputTree->Branch("theJetEta1_JetSubCalc",&theJetEta1_JetSubCalc,"theJetEta1_JetSubCalc/F");
+  outputTree->Branch("theJetEta2_JetSubCalc",&theJetEta2_JetSubCalc,"theJetEta2_JetSubCalc/F");
+  outputTree->Branch("theJetEta3_JetSubCalc",&theJetEta3_JetSubCalc,"theJetEta3_JetSubCalc/F");
+  outputTree->Branch("theJetPhi0_JetSubCalc",&theJetPhi0_JetSubCalc,"theJetPhi0_JetSubCalc/F");
+  outputTree->Branch("theJetPhi1_JetSubCalc",&theJetPhi1_JetSubCalc,"theJetPhi1_JetSubCalc/F");
+  outputTree->Branch("theJetPhi2_JetSubCalc",&theJetPhi2_JetSubCalc,"theJetPhi2_JetSubCalc/F");
+  outputTree->Branch("theJetPhi3_JetSubCalc",&theJetPhi3_JetSubCalc,"theJetPhi3_JetSubCalc/F");
   outputTree->Branch("AK4HTpMETpLepPt",&AK4HTpMETpLepPt,"AK4HTpMETpLepPt/F");
   outputTree->Branch("AK4HT",&AK4HT,"AK4HT/F");
   outputTree->Branch("NJets_JetSubCalc",&NJets_JetSubCalc,"NJets_JetSubCalc/I");
@@ -1982,13 +1990,23 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
 
     double maxJetPt_NotBJet = 0;
 
+    theJetEta0_JetSubCalc = theJetEta_JetSubCalc_PtOrdered.at(0);
+    theJetEta1_JetSubCalc = theJetEta_JetSubCalc_PtOrdered.at(1);
+    theJetEta2_JetSubCalc = theJetEta_JetSubCalc_PtOrdered.at(2);
+    theJetEta3_JetSubCalc = theJetEta_JetSubCalc_PtOrdered.at(3);
+
+    theJetPhi0_JetSubCalc = theJetPhi_JetSubCalc_PtOrdered.at(0);
+    theJetPhi1_JetSubCalc = theJetPhi_JetSubCalc_PtOrdered.at(1);
+    theJetPhi2_JetSubCalc = theJetPhi_JetSubCalc_PtOrdered.at(2);
+    theJetPhi3_JetSubCalc = theJetPhi_JetSubCalc_PtOrdered.at(3);
+    
     for(unsigned int ijet=0; ijet < theJetPt_JetSubCalc_PtOrdered.size(); ijet++){
       jet_lv.SetPtEtaPhiE(theJetPt_JetSubCalc_PtOrdered.at(ijet),theJetEta_JetSubCalc_PtOrdered.at(ijet),theJetPhi_JetSubCalc_PtOrdered.at(ijet),theJetEnergy_JetSubCalc_PtOrdered.at(ijet));
       if((lepton_lv + jet_lv).M() < minMleppJet) {
         minMleppJet = fabs((lepton_lv + jet_lv).M());
         deltaR_lepMinMlj = jet_lv.DeltaR(lepton_lv);
       }
-
+          
       deltaR_lepJets.push_back(lepton_lv.DeltaR(jet_lv));
 
       if(AK4JetDeepCSVb_MultiLepCalc_PtOrdered.at(ijet) + AK4JetDeepCSVbb_MultiLepCalc_PtOrdered.at(ijet) > btagWPdcsv){
