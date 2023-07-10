@@ -144,23 +144,21 @@ for sample in samples:
     nEntries = int( rTree.GetEntries() * float( args.percent ) / 100. )
     for i in tqdm.tqdm( range( nEntries ) ):
       rTree.GetEntry(i)
-      passFilter = True
       if args.lepton.lower() in [ "e", "el" ]:
         if getattr( rTree, "isElectron" ) != 1: continue
       elif args.lepton.lower() in [ "m", "mu" ]:
         if getattr( rTree, "isMuon" ) != 1: continue
-      for filter in config.selection:
-        if config.selection[ filter ][ "CONDITION" ] == ">":
-          if getattr( rTree, str( filter ) ) <= config.selection[ filter ][ "VALUE" ]: passFilter = False
-        if config.selection[ filter ][ "CONDITION" ] == ">=":
-          if getattr( rTree, str( filter ) ) < config.selection[ filter ][ "VALUE" ]: passFilter = False
-        if config.selection[ filter ][ "CONDITION" ] == "<":
-          if getattr( rTree, str( filter ) ) >= config.selection[ filter ][ "VALUE" ]: passFilter = False
-        if config.selection[ filter ][ "CONDITION" ] == "<=":
-          if getattr( rTree, str( filter ) ) > config.selection[ filter ][ "VALUE" ]: passFilter = False
-        if config.selection[ filter ][ "CONDITION" ] == "==":
-          if getattr( rTree, str( filter ) ) != config.selection[ filter ][ "VALUE" ]: passFilter = False
-      if not passFilter: continue
+      for vName in config.selection:
+        if config.selection[ vName ][ "CONDITION" ] == ">":
+          if abs( getattr( rTree, str( vName ) ) ) <= config.selection[ vName ][ "VALUE" ]: continue
+        if config.selection[ vName ][ "CONDITION" ] == ">=":
+          if abs( getattr( rTree, str( vName ) ) ) < config.selection[ vName ][ "VALUE" ]: continue
+        if config.selection[ vName ][ "CONDITION" ] == "<":
+          if abs( getattr( rTree, str( vName ) ) ) >= config.selection[ vName ][ "VALUE" ]: continue
+        if config.selection[ vName ][ "CONDITION" ] == "<=":
+          if abs( getattr( rTree, str( vName ) ) ) > config.selection[ vName ][ "VALUE" ]: continue
+        if config.selection[ vName ][ "CONDITION" ] == "==":
+          if abs( getattr( rTree, str( vName ) ) ) != config.selection[ vName ][ "VALUE" ]: continue
       events_nom[ "leptonPt_MultiLepCalc" ].append(  getattr( rTree, "leptonPt_MultiLepCalc" ) )
       events_nom[ "leptonEta_MultiLepCalc" ].append( getattr( rTree, "leptonEta_MultiLepCalc" ) )
       nominal_events += 1

@@ -171,14 +171,14 @@ float HardcodedConditions::GetCrossSectionEfficiency( TString inputFileName, std
 
   }
   else if( Year == "2016" ){
-    if( inputFileName.Contains( "TTToSemiLeptonic_TuneCP5" ) && inputFileName.Contains( "HT0Njet0" ) ) return 0.041101;
-    else if( inputFileName.Contains( "TTToSemiLepton_HT500Njet9_TuneCP5" ) ) return 0.008219;
-    else if( inputFileName.Contains( "TTToSemiLeptonic_TuneCP5" ) ) return 0.000255;
-    else if( inputFileName.Contains( "TTToHadronic_TuneCP5" ) ) return 0.03084;
-    else if( inputFileName.Contains( "TTTo2L2Nu_TuneCP5" ) ) return 0.03114;
-    else if( inputFileName.Contains( "TTTT" ) ) return 0.0000884;
-    else if( inputFileName.Contains( "TTTW" ) ) return 0.0000809;
-    else if( inputFileName.Contains( "TTTJ" ) ) return 0.0000395;
+    if( inputFileName.Contains( "TTToSemiLeptonic_TuneCP5" ) && inputFileName.Contains( "HT0Njet0" ) ) return 0.04090;
+    else if( inputFileName.Contains( "TTToSemiLepton_HT500Njet9_TuneCP5" ) ) return 0.00818;
+    else if( inputFileName.Contains( "TTToSemiLeptonic_TuneCP5" ) ) return 0.00025;
+    else if( inputFileName.Contains( "TTToHadronic_TuneCP5" ) ) return 0.03069;
+    else if( inputFileName.Contains( "TTTo2L2Nu_TuneCP5" ) ) return 0.03099;
+    else if( inputFileName.Contains( "TTTT" ) ) return 0.00009;
+    else if( inputFileName.Contains( "TTTW" ) ) return 0.00007;
+    else if( inputFileName.Contains( "TTTJ" ) ) return 0.00004;
     else return 1.0;
   }
   else if( Year == "2017" ){

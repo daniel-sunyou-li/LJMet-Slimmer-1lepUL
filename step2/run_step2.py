@@ -61,28 +61,28 @@ gROOT.ProcessLine( ".x compile_step2.C" )
 print( ">> Starting step2 Condor submission..." )
 
 step1Files = {}
-if args.inLoc == "LPC":
-  step1Files = {
-    shift: EOSlistdir( inputDir[ shift ] ) for shift in shifts 
-  }
-elif args.inLoc == "BRUX":
-  xrdClient = client.FileSystem( "root://brux30.hep.brown.edu:1094/" )
-  for shift in shifts:
-    status, dirList = xrdClient.dirlist( inputDir[ shift ].replace( "/isilon/hadoop", "" ) )
-    step1Files[ shift ] = [ item.name for item in dirList ]
-else:
-  quit( "[ERR] Invalid input location, quitting..." )
 
-if args.outLoc == "LPC":
-  step2Files = {
-    shift: EOSlistdir( outputDir[ shift ] ) for shift in shifts
-  }
-elif args.outLoc == "BRUX":
-  step2Files = {
-    shift: os.listdir( os.path.join( config.step2Path[ args.year ][ "BRUX" ], shift ) ) for shift in shifts
-  }
+if args.inLoc == "LPC" and args.outLoc == "LPC":
+  step1Files = { shift: EOSlistdir( inputDir[ shift ] ) for shift in shifts }
+  step2Files = { shift: EOSlistdir( outputDir[ shift ] ) for shift in shifts }
+elif args.inLoc == "LPC" and args.outLoc == "BRUX":
+  step1Files = { shift: EOSlistdir( inputDir[ shift ] ) for shift in shifts }
+  step2Files = { shift: os.listdir( outputDir[ shift ] ) for shift in shifts }
+elif args.inLoc == "BRUX" and args.outLoc == "BRUX":
+  step1Files = { shift: os.listdir( inputDir[ shift ] ) for shift in shifts }
+  step2Files = { shift: os.listdir( outputDir[ shift ] ) for shift in shifts }
+elif args.inLoc == "BRUX" and args.outLoc == "LPC":
+  step1Files = {}
+  for shift in shifts:
+    try:
+      status, dirList = xrdClient.dirlist( inputDir[ shift ].replace( "/isilon/hadoop", "" ) )
+      step1Files[ shift ] = [ item.name for item in dirList ]
+    except:
+      print( status )
+      quit( "[ERR] Exiting..." )
+  step2Files = { shift: EOSlistdir( outputDir[ shift ] ) for shift in shifts }
 else:
-  quit( "[ERR] Invalid output location, quitting..." )
+  quit( "[ERR] Invalid input or output locations specified. Only BRUX or LPC are supported" )
 
 jobCount = 0
 for shift in shifts:

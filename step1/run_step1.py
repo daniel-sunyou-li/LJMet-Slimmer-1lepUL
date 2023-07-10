@@ -56,7 +56,9 @@ for shift in shifts: os.system( "mkdir -p {}".format( os.path.join( condorDir, s
 
 deepCSV_SF = config.deepCSV_SF[ args.year ]
 deepJet_SF = config.deepJet_SF[ args.year ]
-JEC_file = config.JEC_files[ args.year ]
+JEC_files_reduced = config.JEC_files_reduced[ args.year ]
+JEC_files = config.JEC_files[ args.year ]
+
 
 if args.test:
   deepCSV_SF = "btag_sf/reshaping_deepCSV_106XUL17_test.csv"
@@ -82,6 +84,7 @@ job_shift = []
 job_submit = []
 for shift in samples:
   print( "[INFO] Preparing {} samples for shift: {}".format( len( samples[ shift ] ), shift ) )
+  JEC_files_ = JEC_files if "FlavorPure" in shift else JEC_files_reduced
   if args.site == "BRUX":
     if not os.path.exists( outputDir[ shift ] ): os.system( "mkdir -p {}".format( outputDir[ shift ] ) ) 
   for sample in tqdm( sorted( samples[ shift ] ) ):
@@ -200,14 +203,14 @@ for shift in samples:
               'SHIFT': shift,
               'DEEPCSV': deepCSV_SF, 
               'DEEPJET': deepJet_SF,
-              'JEC': JEC_file,
+              'JEC': JEC_files_,
               'SITE': args.site,
               'LOCATION': args.location
             }
             jdfName = "{}{}/{}_{}.job".format( condorDir, shift, jobParams["OUTFILENAME"], jobParams["ID"] )
             jdf = open( jdfName, 'w' )
             jdf.write(
-"""use_x509userproxy = true
+"""use_x509userproxy = false
 universe = vanilla
 Executable = %(RUNDIR)s/make_step1.sh
 should_transfer_files = YES
@@ -224,13 +227,12 @@ Queue 1"""%jobParams)
             jdf.close()
             job_shift.append( shift )
             job_submit.append( jdfName.split( "/" )[-1] )
-            del jdf
-            if args.test: quit()
 
 print( "[CONDOR] Submitting {} jobs".format( len( job_submit ) ) )
 for i in tqdm( range( len( job_submit ) ) ):
   os.chdir( os.path.join( condorDir, job_shift[i] ) )
   submit = subprocess.call( [ "condor_submit", job_submit[i] ], stdout = open( os.devnull, "w" ), stderr = subprocess.STDOUT )
+  #os.system( "condor_submit {}".format( job_submit[i] ) )
   os.chdir( jobParams["RUNDIR"] )
 
 print( "[DONE] {} jobs submitted in {:.2f} minutes".format( len( job_submit ), round( time.time() - start_time, 2 ) / 60. ) )

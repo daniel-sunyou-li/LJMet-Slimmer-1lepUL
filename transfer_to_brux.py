@@ -62,7 +62,7 @@ def transfer_samples():
             for HT in [ "HT0Njet0", "HT500Njet9" ]:
               for fs in [ "ttjj", "ttcc", "ttbb", "tt1b", "tt2b" ]:
                 if fs == "ttjj":
-                  for n in [ "", "_1", "_2", "_3", "_4", "_5", "_6", "_7", "_8", "_9", "_10", "_11", "_12" ]:
+                  for n in [ "", "_1", "_2", "_3", "_4", "_5", "_6", "_7", "_8", "_9", "_10", "_11", "_12", "_13", "_14" ]:
                     transfer_samples.append( "{}_{}_{}{}_hadd.root".format( sample, HT, fs, n ) )
                 else:
                   transfer_samples.append( "{}_{}_{}_hadd.root".format( sample, HT, fs ) )
@@ -79,16 +79,16 @@ def transfer_samples():
     if not args.shifts:
       try:
         if args.step == "ABCDnn":
-          os.system( "xrdcp root://cmseos.fnal.gov///store/group/{}/{}/nominal/{} {}/nominal/".format(
-            "lpcljm", out_folder, sample.replace( "hadd", "ABCDnn_hadd" ), out_dir
+          os.system( "xrdcp root://cmseos.fnal.gov///store/user/{}/{}/nominal/{} {}/nominal/".format(
+            "dali", out_folder, sample.replace( "hadd", "ABCDnn_hadd" ), out_dir
           ) )
         elif args.step == "LJMET":
           os.system( "xrdcp -r root://cmseos.fnal.gov///store/user/{}/{}/{} {}/".format(
             "dali", out_folder, sample, out_dir
           ) )
         else:
-          os.system( "xrdcp root://cmseos.fnal.gov///store/group/{}/{}/nominal/{} {}/nominal/".format(
-            "lpcljm", out_folder, sample, out_dir
+          os.system( "xrdcp root://cmseos.fnal.gov///store/user/{}/{}/nominal/{} {}/nominal/".format(
+            "dali", out_folder, sample, out_dir
           ) )
       except:
         print( "[WARN] nominal/{} does not exist, passing...".format( sample ) )
@@ -104,8 +104,8 @@ def transfer_samples():
                 )
               )
             else:
-              os.system( "xrdcp root://cmseos.fnal.gov///store/group/{}/{}/{}{}/{} {}/{}{}/".format(
-                "lpcljm", out_folder, bSyst, shift, sample, out_dir, bSyst, shift
+              os.system( "xrdcp root://cmseos.fnal.gov///store/user/{}/{}/{}{}/{} {}/{}{}/".format(
+                "dali", out_folder, bSyst, shift, sample, out_dir, bSyst, shift
               ) )
           except:
             print( "[WARN] {}{}/{} does not exist, passing...".format( bSyst, shift, sample ) )

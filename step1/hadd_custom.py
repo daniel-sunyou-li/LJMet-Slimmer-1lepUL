@@ -1,35 +1,42 @@
 import os
-import numpy as np
 from argparse import ArgumentParser
 import config
 
 parser = ArgumentParser()
 parser.add_argument( "-y", "--year", required = True )
+parser.add_argument( "-t", "--total", default = 10 )
+parser.add_argument( "-s", "--step", default = "step1hadds" )
+parser.add_argument( "--shifts", action = "store_true" )
 args = parser.parse_args()
 
-PATH = "/isilon/hadoop/store/user/dali/FWLJMET106XUL_singleLep20{}UL_RunIISummer20_3t_step1hadds/".format( args.year )
+pathName = "/isilon/hadoop/store/user/dali/FWLJMET106XUL_singleLep20{}UL_RunIISummer20_{}_{}/".format( args.year, config.postfix, args.step )
 
-SYSTS = [ str(syst) for syst in config.JES_shifts if config.JES_shifts[ syst ] ]
-SHIFTS = [ "up", "down" ]
 
-TT_SAMPLE = "TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8_HT0Njet0_ttjj_NUM_hadd.root"
+systs = [ str(syst) for syst in config.JES_shifts if config.JES_shifts[ syst ] ] if args.shifts else [ "nominal" ]
+shifts = [ "up", "down" ] if args.shifts else [ "" ]
 
-#NUMS = [ 11, 12, 13 ] if args.year == "16" else [ 11, 12 ]
-NUMS = range( 11, 12 )
+sampleName = "TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8_HT0Njet0_ttjj_NUM_hadd.root"
+#sampleName = "TTTT_TuneCP5_13TeV-amcatnlo-pythia8_NUM_hadd.root"
 
-for SHIFT in SHIFTS:
-  for SYST in SYSTS:
-    for NUM in NUMS:
-      if NUM % 10 == 0:
-        NUM_TO = "10"
-      else:
-        NUM_TO = str( int( NUM % 10 ) )
-      #DIR = "{}{}/".format( PATH, SYST + SHIFT ).replace( "Era", "2016" )
-      DIR = "{}{}/".format( PATH, SYST + SHIFT ).replace( "Era", "20" + args.year )
-      if TT_SAMPLE.replace( "NUM", str(NUM) ) not in os.listdir( DIR ): continue
-      else:
-        os.system( "mv {0}{1} {0}{2}".format( DIR, TT_SAMPLE.replace( "NUM", NUM_TO ), TT_SAMPLE ) )
-        hadd_command = "hadd -f {0}{1} {0}{2} {0}{3}".format( DIR, TT_SAMPLE.replace( "NUM", NUM_TO ), TT_SAMPLE.replace( "NUM", str(NUM) ), TT_SAMPLE )
-        os.system( hadd_command )
-        os.system( "rm {0}{1} {0}{2}".format( DIR, TT_SAMPLE, TT_SAMPLE.replace( "NUM", str(NUM) ) ) )
-        print( "" )
+def hadd_sample( directory, subDirectory, sampleName, numHadd ):
+  step1Files = [ name_ for name_ in os.listdir( os.path.join( directory, subDirectory ) ) if sampleName.split( "NUM" )[0] in name_ ]
+  sizeGroup = 1 + len( step1Files ) / numHadd
+  print( "[INFO] Hadd'ing {} {}/{} files into {} groups of {}".format( len( step1Files ), subDirectory, sampleName, numHadd, sizeGroup ) )
+  remove = []
+  for i in range( 1, numHadd + 1 ):
+    j = i + numHadd
+    haddCommand = [ "hadd -a" ]
+    if not os.path.exists( os.path.join( directory, subDirectory, sampleName.replace( "NUM", str(j) ) ) ): continue
+    haddCommand.append( os.path.join( directory, subDirectory, sampleName.replace( "NUM", str(i) ) ) )
+    haddCommand.append( os.path.join( directory, subDirectory, sampleName.replace( "NUM", str(j) ) ) ) 
+    remove.append( os.path.join( directory, subDirectory, sampleName.replace( "NUM", str(j) ) ) )
+    os.system( " ".join( haddCommand ) )
+  if remove: os.system( "rm {}".format( " ".join( remove ) ) )
+    
+count = 1
+for shift_ in shifts:
+  for syst_ in systs:
+    syst_ = syst_.replace( "Era", "20" + args.year ).replace( "APV", "" )
+    hadd_sample( pathName, syst_ + shift_, sampleName, int( args.total ) )
+    print( "[DONE] {} out of {}".format( count, len(shifts) * len(systs) ) )
+    count += 1

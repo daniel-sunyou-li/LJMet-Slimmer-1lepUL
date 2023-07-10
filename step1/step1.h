@@ -168,13 +168,13 @@ public :
    Float_t         leptonPt_MultiLepCalc;
    Float_t         leptonEta_MultiLepCalc;
    Float_t         leptonPhi_MultiLepCalc;
+   Float_t         leptonCharge_MultiLepCalc;
    Float_t         leptonEnergy_MultiLepCalc;
    Float_t         leptonMVAValue_MultiLepCalc;
    Float_t         leptonMiniIso_MultiLepCalc;
    Float_t         leptonRelIso_MultiLepCalc;
    Float_t         leptonDxy_MultiLepCalc;
    Float_t         leptonDz_MultiLepCalc;
-   Int_t           leptonCharge_MultiLepCalc;
    Int_t           elTrigPresel_MultiLepCalc;
 
    Int_t           NJets_JetSubCalc;
@@ -194,6 +194,11 @@ public :
    Int_t           NJetsCSVwithSF_JetSubCalc_lSFdn;
    Int_t           NJetsCSVnotH_JetSubCalc;
    Int_t           NJetsCSVnotPH_JetSubCalc;
+
+   Float_t         theJetEtaAverage_JetSubCalc;
+   Float_t         theJetEtaPtWeighted_JetSubCalc;
+   Float_t         theJetEtaAverageNotBJet_JetSubCalc;
+   Float_t         theJetEta_JetNotBJetMaxPt_JetSubCalc;
 
    vector<int>     maxProb_JetSubCalc_PtOrdered;
    vector<int>     dnn_largest_BestCalc_PtOrdered;
