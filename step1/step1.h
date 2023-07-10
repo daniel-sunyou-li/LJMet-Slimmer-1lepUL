@@ -133,8 +133,12 @@ public :
    Float_t         TrigEffWeightUncert;
    Float_t         isoSF;
    Float_t         lepIdSF;
+   Float_t         lepIdSF_up;
+   Float_t         lepIdSF_down;
    Float_t         MuTrkSF;
    Float_t         EGammaGsfSF;
+   Float_t         EGammaGsfSF_up;
+   Float_t         EGammaGsfSF_down;
    Float_t         triggerSF;
    Float_t         triggerHadSF;
    Float_t         triggerXSF;
