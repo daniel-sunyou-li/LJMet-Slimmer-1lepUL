@@ -485,7 +485,11 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   outputTree->Branch("HTSF_PolDn",&HTSF_PolDn,"HTSF_PolDn/F");
   outputTree->Branch("topPtWeight13TeV",&topPtWeight13TeV,"topPtWeight13TeV/F");          
   outputTree->Branch("EGammaGsfSF",&EGammaGsfSF,"EGammaGsfSF/F");
+  outputTree->Branch("EGammaGsfSF_up",&EGammaGsfSF_up,"EGammaGsfSF_up/F");
+  outputTree->Branch("EGammaGsfSF_down",&EGammaGsfSF_down,"EGammaGsfSF_down/F");
   outputTree->Branch("lepIdSF",&lepIdSF,"lepIdSF/F");
+  outputTree->Branch("lepIdSF_up",&lepIdSF_up,"lepIdSF_up/F");
+  outputTree->Branch("lepIdSF_down",&lepIdSF_down,"lepIdSF_down/F");
   outputTree->Branch("triggerSF",&triggerSF,"triggerSF/F");
   outputTree->Branch("triggerHadSF",&triggerHadSF,"triggerHadSF/F");
   outputTree->Branch("triggerXSF",&triggerXSF,"triggerXSF/F");
@@ -1511,7 +1515,11 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     DataHadPastTrigger = 0;
     MCHadPastTrigger = 0;
     EGammaGsfSF = 1.0;
+    EGammaGsfSF_up = 1.0;
+    EGammaGsfSF_down = 1.0;
     lepIdSF = 1.0;
+    lepIdSF_up = 1.0;
+    lepIdSF_down = 1.0;
     triggerSF = 1.0;
     triggerHadSF = 1.0;
     triggerXSF = 1.0;
@@ -1620,10 +1628,14 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
           }
         }
         
-        EGammaGsfSF = hardcodedConditions.GetEGammaGsfSF( leppt, lepeta, Year );
-        lepIdSF = hardcodedConditions.GetElectronIdSF( leppt, lepeta, Year );
+        EGammaGsfSF      = hardcodedConditions.GetEGammaGsfSF( leppt, lepeta, Year, "nominal" );
+        EGammaGsfSF_up   = hardcodedConditions.GetEGammaGsfSF( leppt, lepeta, Year, "up" );
+        EGammaGsfSF_down = hardcodedConditions.GetEGammaGsfSF( leppt, lepeta, Year, "down" );
+        lepIdSF      = hardcodedConditions.GetElectronIdSF( leppt, lepeta, Year, "nominal" );
+        lepIdSF_up   = hardcodedConditions.GetElectronIdSF( leppt, lepeta, Year, "up" );
+        lepIdSF_down = hardcodedConditions.GetElectronIdSF( leppt, lepeta, Year, "down" ); 
         isoSF = hardcodedConditions.GetElectronIsoSF( leppt, lepeta, Year );
-        if( Year == "2016APV" ){ // there are no centrally maintained 2016APV SF, so use the SF separately
+        if( Year == "2016APV" || Year == "2016" ){ // there are no centrally maintained 2016preVFP and 2016postVFP UL SF, so use the SF separately
           triggerSF = hardcodedConditions.GetElectronTriggerSF( leppt, lepeta, Year );
           triggerXSF = hardcodedConditions.GetElectronTriggerXSF( leppt, lepeta, Year );
         }
@@ -1659,9 +1671,15 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
             if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(mutriggersX.at(jtrig)) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTriggerX = 1;
           }
         }
-        lepIdSF = hardcodedConditions.GetMuonIdSF(leppt, lepeta, Year);
+        lepIdSF = hardcodedConditions.GetMuonIdSF(leppt, lepeta, Year, "nominal");
+        lepIdSF_up = hardcodedConditions.GetMuonIdSF( leppt, lepeta, Year, "up" );
+        lepIdSF_down = hardcodedConditions.GetMuonIdSF( leppt, lepeta, Year, "down" );
         isoSF = hardcodedConditions.GetMuonIsoSF(leppt, lepeta, Year);
         
+        if( Year == "2016APV" || Year == "2016" ){ // there are no centrally maintained 2016preVFP and 2016postVFP UL SF, so use the SF separately
+          triggerSF = hardcodedConditions.GetMuonTriggerSF( leppt, lepeta, Year );
+          triggerXSF = hardcodedConditions.GetMuonTriggerXSF( leppt, lepeta, Year );
+        }
         if( MCLepPastTrigger == 1 && MCPastTriggerX == 1 ){ // defaults to using the single-object trigger if available
           triggerSF = hardcodedConditions.GetMuonTriggerSF( leppt, lepeta, Year );
           triggerXSF = 1.0; 
