@@ -5784,14 +5784,14 @@ void HardcodedConditions::GetJetPileupIDEff2018( double pt, double eta, double *
 // Extracted using the correctionlib tool from the JSON POG: https://gitlab.cern.ch/cms-nanoAOD/jsonpog-integration
 // Using the analysis recommended working point "jetvetomap": https://twiki.cern.ch/twiki/bin/view/CMS/JECDataMC#Jet_veto_maps
 
-void HardcodedConditions::JetVetoMap( double eta, double phi, std::string year ){
-  if      ( year == "2016APV" ) JetVetoMap2016( eta, phi ); // 2016preVFP and postVFP use same veto map
-  else if ( year == "2016" ) JetVetoMap2016( eta, phi );
-  else if ( year == "2017" ) JetVetoMap2017( eta, phi );
-  else if ( year == "2018" ) JetVetoMap2018( eta, phi ); // complements the HEM 15/16 electron veto
+void HardcodedConditions::GetJetVetoMap( double eta, double phi, std::string year ){
+  if      ( year == "2016APV" ) GetJetVetoMap2016( eta, phi ); // 2016preVFP and postVFP use same veto map
+  else if ( year == "2016" ) GetJetVetoMap2016( eta, phi );
+  else if ( year == "2017" ) GetJetVetoMap2017( eta, phi );
+  else if ( year == "2018" ) GetJetVetoMap2018( eta, phi ); // complements the HEM 15/16 electron veto
 }
 
-void HardcodedConditions::JetVetoMap2016( double eta, double phi ){
+void HardcodedConditions::GetJetVetoMap2016( double eta, double phi ){
   if ( ( eta >= -3.839 && eta < -3.664 ) && ( phi >= -3.142 && phi < -3.054 ) ) return True;
   if ( ( eta >= -3.839 && eta < -3.664 ) && ( phi >= -2.443 && phi < -2.356 ) ) return True;
   if ( ( eta >= -3.664 && eta < -3.489 ) && ( phi >= 1.833 && phi < 1.920 ) ) return True;
@@ -5876,7 +5876,7 @@ void HardcodedConditions::JetVetoMap2016( double eta, double phi ){
   return False;
 }
 
-void HardcodedConditions::JetVetoMap2017( double eta, double phi ){
+void HardcodedConditions::GetJetVetoMap2017( double eta, double phi ){
   if ( ( eta >= -3.139 && eta < -2.964 ) && ( phi >= 2.094 && phi < 2.182 ) ) return True;
   if ( ( eta >= -3.139 && eta < -2.964 ) && ( phi >= 2.182 && phi < 2.269 ) ) return True;
   if ( ( eta >= -3.139 && eta < -2.964 ) && ( phi >= 2.269 && phi < 2.356 ) ) return True;
@@ -6044,7 +6044,7 @@ void HardcodedConditions::JetVetoMap2017( double eta, double phi ){
   return False;
 }
 
-void HardcodedConditions::JetVetoMap2018( double eta, double phi ){
+void HardcodedConditions::GetJetVetoMap2018( double eta, double phi ){
   if ( ( eta >= -3.139 && eta < -2.964 ) && ( phi >= -1.658 && phi < -1.571 ) ) return True;
   if ( ( eta >= -3.139 && eta < -2.964 ) && ( phi >= -1.571 && phi < -1.484 ) ) return True;
   if ( ( eta >= -3.139 && eta < -2.964 ) && ( phi >= -1.484 && phi < -1.396 ) ) return True;
