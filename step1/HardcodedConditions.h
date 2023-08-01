@@ -15,14 +15,14 @@ public:
 
     void GetPileupWeight(int nTrueInt, float *pileupweight, float *pileupweightup, float *pileupweightdn, std::string year = "2017", std::string sample = "");
     
-    double GetEGammaGsfSF(double pt, double eta, std::string year = "2017");
-    double GetElectronIdSF(double pt, double eta, std::string year = "2017");
+    double GetEGammaGsfSF(double pt, double eta, std::string year = "2017", std::string shift = "nominal");
+    double GetElectronIdSF(double pt, double eta, std::string year = "2017", std::string shift = "nominal");
     double GetElectronIsoSF(double pt, double eta, std::string year = "2017");
     double GetElectronTriggerSF(double pt, double eta, std::string year = "2017");
     double GetIsEHadronTriggerSF(double njets, double ht, std::string year = "2017");
     double GetElectronTriggerXSF(double pt, double eta, std::string year = "2017");
     //double GetElectronTriggerVlqXSF(double pt, double eta, std::string year = "2017");
-    double GetMuonIdSF(double pt, double eta, std::string year = "2017");
+    double GetMuonIdSF(double pt, double eta, std::string year = "2017", std::string shift = "nominal");
     double GetMuonIsoSF(double pt, double eta, std::string year = "2017");
     double GetMuonTriggerSF(double pt, double eta, std::string year = "2017");
     double GetIsMHadronTriggerSF(double njets, double ht, std::string year = "2017");
@@ -60,15 +60,15 @@ private:
     void GetPileupWeight2017(int nTrueInt, float *pileupweight, float *pileupweightup, float *pileupweightdn);
     void GetPileupWeight2018(int nTrueInt, float *pileupweight, float *pileupweightup, float *pileupweightdn);
     
-    double GetEGammaGsfSF2016APV(double pt, double eta);
-    double GetEGammaGsfSF2016(double pt, double eta);
-    double GetEGammaGsfSF2017(double pt, double eta);
-    double GetEGammaGsfSF2018(double pt, double eta);
+    double GetEGammaGsfSF2016APV(double pt, double eta, std::string shift);
+    double GetEGammaGsfSF2016(double pt, double eta, std::string shift);
+    double GetEGammaGsfSF2017(double pt, double eta, std::string shift);
+    double GetEGammaGsfSF2018(double pt, double eta, std::string shift);
 
-    double GetElectronIdSF2016APV(double pt, double eta);
-    double GetElectronIdSF2016(double pt, double eta);
-    double GetElectronIdSF2017(double pt, double eta);
-    double GetElectronIdSF2018(double pt, double eta);
+    double GetElectronIdSF2016APV(double pt, double eta, std::string shift);
+    double GetElectronIdSF2016(double pt, double eta, std::string shift);
+    double GetElectronIdSF2017(double pt, double eta, std::string shift);
+    double GetElectronIdSF2018(double pt, double eta, std::string shift);
 
     double GetElectronIsoSF2016APV(double pt, double eta);
     double GetElectronIsoSF2016(double pt, double eta);
@@ -95,10 +95,10 @@ private:
     //double GetElectronTriggerVlqXSF2017(double pt, double eta);
     //double GetElectronTriggerVlqXSF2018(double pt, double eta);
 
-    double GetMuonIdSF2016APV(double pt, double eta);
-    double GetMuonIdSF2016(double pt, double eta);
-    double GetMuonIdSF2017(double pt, double eta);
-    double GetMuonIdSF2018(double pt, double eta);
+    double GetMuonIdSF2016APV(double pt, double eta, std::string shift);
+    double GetMuonIdSF2016(double pt, double eta, std::string shift);
+    double GetMuonIdSF2017(double pt, double eta, std::string shift);
+    double GetMuonIdSF2018(double pt, double eta, std::string shift);
 
     double GetMuonIsoSF2016APV(double pt, double eta);
     double GetMuonIsoSF2016(double pt, double eta);
