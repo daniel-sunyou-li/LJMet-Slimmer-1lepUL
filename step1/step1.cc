@@ -1136,7 +1136,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     if( debug == 1 ) cout << "[DEBUG] Looping through jets" << endl;
     for( unsigned int ijet=0; ijet < theJetPt_JetSubCalc->size(); ijet++){
       // For MC reduced JEC shifts, propagate the uncertainty to each jet before other calculations
-      if( isMC && !( Syst == "nominal" || Syst == "JECup" || Syst == "JECdown" || Syst == "JERup" || Syst == "JERdown") ){
+      if ( isMC && !( Syst == "nominal" || Syst == "JECup" || Syst == "JECdown" || Syst == "JERup" || Syst == "JERdown") ){
         jet_lv.SetPtEtaPhiE( theJetPt_JetSubCalc->at(ijet), theJetEta_JetSubCalc->at(ijet), theJetPhi_JetSubCalc->at(ijet), theJetEnergy_JetSubCalc->at(ijet) );
         jet_jec = jet_lv;
         jecUnc->setJetEta( theJetEta_JetSubCalc->at(ijet) );
@@ -1180,7 +1180,8 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
       double ijetPt = theJetPt_JetSubCalc->at(ijet);
       double ijetEta = theJetEta_JetSubCalc->at(ijet);
       
-      if( ijetPt < jetPtCut || fabs(ijetEta) > jetEtaCut ) continue;
+      if( ijetPt < jetPtCut || fabs(ijetEta) > jetEtaCut ) continue; // jet pt and eta cut
+      if ( hardcodedConditions.GetJetVetoMap( theJetEta_JetSubCalc->at(ijet), theJetPhi_JetSubCalc->at(ijet), Year ) == True ) continue; // jet veto map
       
       jetEtaSum+=fabs(ijetEta);
       jetEtaPtWeightedSum+=ijetPt*fabs(ijetEta);
