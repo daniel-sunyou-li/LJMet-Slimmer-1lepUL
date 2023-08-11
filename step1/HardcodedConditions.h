@@ -37,6 +37,8 @@ public:
 
     bool GetJetVetoMap( double eta, double phi, std::string year );
 
+    double GetMETPhiCorrection( double met, double met_phi, int nPV, int nRun, std::string era, bool isMC );
+
     void GetBtaggingSF(double pt, double eta, double *btagsf, double *btagsfunc, std::string tagger="CSVM", int jetHFlav = 5, std::string year = "2017");
     void GetBtaggingEff(double pt, double *eff, std::string tagger="CSVM", int jetHFlav = 5, std::string year = "2017");
     void GetHOTtaggingSF(double pt, int njet, double *hotsf, double *hotstatunc, double *hotcspurunc, double *hotclosureunc, std::string year = "2017", bool isGenMatched=true, std::string workingpoint = "1pfake");
@@ -50,6 +52,10 @@ private:
     bool GetJetVetoMap2016( double eta, double phi );
     bool GetJetVetoMap2017( double eta, double phi );
     bool GetJetVetoMap2018( double eta, double phi );
+
+    void GetMETPhiCorrection2016( double met_x_corr, double met_y_corr, double nPV, double nRun, std::string era, bool isMC );
+    void GetMETPhiCorrection2017( double met_x_corr, double met_y_corr, double nPV, double nRun, bool isMC );
+    void GetMETPhiCorrection2018( double met_x_corr, double met_y_corr, double nPV, double nRun, bool isMC );
 
     void GetJetPileupIDSF2016APV( double pt, double eta, double *puJetIDsf, double *puJetIDsfUp, double *puJetIDsfDn );
     void GetJetPileupIDSF2016( double pt, double eta, double *puJetIDsf, double *puJetIDsfUp, double *puJetIDsfDn );
