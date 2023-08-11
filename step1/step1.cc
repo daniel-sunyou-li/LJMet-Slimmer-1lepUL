@@ -1015,6 +1015,10 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
       hardcodedConditions.GetPileupWeight(nTrueInteractions_MultiLepCalc, &pileupWeight, &pileupWeightUp, &pileupWeightDown, Year);
     }
 
+    // apply MET xy corrections
+    std::pair<double,double> corr_xy_met_MultiLepCalc = GetMETPhiCorrection( corr_met_MultiLepCalc, corr_met_phi_MultiLepCalc, nTrueInteractions_MultiLepCalc, run_CommonCalc, Era, isMC );
+    corr_met_MultiLepCalc = corr_xy_met_MultiLepCalc.first();
+    corr_met_phi_MultiLepCalc = corr_xy_met_MultiLepCalc.second();
      
     // PU Jet ID weights are determined later based on AK4 jet properties
     pileupJetIDWeight = 1.0;
@@ -1130,7 +1134,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     btagDeepJetWeight_lfstats1dn = 1.0;
     btagDeepJetWeight_lfstats2up = 1.0;
     btagDeepJetWeight_lfstats2dn = 1.0;
-    
+
     double MET_corr_px = corr_met_MultiLepCalc * cos( corr_met_phi_MultiLepCalc );
     double MET_corr_py = corr_met_MultiLepCalc * sin( corr_met_phi_MultiLepCalc );
 
