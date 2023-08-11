@@ -815,6 +815,8 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   int Nelectrons      = 0;
   int Nmuons          = 0;
   int NrelIsoFail     = 0;
+  int jetveto         = 0;
+  int jettotal        = 0;
 
   // Lorentz vectors
   TLorentzVector jet_lv;
@@ -1181,7 +1183,11 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
       double ijetEta = theJetEta_JetSubCalc->at(ijet);
       
       if( ijetPt < jetPtCut || fabs(ijetEta) > jetEtaCut ) continue; // jet pt and eta cut
-      if ( hardcodedConditions.GetJetVetoMap( theJetEta_JetSubCalc->at(ijet), theJetPhi_JetSubCalc->at(ijet), Year ) == True ) continue; // jet veto map
+      //if ( hardcodedConditions.GetJetVetoMap( theJetEta_JetSubCalc->at(ijet), theJetPhi_JetSubCalc->at(ijet), Year ) == true ){ // jet veto map
+      //  jetveto += 1;
+      //  continue;
+      //} 
+      jettotal += 1;
       
       jetEtaSum+=fabs(ijetEta);
       jetEtaPtWeightedSum+=ijetPt*fabs(ijetEta);
@@ -2922,6 +2928,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   std::cout<<"Nmuons          = "<<Nmuons<<" / "<<nentries<<std::endl;
   std::cout<<"NrelIsoFail     = "<<NrelIsoFail<<" / "<<nentries<<std::endl;
   std::cout<<"Npassed_MuEta   = "<<npass_MuEta<<" / "<<nentries<<std::endl;
+  std::cout<<"Jets vetoed     = "<<jetveto<<" / "<<jettotal<<std::endl;
   std::cout<<"Npassed_nAK8Jets= "<<npass_nAK8jets<<" / "<<nentries<<std::endl;
   std::cout<<"Npassed_Trigger = "<<npass_trigger<<" / "<<nentries<<std::endl;
   std::cout<<"Npassed_MET     = "<<npass_met<<" / "<<nentries<<std::endl;

@@ -15,8 +15,8 @@ pathName = "/isilon/hadoop/store/user/dali/FWLJMET106XUL_singleLep20{}UL_RunIISu
 systs = [ str(syst) for syst in config.JES_shifts if config.JES_shifts[ syst ] ] if args.shifts else [ "nominal" ]
 shifts = [ "up", "down" ] if args.shifts else [ "" ]
 
-#sampleName = "TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8_HT0Njet0_ttjj_NUM_hadd.root"
-sampleName = "TTTT_TuneCP5_13TeV-amcatnlo-pythia8_NUM_hadd.root"
+sampleName = "TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8_HT0Njet0_ttjj_NUM_hadd.root"
+#sampleName = "TTTT_TuneCP5_13TeV-amcatnlo-pythia8_NUM_hadd.root"
 
 def hadd_sample( directory, subDirectory, sampleName, numHadd ):
   step1Files = [ name_ for name_ in os.listdir( os.path.join( directory, subDirectory ) ) if sampleName.split( "NUM" )[0] in name_ ]
