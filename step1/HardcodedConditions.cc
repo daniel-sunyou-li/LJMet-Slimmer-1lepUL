@@ -6248,15 +6248,135 @@ float HardcodedConditions::GetTtHfSF(bool isTT, bool isTTHF, bool isTTLF){
   /  .-.                                                         .-.  \
  |  /   \                                                       /   \  |
  | |\_.  |                                                     |    /| |
- |\|  | /|           btag CSV re-normalization                 |\  | |/|
+ |\|  | /|                MET Phi Corrections                  |\  | |/|
  | `---' |                                                     | `---' |
  |       |                                                     |       | 
  |       |-----------------------------------------------------|       |
  \       |                                                     |       /
   \     /                                                       \     /
    `---'                                                         `---'*/
+// values taken from https://lathomas.web.cern.ch/lathomas/METStuff/XYCorrections/XYMETCorrection_withUL17andUL18andUL16.h
 
-// need to be updated for UL
-float HardcodedConditions::GetCSVRenormSF(std::string year, int isE, int njet, std::string sampleType) {
-    return 1.0;
+std::pair<double,double> HardcodedConditions::GetMETPhiCorrection( double met, double met_phi, int nPV int nRun, std::string era, bool isMC ){
+  double met_x_corr(0.); double met_y_corr(0.);
+  if( year == "2016APV" || year == "2016" ) return GetMETPhiCorrection2016( met_x_corr, met_y_corr, nPV, nRun, era, isMC );
+  else if( year == "2017" ) return GetMETPhiCorrection2017( met_x_corr, met_y_corr met, nPV, nRun, isMC );
+  else if( year == "2018" ) return GetMETPhiCorrection2018( met_x_corr, met_y_corr met, nPV, nRun, isMC );
+  else return std::pair<double,double> corr_met( met, met_phi );
+  
+  met_x_corr += met * cos( met_phi );
+  met_y_corr += met * sin( met_phi );
+
+  double met_corr = sqrt( met_x_corr * met_x_corr + met_y_corr * met_y_corr );
+  double met_phi_corr;
+  if( met_x_corr == 0 && met_y_corr > 0 ) met_phi_corr = TMath::Pi();
+  else if( met_x_corr == 0 && met_y_corr < 0 ) met_phi_corr = -TMath::Pi(); 
+  else if( met_x_corr > 0 && met_y_corr > 0 ) met_phi_corr = TMath::ATan( met_y_corr / met_x_corr );
+  else if( met_x_corr < 0 && met_y_corr > 0 ) met_phi_corr = TMath::ATan( met_y_corr / met_x_corr ) + TMath::Pi();
+  else if( met_x_corr < 0 && met_y_corr < 0 ) met_phi_corr = TMath::ATan( met_y_corr / met_x_corr ) - TMath::Pi();
+  else met_phi_corr = 0;
+
+  return std::pair<double,double> met_corr_pair( met_corr, met_phi_corr );
+}
+
+void HardcodedConditions::GetMETPhiCorrection2016( double met_x_corr, double met_y_corr, double nPV, double nRun, std::string era, bool isMC ){
+  if( isMC ){
+    if( era == "2016APV" ){
+      met_x_corr = -( -0.188743 * nPV + 0.136539 );
+      met_y_corr = -( 0.0127927 * nPV + 0.117747 );
+    }
+    else if( era == "2016" ){
+      met_x_corr = -( -0.188743 * nPV + 0.136539);
+      met_y_corr = -( 0.0127927 * nPV + 0.117747);
+    }
+  }
+  else {
+    if( nRun >= 272007 && nRun <= 275656 ){
+      met_x_corr = -( -0.0214894 * nPV + -0.188255 );
+      met_y_corr = -( 0.0876624 * nPV + 0.812885 );
+    }
+    else if( nRun >= 275657 && nRun <= 276283 ){
+      met_x_corr = -( -0.032209 * nPV + 0.067288 );
+      met_y_corr = -( 0.113917 * nPV + 0.743906 );
+    }
+    else if( nRun >= 276315 && nRun <= 276811 ){
+      met_x_corr = -( -0.0293663 * nPV + 0.21106 );
+      met_y_corr = -( 0.11331 * nPV + 0.815787 );
+    }
+    else if( nRun >= 276831 && nRun <= 277420 ){
+      met_x_corr = -( -0.0132046 * nPV + 0.20073 );
+      met_y_corr = -( 0.134809 * nPV + 0.679068 );
+    }
+    else if( ( nRun >= 277772 && nRun <= 278768 ) || nRun == 278770 ){
+      met_x_corr = -( -0.0543566 * nPV + 0.816597 );
+      met_y_corr = -( 0.114225 * nPV + 1.17266 );
+    }
+    else if( ( nRun >= 278801 && nRun <= 278808 ) || nRun == 278769 ){
+      met_x_corr = -( 0.134616 * nPV + -0.89965 );
+      met_y_corr = -( 0.0397736 * nPV + 1.0385 );
+    }
+    else if( nRun >= 278820 && nRun <= 280385 ){
+      met_x_corr = -( 0.121809 * nPV + -0.584893 );
+      met_y_corr = -( 0.0558974 * nPV + 0.891234 );
+    }
+    else if( nRun >= 280919 && nRun <= 284044 ){
+      met_x_corr = -( 0.0868828 * nPV + -0.703489 );
+      met_y_corr = -( 0.0888774 * nPV + 0.902632 );
+    }
+  }
+}
+
+void HardcodedConditions::GetMETPhiCorrection2017( double met_x_corr, double met_y_corr, double nPV, double nRun, bool isMC ){
+  if( isMC ){
+    met_x_corr = -( -0.300155 * nPV + 1.90608 );
+    met_y_corr = -( 0.300213 * nPV + -2.02232 );
+  }
+  else {
+    if( nRun >= 297020 && nRun <= 299329 ){
+      met_x_corr = -( -0.211161 * nPV + 0.419333 );
+      met_y_corr = -( 0.251789 * nPV + -1.28089 );
+    }
+    else if( nRun >= 299337 && nRun <= 302029 ){
+      met_x_corr = -( -0.185184 * nPV + -0.164009 );
+      met_y_corr = -( 0.200941 * nPV + -0.56853 );
+    }
+    else if( nRun >= 302030 && nRun <= 303434 ){
+      met_x_corr = -( -0.201606 * nPV + 0.426502 );
+      met_y_corr = -( 0.188208 * nPV + -0.58313 );
+    }
+    else if( nRun >= 302435 && nRun <= 304826 ){
+      met_x_corr = -( -0.162472 * nPV + 0.176329 );
+      met_y_corr = -( 0.138076 * nPV + -0.250239 );
+    }
+    else if( nRun >= 304911 && nRun <= 306462 ){
+      met_x_corr = -( -0.210639 * nPV + 0.72934 );
+      met_y_corr = -( 0.198626 * nPV + 1.028 );
+    }
+  }
+}
+
+void HardcodedConditions::GetMETPhiCorrection2018( double met_x_corr, double met_y_corr, double nPV, double nRun, bool isMC ){
+  if( isMC ){
+    met_x_corr = -( 0.183518 * nPV + 0.546754 );
+    met_y_corr = -( 0.192263 * nPV + -0.42121 );
+
+  }
+  else {
+    if( nRun >= 315252 && nRun <= 316995 ){
+      met_x_corr = -( 0.263733 * nPV + -1.91115 );
+      met_y_corr = -( 0.0431304 * nPV + -0.112043 );
+    }
+    else if( nRun >= 316998 && nRun <= 319312 ){
+      met_x_corr = -( 0.400466 * nPV + -3.05914 );
+      met_y_corr = -( 0.146125 * nPV + -0.533233 );
+    }
+    else if( nRun >= 319313 && nRun <= 320393 ){
+      met_x_corr = -( 0.430911 * nPV + -1.42865 );
+      met_y_corr = -( 0.0620083 * nPV + -1.46021 );
+    }
+    else if( nRun >= 320394 && nRun <= 325273 ){
+      met_x_corr = -( 0.457327 * nPV + -1.56856 );
+      met_y_corr = -( 0.0684071 * nPV + -0.928372 );
+    }
+  }
 }
