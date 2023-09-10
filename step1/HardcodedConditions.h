@@ -20,24 +20,23 @@ public:
     double GetElectronIsoSF(double pt, double eta, std::string year = "2017");
     double GetElectronTriggerSF(double pt, double eta, std::string year = "2017");
     double GetIsEHadronTriggerSF(double njets, double ht, std::string year = "2017");
-    double GetElectronTriggerXSF(double pt, double eta, std::string year = "2017");
+    double GetElectronTriggerXSF( double ht, double pt, double eta, std::string year = "2017");
     //double GetElectronTriggerVlqXSF(double pt, double eta, std::string year = "2017");
     double GetMuonIdSF(double pt, double eta, std::string year = "2017", std::string shift = "nominal");
     double GetMuonIsoSF(double pt, double eta, std::string year = "2017");
     double GetMuonTriggerSF(double pt, double eta, std::string year = "2017");
     double GetIsMHadronTriggerSF(double njets, double ht, std::string year = "2017");
-    double GetMuonTriggerXSF(double pt, double eta, std::string year = "2017");
+    double GetMuonTriggerXSF( double ht, double pt, double eta, std::string year = "2017");
     //double GetMuonTriggerVlqXSF(double pt, double eta, std::string year = "2017");
     float GetNjetSF(int njet, std::string year, std::string variation, bool isTT);
     float GetTtHfSF(bool isTT, bool isTTHF, bool isTTLF);
-    float GetCSVRenormSF(std::string year, int isE, int njet, std::string sampleType);
 
     void GetJetPileupIDSF( double pt, double eta, double *puJetIDsf, double *puJetIDsfUp, double *puJetIDsfDn, std::string year );
     void GetJetPileupIDEff( double pt, double eta, double *puJetIDEff, std::string year );
 
     bool GetJetVetoMap( double eta, double phi, std::string year );
 
-    double GetMETPhiCorrection( double met, double met_phi, int nPV, int nRun, std::string era, bool isMC );
+    void GetMETPhiCorrection( Double_t *met, Double_t *met_phi, int nPV, int nRun, std::string era, bool isMC );
 
     void GetBtaggingSF(double pt, double eta, double *btagsf, double *btagsfunc, std::string tagger="CSVM", int jetHFlav = 5, std::string year = "2017");
     void GetBtaggingEff(double pt, double *eff, std::string tagger="CSVM", int jetHFlav = 5, std::string year = "2017");
@@ -53,9 +52,9 @@ private:
     bool GetJetVetoMap2017( double eta, double phi );
     bool GetJetVetoMap2018( double eta, double phi );
 
-    void GetMETPhiCorrection2016( double met_x_corr, double met_y_corr, double nPV, double nRun, std::string era, bool isMC );
-    void GetMETPhiCorrection2017( double met_x_corr, double met_y_corr, double nPV, double nRun, bool isMC );
-    void GetMETPhiCorrection2018( double met_x_corr, double met_y_corr, double nPV, double nRun, bool isMC );
+    void GetMETPhiCorrection2016( double *met_x_corr, double *met_y_corr, double nPV, double nRun, std::string era, bool isMC );
+    void GetMETPhiCorrection2017( double *met_x_corr, double *met_y_corr, double nPV, double nRun, bool isMC );
+    void GetMETPhiCorrection2018( double *met_x_corr, double *met_y_corr, double nPV, double nRun, bool isMC );
 
     void GetJetPileupIDSF2016APV( double pt, double eta, double *puJetIDsf, double *puJetIDsfUp, double *puJetIDsfDn );
     void GetJetPileupIDSF2016( double pt, double eta, double *puJetIDsf, double *puJetIDsfUp, double *puJetIDsfDn );
@@ -97,10 +96,10 @@ private:
     double GetIsEHadronTriggerSF2017(double njets, double ht);
     double GetIsEHadronTriggerSF2018(double njets, double ht);
 
-    double GetElectronTriggerXSF2016APV(double pt, double eta);
-    double GetElectronTriggerXSF2016(double pt, double eta);
-    double GetElectronTriggerXSF2017(double pt, double eta);
-    double GetElectronTriggerXSF2018(double pt, double eta);
+    double GetElectronTriggerXSF2016APV(double ht, double pt, double eta);
+    double GetElectronTriggerXSF2016(double ht, double pt, double eta);
+    double GetElectronTriggerXSF2017(double ht, double pt, double eta);
+    double GetElectronTriggerXSF2018(double ht, double pt, double eta);
 
     //double GetElectronTriggerVlqXSF2016APV(double pt, double eta);
     //double GetElectronTriggerVlqXSF2016(double pt, double eta);
@@ -127,10 +126,10 @@ private:
     double GetMuonTriggerSF2017(double pt, double eta);
     double GetMuonTriggerSF2018(double pt, double eta);
 
-    double GetMuonTriggerXSF2016APV(double pt, double eta);
-    double GetMuonTriggerXSF2016(double pt, double eta);
-    double GetMuonTriggerXSF2017(double pt, double eta);
-    double GetMuonTriggerXSF2018(double pt, double eta);
+    double GetMuonTriggerXSF2016APV(double ht, double pt, double eta);
+    double GetMuonTriggerXSF2016(double ht, double pt, double eta);
+    double GetMuonTriggerXSF2017(double ht, double pt, double eta);
+    double GetMuonTriggerXSF2018(double ht, double pt, double eta);
 
     //double GetMuonTriggerVlqXSF2016APV(double pt, double eta);
     //double GetMuonTriggerVlqXSF2016(double pt, double eta);

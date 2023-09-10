@@ -10,6 +10,8 @@
 //
 
 #include <cmath>
+#include <math.h>
+#include <TMath.h>
 #include "HardcodedConditions.h"
 #include <unordered_map>
 
@@ -3750,15 +3752,15 @@ double HardcodedConditions::GetIsEHadronTriggerSF2018(double njets, double ht){
   \     /                                                       \     /
    `---'                                                         `---'*/
 
-double HardcodedConditions::GetElectronTriggerXSF(double pt, double eta, std::string year){
-  if      (year=="2016APV") return GetElectronTriggerXSF2016APV(pt, eta);
-  else if (year=="2016") return GetElectronTriggerXSF2016(pt, eta);
-  else if (year=="2017") return GetElectronTriggerXSF2017(pt, eta);
-  else if (year=="2018") return GetElectronTriggerXSF2018(pt, eta);
+double HardcodedConditions::GetElectronTriggerXSF(double ht, double pt, double eta, std::string year){
+  if      (year=="2016APV") return GetElectronTriggerXSF2016APV(ht, pt, eta);
+  else if (year=="2016") return GetElectronTriggerXSF2016(ht, pt, eta);
+  else if (year=="2017") return GetElectronTriggerXSF2017(ht, pt, eta);
+  else if (year=="2018") return GetElectronTriggerXSF2018(ht, pt, eta);
   else return 0. ;
 }
 
-double HardcodedConditions::GetElectronTriggerXSF2016APV(double pt, double eta){
+double HardcodedConditions::GetElectronTriggerXSF2016APV(double ht, double pt, double eta){
 if ( pt < 25.0 ) {
   if ( fabs(eta) < 0.8000 ) return 0.94003;
   else if ( fabs(eta) < 1.4442 ) return 0.98432;
@@ -3821,7 +3823,7 @@ else {
   else return 0.89987; }
 }
 
-double HardcodedConditions::GetElectronTriggerXSF2016(double pt, double eta){
+double HardcodedConditions::GetElectronTriggerXSF2016(double ht, double pt, double eta){
 if ( pt < 25.0 ) {
   if ( fabs(eta) < 0.8000 ) return 1.14595;
   else if ( fabs(eta) < 1.4442 ) return 1.18934;
@@ -3884,7 +3886,7 @@ else {
   else return 0.81977; }
 }
 
-double HardcodedConditions::GetElectronTriggerXSF2017(double pt, double eta){
+double HardcodedConditions::GetElectronTriggerXSF2017(double ht, double pt, double eta){
   double scaleCDEF = 38.783 / 43.841; 
   double scaleB    = ( 1. - scaleCDEF );
   if ( pt < 25.0 ) {
@@ -3949,7 +3951,7 @@ double HardcodedConditions::GetElectronTriggerXSF2017(double pt, double eta){
     else return 0.88164 * scaleB + 0.87830 * scaleCDEF; }
 }
 
-double HardcodedConditions::GetElectronTriggerXSF2018(double pt, double eta){
+double HardcodedConditions::GetElectronTriggerXSF2018(double ht, double pt, double eta){
 if ( pt < 25.0 ) {
   if ( fabs(eta) < 0.8000 ) return 1.12145;
   else if ( fabs(eta) < 1.4442 ) return 1.17399;
@@ -4850,15 +4852,15 @@ double HardcodedConditions::GetIsMHadronTriggerSF2018(double njets, double ht){
   \     /                                                       \     /
    `---'                                                         `---'*/
 
-double HardcodedConditions::GetMuonTriggerXSF(double pt, double eta, std::string year){
-  if      (year=="2016APV") return GetMuonTriggerXSF2016APV(pt, eta);
-  else if (year=="2016") return GetMuonTriggerXSF2016(pt, eta);
-  else if (year=="2017") return GetMuonTriggerXSF2017(pt, eta);
-  else if (year=="2018") return GetMuonTriggerXSF2018(pt, eta);
+double HardcodedConditions::GetMuonTriggerXSF(double ht, double pt, double eta, std::string year){
+  if      (year=="2016APV") return GetMuonTriggerXSF2016APV(ht, pt, eta);
+  else if (year=="2016") return GetMuonTriggerXSF2016(ht, pt, eta);
+  else if (year=="2017") return GetMuonTriggerXSF2017(ht, pt, eta);
+  else if (year=="2018") return GetMuonTriggerXSF2018(ht, pt, eta);
   else return 0. ;
 }
 
-double HardcodedConditions::GetMuonTriggerXSF2016APV(double pt, double eta){
+double HardcodedConditions::GetMuonTriggerXSF2016APV(double ht, double pt, double eta){
 if ( pt < 25.0 ) {
   if ( fabs(eta) < 0.8000 ) return 0.94708;
   else if ( fabs(eta) < 1.4442 ) return 0.95073;
@@ -4921,7 +4923,7 @@ else {
   else return 0.99677; }
 }
 
-double HardcodedConditions::GetMuonTriggerXSF2016(double pt, double eta){
+double HardcodedConditions::GetMuonTriggerXSF2016(double ht, double pt, double eta){
 if ( pt < 25.0 ) {
   if ( fabs(eta) < 0.8000 ) return 1.08900;
   else if ( fabs(eta) < 1.4442 ) return 1.09055;
@@ -4984,7 +4986,7 @@ else {
   else return 1.01443; }
 }
   
-double HardcodedConditions::GetMuonTriggerXSF2017(double pt, double eta){
+double HardcodedConditions::GetMuonTriggerXSF2017(double ht, double pt, double eta){
   double scaleCDEF = 38.783 / 43.841;
   double scaleB    = ( 1. - scaleCDEF );
   if ( pt < 25.0 ) {
@@ -5055,7 +5057,7 @@ double HardcodedConditions::GetMuonTriggerXSF2017(double pt, double eta){
     else return 0.91977 * scaleB + 1.01261 * scaleCDEF; }
 }
 
-double HardcodedConditions::GetMuonTriggerXSF2018(double pt, double eta){
+double HardcodedConditions::GetMuonTriggerXSF2018(double ht, double pt, double eta){
 if ( pt < 25.0 ) {
   if ( fabs(eta) < 0.8000 ) return 1.02559;
   else if ( fabs(eta) < 1.4442 ) return 1.02896;
@@ -5789,6 +5791,7 @@ bool HardcodedConditions::GetJetVetoMap( double eta, double phi, std::string yea
   else if ( year == "2016" ) GetJetVetoMap2016( eta, phi );
   else if ( year == "2017" ) GetJetVetoMap2017( eta, phi );
   else if ( year == "2018" ) GetJetVetoMap2018( eta, phi ); // complements the HEM 15/16 electron veto
+  return false;
 }
 
 bool HardcodedConditions::GetJetVetoMap2016( double eta, double phi ){
@@ -6257,126 +6260,127 @@ float HardcodedConditions::GetTtHfSF(bool isTT, bool isTTHF, bool isTTLF){
    `---'                                                         `---'*/
 // values taken from https://lathomas.web.cern.ch/lathomas/METStuff/XYCorrections/XYMETCorrection_withUL17andUL18andUL16.h
 
-std::pair<double,double> HardcodedConditions::GetMETPhiCorrection( double met, double met_phi, int nPV int nRun, std::string era, bool isMC ){
+void HardcodedConditions::GetMETPhiCorrection( Double_t *met, Double_t *met_phi, int nPV, int nRun, std::string era, bool isMC ){
   double met_x_corr(0.); double met_y_corr(0.);
-  if( year == "2016APV" || year == "2016" ) return GetMETPhiCorrection2016( met_x_corr, met_y_corr, nPV, nRun, era, isMC );
-  else if( year == "2017" ) return GetMETPhiCorrection2017( met_x_corr, met_y_corr met, nPV, nRun, isMC );
-  else if( year == "2018" ) return GetMETPhiCorrection2018( met_x_corr, met_y_corr met, nPV, nRun, isMC );
-  else return std::pair<double,double> corr_met( met, met_phi );
+  double pi = 3.14159265359;
+  if( era ==  "2016APV" || era == "2016" ) GetMETPhiCorrection2016( &met_x_corr, &met_y_corr, nPV, nRun, era, isMC );
+  else if( era == "2017" ) GetMETPhiCorrection2017( &met_x_corr, &met_y_corr, nPV, nRun, isMC );
+  else if( era == "2018" ) GetMETPhiCorrection2018( &met_x_corr, &met_y_corr, nPV, nRun, isMC );
   
-  met_x_corr += met * cos( met_phi );
-  met_y_corr += met * sin( met_phi );
+  met_x_corr += *met * cos( *met_phi );
+  met_y_corr += *met * sin( *met_phi );
 
   double met_corr = sqrt( met_x_corr * met_x_corr + met_y_corr * met_y_corr );
   double met_phi_corr;
-  if( met_x_corr == 0 && met_y_corr > 0 ) met_phi_corr = TMath::Pi();
-  else if( met_x_corr == 0 && met_y_corr < 0 ) met_phi_corr = -TMath::Pi(); 
-  else if( met_x_corr > 0 && met_y_corr > 0 ) met_phi_corr = TMath::ATan( met_y_corr / met_x_corr );
-  else if( met_x_corr < 0 && met_y_corr > 0 ) met_phi_corr = TMath::ATan( met_y_corr / met_x_corr ) + TMath::Pi();
-  else if( met_x_corr < 0 && met_y_corr < 0 ) met_phi_corr = TMath::ATan( met_y_corr / met_x_corr ) - TMath::Pi();
+  if( met_x_corr == 0 && met_y_corr > 0 ) met_phi_corr = pi;
+  else if( met_x_corr == 0 && met_y_corr < 0 ) met_phi_corr = -pi; 
+  else if( met_x_corr > 0 ) met_phi_corr = TMath::ATan( met_y_corr / met_x_corr );
+  else if( met_x_corr < 0 && met_y_corr > 0 ) met_phi_corr = TMath::ATan( met_y_corr / met_x_corr ) + pi;
+  else if( met_x_corr < 0 && met_y_corr < 0 ) met_phi_corr = TMath::ATan( met_y_corr / met_x_corr ) - pi;
   else met_phi_corr = 0;
 
-  return std::pair<double,double> met_corr_pair( met_corr, met_phi_corr );
+  *met = met_corr;
+  *met_phi = met_phi_corr;
 }
 
-void HardcodedConditions::GetMETPhiCorrection2016( double met_x_corr, double met_y_corr, double nPV, double nRun, std::string era, bool isMC ){
+void HardcodedConditions::GetMETPhiCorrection2016( double *met_x_corr, double *met_y_corr, double nPV, double nRun, std::string era, bool isMC ){
   if( isMC ){
     if( era == "2016APV" ){
-      met_x_corr = -( -0.188743 * nPV + 0.136539 );
-      met_y_corr = -( 0.0127927 * nPV + 0.117747 );
+      *met_x_corr = -( -0.188743 * nPV + 0.136539 );
+      *met_y_corr = -( 0.0127927 * nPV + 0.117747 );
     }
     else if( era == "2016" ){
-      met_x_corr = -( -0.188743 * nPV + 0.136539);
-      met_y_corr = -( 0.0127927 * nPV + 0.117747);
+      *met_x_corr = -( -0.188743 * nPV + 0.136539);
+      *met_y_corr = -( 0.0127927 * nPV + 0.117747);
     }
   }
   else {
     if( nRun >= 272007 && nRun <= 275656 ){
-      met_x_corr = -( -0.0214894 * nPV + -0.188255 );
-      met_y_corr = -( 0.0876624 * nPV + 0.812885 );
+      *met_x_corr = -( -0.0214894 * nPV + -0.188255 );
+      *met_y_corr = -( 0.0876624 * nPV + 0.812885 );
     }
     else if( nRun >= 275657 && nRun <= 276283 ){
-      met_x_corr = -( -0.032209 * nPV + 0.067288 );
-      met_y_corr = -( 0.113917 * nPV + 0.743906 );
+      *met_x_corr = -( -0.032209 * nPV + 0.067288 );
+      *met_y_corr = -( 0.113917 * nPV + 0.743906 );
     }
     else if( nRun >= 276315 && nRun <= 276811 ){
-      met_x_corr = -( -0.0293663 * nPV + 0.21106 );
-      met_y_corr = -( 0.11331 * nPV + 0.815787 );
+      *met_x_corr = -( -0.0293663 * nPV + 0.21106 );
+      *met_y_corr = -( 0.11331 * nPV + 0.815787 );
     }
     else if( nRun >= 276831 && nRun <= 277420 ){
-      met_x_corr = -( -0.0132046 * nPV + 0.20073 );
-      met_y_corr = -( 0.134809 * nPV + 0.679068 );
+      *met_x_corr = -( -0.0132046 * nPV + 0.20073 );
+      *met_y_corr = -( 0.134809 * nPV + 0.679068 );
     }
     else if( ( nRun >= 277772 && nRun <= 278768 ) || nRun == 278770 ){
-      met_x_corr = -( -0.0543566 * nPV + 0.816597 );
-      met_y_corr = -( 0.114225 * nPV + 1.17266 );
+      *met_x_corr = -( -0.0543566 * nPV + 0.816597 );
+      *met_y_corr = -( 0.114225 * nPV + 1.17266 );
     }
     else if( ( nRun >= 278801 && nRun <= 278808 ) || nRun == 278769 ){
-      met_x_corr = -( 0.134616 * nPV + -0.89965 );
-      met_y_corr = -( 0.0397736 * nPV + 1.0385 );
+      *met_x_corr = -( 0.134616 * nPV + -0.89965 );
+      *met_y_corr = -( 0.0397736 * nPV + 1.0385 );
     }
     else if( nRun >= 278820 && nRun <= 280385 ){
-      met_x_corr = -( 0.121809 * nPV + -0.584893 );
-      met_y_corr = -( 0.0558974 * nPV + 0.891234 );
+      *met_x_corr = -( 0.121809 * nPV + -0.584893 );
+      *met_y_corr = -( 0.0558974 * nPV + 0.891234 );
     }
     else if( nRun >= 280919 && nRun <= 284044 ){
-      met_x_corr = -( 0.0868828 * nPV + -0.703489 );
-      met_y_corr = -( 0.0888774 * nPV + 0.902632 );
+      *met_x_corr = -( 0.0868828 * nPV + -0.703489 );
+      *met_y_corr = -( 0.0888774 * nPV + 0.902632 );
     }
   }
 }
 
-void HardcodedConditions::GetMETPhiCorrection2017( double met_x_corr, double met_y_corr, double nPV, double nRun, bool isMC ){
+void HardcodedConditions::GetMETPhiCorrection2017( double *met_x_corr, double *met_y_corr, double nPV, double nRun, bool isMC ){
   if( isMC ){
-    met_x_corr = -( -0.300155 * nPV + 1.90608 );
-    met_y_corr = -( 0.300213 * nPV + -2.02232 );
+    *met_x_corr = -( -0.300155 * nPV + 1.90608 );
+    *met_y_corr = -( 0.300213 * nPV + -2.02232 );
   }
   else {
     if( nRun >= 297020 && nRun <= 299329 ){
-      met_x_corr = -( -0.211161 * nPV + 0.419333 );
-      met_y_corr = -( 0.251789 * nPV + -1.28089 );
+      *met_x_corr = -( -0.211161 * nPV + 0.419333 );
+      *met_y_corr = -( 0.251789 * nPV + -1.28089 );
     }
     else if( nRun >= 299337 && nRun <= 302029 ){
-      met_x_corr = -( -0.185184 * nPV + -0.164009 );
-      met_y_corr = -( 0.200941 * nPV + -0.56853 );
+      *met_x_corr = -( -0.185184 * nPV + -0.164009 );
+      *met_y_corr = -( 0.200941 * nPV + -0.56853 );
     }
     else if( nRun >= 302030 && nRun <= 303434 ){
-      met_x_corr = -( -0.201606 * nPV + 0.426502 );
-      met_y_corr = -( 0.188208 * nPV + -0.58313 );
+      *met_x_corr = -( -0.201606 * nPV + 0.426502 );
+      *met_y_corr = -( 0.188208 * nPV + -0.58313 );
     }
     else if( nRun >= 302435 && nRun <= 304826 ){
-      met_x_corr = -( -0.162472 * nPV + 0.176329 );
-      met_y_corr = -( 0.138076 * nPV + -0.250239 );
+      *met_x_corr = -( -0.162472 * nPV + 0.176329 );
+      *met_y_corr = -( 0.138076 * nPV + -0.250239 );
     }
     else if( nRun >= 304911 && nRun <= 306462 ){
-      met_x_corr = -( -0.210639 * nPV + 0.72934 );
-      met_y_corr = -( 0.198626 * nPV + 1.028 );
-    }
+      *met_x_corr = -( -0.210639 * nPV + 0.72934 );
+      *met_y_corr = -( 0.198626 * nPV + 1.028 );
+}
   }
 }
 
-void HardcodedConditions::GetMETPhiCorrection2018( double met_x_corr, double met_y_corr, double nPV, double nRun, bool isMC ){
+void HardcodedConditions::GetMETPhiCorrection2018( double *met_x_corr, double *met_y_corr, double nPV, double nRun, bool isMC ){
   if( isMC ){
-    met_x_corr = -( 0.183518 * nPV + 0.546754 );
-    met_y_corr = -( 0.192263 * nPV + -0.42121 );
+    *met_x_corr = -( 0.183518 * nPV + 0.546754 );
+    *met_y_corr = -( 0.192263 * nPV + -0.42121 );
 
   }
   else {
     if( nRun >= 315252 && nRun <= 316995 ){
-      met_x_corr = -( 0.263733 * nPV + -1.91115 );
-      met_y_corr = -( 0.0431304 * nPV + -0.112043 );
+      *met_x_corr = -( 0.263733 * nPV + -1.91115 );
+      *met_y_corr = -( 0.0431304 * nPV + -0.112043 );
     }
     else if( nRun >= 316998 && nRun <= 319312 ){
-      met_x_corr = -( 0.400466 * nPV + -3.05914 );
-      met_y_corr = -( 0.146125 * nPV + -0.533233 );
+      *met_x_corr = -( 0.400466 * nPV + -3.05914 );
+      *met_y_corr = -( 0.146125 * nPV + -0.533233 );
     }
     else if( nRun >= 319313 && nRun <= 320393 ){
-      met_x_corr = -( 0.430911 * nPV + -1.42865 );
-      met_y_corr = -( 0.0620083 * nPV + -1.46021 );
+      *met_x_corr = -( 0.430911 * nPV + -1.42865 );
+      *met_y_corr = -( 0.0620083 * nPV + -1.46021 );
     }
     else if( nRun >= 320394 && nRun <= 325273 ){
-      met_x_corr = -( 0.457327 * nPV + -1.56856 );
-      met_y_corr = -( 0.0684071 * nPV + -0.928372 );
+      *met_x_corr = -( 0.457327 * nPV + -1.56856 );
+      *met_y_corr = -( 0.0684071 * nPV + -0.928372 );
     }
   }
 }

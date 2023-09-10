@@ -9,6 +9,7 @@
 #include <TCanvas.h>
 #include <TRandom.h>
 #include <TRandom3.h>
+#include <TMath.h>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -200,7 +201,8 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   inputTree->SetBranchStatus("event_CommonCalc",1);
   inputTree->SetBranchStatus("run_CommonCalc",1);
   inputTree->SetBranchStatus("lumi_CommonCalc",1);
-  //   inputTree->SetBranchStatus("nPV_MultiLepCalc",1);
+  inputTree->SetBranchStatus("nPV_MultiLepCalc",1);
+  //inputTree->SetBranchStatus("nPileupInteractions_MultiLepCalc",1);
   inputTree->SetBranchStatus("nTrueInteractions_MultiLepCalc",1);
   inputTree->SetBranchStatus("MCWeight_MultiLepCalc",1);
   inputTree->SetBranchStatus("evtWeightsMC_MultiLepCalc",1);
@@ -425,6 +427,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   outputTree->Branch("run_CommonCalc",&run_CommonCalc,"run_CommonCalc/I");
   outputTree->Branch("lumi_CommonCalc",&lumi_CommonCalc,"lumi_CommonCalc/I");
   outputTree->Branch("nTrueInteractions_MultiLepCalc",&nTrueInteractions_MultiLepCalc,"nTrueInteractions_MultiLepCalc/I");
+  outputTree->Branch("nPV_MultiLepCalc",&nPV_MultiLepCalc,"nPV_MultiLepCalc/I");
   outputTree->Branch("isElectron",&isElectron,"isElectron/I");
   outputTree->Branch("isMuon",&isMuon,"isMuon/I");
   outputTree->Branch("MCPastTriggerX",&MCPastTriggerX,"MCPastTriggerX/I");
@@ -469,6 +472,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   outputTree->Branch("renormWeights",&renormWeights);
   outputTree->Branch("renormPSWeights",&renormPSWeights);
   outputTree->Branch("pdfWeights",&pdfWeights);
+  outputTree->Branch("alphaSWeights",&alphaSWeights);
   outputTree->Branch("pdfNewWeights",&pdfNewWeights);
   outputTree->Branch("pdfNewNominalWeight",&pdfNewNominalWeight,"pdfNewNominalWeight/F");
   outputTree->Branch("pileupJetIDWeight",&pileupJetIDWeight,"pileupJetIDWeight/F");
@@ -525,7 +529,6 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   outputTree->Branch("njetsWeightUp",&njetsWeightUp,"njetsWeightUp/F");
   outputTree->Branch("njetsWeightDown",&njetsWeightDown,"njetsWeightDown/F");
   outputTree->Branch("tthfWeight",&tthfWeight,"tthfWeight/F");
-  outputTree->Branch("btagCSVRenormWeight",&btagCSVRenormWeight,"btagCSVRenormWeight/F");
 
   //ttbar generator
   outputTree->Branch("ttbarMass_TTbarMassCalc",&ttbarMass_TTbarMassCalc,"ttbarMass_TTbarMassCalc/D");
@@ -625,6 +628,10 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   outputTree->Branch("theJetPhi1_JetSubCalc",&theJetPhi1_JetSubCalc,"theJetPhi1_JetSubCalc/F");
   outputTree->Branch("theJetPhi2_JetSubCalc",&theJetPhi2_JetSubCalc,"theJetPhi2_JetSubCalc/F");
   outputTree->Branch("theJetPhi3_JetSubCalc",&theJetPhi3_JetSubCalc,"theJetPhi3_JetSubCalc/F");
+  outputTree->Branch("theForwardJetPt_JetSubCalc",&theForwardJetPt_JetSubCalc,"theForwardJetPt_JetSubCalc/F");
+  outputTree->Branch("theForwardJetEta_JetSubCalc",&theForwardJetEta_JetSubCalc,"theForwardJetEta_JetSubCalc/F");
+  outputTree->Branch("theForwardJetPhi_JetSubCalc",&theForwardJetPhi_JetSubCalc,"theForwardJetPhi_JetSubCalc/F");
+  outputTree->Branch("theForwardJetCSV_JetSubCalc",&theForwardJetCSV_JetSubCalc,"theForwardJetCSV_JetSubCalc/F");
   outputTree->Branch("AK4HTpMETpLepPt",&AK4HTpMETpLepPt,"AK4HTpMETpLepPt/F");
   outputTree->Branch("AK4HT",&AK4HT,"AK4HT/F");
   outputTree->Branch("NJets_JetSubCalc",&NJets_JetSubCalc,"NJets_JetSubCalc/I");
@@ -1016,10 +1023,8 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     }
 
     // apply MET xy corrections
-    std::pair<double,double> corr_xy_met_MultiLepCalc = GetMETPhiCorrection( corr_met_MultiLepCalc, corr_met_phi_MultiLepCalc, nTrueInteractions_MultiLepCalc, run_CommonCalc, Era, isMC );
-    corr_met_MultiLepCalc = corr_xy_met_MultiLepCalc.first();
-    corr_met_phi_MultiLepCalc = corr_xy_met_MultiLepCalc.second();
-     
+    hardcodedConditions.GetMETPhiCorrection( &corr_met_MultiLepCalc, &corr_met_phi_MultiLepCalc, nPV_MultiLepCalc, run_CommonCalc, Year, isMC );
+
     // PU Jet ID weights are determined later based on AK4 jet properties
     pileupJetIDWeight = 1.0;
     pileupJetIDWeightUp = 1.0;
@@ -1027,8 +1032,6 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     pileupJetIDWeight_tag = 1.0;
     pileupJetIDWeightUp_tag = 1.0;
     pileupJetIDWeightDown_tag = 1.0;
-
-    btagCSVRenormWeight = 1.0;
 
     std::string sampleType = "";
     if (isTTTT) sampleType = "tttt";
@@ -1096,6 +1099,11 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     theJetEtaAverageNotBJet_JetSubCalc = 0;
     theJetEta_JetNotBJetMaxPt_JetSubCalc = 0;
 
+    theForwardJetPt_JetSubCalc = 0;
+    theForwardJetEta_JetSubCalc = 0;
+    theForwardJetPhi_JetSubCalc = 0;
+    theForwardJetCSV_JetSubCalc = 0;
+
     double jetEtaSum = 0;
     double jetEtaPtWeightedSum = 0;
     double jetEtaSumNotBJet = 0; 
@@ -1142,6 +1150,12 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     if( debug == 1 ) cout << "[DEBUG] Looping through jets" << endl;
     for( unsigned int ijet=0; ijet < theJetPt_JetSubCalc->size(); ijet++){
       // For MC reduced JEC shifts, propagate the uncertainty to each jet before other calculations
+      if ( abs(theJetEta_JetSubCalc->at(ijet)) > abs(theForwardJetEta_JetSubCalc) ){
+        theForwardJetEta_JetSubCalc = theJetEta_JetSubCalc->at(ijet);
+        theForwardJetPt_JetSubCalc = theJetPt_JetSubCalc->at(ijet);
+        theForwardJetPhi_JetSubCalc = theJetPhi_JetSubCalc->at(ijet);
+        theForwardJetCSV_JetSubCalc = theJetDeepFlavB_JetSubCalc->at(ijet);
+      }
       if ( isMC && !( Syst == "nominal" || Syst == "JECup" || Syst == "JECdown" || Syst == "JERup" || Syst == "JERdown") ){
         jet_lv.SetPtEtaPhiE( theJetPt_JetSubCalc->at(ijet), theJetEta_JetSubCalc->at(ijet), theJetPhi_JetSubCalc->at(ijet), theJetEnergy_JetSubCalc->at(ijet) );
         jet_jec = jet_lv;
@@ -1187,10 +1201,10 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
       double ijetEta = theJetEta_JetSubCalc->at(ijet);
       
       if( ijetPt < jetPtCut || fabs(ijetEta) > jetEtaCut ) continue; // jet pt and eta cut
-      //if ( hardcodedConditions.GetJetVetoMap( theJetEta_JetSubCalc->at(ijet), theJetPhi_JetSubCalc->at(ijet), Year ) == true ){ // jet veto map
-      //  jetveto += 1;
-      //  continue;
-      //} 
+      if ( hardcodedConditions.GetJetVetoMap( theJetEta_JetSubCalc->at(ijet), theJetPhi_JetSubCalc->at(ijet), Year ) == true ){ // jet veto map
+        jetveto += 1;
+        continue;
+      } 
       jettotal += 1;
       
       jetEtaSum+=fabs(ijetEta);
@@ -1491,10 +1505,6 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
       pileupJetIDWeightDown_tag = compute_SFWeight( jetPUIDsfDn, jetPUIDEff, jetPUIDTag_tag );
     }
 
-    if (isMC) {
-      btagCSVRenormWeight = hardcodedConditions.GetCSVRenormSF(Year, isElectron, NJets_JetSubCalc, sampleType);  
-    }	
-
     // ----------------------------------------------------------------------------
     // nJets weight calculation
     // ----------------------------------------------------------------------------
@@ -1656,7 +1666,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         isoSF = hardcodedConditions.GetElectronIsoSF( leppt, lepeta, Year );
         if( Year == "2016APV" || Year == "2016" ){ // there are no centrally maintained 2016preVFP and 2016postVFP UL SF, so use the SF separately
           triggerSF = hardcodedConditions.GetElectronTriggerSF( leppt, lepeta, Year );
-          triggerXSF = hardcodedConditions.GetElectronTriggerXSF( leppt, lepeta, Year );
+          triggerXSF = hardcodedConditions.GetElectronTriggerXSF( AK4HT, leppt, lepeta, Year );
         }
         else if( MCLepPastTrigger == 1 && MCPastTriggerX == 1 ){ // defaults to using the single-object trigger if available
           triggerSF = hardcodedConditions.GetElectronTriggerSF( leppt, lepeta, Year );
@@ -1664,11 +1674,11 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         }
         else if( MCLepPastTrigger == 0 && MCPastTriggerX == 1 ){ 
           triggerSF = 1.0;
-          triggerXSF = hardcodedConditions.GetElectronTriggerXSF( leppt, lepeta, Year );
+          triggerXSF = hardcodedConditions.GetElectronTriggerXSF( AK4HT, leppt, lepeta, Year );
         }
         else{ 
           triggerSF = hardcodedConditions.GetElectronTriggerSF(leppt, lepeta, Year);
-          triggerXSF = hardcodedConditions.GetElectronTriggerXSF(leppt, lepeta, Year);
+          triggerXSF = hardcodedConditions.GetElectronTriggerXSF( AK4HT, leppt, lepeta, Year);
         }
         
         //triggerHadSF = hardcodedConditions.GetIsEHadronTriggerSF(NJets_JetSubCalc, AK4HT, Year);
@@ -1697,7 +1707,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         
         if( Year == "2016APV" || Year == "2016" ){ // there are no centrally maintained 2016preVFP and 2016postVFP UL SF, so use the SF separately
           triggerSF = hardcodedConditions.GetMuonTriggerSF( leppt, lepeta, Year );
-          triggerXSF = hardcodedConditions.GetMuonTriggerXSF( leppt, lepeta, Year );
+          triggerXSF = hardcodedConditions.GetMuonTriggerXSF( AK4HT, leppt, lepeta, Year );
         }
         if( MCLepPastTrigger == 1 && MCPastTriggerX == 1 ){ // defaults to using the single-object trigger if available
           triggerSF = hardcodedConditions.GetMuonTriggerSF( leppt, lepeta, Year );
@@ -1705,11 +1715,11 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         }
         else if( MCLepPastTrigger == 0 && MCPastTriggerX == 1 ){ 
           triggerSF = 1.0;
-          triggerXSF = hardcodedConditions.GetMuonTriggerXSF( leppt, lepeta, Year );
+          triggerXSF = hardcodedConditions.GetMuonTriggerXSF( AK4HT, leppt, lepeta, Year );
         }
         else{ 
           triggerSF = hardcodedConditions.GetMuonTriggerSF(leppt, lepeta, Year);
-          triggerXSF = hardcodedConditions.GetMuonTriggerXSF(leppt, lepeta, Year);
+          triggerXSF = hardcodedConditions.GetMuonTriggerXSF( AK4HT, leppt, lepeta, Year);
         }
         
         //triggerHadSF = hardcodedConditions.GetIsMHadronTriggerSF(NJets_JetSubCalc, AK4HT, Year);
@@ -2806,6 +2816,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     renormWeights.clear();
     renormPSWeights.clear();
     pdfWeights.clear();
+    alphaSWeights.clear();
     pdfNewWeights.clear();
     pdfNewNominalWeight = 1.0;
 
@@ -2919,6 +2930,9 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
       for(int ipdf = 0; ipdf < 100; ipdf++){
         pdfWeights.push_back(1.0);
       }
+    }
+    if(alphaSWeights.size() == 0){
+      alphaSWeights.push_back(1.0);
     }
 
     // ----------------------------------------------------------------------------

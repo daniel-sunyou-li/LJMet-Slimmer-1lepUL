@@ -29,35 +29,38 @@ def calculate_efficiency_err( N1, N2 ):
   n = max( N1, N2 )
   return np.sqrt( ( ( k + 1 ) * ( k + 2 ) )/( ( n + 2 ) * ( n + 3 ) ) - ( ( k + 1 )**2 / ( n + 2 )**2 ) )
 
-def print_efficiency( efficiency, efficiency_err, pt_bins, eta_bins ):
-  header = "{:<15} |".format( "Eff." )
-  split = "_"*17
-  for i in range( len( pt_bins ) + 1 ):
-    if i == 0:
-      header += "{:>7.1f}-{:<7.1f} |".format( 0, pt_bins[i] )
-    elif i == len( pt_bins ):
-      header += "{:>7.1f}-Inf".format( pt_bins[i-1] )
-    else:
-      header += "{:>7.1f}-{:<7.1f} |".format( pt_bins[i-1], pt_bins[i] )
-    split += "_"*17
-  print( header )
-  print( split )
-  for j in range( len( eta_bins ) + 1 ):
-    if j == 0:
-      row = "{:>7.3f}-{:<7.3f} |".format( 0, eta_bins[j] )
-    elif j == len( eta_bins ):
-      row = "{:>7.3f}-{:<7} |".format( eta_bins[j-1], "INF" )
-    else:
-      row = "{:>7.3f}-{:<7.3f} |".format( eta_bins[j-1], eta_bins[j] )
-    for i in range( len( pt_bins ) + 1 ):
-      row += " {:<4.3f} pm {:<4.3f} |".format( efficiency[i][j], efficiency_err[i][j] ) 
-    print( row )
+def print_efficiency( efficiency, efficiency_err, ht_bins, pt_bins, eta_bins ):
+  for i in range( len( ht_bins ) ):
+    header = "{:<15} |".format( "HT {}".format( ht_bins[i] ) )
+    split = "_"*17
+    for j in range( len( pt_bins ) + 1 ):
+      if j == 0:
+        header += "{:>7.1f}-{:<7.1f} |".format( 0, pt_bins[j] )
+      elif j == len( pt_bins ):
+        header += "{:>7.1f}-Inf".format( pt_bins[j-1] )
+      else:
+        header += "{:>7.1f}-{:<7.1f} |".format( pt_bins[j-1], pt_bins[j] )
+      split += "_"*17
+    print( header )
+    print( split )
+    for k in range( len( eta_bins ) + 1 ):
+      if k == 0:
+        row = "{:>7.3f}-{:<7.3f} |".format( 0, eta_bins[k] )
+      elif k == len( eta_bins ):
+        row = "{:>7.3f}-{:<7} |".format( eta_bins[k-1], "INF" )
+      else:
+        row = "{:>7.3f}-{:<7.3f} |".format( eta_bins[k-1], eta_bins[k] )
+      for j in range( len( pt_bins ) + 1 ):
+        row += " {:<4.3f} pm {:<4.3f} |".format( efficiency[i][j][k], efficiency_err[i][j][k] ) 
+      print( row )
+    print( split )
+    print( "" )
       
 
 # prepare the yield arrays
 yields = {
-  "HLT": np.zeros( ( len( config.triggerX_bins[ "PT" ] ) + 1, len( config.triggerX_bins[ "ETA" ] ) + 1 ) ),
-  "NOMINAL": np.zeros( ( len( config.triggerX_bins[ "PT" ] ) + 1, len( config.triggerX_bins[ "ETA" ] ) + 1 ) )
+  "HLT": np.zeros( ( len( config.triggerX_bins[ "HT" ] ) + 1, len( config.triggerX_bins[ "PT" ] ) + 1, len( config.triggerX_bins[ "ETA" ] ) + 1 ) ),
+  "NOMINAL": np.zeros( ( len( config.triggerX_bins[ "HT" ] ) + 1, len( config.triggerX_bins[ "PT" ] ) + 1, len( config.triggerX_bins[ "ETA" ] ) + 1 ) )
 }
 
 # compile the pre-selection
@@ -130,12 +133,12 @@ for sample in samples:
       print( "  + {} passed pre-selection + trigger = {:.3f}".format( hlt_events, float( hlt_events ) / float( nominal_events )  ) )
     else:
       print( "  + {} passed pre-selection + triggerX = {:.3f}".format( hlt_events, float( hlt_events ) / float( nominal_events ) ) )
-    nom_df = pandas.DataFrame( rDF_nominal.AsNumpy( columns = [ "leptonPt_MultiLepCalc", "leptonEta_MultiLepCalc" ] ) )
-    hlt_df = pandas.DataFrame( rDF_hlt.AsNumpy( columns = [ "leptonPt_MultiLepCalc", "leptonEta_MultiLepCalc" ] ) )
+    nom_df = pandas.DataFrame( rDF_nominal.AsNumpy( columns = [ "AK4HT", "leptonPt_MultiLepCalc", "leptonEta_MultiLepCalc" ] ) )
+    hlt_df = pandas.DataFrame( rDF_hlt.AsNumpy( columns = [ "AK4HT", "leptonPt_MultiLepCalc", "leptonEta_MultiLepCalc" ] ) )
     
   elif args.site == "BRUX":
-    events_nom = { "leptonPt_MultiLepCalc": [], "leptonEta_MultiLepCalc": [] }
-    events_hlt = { "leptonPt_MultiLepCalc": [], "leptonEta_MultiLepCalc": [] }
+    events_nom = { "AK4HT": [], "leptonPt_MultiLepCalc": [], "leptonEta_MultiLepCalc": [] }
+    events_hlt = { "AK4HT": [], "leptonPt_MultiLepCalc": [], "leptonEta_MultiLepCalc": [] }
     rFile = ROOT.TFile( samplePath )
     rTree = rFile.Get( "ljmet" )
     total_events = rTree.GetEntries()
@@ -159,6 +162,7 @@ for sample in samples:
           if abs( getattr( rTree, str( vName ) ) ) > config.selection[ vName ][ "VALUE" ]: continue
         if config.selection[ vName ][ "CONDITION" ] == "==":
           if abs( getattr( rTree, str( vName ) ) ) != config.selection[ vName ][ "VALUE" ]: continue
+      events_nom[ "AK4HT" ].append( getattr( rTree, "AK4HT" ) )
       events_nom[ "leptonPt_MultiLepCalc" ].append(  getattr( rTree, "leptonPt_MultiLepCalc" ) )
       events_nom[ "leptonEta_MultiLepCalc" ].append( getattr( rTree, "leptonEta_MultiLepCalc" ) )
       nominal_events += 1
@@ -168,7 +172,8 @@ for sample in samples:
       else:
         if getattr( rTree, "MCPastTriggerX" ) == 1 and getattr( rTree, "DataPastTriggerX" ) == 1: passHLT = True
       if passHLT:
-        events_hlt[ "leptonPt_MultiLepCalc" ].append(  getattr( rTree, "leptonPt_MultiLepCalc" ) )
+        events_hlt[ "AK4HT" ].append( getattr( rTree, "AK4HT" ) )
+        events_hlt[ "leptonPt_MultiLepCalc" ].append( getattr( rTree, "leptonPt_MultiLepCalc" ) )
         events_hlt[ "leptonEta_MultiLepCalc" ].append( getattr( rTree, "leptonEta_MultiLepCalc" ) )
         hlt_events += 1
     total_nominal += nominal_events
@@ -179,56 +184,68 @@ for sample in samples:
     nom_df  = pandas.DataFrame.from_dict( events_nom )
     hlt_df = pandas.DataFrame.from_dict( events_hlt )
     
-  for i in range( len( config.triggerX_bins[ "PT" ] ) + 1 ):
-    if i == 0: 
-      pt_pass_nom = ( nom_df[ "leptonPt_MultiLepCalc" ] < config.triggerX_bins[ "PT" ][i] )
-      pt_pass_hlt = ( hlt_df[ "leptonPt_MultiLepCalc" ] < config.triggerX_bins[ "PT" ][i] )
-    elif i == len( config.triggerX_bins[ "PT" ] ):
-      pt_pass_nom = ( nom_df[ "leptonPt_MultiLepCalc" ] >= config.triggerX_bins[ "PT" ][i-1] )
-      pt_pass_hlt = ( hlt_df[ "leptonPt_MultiLepCalc" ] >= config.triggerX_bins[ "PT" ][i-1] )
+  for i in range( len( config.triggerX_bins[ "HT" ] ) + 1 ):
+    if i == 0:
+      ht_pass_nom = ( nom_df[ "AK4HT" ] < config.triggerX_bins[ "HT" ][i] )
+      ht_pass_hlt = ( hlt_df[ "AK4HT" ] < config.triggerX_bins[ "HT" ][i] )
+    elif i == len( config.triggerX_bins[ "HT" ] ):
+      ht_pass_nom = ( nom_df[ "AK4HT" ] >= config.triggerX_bins[ "HT" ][i-1] )
+      ht_pass_hlt = ( hlt_df[ "AK4HT" ] >= config.triggerX_bins[ "HT" ][i-1] )
     else:
-      pt_pass_nom = ( nom_df[ "leptonPt_MultiLepCalc" ] >= config.triggerX_bins[ "PT" ][i-1] ) & ( nom_df[ "leptonPt_MultiLepCalc" ] < config.triggerX_bins[ "PT" ][i] )
-      pt_pass_hlt = ( hlt_df[ "leptonPt_MultiLepCalc" ] >= config.triggerX_bins[ "PT" ][i-1] ) & ( hlt_df[ "leptonPt_MultiLepCalc" ] < config.triggerX_bins[ "PT" ][i] )
-    for j in range( len( config.triggerX_bins[ "ETA" ] ) + 1 ):
-      if j == 0:
-        eta_pass_nom = ( nom_df[ "leptonEta_MultiLepCalc" ].abs() < config.triggerX_bins[ "ETA" ][j] )
-        eta_pass_hlt = ( hlt_df[ "leptonEta_MultiLepCalc" ].abs() < config.triggerX_bins[ "ETA" ][j] )
-      elif j == len( config.triggerX_bins[ "ETA" ] ):
-        eta_pass_nom = ( nom_df[ "leptonEta_MultiLepCalc" ].abs() >= config.triggerX_bins[ "ETA" ][j-1] )
-        eta_pass_hlt = ( hlt_df[ "leptonEta_MultiLepCalc" ].abs() >= config.triggerX_bins[ "ETA" ][j-1] )
+      ht_pass_nom = ( nom_df[ "AK4HT" ] >= config.triggerX_bins[ "HT" ][i-1] ) & ( nom_df[ "AK4HT" ] < config.triggerX_bins[ "HT" ][i] )
+      ht_pass_hlt = ( hlt_df[ "AK4HT" ] >= config.triggerX_bins[ "HT" ][i-1] ) & ( hlt_df[ "AK4HT" ] < config.triggerX_bins[ "HT" ][i] )
+    for j in range( len( config.triggerX_bins[ "PT" ] ) + 1 ):
+      if j == 0: 
+        pt_pass_nom = ( nom_df[ "leptonPt_MultiLepCalc" ] < config.triggerX_bins[ "PT" ][j] )
+        pt_pass_hlt = ( hlt_df[ "leptonPt_MultiLepCalc" ] < config.triggerX_bins[ "PT" ][j] )
+      elif j == len( config.triggerX_bins[ "PT" ] ):
+        pt_pass_nom = ( nom_df[ "leptonPt_MultiLepCalc" ] >= config.triggerX_bins[ "PT" ][j-1] )
+        pt_pass_hlt = ( hlt_df[ "leptonPt_MultiLepCalc" ] >= config.triggerX_bins[ "PT" ][j-1] )
       else:
-        eta_pass_nom = ( nom_df[ "leptonEta_MultiLepCalc" ].abs() >= config.triggerX_bins[ "ETA" ][j-1] ) & ( nom_df[ "leptonEta_MultiLepCalc" ].abs() < config.triggerX_bins[ "ETA" ][j] )
-        eta_pass_hlt = ( hlt_df[ "leptonEta_MultiLepCalc" ].abs() >= config.triggerX_bins[ "ETA" ][j-1] ) & ( hlt_df[ "leptonEta_MultiLepCalc" ].abs() < config.triggerX_bins[ "ETA" ][j] )
+        pt_pass_nom = ( nom_df[ "leptonPt_MultiLepCalc" ] >= config.triggerX_bins[ "PT" ][j-1] ) & ( nom_df[ "leptonPt_MultiLepCalc" ] < config.triggerX_bins[ "PT" ][j] )
+        pt_pass_hlt = ( hlt_df[ "leptonPt_MultiLepCalc" ] >= config.triggerX_bins[ "PT" ][j-1] ) & ( hlt_df[ "leptonPt_MultiLepCalc" ] < config.triggerX_bins[ "PT" ][j] )
+      for k in range( len( config.triggerX_bins[ "ETA" ] ) + 1 ):
+        if k == 0:
+          eta_pass_nom = ( nom_df[ "leptonEta_MultiLepCalc" ].abs() < config.triggerX_bins[ "ETA" ][k] )
+          eta_pass_hlt = ( hlt_df[ "leptonEta_MultiLepCalc" ].abs() < config.triggerX_bins[ "ETA" ][k] )
+        elif k == len( config.triggerX_bins[ "ETA" ] ):
+          eta_pass_nom = ( nom_df[ "leptonEta_MultiLepCalc" ].abs() >= config.triggerX_bins[ "ETA" ][k-1] )
+          eta_pass_hlt = ( hlt_df[ "leptonEta_MultiLepCalc" ].abs() >= config.triggerX_bins[ "ETA" ][k-1] )
+        else:
+          eta_pass_nom = ( nom_df[ "leptonEta_MultiLepCalc" ].abs() >= config.triggerX_bins[ "ETA" ][k-1] ) & ( nom_df[ "leptonEta_MultiLepCalc" ].abs() < config.triggerX_bins[ "ETA" ][k] )
+          eta_pass_hlt = ( hlt_df[ "leptonEta_MultiLepCalc" ].abs() >= config.triggerX_bins[ "ETA" ][k-1] ) & ( hlt_df[ "leptonEta_MultiLepCalc" ].abs() < config.triggerX_bins[ "ETA" ][k] )
      
-      if args.verbose:
-        print( ">> Bin (i,j) = ({},{}):".format( i, j ) )
-        try:
-          print( "   + HLT / NOM = {} / {} ({:.3f})".format( len( hlt_df[ ( pt_pass_hlt ) & ( eta_pass_hlt ) ] ), len( nom_df[ ( pt_pass_nom ) & ( eta_pass_nom ) ] ), float( len( hlt_df[ ( pt_pass_hlt ) & ( eta_pass_hlt ) ] ) ) / len( nom_df[ ( pt_pass_nom ) & ( eta_pass_nom ) ] ) ) ) 
-        except:
-          print( "   + HLT / NOM = 0 / 0" )
+        if args.verbose:
+          print( ">> Bin (i,j,k) = ({},{},{}):".format( i, j, k ) )
+          try:
+            print( "   + HLT / NOM = {} / {} ({:.3f})".format( len( hlt_df[ ( ht_pass_hlt ) & ( pt_pass_hlt ) & ( eta_pass_hlt ) ] ), len( nom_df[ ( ht_pass_nom ) & ( pt_pass_nom ) & ( eta_pass_nom ) ] ), float( len( hlt_df[ ( ht_pass_hlt ) & ( pt_pass_hlt ) & ( eta_pass_hlt ) ] ) ) / len( nom_df[ ( ht_pass_nom ) & ( pt_pass_nom ) & ( eta_pass_nom ) ] ) ) ) 
+          except:
+            print( "   + HLT / NOM = 0 / 0" )
 
-      yields[ "NOMINAL" ][i][j] += len( nom_df[ ( pt_pass_nom ) & ( eta_pass_nom ) ] )
-      yields[ "HLT" ][i][j] += len( hlt_df[ ( pt_pass_hlt ) & ( eta_pass_hlt ) ] )
+        yields[ "NOMINAL" ][i][j][k] += len( nom_df[ ( ht_pass_nom ) & ( pt_pass_nom ) & ( eta_pass_nom ) ] )
+        yields[ "HLT" ][i][j][k] += len( hlt_df[ ( ht_pass_hlt ) & ( pt_pass_hlt ) & ( eta_pass_hlt ) ] )
      
 # compute efficiencies for pt and eta bins
-efficiency = np.zeros( ( len( config.triggerX_bins[ "PT" ] ) + 1, len( config.triggerX_bins[ "ETA" ] ) + 1 ) )
-efficiency_err = np.zeros( ( len( config.triggerX_bins[ "PT" ] ) + 1, len( config.triggerX_bins[ "ETA" ] ) + 1 ) )
+efficiency = np.zeros( ( len( config.triggerX_bins[ "HT" ] ) + 1, len( config.triggerX_bins[ "PT" ] ) + 1, len( config.triggerX_bins[ "ETA" ] ) + 1 ) )
+efficiency_err = np.zeros( ( len( config.triggerX_bins[ "HT" ] ) + 1, len( config.triggerX_bins[ "PT" ] ) + 1, len( config.triggerX_bins[ "ETA" ] ) + 1 ) )
 print( "[START] Calculating efficiency and efficiency error" )
 for i in range( efficiency_err.shape[0] ):
   for j in range( efficiency_err.shape[1] ):
-    efficiency_err[i][j] = calculate_efficiency_err( yields[ "HLT" ][i][j], yields[ "NOMINAL" ][i][j] )
-    if yields[ "NOMINAL" ][i][j] == 0:
-      efficiency[i][j] = 0
-    else:
-      efficiency[i][j] = yields["HLT"][i][j] / yields["NOMINAL"][i][j]
+    for k in range( efficiency_err.shape[2] ):
+      efficiency_err[i][j][k] = calculate_efficiency_err( yields[ "HLT" ][i][j][k], yields[ "NOMINAL" ][i][j][k] )
+      if yields[ "NOMINAL" ][i][j][k] == 0:
+        efficiency[i][j][k] = 0
+      else:
+        efficiency[i][j][k] = yields["HLT"][i][j][k] / yields["NOMINAL"][i][j][k]
 print( "[DONE]" )
-print_efficiency( efficiency, efficiency_err, config.triggerX_bins[ "PT" ], config.triggerX_bins[ "ETA" ] )
+print_efficiency( efficiency, efficiency_err, config.triggerX_bins[ "HT" ], config.triggerX_bins[ "PT" ], config.triggerX_bins[ "ETA" ] )
 # read out the efficiencies in json format
 pickle_dict = {
   "NOMINAL YIELD": yields[ "NOMINAL" ],
   "HLT YIELD": yields[ "HLT" ],
   "EFFICIENCY": efficiency,
   "EFFICIENCY ERR": efficiency_err,
+  "HT BINS": config.triggerX_bins[ "HT" ],
   "PT BINS": config.triggerX_bins[ "PT" ],
   "ETA BINS": config.triggerX_bins[ "ETA" ]
 }

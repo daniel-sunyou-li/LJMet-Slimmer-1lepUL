@@ -211,6 +211,10 @@ public :
    Float_t         theJetPhi1_JetSubCalc;
    Float_t         theJetPhi2_JetSubCalc;
    Float_t         theJetPhi3_JetSubCalc;
+   Float_t         theForwardJetPt_JetSubCalc;
+   Float_t         theForwardJetEta_JetSubCalc;
+   Float_t         theForwardJetPhi_JetSubCalc;
+   Float_t         theForwardJetCSV_JetSubCalc;
 
    vector<int>     maxProb_JetSubCalc_PtOrdered;
    vector<int>     dnn_largest_BestCalc_PtOrdered;
