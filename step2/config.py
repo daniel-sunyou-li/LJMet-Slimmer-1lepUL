@@ -26,7 +26,7 @@ lumi = {
 
 JES_shifts = {
   "JER": True,
-  "JEC": False, # fully de-correlated, corresponds to total JEC from LJMet
+  "JEC": True, # fully de-correlated, corresponds to total JEC from LJMet
   "FlavorQCD": True,
   "FlavorPureQuark": True,
   "FlavorPureGluon": True,
