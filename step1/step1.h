@@ -1342,7 +1342,7 @@ public :
    virtual void     saveHistograms();
    bool             applySF(bool& isTagged, float tag_SF, float tag_eff);
    vector<vector<int>>  get_combinations( int n, int k );
-   double           compute_SFWeight( vector<double>& SF, vector<double>& Eff, vector<int>& Tag );
+   double           compute_SFWeight( vector<double>& SF, vector<double>& Eff, vector<double>& Tag );
    
 };
 

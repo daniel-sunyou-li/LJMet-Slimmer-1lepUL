@@ -33,13 +33,13 @@ TRandom3 Rand;
 const double MTOP  = 173.5;
 const double MW    = 80.4; 
 
-double step1::compute_SFWeight( vector<double>& SF, vector<double>& Eff, vector<int>& Tag ){
+double step1::compute_SFWeight( vector<double>& SF, vector<double>& Eff, vector<double>& Tag ){
   double pMC = 1.;
   double pData = 1.;
   for( unsigned int i = 0; i < Tag.size(); i++ ){
     if( Tag.at(i) == 1 ){
       pMC *= Eff.at(i);
-      pData *= ( SF.at(i) * Eff.at(i) );
+      pData *= SF.at(i) * Eff.at(i);
     }
     else {
       pMC *= ( 1. - Eff.at(i) );
@@ -478,9 +478,6 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
   outputTree->Branch("pileupJetIDWeight",&pileupJetIDWeight,"pileupJetIDWeight/F");
   outputTree->Branch("pileupJetIDWeightUp",&pileupJetIDWeightUp,"pileupJetIDWeightUp/F");
   outputTree->Branch("pileupJetIDWeightDown",&pileupJetIDWeightDown,"pileupJetIDWeightDown/F");
-  outputTree->Branch("pileupJetIDWeight_tag",&pileupJetIDWeight_tag,"pileupJetIDWeight_tag/F");
-  outputTree->Branch("pileupJetIDWeightUp_tag",&pileupJetIDWeightUp_tag,"pileupJetIDWeightUp_tag/F");
-  outputTree->Branch("pileupJetIDWeightDown_tag",&pileupJetIDWeightDown_tag,"pileupJetIDWeightDown_tag/F");
   outputTree->Branch("pileupWeight",&pileupWeight,"pileupWeight/F");
   outputTree->Branch("pileupWeightUp",&pileupWeightUp,"pileupWeightUp/F");
   outputTree->Branch("pileupWeightDown",&pileupWeightDown,"pileupWeightDown/F");
@@ -1029,9 +1026,6 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     pileupJetIDWeight = 1.0;
     pileupJetIDWeightUp = 1.0;
     pileupJetIDWeightDown = 1.0;
-    pileupJetIDWeight_tag = 1.0;
-    pileupJetIDWeightUp_tag = 1.0;
-    pileupJetIDWeightDown_tag = 1.0;
 
     std::string sampleType = "";
     if (isTTTT) sampleType = "tttt";
@@ -1115,8 +1109,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
     vector<double> jetPUIDsfUp;
     vector<double> jetPUIDsfDn;
     vector<double> jetPUIDEff;
-    vector<int>    jetPUIDTag;
-    vector<int>    jetPUIDTag_tag;
+    vector<double> jetPUIDTag;
     btagCSVWeight = 1.0;
     btagCSVWeight_HFup = 1.0;
     btagCSVWeight_HFdn = 1.0;
@@ -1223,33 +1216,41 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         double jetPUIDEff_ = 1.0;
         hardcodedConditions.GetJetPileupIDSF( ijetPt, ijetEta, &jetPUIDsf_, &jetPUIDsfUp_, &jetPUIDsfDn_, Year );
         hardcodedConditions.GetJetPileupIDEff( ijetPt, ijetEta, &jetPUIDEff_, Year );
-        if( ijetPt < 50. ){
+        if( ijetPt < 50. ){ // only consider jets with pT < 50 GeV
           // determine if the reco jet is geometrically matched to a gen jet for PU truth
           jetPU_lv.SetPtEtaPhiM( ijetPt, ijetEta, ijetPhi, ijetEng );
           bool isPU = true;
           for( unsigned int jjet = 0; jjet < genJetPt_MultiLepCalc->size(); jjet++ ){
             genJetPU_lv.SetPtEtaPhiE( genJetPtNoClean_MultiLepCalc->at(jjet), genJetEtaNoClean_MultiLepCalc->at(jjet), genJetPhiNoClean_MultiLepCalc->at(jjet), genJetEnergyNoClean_MultiLepCalc->at(jjet) );
             if( jetPU_lv.DeltaR( genJetPU_lv ) < 0.4 ){
-              isPU = false;
+              isPU = false; // found a match, not pileup
               continue; // only need to confirm one reco to gen match
             }
           }
+
+          if( isPU == true ){
+            ijetPUIDTight = false; // any MC jet that is not geometrically-matched is also considered pileup
+          }
           
-          if( isPU == false ){
-            if( ijetPUIDTight == false ){ 
-              jetPUIDTag.push_back( 0 ); // only apply SF to hard jets that aren't PU tagged
-              jetPUIDTag_tag.push_back( 1 ); // in case it's intended to consider real tagged jets as (1-Eff*SF) and not Eff*SF
-              jetPUIDsf.push_back( jetPUIDsf_ );
-              jetPUIDsfUp.push_back( jetPUIDsfUp_ );
-              jetPUIDsfDn.push_back( jetPUIDsfDn_ );
-              jetPUIDEff.push_back( jetPUIDEff_ );
-            }
+          // only apply scale factors to prompt jets that are geometrically matched
+          // using event re-weighting method 1-a: https://twiki.cern.ch/twiki/bin/view/CMS/BTagSFMethods#1a_Event_reweighting_using_scale
+          // tagged if it is GEN-matched and passes the ID
+          jetPUIDsf.push_back( jetPUIDsf_ );
+          jetPUIDsfUp.push_back( jetPUIDsfUp_ );
+          jetPUIDsfDn.push_back( jetPUIDsfDn_ );
+          jetPUIDEff.push_back( jetPUIDEff_ );
+          if( isPU == false && ijetPUIDTight == true ){
+            jetPUIDTag.push_back( 1 );
+          }
+          // untagged otherwise
+          else{
+            jetPUIDTag.push_back( 0 );
           }
         }
       }
 
-      // exclude jets tagged as PU
-      if( ijetPUIDTight == true && ijetPt < 50. ){
+      // exclude jets with pT < 50 GeV tagged as PU
+      if( ijetPUIDTight == false && ijetPt < 50. ){
         NJetsPU_JetSubCalc+=1;
         continue;
       }
@@ -1500,9 +1501,6 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
       pileupJetIDWeight     = compute_SFWeight( jetPUIDsf, jetPUIDEff, jetPUIDTag );
       pileupJetIDWeightUp   = compute_SFWeight( jetPUIDsfUp, jetPUIDEff, jetPUIDTag );
       pileupJetIDWeightDown = compute_SFWeight( jetPUIDsfDn, jetPUIDEff, jetPUIDTag ); 
-      pileupJetIDWeight_tag     = compute_SFWeight( jetPUIDsf, jetPUIDEff, jetPUIDTag_tag );
-      pileupJetIDWeightUp_tag   = compute_SFWeight( jetPUIDsfUp, jetPUIDEff, jetPUIDTag_tag );
-      pileupJetIDWeightDown_tag = compute_SFWeight( jetPUIDsfDn, jetPUIDEff, jetPUIDTag_tag );
     }
 
     // ----------------------------------------------------------------------------
@@ -1664,11 +1662,7 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         lepIdSF_up   = hardcodedConditions.GetElectronIdSF( leppt, lepeta, Year, "up" );
         lepIdSF_down = hardcodedConditions.GetElectronIdSF( leppt, lepeta, Year, "down" ); 
         isoSF = hardcodedConditions.GetElectronIsoSF( leppt, lepeta, Year );
-        if( Year == "2016APV" || Year == "2016" ){ // there are no centrally maintained 2016preVFP and 2016postVFP UL SF, so use the SF separately
-          triggerSF = hardcodedConditions.GetElectronTriggerSF( leppt, lepeta, Year );
-          triggerXSF = hardcodedConditions.GetElectronTriggerXSF( AK4HT, leppt, lepeta, Year );
-        }
-        else if( MCLepPastTrigger == 1 && MCPastTriggerX == 1 ){ // defaults to using the single-object trigger if available
+        if( MCLepPastTrigger == 1 && MCPastTriggerX == 1 ){ // defaults to using the single-object trigger if available
           triggerSF = hardcodedConditions.GetElectronTriggerSF( leppt, lepeta, Year );
           triggerXSF = 1.0; 
         }
@@ -1705,10 +1699,6 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
         lepIdSF_down = hardcodedConditions.GetMuonIdSF( leppt, lepeta, Year, "down" );
         isoSF = hardcodedConditions.GetMuonIsoSF(leppt, lepeta, Year);
         
-        if( Year == "2016APV" || Year == "2016" ){ // there are no centrally maintained 2016preVFP and 2016postVFP UL SF, so use the SF separately
-          triggerSF = hardcodedConditions.GetMuonTriggerSF( leppt, lepeta, Year );
-          triggerXSF = hardcodedConditions.GetMuonTriggerXSF( AK4HT, leppt, lepeta, Year );
-        }
         if( MCLepPastTrigger == 1 && MCPastTriggerX == 1 ){ // defaults to using the single-object trigger if available
           triggerSF = hardcodedConditions.GetMuonTriggerSF( leppt, lepeta, Year );
           triggerXSF = 1.0; 
@@ -2846,9 +2836,9 @@ void step1::Loop(TString inTreeName, TString outTreeName, const BTagCalibrationF
 
 
     //std::cout<<"yes 2"<<std::endl;
-    //ME-PS
-    if( debug == 1 ){ cout << "[DEBUG] Adding theory weights" << endl; }
-    if(isSig && !isSig && !isTTTT){
+    //
+    // PDF weights: https://twiki.cern.ch/twiki/bin/view/CMS/HowToPDF
+    if(isSig && !isTTTT && !isTTTX){
       pdfNewNominalWeight = NewPDFweights_MultiLepCalc->at(0);
       // SEEMS TO APPLY TO ALL B2G MG+PYTHIA SIGNALS. NNLO 4-FLAVOR PDF
       for(unsigned int i = 0; i < LHEweightids_MultiLepCalc->size(); i++){
