@@ -57,11 +57,10 @@ JEC_files_reduced = {
   "17": "btag_sf/RegroupedV2_Summer19UL17_V5_MC_UncertaintySources_AK4PFchs.txt",
   "18": "btag_sf/RegroupedV2_Summer19UL18_V5_MC_UncertaintySources_AK4PFchs.txt"
 }
-
 JES_shifts = {
   "JER": True,
-  "JEC": True, # fully de-correlated, corresponds to total JEC from LJMet
-  "FlavorQCD": True,
+  "JEC": False, # fully de-correlated, corresponds to total JEC from LJMet
+  "FlavorQCD": False,
   "FlavorPureGluon": True,
   "FlavorPureQuark": True,
   "FlavorPureCharm": True,
@@ -82,8 +81,8 @@ selection = {
   "leptonPt_MultiLepCalc": { "VALUE": [ 20 ], "CONDITION": [ ">" ] },
   "leptonEta_MultiLepCalc": { "VALUE": [ 2.5 ], "CONDITION": [ "<" ] },
   "AK4HT": { "VALUE": [ 350. ], "CONDITION": [ ">" ] },
-  "NJets_JetSubCalc": { "VALUE": [ 5 ], "CONDITION": [ "<=" ] },
-  "NJetsCSV_JetSubCalc": { "VALUE": [ 0 ], "CONDITION": [ ">=" ] },
+  "NJets_JetSubCalc": { "VALUE": [ 4 ], "CONDITION": [ "<=" ] },
+  "NJetsCSV_JetSubCalc": { "VALUE": [ 1 ], "CONDITION": [ ">=" ] },
   "corr_met_MultiLepCalc": { "VALUE": [ 20. ], "CONDITION": [ ">" ] },
 }
 
@@ -128,9 +127,13 @@ samples = {
       "ChargedHiggs_HplusTB_HplusToTB_M-3000_TuneCP5_13TeV_amcatnlo_pythia8"
     ],
     "TTTX": [
-      "TTTT_TuneCP5_13TeV-amcatnlo-pythia8",
-      "TTTJ_TuneCP5_13TeV-madgraph-pythia8",
-      "TTTW_TuneCP5_13TeV-madgraph-pythia8"
+      #"TTTT_TuneCP5_13TeV-amcatnlo-pythia8",
+      #"TTTJ_TuneCP5_13TeV-madgraph-pythia8",
+      #"TTTW_TuneCP5_13TeV-madgraph-pythia8",
+      "TTTJminus-DR1_TuneCP5_13TeV_amcatnlo-pythia8",
+      "TTTJplus-DR1_TuneCP5_13TeV_amcatnlo-pythia8",
+      "TTTWminus-DR1_TuneCP5_13TeV_amcatnlo-pythia8",
+      "TTTWplus-DR1_TuneCP5_13TeV_amcatnlo-pythia8"
     ],
     "TTBAR": [
       "TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8",
@@ -212,8 +215,12 @@ samples = {
   },
   "16": {
     "TEST": [
-      "TTTW_TuneCP5_13TeV-madgraph-pythia8",
-      "TTTJ_TuneCP5_13TeV-madgraph-pythia8"
+      #"TTTW_TuneCP5_13TeV-madgraph-pythia8",
+      #"TTTJ_TuneCP5_13TeV-madgraph-pythia8",
+      "TTTJminus-DR1_TuneCP5_13TeV_amcatnlo-pythia8",
+      "TTTJplus-DR1_TuneCP5_13TeV_amcatnlo-pythia8",
+      "TTTWminus-DR1_TuneCP5_13TeV_amcatnlo-pythia8",
+      "TTTWplus-DR1_TuneCP5_13TeV_amcatnlo-pythia8"
     ],
     "DATAE": [
       "SingleElectron",
@@ -354,9 +361,13 @@ samples = {
       "ChargedHiggs_HplusTB_HplusToTB_M-3000_TuneCP5_13TeV_amcatnlo_pythia8"
     ],
     "TTTX": [
-      "TTTT_TuneCP5_13TeV-amcatnlo-pythia8",
-      "TTTJ_TuneCP5_13TeV-madgraph-pythia8",
-      "TTTW_TuneCP5_13TeV-madgraph-pythia8"
+      #"TTTT_TuneCP5_13TeV-amcatnlo-pythia8",
+      #"TTTJ_TuneCP5_13TeV-madgraph-pythia8",
+      #"TTTW_TuneCP5_13TeV-madgraph-pythia8"
+      "TTTJminus-DR1_TuneCP5_13TeV_amcatnlo-pythia8",
+      "TTTJplus-DR1_TuneCP5_13TeV_amcatnlo-pythia8",
+      "TTTWminus-DR1_TuneCP5_13TeV_amcatnlo-pythia8",
+      "TTTWplus-DR1_TuneCP5_13TeV_amcatnlo-pythia8"
     ],
     "TTBAR": [
       "TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8",
@@ -467,9 +478,13 @@ samples = {
       "ChargedHiggs_HplusTB_HplusToTB_M-3000_TuneCP5_13TeV_amcatnlo_pythia8"
     ],
     "TTTX": [
-      "TTTT_TuneCP5_13TeV-amcatnlo-pythia8",
+      #"TTTT_TuneCP5_13TeV-amcatnlo-pythia8",
       #"TTTJ_TuneCP5_13TeV-madgraph-pythia8",
-      #"TTTW_TuneCP5_13TeV-madgraph-pythia8"
+      #"TTTW_TuneCP5_13TeV-madgraph-pythia8",
+      "TTTJminus-DR1_TuneCP5_13TeV_amcatnlo-pythia8",
+      "TTTJplus-DR1_TuneCP5_13TeV_amcatnlo-pythia8",
+      "TTTWminus-DR1_TuneCP5_13TeV_amcatnlo-pythia8",
+      "TTTWplus-DR1_TuneCP5_13TeV_amcatnlo-pythia8"
     ],
     "TTBAR": [
       "TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8",

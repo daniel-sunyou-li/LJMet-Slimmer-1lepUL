@@ -36,7 +36,7 @@ else:
   shifts = []
   print( "[INFO] Running step1 on shifts:" )
   for syst in config.JES_shifts:
-    for shift in [ "up", "down" ]:
+    for shift in [ "up" ]: #[ "up", "down" ]:
       if config.JES_shifts[ syst ]:
         sName = syst.replace( "Era", "20{}".format( args.year.replace( "APV", "" ) ) ) + shift
         print( "  + {}".format( sName ) )

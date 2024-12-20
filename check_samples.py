@@ -24,4 +24,5 @@ for subDirectory in subDirectories:
   for fileName in nomFiles:
     if fileName not in subFiles:
       if "EGAMMA" in fileName.upper() or "SINGLEMUON" in fileName.upper() or "SINGLEELECTRON" in fileName.upper(): continue
+      if "RENORM" in fileName.upper(): continue
       print( "  + {}".format( fileName ) )
